@@ -1,0 +1,64 @@
+{
+    "name": "smsLog",
+    "namePlural": "smsLogs",
+    "frontend": true,
+    "traits": [],
+    "fields": [
+        {
+            "name": "user_id",
+            "type": "relationship",
+            "nullable": true,
+            "default": null,
+            "index": true,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": "api/v2/users"
+        },
+        {
+            "name": "number",
+            "type": "string",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "message",
+            "type": "longText",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        }
+    ],
+    "relationshipFields": [],
+    "hasOne": [],
+    "belongsTo": ["user"],
+    "belongsToMany": [],
+    "hasMany": [],
+    "hasOneThrough": [],
+    "hasManyThrough": [],
+    "morphMany": {},
+    "morphToMany": {},
+    "morphTo": [],
+    "morphOne": [],
+    "morphedByMany": {},
+    "seeder": 10,
+    "fillables": [
+        "message", "number"
+    ],
+    "casts": {
+        "date": "datetime"
+    },
+    "allowedSorts": ["id", "message", "number"],
+    "allowedEmbeds": [ "user" ],
+    "allowedFields": ["id", "message", "number", "user.full_name"],
+    "revisionModel": null
+}

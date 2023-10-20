@@ -1,0 +1,54 @@
+{
+    "name": "tagGroup",
+    "namePlural": "tagGroups",
+    "frontend": true,
+    "traits": ["HasTitleSlug"],
+    "fields": [
+        {
+            "name": "title",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "slug",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [255],
+            "options": [],
+            "url": null
+        }
+    ],
+    "relationshipFields": [],
+    "hasOne": [],
+    "belongsTo": [],
+    "belongsToMany": [
+        "tag"
+    ],
+    "hasMany": [],
+    "hasOneThrough": [],
+    "hasManyThrough": [],
+    "morphMany": {},
+    "morphToMany": {},
+    "morphTo": [],
+    "morphOne": [],
+    "morphedByMany": {},
+    "seeder": 10,
+    "fillables": [
+        "title",
+        "slug"
+    ],
+    "casts": {},
+    "allowedSorts": ["id", "title", "slug"],
+    "allowedEmbeds": ["tags"],
+    "allowedFields": ["id", "title", "slug"],
+    "revisionModel": null
+}

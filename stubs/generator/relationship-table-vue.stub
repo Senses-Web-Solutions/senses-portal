@@ -1,0 +1,34 @@
+<template>
+    <SensesTable title="{{ title }}" url="" :fields="fields" table="{{ snakePluralModel }}" @row-click="rowClick">
+        <template v-slot:created_at="slotProps">
+            <td :class="slotProps.class">{{ formatDateTime(slotProps.row.created_at) }}</td>
+        </template>
+    </SensesTable>
+</template>
+<script>
+import SensesTable from '../Tables/SensesTable.vue';
+import formatDateTime from '../../../Filters/FormatDateTime';
+export default {
+    components: {
+        SensesTable
+    },
+    data() {
+        return {
+            fields: [
+                { label: "ID", key: "id" },
+                { label: "Title", key: "title" },
+            ]
+        }
+    },
+    methods: {
+        formatDateTime,
+        rowClick(row) {
+            if (row.id) {
+                window.location = "/{{ pluralModel }}/" + row.id;
+            }
+        }
+    }
+}
+</script>
+
+//Generated {{ generationDate }}

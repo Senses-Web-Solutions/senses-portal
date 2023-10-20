@@ -1,0 +1,1 @@
+export default "/api/v2/files?append=url"

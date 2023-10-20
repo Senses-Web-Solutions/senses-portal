@@ -1,0 +1,53 @@
+<?php
+
+namespace Tests\Browser;
+
+use App\Models\User;
+use App\Models\{{ ucCamelModel }};
+use Tests\DuskTestCase;
+use Laravel\Dusk\Browser;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
+class {{ ucCamelModel }}Test extends DuskTestCase
+{
+    use DatabaseTransactions;
+
+    /**
+     * A {{ titleModel }} form test.
+     *
+     * @return void
+     */
+    public function formTest()
+    {
+        $generatorData = json_decode('{
+            "fields":[{{ fields }}          ]
+        }', true);
+        $model = {{ ucCamelModel }}::factory()->make();
+
+        $this->browse(function (Browser $browser) use(&$model, &$generatorData){
+            $user = User::find(1);
+
+            $browser->visit('/')
+            ->type('email', $user->email)
+            ->type('password', env('SENSES_PASSWORD'))
+            ->press('Login')
+
+            ->visit('/{{ pluralModel }}')
+            ->waitUntilMissing('.dusk-loading-icon')
+            ->press('Add')
+            ->waitUntilMissing('.dusk-aside')
+            ->waitUntilMissing('.dusk-aside.transition');
+
+            $attributes = [];
+            foreach($generatorData['fields'] as $field) {
+                $browser->type($field['name'], $model->{$field['name']});
+                $attributes[$field['name']] = $model->{$field['name']};
+            }
+
+            $browser->press('Save');
+            $browser->screenshot('save');
+            $this->assertDatabaseHas('{{ snakePluralModel }}', $attributes);
+        });
+    }
+}

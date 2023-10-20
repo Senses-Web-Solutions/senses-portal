@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Http\Controllers\Web;
+
+use App\Models\{{ ucCamelModel }};
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class {{ ucCamelModel }}Controller extends Controller
+{
+    public function index()
+    {
+        if (!getCurrentUser()->can('list-{{ model }}')) {
+            abort(403);
+        }
+
+        return view('{{ pluralModel }}.index');
+    }
+
+    public function show($id)
+    {
+        if (!getCurrentUser()->can('show-{{ model }}')) {
+            abort(403);
+        }
+
+        return view('{{ pluralModel }}.show', compact('id'));
+    }
+}
+
+//Generated {{ generationDate }}

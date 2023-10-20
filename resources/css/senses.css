@@ -1,0 +1,75 @@
+@import './dropzone.css';
+@import './vue-multiselect.css';
+@import 'flatpickr/dist/flatpickr.css';
+@import '@senses/builder/dist/style.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input,
+select {
+    @apply text-base;
+}
+
+[type='text'],
+[type='email'],
+[type='url'],
+[type='password'],
+[type='number'],
+[type='date'],
+[type='datetime-local'],
+[type='month'],
+[type='search'],
+[type='tel'],
+[type='time'],
+[type='week'],
+[multiple],
+textarea,
+select {
+    @apply text-base;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    opacity: 1;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: theme('colors.gray.200');
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: theme('colors.gray.400');
+    border-radius: 100vh;
+    /* border: 3px solid #edf2f7; */
+}
+
+::-webkit-slider-thumb {
+    appearance:none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: theme('colors.primary.DEFAULT');
+}
+
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0;
+}
+
+body:not(.guest-page) #lz_overlay_wm {
+    display: none !important;
+}
+
+@config '../../tailwind.config.js';

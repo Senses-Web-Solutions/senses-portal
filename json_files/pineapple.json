@@ -1,0 +1,294 @@
+{
+    "name": "pineapple",
+    "namePlural": "pineapples",
+    "frontend": true,
+    "traits": ["HasComments", "HasFiles",  "HasStatus", "HasTags", "HasTextColour"],
+    "fields": [
+        {
+            "name": "title",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "description",
+            "type": "longText",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "size",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": ["big", "medium", "small"],
+            "url": null
+        },
+        {
+            "name": "purchased_date",
+            "type": "date",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "registration",
+            "type": "string",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "notes",
+            "type": "longText",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "per_hour_cost",
+            "type": "double",
+            "nullable": false,
+            "default": 0,
+            "index": false,
+            "unique": false,
+            "params": [10, 2],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "base_cost_per_day",
+            "type": "double",
+            "nullable": false,
+            "default": 0,
+            "index": false,
+            "unique": false,
+            "params": [10, 2],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "travel_cost_uplift",
+            "type": "double",
+            "nullable": false,
+            "default": 0,
+            "index": false,
+            "unique": false,
+            "params": [10, 2],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "insurance_cost_per_day",
+            "type": "double",
+            "nullable": false,
+            "default": 0,
+            "index": false,
+            "unique": false,
+            "params": [10, 2],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "tax_cost_per_day",
+            "type": "double",
+            "nullable": false,
+            "default": 0,
+            "index": false,
+            "unique": false,
+            "params": [10, 2],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "maintenance_plan_cost_per_day",
+            "type": "double",
+            "nullable": false,
+            "default": 0,
+            "index": false,
+            "unique": false,
+            "params": [10, 2],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "asset_type_id",
+            "type": "relationship",
+            "nullable": true,
+            "default": null,
+            "index": true,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "colour",
+            "type": "colour",
+            "nullable": false,
+            "default": "'purple'",
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "retired_date",
+            "type": "dateTime",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "capital_purchase_cost",
+            "type": "double",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [10, 2],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "supplier_id",
+            "type": "relationship",
+            "nullable": true,
+            "default": null,
+            "index": true,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "tag_number",
+            "type": "string",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "assignable",
+            "type": "boolean",
+            "nullable": false,
+            "default": "true",
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        }
+    ],
+    "relationshipFields": [
+        {
+            "title": "Tags",
+            "field": "tag_id",
+            "model": "tags",
+            "relationship": "tags",
+            "fieldType": "select-search",
+            "url": "api/v2/examples",
+            "relationshipType": "morphToMany"
+        },{
+            "title": "Drivers",
+            "field": "user_id",
+            "model": "users",
+            "relationship": "drivers",
+            "fieldType": "select-search",
+            "url": "api/v2/users",
+            "relationshipType": "hasMany"
+        }
+    ],
+    "hasOne": [
+        "asset-information"
+    ],
+    "belongsTo": [
+        "asset-type",
+        "supplier"
+    ],
+    "belongsToMany": [
+        "activity",
+        "survey"
+    ],
+    "hasMany": [
+        "asset-ownership",
+        "asset-summary",
+        "asset-load-line",
+        "asset-maintenance",
+        "asset-unavailability",
+        "asset-target",
+        "asset-inspection-sheet"
+    ],
+    "hasOneThrough": [],
+    "hasManyThrough": [],
+    "morphMany": {
+        "assignable": "assignment"
+    },
+    "morphToMany": {
+        "taggable": "tag"
+    },
+    "morphTo": [],
+    "morphOne": [],
+    "morphedByMany": [],
+    "seeder": 10,
+    "fillables": [
+        "title",
+        "description",
+        "registration",
+        "notes",
+        "asset_type_id",
+        "purchased_date",
+        "per_hour_cost",
+        "colour",
+        "base_cost_per_day",
+        "travel_cost_uplift",
+        "insurance_cost_per_day",
+        "tax_cost_per_day",
+        "maintenance_plan_cost_per_day",
+        "retired_date",
+        "capital_purchase_cost",
+        "tag_number",
+        "assignable"
+    ],
+    "casts": {
+        "assignable": "boolean"
+    },
+    "allowedSorts": ["id", "title", "purchased_date", "retired_date"],
+    "allowedEmbeds": ["assetInformation", "assetType", "supplier", "activities", "surveys", "assetOwnerships", "assetSummaries", "assetLoadLines", "assetMaintenances", "assetUnavailabilities", "assetTargets", "assignments", "tags"],
+    "allowedFields": ["id", "title", "description", "purchased_date", "registration", "notes", "colour", "retired_date", "tag_number", "asset_type.title", "supplier.title"],
+    "revisionModel": "PineappleRevision"
+}

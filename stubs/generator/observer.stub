@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Observers;
+
+use App\Models\{{ ucCamelModel }};
+use Senses\TaggedCache\Facades\TaggedCache;
+use App\Actions\{{ ucCamelPluralModel }}\Generate{{ ucCamelModel }}ShowCache;
+
+use App\Events\{{ ucCamelPluralModel }}\{{ ucCamelModel }}Created;
+use App\Events\{{ ucCamelPluralModel }}\{{ ucCamelModel }}Deleted;
+use App\Events\{{ ucCamelPluralModel }}\{{ ucCamelModel }}Updated;
+
+class {{ ucCamelModel }}Observer
+{
+    public function created({{ ucCamelModel }} ${{ camelModel }})
+    {
+        //app(Generate{{ ucCamelModel }}ShowCache::class)->onQueue('low')->execute(${{ camelModel }}->id);
+        broadcast_safely(new {{ ucCamelModel }}Created(${{ camelModel }}));
+    }
+
+    public function updated({{ ucCamelModel }} ${{ camelModel }})
+    {
+        TaggedCache::forgetWithTag(${{ camelModel }}->cacheKey);
+        //app(Generate{{ ucCamelModel }}ShowCache::class)->onQueue('low')->execute(${{ camelModel }}->id);
+        broadcast_safely(new {{ ucCamelModel }}Updated(${{ camelModel }}));
+    }
+
+    public function locked({{ ucCamelModel }} ${{ camelModel }})
+    {
+        TaggedCache::forgetWithTag(${{ camelModel }}->cacheKey);
+        //app(Generate{{ ucCamelModel }}ShowCache::class)->onQueue('low')->execute(${{ camelModel }}->id);
+        broadcast_safely(new {{ ucCamelModel }}Updated(${{ camelModel }}));
+    }
+
+    public function unlocked({{ ucCamelModel }} ${{ camelModel }})
+    {
+        TaggedCache::forgetWithTag(${{ camelModel }}->cacheKey);
+        //app(Generate{{ ucCamelModel }}ShowCache::class)->onQueue('low')->execute(${{ camelModel }}->id);
+        broadcast_safely(new {{ ucCamelModel }}Updated(${{ camelModel }}));
+    }
+
+    public function deleted({{ ucCamelModel }} ${{ camelModel }})
+    {
+        TaggedCache::forgetWithTag(${{ camelModel }}->cacheKey);
+        broadcast_safely(new {{ ucCamelModel }}Deleted(${{ camelModel }}));
+    }
+
+    public function restored({{ ucCamelModel }} ${{ camelModel }})
+    {
+        TaggedCache::forgetWithTag(${{ camelModel }}->cacheKey);
+        //app(Generate{{ ucCamelModel }}ShowCache::class)->onQueue('low')->execute(${{ camelModel }}->id);
+        broadcast_safely(new {{ ucCamelModel }}Updated(${{ camelModel }}));
+    }
+
+    public function forceDeleted({{ ucCamelModel }} ${{ camelModel }})
+    {
+        TaggedCache::forgetWithTag(${{ camelModel }}->cacheKey);
+        broadcast_safely(new {{ ucCamelModel }}Deleted(${{ camelModel }}));
+    }
+}
+
+//Generated {{ generationDate }}

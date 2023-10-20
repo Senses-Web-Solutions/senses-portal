@@ -1,0 +1,21 @@
+<?php
+
+namespace Database\Seeders\Basic;
+
+use App\Models\{{ ucCamelModel }};
+use Illuminate\Database\Seeder;
+
+class Basic{{ ucCamelPluralModel }}TableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        {{ ucCamelModel }}::factory()->count({{ seederNumber }})->create();
+    }
+}
+
+//Generated {{ generationDate }}

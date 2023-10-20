@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Actions\{{ ucCamelPluralModel }};
+
+use App\Models\{{ ucCamelModel }};
+use Spatie\QueueableAction\QueueableAction;
+
+class Delete{{ ucCamelModel }}
+{
+    use QueueableAction;
+
+    public function execute(int $id)
+    {
+        ${{ camelModel }} = {{ ucCamelModel }}::findOrFail($id);
+
+        ${{ camelModel }}->delete();
+
+        return ${{ camelModel }};
+    }
+}
+
+//Generated {{ generationDate }}

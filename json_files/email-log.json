@@ -1,0 +1,138 @@
+{
+    "name": "emailLog",
+    "namePlural": "emailLogs",
+    "frontend": true,
+    "traits": [],
+    "fields": [
+        {
+            "name": "date",
+            "type": "datetime",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "from",
+            "type": "string",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "to",
+            "type": "string",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "cc",
+            "type": "string",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "bcc",
+            "type": "string",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "subject",
+            "type": "string",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "body",
+            "type": "longText",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "headers",
+            "type": "longText",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "attachments",
+            "type": "longText",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        }
+    ],
+    "relationshipFields": [],
+    "hasOne": [],
+    "belongsTo": [],
+    "belongsToMany": [],
+    "hasMany": [],
+    "hasOneThrough": [],
+    "hasManyThrough": [],
+    "morphMany": {},
+    "morphToMany": {},
+    "morphTo": [],
+    "morphOne": [],
+    "morphedByMany": {},
+    "seeder": 10,
+    "fillables": [
+        "date",
+        "from",
+        "to",
+        "cc",
+        "bcc",
+        "subject",
+        "body",
+        "headers",
+        "attachments"
+    ],
+    "casts": {
+        "date": "datetime"
+    },
+    "allowedSorts": ["id", "date", "from", "to", "cc", "bcc", "subject", "body", "headers", "attachments"],
+    "allowedEmbeds": [],
+    "allowedFields": ["id", "date", "from", "to", "cc", "bcc", "subject", "body", "headers", "attachments"],
+    "revisionModel": null
+}

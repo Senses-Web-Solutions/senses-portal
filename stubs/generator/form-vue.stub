@@ -1,0 +1,61 @@
+<template>
+    <AsideLayout v-bind="$props" :loading="state.is(AsideState.LOADING)">
+        <template #title>{{ data.id ? 'Edit {{ titleModel }}' : '{{ titleModel }} Form'}}</template>
+
+        <SensesForm
+            v-model="{{ camelModel }}"
+            v-model:fields="fields"
+            v-model:error="error"
+            url="/api/v2/{{ pluralModel }}"
+            :id="data.id"
+            @stateChange="state = $event"
+            @success='formSuccess'
+            :aside-index="asideIndex"
+        />
+    </AsideLayout>
+</template>
+
+<script>
+
+import AsideLayout from '../../Layout/AsideLayout.vue';
+import SensesForm from '../Common/SensesForm.vue';
+import Aside from "../../../Mixins/Aside";
+import eventHub from '../../../Support/EventHub';
+import AsideState from "../../../States/AsideState";
+
+export default {
+    components: {
+        SensesForm,
+        AsideLayout,
+    },
+
+    mixins: [Aside],
+
+    data() {
+        return {
+            state: new AsideState(),
+            AsideState,
+            error: null,
+
+            {{ camelModel }}: { {{ dataModelFields }}            },
+
+            fields: [{{ dataFields }}
+            ]
+        };
+    },
+
+    methods: {
+        formSuccess(data) {
+            eventHub.emit('{{ model }}-updated', data);
+            if (this.data.id) {
+                this.$asides.pop();
+            } else {
+                window.location.href = `/{{ pluralModel }}/${data.id}`;
+            }
+        }
+    }
+}
+
+</script>
+
+// Generated {{ generationDate }}

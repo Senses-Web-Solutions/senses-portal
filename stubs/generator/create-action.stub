@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Actions\{{ ucCamelPluralModel }};
+
+use App\Models\{{ ucCamelModel }};
+use Spatie\QueueableAction\QueueableAction;
+
+class Create{{ ucCamelModel }}
+{
+    use QueueableAction;
+
+    public function execute(array $data)
+    {
+        ${{ camelModel }} = new {{ ucCamelModel }}($data);
+
+{{ relationships }}        ${{ camelModel }}->save();
+
+        return ${{ camelModel }};
+    }
+}
+
+//Generated {{ generationDate }}

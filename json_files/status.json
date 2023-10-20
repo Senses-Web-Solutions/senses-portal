@@ -1,0 +1,71 @@
+{
+    "name": "status",
+    "namePlural": "statuses",
+    "frontend": true,
+    "traits": ["HasTitleSlug"],
+    "fields": [
+        {
+            "name": "title",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "slug",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [255],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "colour",
+            "type": "colour",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        }
+    ],
+    "relationshipFields": [],
+    "hasOne": [],
+    "belongsTo": [],
+    "belongsToMany": [
+        "status-group"
+    ],
+    "hasMany": [
+        "service",
+        "review",
+        "venue",
+        "organisation",
+        "venue"
+    ],
+    "hasOneThrough": [],
+    "hasManyThrough": [],
+    "morphMany": {},
+    "morphToMany": {},
+    "morphTo": [],
+    "morphOne": [],
+    "morphedByMany": {},
+    "seeder": 10,
+    "fillables": [
+        "title",
+        "slug", "colour"
+    ],
+    "casts": {},
+    "allowedSorts": ["id", "title", "slug", "colour"],
+    "allowedEmbeds": ["services", "reviews", "venues", "organisations", "venues", "statusGroup"],
+    "allowedFields": ["id", "title", "slug", "statusGroup.title", "colour"],
+    "revisionModel": null
+}

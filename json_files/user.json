@@ -1,0 +1,106 @@
+{
+    "name": "user",
+    "namePlural": "users",
+    "frontend": true,
+    "traits": [],
+    "fields": [
+        {
+            "name": "first_name",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "last_name",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "email",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": true,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "email_verified_at",
+            "type": "datetime",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "password",
+            "type": "string",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        }
+    ],
+    "relationshipFields": [],
+    "hasOne": [],
+    "belongsTo": [],
+    "belongsToMany": [],
+    "hasMany": [
+        "favourite"
+    ],
+    "hasOneThrough": [],
+    "hasManyThrough": [],
+    "morphMany": {},
+    "morphToMany": {},
+    "morphTo": [],
+    "morphOne": [],
+    "morphedByMany": [],
+    "seeder": 0,
+    "fillables": [
+        "first_name",
+        "last_name",
+        "email",
+        "email_verified_at",
+        "password"
+    ],
+    "casts": {
+        "email_verified_at": "datetime"
+    },
+    "allowedSorts": [
+        "id",
+        "first_name",
+        "last_name",
+        "email",
+        "email_verified_at",
+        "password"
+    ],
+    "allowedEmbeds": [],
+    "allowedFields": [
+        "id",
+        "first_name",
+        "last_name",
+        "email",
+        "email_verified_at",
+        "password"
+    ],
+    "revisionModel": null
+}

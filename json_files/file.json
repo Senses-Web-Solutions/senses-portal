@@ -1,0 +1,230 @@
+{
+    "name": "file",
+    "namePlural": "files",
+    "frontend": false,
+    "traits": [
+        "HasTags"
+    ],
+    "fields": [
+        {
+            "name": "name",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [
+                255
+            ],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "stored_name",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [
+                255
+            ],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "path",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [
+                255
+            ],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "folder",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [
+                255
+            ],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "mime_type",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [
+                255
+            ],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "extension",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [
+                255
+            ],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "size",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "disk",
+            "type": "string",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [
+                255
+            ],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "preview_path",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [
+                255
+            ],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "preview_disk",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [
+                255
+            ],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "print_path",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [
+                255
+            ],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "print_disk",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [
+                255
+            ],
+            "options": [],
+            "url": null
+        }
+    ],
+    "relationshipFields": [],
+    "hasOne": [],
+    "belongsTo": [],
+    "belongsToMany": [],
+    "hasMany": [],
+    "hasOneThrough": [],
+    "hasManyThrough": [],
+    "morphMany": {},
+    "morphToMany": {},
+    "morphTo": [],
+    "morphOne": [],
+    "morphedByMany": {
+        "fileable": [
+            "event", "service"
+        ]
+    },
+    "seeder": 0,
+    "fillables": [
+        "name",
+        "stored_name",
+        "path",
+        "mime_type",
+        "extension",
+        "size",
+        "disk",
+        "folder",
+        "preview_disk",
+        "preview_path",
+        "print_disk",
+        "print_path"
+    ],
+    "casts": {
+        "size": "integer"
+    },
+    "allowedSorts": [
+        "id",
+        "name",
+        "stored_name",
+        "path",
+        "mime_type",
+        "extension",
+        "size",
+        "disk",
+        "folder",
+        "preview_disk",
+        "preview_path",
+        "print_disk",
+        "print_path"
+    ],
+    "allowedEmbeds": ["tags", "fileable"],
+    "allowedFields": [
+        "id",
+        "name",
+        "stored_name",
+        "path",
+        "mime_type",
+        "extension",
+        "size",
+        "disk",
+        "folder",
+        "preview_disk",
+        "preview_path",
+        "print_disk",
+        "print_path"
+    ],
+    "revisionModel": null
+}

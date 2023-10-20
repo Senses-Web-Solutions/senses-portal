@@ -1,0 +1,87 @@
+{
+    "name": "block-group",
+    "namePlural": "block-groups",
+    "frontend": true,
+    "traits": [],
+    "fields": [
+        {
+            "name": "display_name",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "builder_category_id",
+            "type": "relationship",
+            "nullable": true,
+            "default": null,
+            "index": true,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": "api/v2/builder-categories"
+        },
+        {
+            "name": "description",
+            "type": "string",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "block_group_types",
+            "type": "jsonb",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        }
+    ],
+    "relationshipFields": [
+    ],
+    "hasOne": [],
+    "belongsTo": [],
+    "belongsToMany": [],
+    "hasMany": [],
+    "hasOneThrough": [],
+    "hasManyThrough": [],
+    "morphMany": {},
+    "morphToMany": {},
+    "morphTo": [],
+    "morphOne": [],
+    "morphedByMany": {},
+    "seeder": 10,
+    "fillables": [
+        "id", "display_name", "name", "description", "block_group_types"
+    ],
+    "casts": {
+        "block_group_types": "array"
+    },
+    "allowedSorts": ["id", "display_name", "name", "description", "block_group_types"],
+    "allowedEmbeds": [],
+    "allowedFields": ["id", "display_name", "name", "description", "block_group_types"],
+    "revisionModel": null
+}

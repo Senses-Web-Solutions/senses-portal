@@ -1,0 +1,122 @@
+<?php
+
+namespace App\Console\Commands\Generator;
+
+use Carbon\Carbon;
+use Illuminate\Console\GeneratorCommand;
+use Illuminate\Support\Str;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
+use Spatie\QueueableAction\ActionMakeCommand;
+use Symfony\Component\Console\Input\InputOption;
+
+class MakeFactory extends GeneratorCommand
+{
+    protected $name = 'make:senses_factory';
+
+    protected $description = 'Create a new factory';
+
+    protected $type = 'Factory';
+
+    protected function getStub(): string
+    {
+        return $this->resolveStubPath('/stubs/generator/factory.stub');
+    }
+
+    protected function getOptions(): array
+    {
+        $options = parent::getOptions();
+
+        return array_merge($options, [
+            ['model', null, InputOption::VALUE_REQUIRED, 'Model'],
+            ['path', null, InputOption::VALUE_REQUIRED, 'Path'],
+            ['force', null, InputOption::VALUE_REQUIRED, 'Force'],
+        ]);
+    }
+
+    protected function resolveStubPath($stub)
+    {
+        return file_exists($customPath = $this->laravel->basePath(trim($stub, '/')))
+            ? $customPath
+            : __DIR__ . $stub;
+    }
+
+    protected function buildClass($name)
+    {
+        $stub = parent::buildClass($name);
+
+        $stub = str_replace(['{{ model }}', '{{model}}'], $this->option('model'), $stub); //assignment-group
+        $stub = str_replace(['{{ pluralModel }}', '{{pluralModel}}'], Str::plural($this->option('model')), $stub); //assignment-groups
+        $stub = str_replace(['{{ camelModel }}', '{{camelModel}}'], Str::camel($this->option('model')), $stub); //assignmentGroup
+        $stub = str_replace(['{{ camelPluralModel }}', '{{camelPluralModel}}'], Str::plural(Str::camel($this->option('model'))), $stub); //assignmentGroups
+        $stub = str_replace(['{{ ucCamelModel }}', '{{ucCamelModel}}'], ucfirst(Str::camel($this->option('model'))), $stub); //AssignmentGroup
+        $stub = str_replace(['{{ ucCamelPluralModel }}', '{{ucPluralModel}}'], ucfirst(Str::plural(Str::camel($this->option('model')))), $stub); //AssignmentGroups
+        $stub = str_replace(['{{ snakeModel }}', '{{snakeModel}}'], str_replace('-', '_', $this->option('model')), $stub); //assignment_group
+        $stub = str_replace(['{{ snakePluralModel }}', '{{snakePluralModel}}'], str_replace('-', '_', Str::plural($this->option('model'))), $stub); //assignment_groups
+        $stub = str_replace(['{{ sentenceModel }}', '{{sentenceModel}}'], str_replace('-', ' ', $this->option('model')), $stub); //assignment group
+        $stub = str_replace(['{{ sentencePluralModel }}', '{{sentencePluralModel}}'], str_replace('-', ' ', Str::plural($this->option('model'))), $stub); //assignment groups
+        $stub = str_replace(['{{ titleModel }}', '{{titleModel}}'], ucwords(str_replace('-', ' ', $this->option('model'))), $stub); //Assignment Group
+        $stub = str_replace(['{{ titlePluralModel }}', '{{titlePluralModel}}'], ucwords(str_replace('-', ' ', Str::plural($this->option('model')))), $stub); //Assignment Groups
+        $stub = str_replace(['{{ generationDate }}', '{{generationDate}}'], Carbon::now()->format('d-m-Y H:i:s'), $stub);
+
+        $this->buildUsingJson($stub);
+
+        return $stub;
+    }
+
+    protected function buildUsingJson(&$stub)
+    {
+        $file = file_get_contents("json_files/" . $this->option('model') . ".json");
+        $jsonData = json_decode($file, true);
+
+        $fields = '';
+
+        $fakerCode = [
+            'string' => '$this->faker->text(10),',
+            'longtext' => '$this->faker->text(100),',
+            'integer' => '$this->faker->randomDigit,',
+            'colour' => '$this->faker->randomElement(Colour::toArray()),',
+            'money' => '$this->faker->randomFloat(2,1,6),',
+            'boolean' => '$this->faker->boolean,',
+            'unsignedbiginteger' => '$this->faker->numberBetween(1,50),',
+            'relationship' => '$this->faker->numberBetween(1,10),',
+            'date' => '$this->faker->dateTimeThisMonth->format(Format::DATE->value),',
+            'datetime' => '$this->faker->dateTimeThisMonth->format(Format::DATETIME->value),',
+            'time' => '$this->faker->dateTimeThisMonth->format(Format::TIME->value),',
+            'timestamp' => '$this->faker->unixTime,',
+            'double' => '$this->faker->randomFloat(2,1,6),',
+        ];
+
+        foreach($jsonData['fields'] as $field){
+            if(array_key_exists('default', $field) && isset($field['default'])){
+                $string = "\t\t\t" . '\''. $field['name'] . '\'' . ' => '. $field['default'] . ',';
+            }else if(array_key_exists('options', $field) && isset($field['options']) && count($field['options'])){
+                $string = "\t\t\t" . '\''. $field['name'] . '\'' . ' =>  $this->faker->randomElement([' . implode(', ', $field['options']) .']),';
+            }else if(array_key_exists(strtolower($field['type']), $fakerCode)){
+                $string = "\t\t\t" . '\''. $field['name'] . '\'' . ' => ' . $fakerCode[strtolower($field['type'])];
+            } else if ($field['type'] === 'morphs'){
+                $string = "\t\t\t" . '\''. $field['name']. '_id\'' . ' => $this->faker->numberBetween(1,100),' . PHP_EOL . "\t\t\t" . '\''. $field['name']. '_type\'' . ' => \'task\',';
+            } else {
+                $string = "\t\t\t" . '\''. $field['name'] . '\'' . ' => null,';
+            }
+            $fields .= $string . PHP_EOL;
+        }
+
+        $stub = str_replace(['{{ fields }}', '{{fields}}'], $fields, $stub);
+    }
+
+    protected function replaceNamespace(&$stub, $name)
+    {
+        $name = class_basename(str_replace('\\', '/', $name));
+
+        $stub = str_replace('{Component}', $name, $stub);
+
+        return $this;
+    }
+
+    protected function getPath($name): string
+    {
+        $fileName = $this->option('path');
+        return "{$this->laravel['path']}/../database/factories/$fileName";
+    }
+}

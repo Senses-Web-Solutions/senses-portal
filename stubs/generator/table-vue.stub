@@ -1,0 +1,49 @@
+<template>
+    <SensesTable
+        url="/api/v2/{{ pluralModel }}"
+        table="{{ snakePluralModel }}"
+        setting="table-{{ pluralModel }}"
+        event="{{ model }}-updated"
+        :fields="fields"
+        :actions="actions"
+        @row-click="rowClick"
+    />
+</template>
+
+<script>
+
+import SensesTable from '../Tables/SensesTable.vue';
+
+export default {
+    components: {
+        SensesTable,
+    },
+
+    data() {
+        return {
+            user: window.user,
+            actions: [],
+
+            fields: [
+                { label: "ID", key: "id" },
+                    {{ fields }}
+            ]
+        }
+    },
+
+    methods: {
+        rowClick(row, type) {
+            if (row.id && user().can('show-{{ model }}')) {
+                if (type && type === 'blank') {
+                    window.open("/{{ pluralModel }}/" + row.id);
+                } else {
+                    window.location.href = "/{{ pluralModel }}/" + row.id;
+                }
+            }
+        }
+    }
+}
+
+</script>
+
+// Generated {{ generationDate }}

@@ -1,0 +1,108 @@
+{
+    "name": "empty",
+    "namePlural": "empties",
+
+    "frontend": true,
+
+    "traits": [
+        "HasComments",
+        "HasFiles",
+        "HasStatus",
+        "HasTags",
+        "HasTextColour"
+    ],
+
+    "fields": [
+        {
+            "name": "string",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [255],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "integer",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "longText",
+            "type": "longText",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "colour",
+            "type": "colour",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "datetime",
+            "type": "datetime",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        }
+    ],
+
+    "fillables": [],
+    "casts": {},
+
+    "allowedSorts": [],
+    "allowedEmbeds": [],
+    "allowedFields": [],
+
+    "relationshipFields": [
+        {
+            "title": "",
+            "field": "",
+            "model": "",
+            "relationship": "",
+            "fieldType": "",
+            "url": "",
+            "relationshipType": ""
+        }
+    ],
+
+    "hasOne": [],
+    "belongsTo": [],
+    "belongsToMany": [],
+    "hasMany": [],
+    "hasOneThrough": [],
+    "hasManyThrough": [],
+
+    "morphMany": {},
+    "morphToMany": {},
+    "morphTo": [],
+    "morphOne": [],
+    "morphedByMany": [],
+
+    "seeder": 10,
+
+    "revisionModel": null
+}

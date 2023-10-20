@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Actions\{{ ucCamelPluralModel }};
+
+use App\Models\{{ ucCamelModel }};
+use App\Traits\ApiResponse;
+use App\Support\QueryBuilder;
+use Senses\TaggedCache\Facades\TaggedCache;
+use Spatie\QueueableAction\QueueableAction;
+
+class Generate{{ ucCamelModel }}ShowCache
+{
+    use QueueableAction, ApiResponse;
+
+    public $queue = 'low';
+
+    public function execute(int $id)
+    {
+        return TaggedCache::responseForever('{{ model }}-' . $id, function () use ($id) {
+            return $this->respond({{ ucCamelModel }}::findOrFail($id));
+        });
+    }
+}
+
+//Generated {{ generationDate }}

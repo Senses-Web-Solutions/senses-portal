@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Actions\{{ ucCamelPluralModel }};
+
+use App\Models\{{ ucCamelModel }};
+use Spatie\QueueableAction\QueueableAction;
+
+class Update{{ ucCamelModel }}
+{
+    use QueueableAction;
+
+    public function execute(int $id, array $data)
+    {
+        ${{ camelModel }} = {{ ucCamelModel }}::findOrFail($id);
+
+        ${{ camelModel }}->fill($data);
+
+{{ relationships }}        if (!${{ camelModel }}->isDirty()) {
+            ${{ camelModel }}->emitUpdated();
+        }
+
+        ${{ camelModel }}->save();
+
+        return ${{ camelModel }};
+    }
+}
+
+//Generated {{ generationDate }}

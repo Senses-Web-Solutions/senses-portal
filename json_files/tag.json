@@ -1,0 +1,67 @@
+{
+    "name": "tag",
+    "namePlural": "tags",
+    "frontend": true,
+    "traits": ["HasTitleSlug"],
+    "fields": [
+        {
+            "name": "title",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "slug",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [255],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "colour",
+            "type": "colour",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        }
+    ],
+    "relationshipFields": [],
+    "hasOne": [],
+    "belongsTo": [],
+    "belongsToMany": [
+        "tag-group"
+    ],
+    "hasMany": [],
+    "hasOneThrough": [],
+    "hasManyThrough": [],
+    "morphMany": {},
+    "morphToMany": {},
+    "morphTo": [],
+    "morphOne": [],
+    "morphedByMany": {
+        "taggable": [ "service", "event", "venue", "file", "link"]
+    },
+    "seeder": 10,
+    "fillables": [
+        "title",
+        "slug", "colour"
+    ],
+    "casts": {},
+    "allowedSorts": ["id", "title", "slug", "colour"],
+    "allowedEmbeds": ["services", "events", "venues", "files", "links", "tagGroup"],
+    "allowedFields": ["id", "title", "slug", "tagGroup.title", "colour"],
+    "revisionModel": null
+}

@@ -1,0 +1,156 @@
+{
+    "name": "page",
+    "namePlural": "pages",
+    "frontend": true,
+    "traits": [],
+    "fields": [
+        {
+            "name": "title",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "slug",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "excerpt",
+            "type": "longText",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "type",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "status_id",
+            "type": "relationship",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": "api/v2/statuses",
+            "url_params": ["filter[status-group-slug]=page"]
+        },
+        {
+            "name": "content",
+            "type": "longText",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "meta_title",
+            "type": "string",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "meta_description",
+            "type": "longText",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "featured",
+            "type": "boolean",
+            "nullable": false,
+            "default": false,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "show_last_updated",
+            "type": "boolean",
+            "nullable": false,
+            "default": true,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        }
+    ],
+
+    "relationshipFields": [],
+
+    "hasOne": [],
+    "belongsTo": [],
+    "belongsToMany": [],
+    "hasMany": [],
+    "hasOneThrough": [],
+    "hasManyThrough": [],
+    "morphMany": {},
+    "morphToMany": {},
+    "morphTo": [],
+    "morphOne": [],
+    "morphedByMany": {},
+    "seeder": 0,
+    "fillables": [],
+    "casts": {},
+
+    "allowedSorts": [
+        "id",
+        "title",
+        "slug",
+        "status",
+        "featured"
+    ],
+
+    "allowedEmbeds": [],
+
+    "allowedFields": [
+        "id",
+        "title",
+        "slug",
+        "status",
+        "featured"
+    ],
+
+    "revisionModel": null
+}

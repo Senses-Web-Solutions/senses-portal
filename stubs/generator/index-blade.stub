@@ -1,0 +1,21 @@
+@extends('layouts.senses')
+
+@section('title', '{{ titlePluralModel }}')
+
+@section('content')
+
+<page-header>
+    <template #title>{{ titlePluralModel }}</template>
+
+    <template #actions>
+        <add-button form="{{ ucCamelModel }}Form" model="{{ model }}"></add-button>
+    </template>
+</page-header>
+
+<page-layout>
+    <{{ model }}-table></{{ model }}-table>
+</page-layout>
+
+@endsection
+
+<!-- Generated {{ generationDate }} -->

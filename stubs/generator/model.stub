@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Models;
+
+{{ traitPaths }}use App\Traits\SensesModel;
+{{ revisionPath }}
+use Illuminate\Database\Eloquent\Model;
+use App\Enums\Format;
+use App\Casts\DateTime;
+use App\Casts\Money;
+use App\Casts\Date;
+
+class {{ ucCamelModel }} extends Model
+{
+    use SensesModel{{ traits }};
+
+    {{ revision }}
+    {{ fillables }}
+
+    {{ casts }}
+
+    public function scopeTableSearch($query, $search) {
+        $table = $this->getTable();
+        $query->where(function($q) use(&$search, $table) {
+            $q->where( $table.'.id', 'like', '%'. $search .'%');
+            $q->orWhere($table.'.title', 'ilike', '%'. $search.'%');
+        });
+    }
+
+    public function allowedSorts()
+    {
+        return ['id', {{ allowedSorts }}];
+    }
+
+    public function allowedEmbeds()
+    {
+        return [{{ allowedEmbeds }}];
+    }
+
+    public function allowedFields()
+    {
+        return ['id', {{ allowedFields }}];
+    }
+
+    public function allowedFilters() {
+        return $this->defineFilters([
+            'id' => 'integer',
+            {{ allowedFilters }}
+        ]);
+    }
+
+{{ relationships }}}
+
+//Generated {{ generationDate }}

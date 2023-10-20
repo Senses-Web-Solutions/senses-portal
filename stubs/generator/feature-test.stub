@@ -1,0 +1,30 @@
+<?php
+
+use App\Models\{{ ucCamelModel }};
+use App\Models\User;
+use App\Enums\Colour;
+use Laravel\Passport\Passport;
+
+use function Pest\Laravel\post;
+
+it('checks frontend /{{ pluralModel }} page is protected')->get('/{{ pluralModel }}')->assertRedirect('/login');
+
+test('api shows {{ pluralModel }}', function(){
+    $this->assertShowApi(\App\Models\{{ ucCamelModel }}::class, '/api/v2/{{ pluralModel }}');
+});
+
+test('api lists {{ pluralModel }}', function(){
+    $this->assertListApi(\App\Models\{{ ucCamelModel }}::class, '/api/v2/{{ pluralModel }}');
+});
+
+test('api creates {{ pluralModel }}', function(){
+    $this->assertCreateApi(\App\Models\{{ ucCamelModel }}::class, '/api/v2/{{ pluralModel }}');
+});
+
+test('api updates {{ pluralModel }}', function(){
+    $this->assertUpdateApi(\App\Models\{{ ucCamelModel }}::class, '/api/v2/{{ pluralModel }}');
+});
+
+test('api destroys {{ pluralModel }}', function(){
+    $this->assertDestroyApi(\App\Models\{{ ucCamelModel }}::class, '/api/v2/{{ pluralModel }}');
+});
