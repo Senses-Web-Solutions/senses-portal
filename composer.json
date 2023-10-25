@@ -33,7 +33,6 @@
         "spatie/laravel-ignition": "^2.0"
     },
     "repositories": [
-        { "type": "vcs", "url": "git@github.com:Senses-Web-Solutions/laravel-tagged-cache.git" },
         { "type": "vcs", "url": "git@github.com:Senses-Web-Solutions/laravel-pusher-batch-auth.git" },
         { "type": "vcs", "url": "git@github.com:Senses-Web-Solutions/builder-laravel.git" },
 
