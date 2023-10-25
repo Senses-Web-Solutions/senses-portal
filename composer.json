@@ -16,6 +16,7 @@
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "pusher/pusher-php-server": "^7.2",
+        "senses/builder-laravel": "dev-main",
         "senses/tagged-cache": "dev-main",
         "silber/bouncer": "^1.0",
         "spatie/laravel-morph-map-generator": "^1.2",
@@ -33,9 +34,10 @@
         "spatie/laravel-ignition": "^2.0"
     },
     "repositories": [
-        { "type": "vcs", "url": "git@github.com:Senses-Web-Solutions/laravel-tagged-cache.git" },
-        { "type": "vcs", "url": "git@github.com:Senses-Web-Solutions/laravel-pusher-batch-auth.git" },
-        { "type": "vcs", "url": "git@github.com:Senses-Web-Solutions/builder-laravel.git" }
+        {
+            "type": "composer",
+            "url": "https://satis.senses.co.uk"
+        }
     ],
     "autoload": {
         "psr-4": {
