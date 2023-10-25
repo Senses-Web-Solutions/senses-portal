@@ -83,18 +83,60 @@ export default {
                 vm.navbarIcons = clientData.navbarIcons;
             }
         });
+
+        if (!this.getCookie('theme') && window.matchMedia("(prefers-color-scheme: dark)")) {
+            this.setCookie('theme', 'dark');
+        }
+
+        this.darkMode = this.getCookie('theme') == 'dark';
     },
 
     methods: {
-        capitalize
+        capitalize,
+
+        setCookie(name, value) {
+            var d = new Date();
+            d.setTime(d.getTime() + (365*24*60*60*1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        },
+
+        removeCookie(name, value) {
+            var d = new Date();
+            d.setTime(d.getTime() + (365*24*60*60*1000));
+            var expires = "expires=Thu, 01 Jan 1970 00:00:00 UTC";
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        },
+
+        getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+
+            for (let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+
+            return "";
+        }
     },
 
     watch: {
         darkMode(v) {
             if (v) {
                 document.getElementById('app').classList.add('dark');
+                this.setCookie('theme', 'dark');
             } else {
                 document.getElementById('app').classList.remove('dark');
+                this.setCookie('theme', 'light');
             }
         }
     },

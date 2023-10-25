@@ -1,5 +1,5 @@
 <template>
-    <th class="relative overflow-hidden" :style="{ width: thWidth }">
+    <th class="relative overflow-hidden bg-white" :style="{ width: thWidth }">
         <Popover
             v-slot="{ open }"
             :style="{ width: buttonWidth }"
