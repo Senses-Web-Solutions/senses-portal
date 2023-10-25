@@ -95,37 +95,15 @@ export default {
         capitalize,
 
         setCookie(name, value) {
-            var d = new Date();
-            d.setTime(d.getTime() + (365*24*60*60*1000));
-            var expires = "expires=" + d.toUTCString();
-            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+            document.cookie = name + "=" + value + ";" + "expires=Fri, 31 Dec 9999 23:59:59 UTC";
         },
 
         removeCookie(name, value) {
-            var d = new Date();
-            d.setTime(d.getTime() + (365*24*60*60*1000));
-            var expires = "expires=Thu, 01 Jan 1970 00:00:00 UTC";
-            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+            document.cookie = name + "=" + value + ";" + "expires=Thu, 01 Jan 1970 00:00:00 UTC";
         },
 
-        getCookie(cname) {
-            let name = cname + "=";
-            let decodedCookie = decodeURIComponent(document.cookie);
-            let ca = decodedCookie.split(';');
-
-            for (let i = 0; i <ca.length; i++) {
-                let c = ca[i];
-
-                while (c.charAt(0) == ' ') {
-                    c = c.substring(1);
-                }
-
-                if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
-                }
-            }
-
-            return "";
+        getCookie(name) {
+            return Object.fromEntries(document.cookie.split('; ').map(cookie => { return cookie.split('=') }))[name] ?? '';
         }
     },
 
