@@ -36,7 +36,12 @@
     "repositories": [
         { "type": "vcs", "url": "git@github.com:Senses-Web-Solutions/laravel-tagged-cache.git" },
         { "type": "vcs", "url": "git@github.com:Senses-Web-Solutions/laravel-pusher-batch-auth.git" },
-        { "type": "vcs", "url": "git@github.com:Senses-Web-Solutions/builder-laravel.git" }
+        { "type": "vcs", "url": "git@github.com:Senses-Web-Solutions/builder-laravel.git" },
+
+        {
+            "type": "composer",
+            "url": "https://satis.senses.co.uk"
+        }
     ],
     "autoload": {
         "psr-4": {
