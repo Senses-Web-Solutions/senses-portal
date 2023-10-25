@@ -57,8 +57,8 @@ import TagGroupAdditionalInformation from './Senses/TagGroups/TagGroupAdditional
 // import PageForm from './Senses/Pages/PageForm.vue';
 // import PageBuilder from './Senses/Pages/PageBuilder.vue';
 // import PageBuilderButtons from './Senses/Pages/PageBuilderButtons.vue';
-import BlockGroupTable from './Senses/BlockGroups/BlockGroupTable.vue';
-import BlockGroupForm from './Senses/BlockGroups/BlockGroupForm.vue';
+// import BlockGroupTable from './Senses/BlockGroups/BlockGroupTable.vue';
+// import BlockGroupForm from './Senses/BlockGroups/BlockGroupForm.vue';
 import AbilityTable from './Senses/Abilities/AbilityTable.vue';
 import AbilityGroupTable from './Senses/AbilityGroups/AbilityGroupTable.vue';
 import AbilityGroupForm from './Senses/AbilityGroups/AbilityGroupForm.vue';
@@ -112,8 +112,8 @@ export {
 	// PageTable,
 	// PageBuilder,
 	// PageBuilderButtons,
-	BlockGroupTable,
-	BlockGroupForm,
+	// BlockGroupTable,
+	// BlockGroupForm,
 
 	UserImpersonationForm,
 
