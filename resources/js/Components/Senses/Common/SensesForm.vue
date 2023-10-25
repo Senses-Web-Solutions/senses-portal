@@ -187,6 +187,7 @@ export default {
             const invalidState = this.state.is(AsideState.LOADING) || this.state.is(AsideState.SUBMITTING);
             return (invalidState || (this.modelValue && this.modelValue.locked_at && this.modelValue.locked_at !== null) || this.permissionDenied || this.disableButtons);
         },
+
         proxyModel:{
             get() {
                 return this.modelValue;
@@ -196,6 +197,7 @@ export default {
                 this.$emit('update:modelValue', val);
             },
         },
+
         proxyError: {
             get() {
                 return this.error;
@@ -204,16 +206,18 @@ export default {
                 this.$emit('update:error', val);
             },
         },
+
         method() {
-            console.log(this.modelValue);
             return this.modelValue && this.modelValue.id ? 'patch' : 'post';
         },
+
         formUrl() {
             if (this.method === 'patch') {
                 return `${this.url}/${this.modelValue.id}`;
             }
             return this.url;
         },
+
         templateFields() {
             let fields = [];
             this.fields.forEach((fieldGroup) => {
@@ -226,11 +230,13 @@ export default {
             return fields;
         },
     },
+
     watch: {
         // eslint-disable-next-line func-names
         'state.states': function () {
             this.$emit('stateChange', this.state);
         },
+
         fields: {
             deep: true,
             handler() {
@@ -244,6 +250,7 @@ export default {
             },
         },
     },
+
     mounted() {
         // Log.info('Mounted');
 
@@ -260,22 +267,26 @@ export default {
             });
             this.load();
         }
+
         if (this.asideIndex !== -1) {
             this.$nextTick(() => {
                 this.teleportButtons = true;
                 // Log.info('teleportButtons set to true');
             });
         }
+
         this.$nextTick(() => {
             this.$forceUpdate();
         });
     },
+
     methods: {
         slotEmpty,
         isLastFieldGroup(index) {
             const lastKey = Object.keys(this.fields).length - 1;
             return index === lastKey;
         },
+
         load() {
             this.state.set(AsideState.LOADING);
             axios.get(`${this.url}/${this.id}`).then((response) => {
@@ -284,6 +295,7 @@ export default {
                 this.state.set(AsideState.IDLE);
             });
         },
+
         async submit() {
             var confirmed = true;
 
