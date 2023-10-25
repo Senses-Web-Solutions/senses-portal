@@ -47,6 +47,7 @@
         "pusher-js": "^8.3.0",
         "pusher-js-auth": "^4.0.1",
         "signature_pad": "^4.1.6",
+        "sortablejs-vue3": "^1.2.9",
         "velocity-animate": "^1.5.2",
         "vue": "^3.3.4",
         "vue-multiselect": "^3.0.0-beta.2",

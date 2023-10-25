@@ -129,11 +129,6 @@
   resolved "https://node.senses.co.uk:443/@esbuild%2fwin32-x64/-/win32-x64-0.18.20.tgz"
   integrity sha512-kTdfRcSiDfQca/y9QIkng02avJ+NCaQvrMejlsB3RRv5sE9rRoeBPISaZpKxHELzRxZyLvNts1P27W3wV+8geQ==
 
-"@formkit/auto-animate@^1.0.0-beta.1":
-  version "1.0.0-beta.6"
-  resolved "https://node.senses.co.uk:443/@formkit%2fauto-animate/-/auto-animate-1.0.0-beta.6.tgz"
-  integrity sha512-PVDhLAlr+B4Xb7e+1wozBUWmXa6BFU8xUPR/W/E+TsQhPS1qkAdAsJ25keEnFrcePSnXHrOsh3tiFbEToOzV9w==
-
 "@headlessui/vue@^1.7.16":
   version "1.7.16"
   resolved "https://node.senses.co.uk:443/@headlessui%2fvue/-/vue-1.7.16.tgz"
@@ -245,54 +240,10 @@
   dependencies:
     type-fest "^2.19.0"
 
-"@senses/builder@1.4.1":
-  version "1.4.1"
-  resolved "https://node.senses.co.uk:443/@senses%2fbuilder/-/builder-1.4.1.tgz"
-  integrity sha512-BmUAJrvShRmJ0Mfd/nKYP8hhJO2Omf08l3PMLbR4VjN4a3J/8Gd59GHj3v+C9H233S7yN6dhSE6qG/+iAN14gQ==
-  dependencies:
-    "@formkit/auto-animate" "^1.0.0-beta.1"
-    "@senses/medialibrary-ui" "^0.1.1"
-    "@tiptap/core" "^2.0.0-beta.180"
-    "@tiptap/extension-bold" "^2.0.0-beta.28"
-    "@tiptap/extension-bullet-list" "^2.0.0-beta.29"
-    "@tiptap/extension-document" "^2.0.0-beta.17"
-    "@tiptap/extension-dropcursor" "^2.0.0-beta.28"
-    "@tiptap/extension-gapcursor" "^2.0.0-beta.38"
-    "@tiptap/extension-highlight" "^2.0.0-beta.35"
-    "@tiptap/extension-history" "^2.0.0-beta.25"
-    "@tiptap/extension-italic" "^2.0.0-beta.28"
-    "@tiptap/extension-link" "^2.0.0-beta.42"
-    "@tiptap/extension-list-item" "^2.0.0-beta.23"
-    "@tiptap/extension-ordered-list" "^2.0.0-beta.30"
-    "@tiptap/extension-paragraph" "^2.0.0-beta.26"
-    "@tiptap/extension-placeholder" "^2.0.0-beta.52"
-    "@tiptap/extension-subscript" "^2.0.0-beta.13"
-    "@tiptap/extension-superscript" "^2.0.0-beta.13"
-    "@tiptap/extension-text" "^2.0.0-beta.17"
-    "@tiptap/extension-underline" "^2.0.0-beta.25"
-    "@tiptap/vue-3" "^2.0.0-beta.95"
-    "@types/sortablejs" "^1.13.0"
-    "@vueuse/core" "^8.7.5"
-    axios "^1.4.0"
-    core-js "^3.6.5"
-    sortablejs "^1.15.0"
-    sortablejs-vue3 "^1.0.3"
-    vue "^3.2.37"
-
 "@senses/medialibrary-ui@0.1.2":
   version "0.1.2"
   resolved "https://node.senses.co.uk:443/@senses%2fmedialibrary-ui/-/medialibrary-ui-0.1.2.tgz"
   integrity sha512-8AnfC3EASHcq0Gogxk2l17/a1tFABtAxtP7Q+BAPRdC5oZXrXS1cYzZzTpTXekKe3vn0Q4xo+per6nza4aEjlQ==
-  dependencies:
-    "@heroicons/vue" "1"
-    "@vueuse/core" "^9.2.0"
-    axios "^0.27.2"
-    vue "^3.2.37"
-
-"@senses/medialibrary-ui@^0.1.1":
-  version "0.1.1"
-  resolved "https://node.senses.co.uk:443/@senses%2fmedialibrary-ui/-/medialibrary-ui-0.1.1.tgz"
-  integrity sha512-WUPRPmHxmua+RWJGB/ID/4qVhnZOLffxVk+gT5p2l12aungcm8OxulynsFVinWp1ohOd5xOC08XPt5TBqhWbSg==
   dependencies:
     "@heroicons/vue" "1"
     "@vueuse/core" "^9.2.0"
@@ -331,15 +282,10 @@
     lodash.merge "^4.6.2"
     postcss-selector-parser "6.0.10"
 
-"@tiptap/core@^2.0.0-beta.180", "@tiptap/core@^2.1.11":
+"@tiptap/core@^2.1.11":
   version "2.1.11"
   resolved "https://node.senses.co.uk:443/@tiptap%2fcore/-/core-2.1.11.tgz"
   integrity sha512-1W2DdjpPwfphHgQ3Qm4s5wzCnEjiXm1TeZ+6/zBl89yKURXgv8Mw1JGdj/NcImQjtDcsNn97MscACK3GKbEJBA==
-
-"@tiptap/extension-bold@^2.0.0-beta.28":
-  version "2.1.11"
-  resolved "https://node.senses.co.uk:443/@tiptap%2fextension-bold/-/extension-bold-2.1.11.tgz"
-  integrity sha512-vhdkBtvd029ufOYt2ug49Gz+RLKSczO/CCqKYBqBmpIpsifyK7M6jkgamvAQg3c/vYk0LNcKiL2dp0Jp7L+5Gw==
 
 "@tiptap/extension-bubble-menu@^2.1.11":
   version "2.1.11"
@@ -348,17 +294,7 @@
   dependencies:
     tippy.js "^6.3.7"
 
-"@tiptap/extension-bullet-list@^2.0.0-beta.29":
-  version "2.1.11"
-  resolved "https://node.senses.co.uk:443/@tiptap%2fextension-bullet-list/-/extension-bullet-list-2.1.11.tgz"
-  integrity sha512-SOOVH2aSmdMtjWL7TTLbN72xbAFz2G5jifT4UCXb7Qx6LsyhNCyDCu0ukOW8rSosGoSdmBXxAsD9sBJ1jEOmZw==
-
-"@tiptap/extension-document@^2.0.0-beta.17":
-  version "2.1.11"
-  resolved "https://node.senses.co.uk:443/@tiptap%2fextension-document/-/extension-document-2.1.11.tgz"
-  integrity sha512-L/iLuqxvJep33ycCFNrnUhdR0VtcZyeNnqB+ZvVHzEwLoRud+LBy44lpEdBrAFsvRm3DG14m/FGYL+TfaD0vxA==
-
-"@tiptap/extension-dropcursor@^2.0.0-beta.28", "@tiptap/extension-dropcursor@^2.1.11":
+"@tiptap/extension-dropcursor@^2.1.11":
   version "2.1.11"
   resolved "https://node.senses.co.uk:443/@tiptap%2fextension-dropcursor/-/extension-dropcursor-2.1.11.tgz"
   integrity sha512-MiJepRpHlu93aInOMW8NeRCvm9VE5rL0MA9TONY/IspJFGFIqonc/01J6t33JQa3Xh/x3xAfis4nKa/UazeVJw==
@@ -370,72 +306,17 @@
   dependencies:
     tippy.js "^6.3.7"
 
-"@tiptap/extension-gapcursor@^2.0.0-beta.38":
-  version "2.1.11"
-  resolved "https://node.senses.co.uk:443/@tiptap%2fextension-gapcursor/-/extension-gapcursor-2.1.11.tgz"
-  integrity sha512-P/xjyhSOVyop5XXbNtRPgrooQrSlpYblwR67ClI9FAC7uQliuOwi5VcndmEItjWWSe85kJa2IHjOS7mLYvJe8A==
-
-"@tiptap/extension-highlight@^2.0.0-beta.35":
-  version "2.1.11"
-  resolved "https://node.senses.co.uk:443/@tiptap%2fextension-highlight/-/extension-highlight-2.1.11.tgz"
-  integrity sha512-pcs55B1lF2vyQ8VvZob9CsYdbFgVpIfG3+qchLsA1WflUJCcIexstTclWTS9N5UocADg4hBOeerZ4ecq1iXs3w==
-
-"@tiptap/extension-history@^2.0.0-beta.25", "@tiptap/extension-history@^2.1.11":
+"@tiptap/extension-history@^2.1.11":
   version "2.1.11"
   resolved "https://node.senses.co.uk:443/@tiptap%2fextension-history/-/extension-history-2.1.11.tgz"
   integrity sha512-88dovV2O9icmBn0IvaArFFeS6X5ts6BxZPu5VbGML8KBL8iAu+Og7RXEPdOy5e13K0K4V21fDpO3n7KdvNOAYQ==
 
-"@tiptap/extension-italic@^2.0.0-beta.28":
-  version "2.1.11"
-  resolved "https://node.senses.co.uk:443/@tiptap%2fextension-italic/-/extension-italic-2.1.11.tgz"
-  integrity sha512-QmDsHtnBBit/1KtQpBPxjSPjDC1mVKtoNTgsEwMWK6YAkCKOKPj7oPEqqjaNZIRMKPPzE5XCsfBoS3jtVmo+6A==
-
-"@tiptap/extension-link@^2.0.0-beta.42", "@tiptap/extension-link@^2.1.11":
+"@tiptap/extension-link@^2.1.11":
   version "2.1.11"
   resolved "https://node.senses.co.uk:443/@tiptap%2fextension-link/-/extension-link-2.1.11.tgz"
   integrity sha512-Dn8hq4ld8br53fE4/QUZ7/y6ejY/kqAxeNhtud+OZKRs6VRn/CQd0H6A26opL+mKAK0kzrs0rh7rJPpHvahx/Q==
   dependencies:
     linkifyjs "^4.1.0"
-
-"@tiptap/extension-list-item@^2.0.0-beta.23":
-  version "2.1.11"
-  resolved "https://node.senses.co.uk:443/@tiptap%2fextension-list-item/-/extension-list-item-2.1.11.tgz"
-  integrity sha512-YhwHaPGhffsFsg/zjCu1G24//j/BTRDRZbZXmMwp77m1yEqPULcWyoWrI+gUzetQxJRD/ruAucqjLtoLLfICmQ==
-
-"@tiptap/extension-ordered-list@^2.0.0-beta.30":
-  version "2.1.11"
-  resolved "https://node.senses.co.uk:443/@tiptap%2fextension-ordered-list/-/extension-ordered-list-2.1.11.tgz"
-  integrity sha512-/tghfEJ5U7WFbF8xyOqRJks8KxP/lRjnroMXMglaushSMx8PYPo1dZDB/dJZw7ksy47MAaKJfKlx3gyN2CPXBQ==
-
-"@tiptap/extension-paragraph@^2.0.0-beta.26":
-  version "2.1.11"
-  resolved "https://node.senses.co.uk:443/@tiptap%2fextension-paragraph/-/extension-paragraph-2.1.11.tgz"
-  integrity sha512-gXMgJ2CU3X4yh1wKnb8RdbDmhITB76pH6DX0uWprmEgvzNMN3Qw+h5uBD9lgxg1WVghbCmkG9mY9J4PPbPTLxw==
-
-"@tiptap/extension-placeholder@^2.0.0-beta.52":
-  version "2.1.11"
-  resolved "https://node.senses.co.uk:443/@tiptap%2fextension-placeholder/-/extension-placeholder-2.1.11.tgz"
-  integrity sha512-laHYRFxJWj6m72Yf1v6Q5nF2nvwWpQlKUj6Yu/yluOOoVE92HpLqCAvA8RamqLtPiw5VxR3v3oCY0WNeQRvyIg==
-
-"@tiptap/extension-subscript@^2.0.0-beta.13":
-  version "2.1.11"
-  resolved "https://node.senses.co.uk:443/@tiptap%2fextension-subscript/-/extension-subscript-2.1.11.tgz"
-  integrity sha512-KXPrcN2i9edOyjsYc+WmXtRNod5rcA402NJEXKsSg/Lr7ezstdeE9CqVVpipdKDRBv5avJcSdCe3TiDLnFggBw==
-
-"@tiptap/extension-superscript@^2.0.0-beta.13":
-  version "2.1.11"
-  resolved "https://node.senses.co.uk:443/@tiptap%2fextension-superscript/-/extension-superscript-2.1.11.tgz"
-  integrity sha512-Lhbg2Yhm0XWcBmdbvbRnF+2oVPWlAkCffMvB8hDRlJlrntzTp5Xv/FqNeO+VzkH6oU0oBiKL5jWYXZG7IQsZdQ==
-
-"@tiptap/extension-text@^2.0.0-beta.17":
-  version "2.1.11"
-  resolved "https://node.senses.co.uk:443/@tiptap%2fextension-text/-/extension-text-2.1.11.tgz"
-  integrity sha512-Iey0EXYv9079+lbHMvZtLc6XcYfKrq++msEXuFFNHxvL0i/XzndhGf+qlDhLROLgEtDiiTqzOBBwFCGlFjbDow==
-
-"@tiptap/extension-underline@^2.0.0-beta.25":
-  version "2.1.11"
-  resolved "https://node.senses.co.uk:443/@tiptap%2fextension-underline/-/extension-underline-2.1.11.tgz"
-  integrity sha512-2C/jDNRV3WHfM5kgx6xB/1ooBciQ9j02gJVJkTHeLpz6zUWkxrRgU/u+FvZxGVBVskasJsQnsYMG9pAqwd9R8A==
 
 "@tiptap/pm@^2.1.11":
   version "2.1.11"
@@ -461,7 +342,7 @@
     prosemirror-transform "^1.7.0"
     prosemirror-view "^1.28.2"
 
-"@tiptap/vue-3@^2.0.0-beta.95", "@tiptap/vue-3@^2.1.11":
+"@tiptap/vue-3@^2.1.11":
   version "2.1.11"
   resolved "https://node.senses.co.uk:443/@tiptap%2fvue-3/-/vue-3-2.1.11.tgz"
   integrity sha512-PA0ep7W4cXh1jSXpXgR/eKjTbBxP8b0rIKmwLHOLVLaXz2fGFYt+HwKmtZSnYMTcf+CscXmbhmajBJZQJVJQwQ==
@@ -492,20 +373,10 @@
   resolved "https://node.senses.co.uk:443/@types%2fobject.pick/-/object.pick-1.3.2.tgz"
   integrity sha512-sn7L+qQ6RLPdXRoiaE7bZ/Ek+o4uICma/lBFPyJEKDTPTBP1W8u0c4baj3EiS4DiqLs+Hk+KUGvMVJtAw3ePJg==
 
-"@types/sortablejs@^1.13.0":
-  version "1.15.3"
-  resolved "https://node.senses.co.uk:443/@types%2fsortablejs/-/sortablejs-1.15.3.tgz"
-  integrity sha512-v+zh6TZP/cLeMUK0MDx1onp8e7Jk2/4iTQ7sb/n80rTAvBm14yJkpOEfJdrTCkHiF7IZbPjxGX2NRJfogRoYIg==
-
 "@types/throttle-debounce@^2.1.0":
   version "2.1.0"
   resolved "https://node.senses.co.uk:443/@types%2fthrottle-debounce/-/throttle-debounce-2.1.0.tgz"
   integrity sha512-5eQEtSCoESnh2FsiLTxE121IiE60hnMqcb435fShf4bpLRjEu1Eoekht23y6zXS9Ts3l+Szu3TARnTsA0GkOkQ==
-
-"@types/web-bluetooth@^0.0.14":
-  version "0.0.14"
-  resolved "https://node.senses.co.uk:443/@types%2fweb-bluetooth/-/web-bluetooth-0.0.14.tgz"
-  integrity sha512-5d2RhCard1nQUC3aHcq/gHzWYO6K0WJmAbjO7mQJgCQKtZpgXxv1rOM6O/dBDhDYYVutk1sciOgNSe+5YyfM8A==
 
 "@types/web-bluetooth@^0.0.16":
   version "0.0.16"
@@ -636,16 +507,6 @@
     "@vueuse/shared" "10.4.1"
     vue-demi ">=0.14.5"
 
-"@vueuse/core@^8.7.5":
-  version "8.9.4"
-  resolved "https://node.senses.co.uk:443/@vueuse%2fcore/-/core-8.9.4.tgz"
-  integrity sha512-B/Mdj9TK1peFyWaPof+Zf/mP9XuGAngaJZBwPaXBvU3aCTZlx3ltlrFFFyMV4iGBwsjSCeUCgZrtkEj9dS2Y3Q==
-  dependencies:
-    "@types/web-bluetooth" "^0.0.14"
-    "@vueuse/metadata" "8.9.4"
-    "@vueuse/shared" "8.9.4"
-    vue-demi "*"
-
 "@vueuse/core@^9.2.0":
   version "9.13.0"
   resolved "https://node.senses.co.uk:443/@vueuse%2fcore/-/core-9.13.0.tgz"
@@ -661,11 +522,6 @@
   resolved "https://node.senses.co.uk:443/@vueuse%2fmetadata/-/metadata-10.4.1.tgz"
   integrity sha512-2Sc8X+iVzeuMGHr6O2j4gv/zxvQGGOYETYXEc41h0iZXIRnRbJZGmY/QP8dvzqUelf8vg0p/yEA5VpCEu+WpZg==
 
-"@vueuse/metadata@8.9.4":
-  version "8.9.4"
-  resolved "https://node.senses.co.uk:443/@vueuse%2fmetadata/-/metadata-8.9.4.tgz"
-  integrity sha512-IwSfzH80bnJMzqhaapqJl9JRIiyQU0zsRGEgnxN6jhq7992cPUJIRfV+JHRIZXjYqbwt07E1gTEp0R0zPJ1aqw==
-
 "@vueuse/metadata@9.13.0":
   version "9.13.0"
   resolved "https://node.senses.co.uk:443/@vueuse%2fmetadata/-/metadata-9.13.0.tgz"
@@ -677,13 +533,6 @@
   integrity sha512-vz5hbAM4qA0lDKmcr2y3pPdU+2EVw/yzfRsBdu+6+USGa4PxqSQRYIUC9/NcT06y+ZgaTsyURw2I9qOFaaXHAg==
   dependencies:
     vue-demi ">=0.14.5"
-
-"@vueuse/shared@8.9.4":
-  version "8.9.4"
-  resolved "https://node.senses.co.uk:443/@vueuse%2fshared/-/shared-8.9.4.tgz"
-  integrity sha512-wt+T30c4K6dGRMVqPddexEVLa28YwxW5OFIPmzUHICjphfAuBFTTdDoyqREZNDOFJZ44ARH1WWQNCUK8koJ+Ag==
-  dependencies:
-    vue-demi "*"
 
 "@vueuse/shared@9.13.0":
   version "9.13.0"
@@ -747,7 +596,7 @@ axios@^0.27.2:
     follow-redirects "^1.14.9"
     form-data "^4.0.0"
 
-axios@^1.4.0, axios@^1.5.1:
+axios@^1.5.1:
   version "1.5.1"
   resolved "https://node.senses.co.uk:443/axios/-/axios-1.5.1.tgz"
   integrity sha512-Q28iYCWzNHjAm+yEAot5QaAMxhMghWLFVf7rRdwhUI+c2jix2DUXjAHXVi+s1ibs3mjPO/cCgbA++3BjD0vP/A==
@@ -837,11 +686,6 @@ concat-map@0.0.1:
   version "0.0.1"
   resolved "https://node.senses.co.uk:443/concat-map/-/concat-map-0.0.1.tgz"
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
-
-core-js@^3.6.5:
-  version "3.33.0"
-  resolved "https://node.senses.co.uk:443/core-js/-/core-js-3.33.0.tgz"
-  integrity sha512-HoZr92+ZjFEKar5HS6MC776gYslNOKHt75mEBKWKnPeFDpZ6nH5OeF3S6HFT1mUAUZKrzkez05VboaX8myjSuw==
 
 crelt@^1.0.0:
   version "1.0.6"
@@ -1704,9 +1548,9 @@ signature_pad@^4.1.6:
   resolved "https://node.senses.co.uk:443/signature_pad/-/signature_pad-4.1.6.tgz"
   integrity sha512-eoZB8qFPfCs7o00weajp5roNnE2gY2kTNjZsh805L8V+lYPagxoZi9qrBFS3A6sgbVq++ukdzgruK7tuv3JFXQ==
 
-sortablejs-vue3@^1.0.3:
+sortablejs-vue3@^1.2.9:
   version "1.2.9"
-  resolved "https://node.senses.co.uk:443/sortablejs-vue3/-/sortablejs-vue3-1.2.9.tgz"
+  resolved "https://node.senses.co.uk:443/sortablejs-vue3/-/sortablejs-vue3-1.2.9.tgz#782fbce79dd2c94529c4e94fe19ba67218ced6a6"
   integrity sha512-l0IIBdu+nRIwC2+KOkiavXw5vRfsn6MIPVSVSf7ItBevcuRZ4mVzC7dgnr/Hs/VPH2Q+nF2PYP3FsrnrG+7qCw==
   dependencies:
     sortablejs "^1.15.0"
