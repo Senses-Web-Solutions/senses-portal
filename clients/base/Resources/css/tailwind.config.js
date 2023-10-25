@@ -29,7 +29,6 @@ export default {
     './clients/*/Resources/js/**/*.vue',
     './clients/*/Resources/js/**/*.js',
     './clients/*/Resources/views/**/*.blade.php',
-    './node_modules/@senses/builder/src/**/*.vue',
   ],
 
   theme: {
