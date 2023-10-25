@@ -28,7 +28,7 @@
 <script>
 import SeInput from './Inputs/SeInput.vue';
 import SeTextArea from './Inputs/SeTextArea.vue';
-import SeRichTextArea from './Inputs/SeRichTextArea.vue';
+// import SeRichTextArea from './Inputs/SeRichTextArea.vue';
 import SeToggle from './Inputs/SeToggle.vue';
 import SeColour from './Inputs/SeColour.vue';
 import SeSelectBasic from './Inputs/SeSelectBasic.vue';
@@ -56,7 +56,7 @@ export default {
         SmallText,
         SeInput,
         SeTextArea,
-        SeRichTextArea,
+        // SeRichTextArea,
         SeToggle,
         SeColour,
         SeSelect,
@@ -103,7 +103,7 @@ export default {
                 ...this.fieldTypes,
                 text: 'se-input',
                 textarea: 'se-text-area',
-                'rich-textarea': 'se-rich-text-area',
+                // 'rich-textarea': 'se-rich-text-area',
                 toggle: 'se-toggle',
                 email: 'se-input',
                 number: 'se-input',
