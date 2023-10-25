@@ -1,7 +1,6 @@
 @import './dropzone.css';
 @import './vue-multiselect.css';
 @import 'flatpickr/dist/flatpickr.css';
-@import '@senses/builder/dist/style.css';
 
 @tailwind base;
 @tailwind components;
