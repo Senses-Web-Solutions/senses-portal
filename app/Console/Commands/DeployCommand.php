@@ -37,19 +37,11 @@ class DeployCommand extends Command
      */
     public function handle()
     {
-        if(env('OCTANE_ENABLED', true)) {
-            $this->call('octane:reload');
-        }
-
         $this->call('migrate', ['--force' => true]);
         $this->call('horizon:terminate');
         $this->call('horizon:publish');
         $this->call('queue:restart');
         $this->call('vendor:publish', ['--tag' => 'log-viewer-assets', '--force' => true]);
-
-        if(env('OCTANE_ENABLED', true)) {
-            $this->call('octane:reload');
-        }
 
         return 0;
     }
