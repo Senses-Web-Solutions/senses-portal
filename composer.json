@@ -36,7 +36,8 @@
         {
             "type": "composer",
             "url": "https://satis.senses.co.uk"
-        }
+        },
+        { "type": "vcs", "url": "git@github.com:Senses-Web-Solutions/laravel-pusher-batch-auth.git" }
     ],
     "autoload": {
         "psr-4": {
