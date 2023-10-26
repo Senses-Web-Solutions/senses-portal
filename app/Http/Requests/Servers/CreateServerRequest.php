@@ -12,11 +12,7 @@ class CreateServerRequest extends FormRequest
 {
     public function authorize(): bool
     {
-		if (getCurrentUser()?->can('create-block-group')) {
-			return true;
-		}
-
-        return false;
+        return true;
     }
 
     public function rules()
