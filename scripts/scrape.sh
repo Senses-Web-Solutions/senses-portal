@@ -95,6 +95,8 @@ CPU_USE=$(echo "100 - $CPU_IDLE" | bc)
 DISK_USED=$(df -BKB / | awk 'NR==2 {print $3*1}')
 DISK_FREE=$(df -BKB / | awk 'NR==2 {print $4*1}')
 
+# USE IWJS TO SEE VOLUMES (VDA/SDA)
+
 
 # #################################################################################################################### #
 

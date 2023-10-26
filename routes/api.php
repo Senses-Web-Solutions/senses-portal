@@ -14,6 +14,8 @@ use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\UserSettingController;
 use App\Http\Controllers\Api\AbilityGroupController;
 use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\ServerController;
+
 // ----- GENERATOR 1 -----
 
 /*
@@ -73,6 +75,9 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
 
     //Statuses
     Route::get('status-groups/{status_group}/statuses', [StatusController::class, 'statusGroupStatuses']);
+
+    // Scrape
+    Route::post('servers/scrape', [ServerController::class, 'collectData']);
 });
 
 Route::prefix('v2')->group(function () {
