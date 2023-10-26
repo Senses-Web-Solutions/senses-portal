@@ -46,7 +46,7 @@
                 </SidebarGroup>
             </div>
 
-            <div class="border-t border-zinc-200  inset-x-0 bottom-8 px-2 mt-4">
+            <!-- <div class="border-t border-zinc-200  inset-x-0 bottom-8 px-2 mt-4">
                 <p class="text-zinc-500 text-sm uppercase font-medium px-2 mt-2 pt-2 pb-4">Help and Support</p>
                 <a href="#" @click.prevent.stop="openLivechat" class="text-zinc-700 hover:bg-primary-200 group flex items-center px-2 py-1.5 text-sm rounded-md">
                     <div class="rounded-full bg-purple-600 mr-2 p-1.5 ">
@@ -54,7 +54,7 @@
                     </div>
                     Live Chat
                 </a>
-            </div>
+            </div> -->
         </template>
     </nav>
 </template>
