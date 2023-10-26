@@ -4,13 +4,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\TagController;
 use App\Http\Controllers\Api\FileController;
-use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ExportController;
 use App\Http\Controllers\Api\StatusController;
 use App\Http\Controllers\Api\AbilityController;
 use App\Http\Controllers\Api\TagGroupController;
-use App\Http\Controllers\Api\BlockGroupController;
 use App\Http\Controllers\Api\StatusGroupController;
 use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\UserSettingController;
@@ -41,8 +39,6 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
         'status-groups' => StatusGroupController::class,
         'files' => FileController::class,
         'users' => UserController::class,
-        'pages' => PageController::class,
-        'block-groups' => BlockGroupController::class,
         'ability-groups' => AbilityGroupController::class,
 		// ----- GENERATOR 2 -----
     ]);

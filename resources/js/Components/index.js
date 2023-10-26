@@ -53,12 +53,6 @@ import StatusGroupTable from './Senses/StatusGroups/StatusGroupTable.vue';
 import StatusGroupForm from './Senses/StatusGroups/StatusGroupForm.vue';
 import StatusGroupAdditionalInformation from './Senses/StatusGroups/StatusGroupAdditionalInformation.vue';
 import TagGroupAdditionalInformation from './Senses/TagGroups/TagGroupAdditionalInformation.vue';
-// import PageTable from './Senses/Pages/PageTable.vue';
-// import PageForm from './Senses/Pages/PageForm.vue';
-// import PageBuilder from './Senses/Pages/PageBuilder.vue';
-// import PageBuilderButtons from './Senses/Pages/PageBuilderButtons.vue';
-// import BlockGroupTable from './Senses/BlockGroups/BlockGroupTable.vue';
-// import BlockGroupForm from './Senses/BlockGroups/BlockGroupForm.vue';
 import AbilityTable from './Senses/Abilities/AbilityTable.vue';
 import AbilityGroupTable from './Senses/AbilityGroups/AbilityGroupTable.vue';
 import AbilityGroupForm from './Senses/AbilityGroups/AbilityGroupForm.vue';
@@ -107,13 +101,6 @@ export {
 	NotificationAside,
 	NotificationCard,
 	NotificationTable,
-
-	// Page Builder
-	// PageTable,
-	// PageBuilder,
-	// PageBuilderButtons,
-	// BlockGroupTable,
-	// BlockGroupForm,
 
 	UserImpersonationForm,
 

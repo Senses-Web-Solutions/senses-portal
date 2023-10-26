@@ -12,12 +12,8 @@ use Illuminate\Queue\Events\JobProcessing;
 
 use App\Models\User;
 use App\Observers\UserObserver;
-use App\Models\BlockGroup;
-use App\Observers\BlockGroupObserver;
 use App\Models\File;
 use App\Observers\FileObserver;
-use App\Models\Page;
-use App\Observers\PageObserver;
 use App\Models\StatusGroup;
 use App\Observers\StatusGroupObserver;
 use App\Models\Status;
@@ -44,9 +40,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
 		User::observe(UserObserver::class);
-        BlockGroup::observe(BlockGroupObserver::class);
         File::observe(FileObserver::class);
-        Page::observe(PageObserver::class);
         StatusGroup::observe(StatusGroupObserver::class);
         Status::observe(StatusObserver::class);
         TagGroup::observe(TagGroupObserver::class);

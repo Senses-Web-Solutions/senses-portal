@@ -9,7 +9,6 @@
                 </SidebarItem>
 
 				<SidebarItem title="Users" v-if="user().can('list-user')" to="/users" :active="Route.is('users', 'any')" />
-				<SidebarItem title="Pages" v-if="user().can('list-page')" to="/pages" :active="Route.is('pages', 'any')" />
 				<!-- ---------- GENERATOR ---------- -->
 
                 <SidebarGroup title="Intel">
@@ -21,7 +20,6 @@
                     <SidebarSubItem title="Status Groups" v-if="user().can('list-status-group')" to="/status-groups" :active="Route.is('status-groups', 'any')" />
                     <SidebarSubItem title="Tags" v-if="user().can('list-tag')" to="/tags" :active="Route.is('tags', 'any')" />
                     <SidebarSubItem title="Tag Groups" v-if="user().can('list-tag-group')" to="/tag-groups" :active="Route.is('tag-groups', 'any')" />
-                    <SidebarSubItem title="Block Groups" v-if="user().can('list-block-group')" to="/block-groups" :active="Route.is('block-groups', 'any')" />
                     <SidebarSubItem title="Ability Groups" v-if="user().can('list-ability-group')" to="/ability-groups" :active="Route.is('ability-groups', 'any')" />
                 </SidebarGroup>
 

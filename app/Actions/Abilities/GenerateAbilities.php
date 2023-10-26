@@ -111,8 +111,6 @@ class GenerateAbilities
 			'status',
 			'status-group',
             'user',
-			'page',
-			'block-group',
             'file',
 			'ability-group',
 			// ----- GENERATOR -----
