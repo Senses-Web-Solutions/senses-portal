@@ -38,8 +38,8 @@ class DeployCommand extends Command
     public function handle()
     {
         $this->call('migrate', ['--force' => true]);
-        $this->call('horizon:terminate');
-        $this->call('horizon:publish');
+        // $this->call('horizon:terminate');
+        // $this->call('horizon:publish');
         $this->call('queue:restart');
         $this->call('vendor:publish', ['--tag' => 'log-viewer-assets', '--force' => true]);
 
