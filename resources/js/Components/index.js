@@ -59,6 +59,8 @@ import AbilityGroupForm from './Senses/AbilityGroups/AbilityGroupForm.vue';
 import AbilityGroupAbilities from './Senses/AbilityGroups/AbilityGroupAbilities.vue';
 import ServerTable from './Senses/Servers/ServerTable.vue';
 import ServerForm from './Senses/Servers/ServerForm.vue';
+import ServerMetricTable from './Senses/ServerMetrics/ServerMetricTable.vue';
+import ServerMetricForm from './Senses/ServerMetrics/ServerMetricForm.vue';
 // ----- GENERATOR A -----
 
 export {
@@ -125,5 +127,7 @@ export {
 	AbilityGroupAbilities,
 	ServerTable,
 	ServerForm,
+	ServerMetricTable,
+	ServerMetricForm,
 	// ----- GENERATOR B -----
 }

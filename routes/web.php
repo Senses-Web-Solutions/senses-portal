@@ -12,6 +12,7 @@ use App\Http\Controllers\Web\TagController;
 use App\Http\Controllers\Web\TagGroupController;
 use App\Http\Controllers\Web\AbilityGroupController;
 use App\Http\Controllers\Web\ServerController;
+use App\Http\Controllers\Web\ServerMetricController;
 // ----- GENERATOR 1 -----
 
 /*
@@ -37,6 +38,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('status-groups', StatusGroupController::class)->only('index', 'show');
 	Route::resource('ability-groups', AbilityGroupController::class)->only('index', 'show');
 	Route::resource('servers', ServerController::class)->only('index', 'show');
+		Route::resource('server-metrics', ServerMetricController::class)->only('index', 'show');
 		// ----- GENERATOR 2 -----
 
 	//Abilities

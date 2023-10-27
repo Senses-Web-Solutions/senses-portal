@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\AbilityGroupController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\ServerController;
 
+use App\Http\Controllers\Api\ServerMetricController;
 // ----- GENERATOR 1 -----
 
 /*
@@ -43,6 +44,7 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
         'users' => UserController::class,
         'ability-groups' => AbilityGroupController::class,
 		'servers' => ServerController::class,
+		'server-metrics' => ServerMetricController::class,
 		// ----- GENERATOR 2 -----
     ]);
 
