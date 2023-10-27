@@ -61,6 +61,8 @@ import ServerTable from './Senses/Servers/ServerTable.vue';
 import ServerForm from './Senses/Servers/ServerForm.vue';
 import ServerMetricTable from './Senses/ServerMetrics/ServerMetricTable.vue';
 import ServerMetricForm from './Senses/ServerMetrics/ServerMetricForm.vue';
+import CompanyTable from './Senses/Companies/CompanyTable.vue';
+import CompanyForm from './Senses/Companies/CompanyForm.vue';
 // ----- GENERATOR A -----
 
 export {
@@ -129,5 +131,7 @@ export {
 	ServerForm,
 	ServerMetricTable,
 	ServerMetricForm,
+	CompanyTable,
+	CompanyForm,
 	// ----- GENERATOR B -----
 }

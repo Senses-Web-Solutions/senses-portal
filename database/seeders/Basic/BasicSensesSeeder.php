@@ -19,6 +19,7 @@ class BasicSensesSeeder extends Seeder
 
  			BasicServersTableSeeder::class,
  			BasicServerMetricsTableSeeder::class,
+ 			BasicCompaniesTableSeeder::class,
  			// ----- GENERATOR -----
         ]);
     }
