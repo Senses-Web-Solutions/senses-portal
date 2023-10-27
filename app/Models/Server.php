@@ -14,12 +14,12 @@ class Server extends Model
 {
     use SensesModel;
 
-    
+
     protected $fillable = [
 		'app_id',
-		'name', 
-		'ip', 
-		'os', 
+		'name',
+		'ip',
+		'os',
 		'priority'
 	];
 
@@ -29,7 +29,7 @@ class Server extends Model
 		'updated_at' => DateTime::class,
 		'deleted_at' => DateTime::class,
 		'hidden_at' => DateTime::class,
-		
+
 	];
 
     public function scopeTableSearch($query, $search) {
@@ -58,22 +58,22 @@ class Server extends Model
     public function allowedFilters() {
         return $this->defineFilters([
             'id' => 'integer',
-            'name' => 'text', 
-			'ip' => 'text', 
+            'name' => 'text',
+			'ip' => 'text',
 			'os' => 'text'
         ]);
     }
 
 	public function company()
 	{
-		abort(501, 'Server: Company Not implemented');
-		//return $this->belongsTo(Company::class);
+		// abort(501, 'Server: Company Not implemented');
+		return $this->belongsTo(Company::class);
 	}
 
 	public function serverMetrics()
 	{
-		abort(501, 'Server: Server Metrics Not implemented');
-		//return $this->hasMany(ServerMetric::class);
+		// abort(501, 'Server: Server Metrics Not implemented');
+		return $this->hasMany(ServerMetric::class);
 	}
 
 }

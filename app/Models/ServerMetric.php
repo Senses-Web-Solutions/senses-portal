@@ -14,24 +14,24 @@ class ServerMetric extends Model
 {
     use SensesModel;
 
-    
+
     protected $fillable = [
 		'app_id',
-		'timestamp', 
-		'uptime', 
-		'logged_at', 
-		'cpu_cores', 
-		'cpu_threads', 
-		'cpu_use', 
-		'cpu_idle', 
-		'load_1', 
-		'load_5', 
-		'load_15', 
-		'ram_free', 
-		'ram_used', 
-		'disk_free', 
-		'disk_used', 
-		'swap_free', 
+		'timestamp',
+		'uptime',
+		'logged_at',
+		'cpu_cores',
+		'cpu_threads',
+		'cpu_use',
+		'cpu_idle',
+		'load_1',
+		'load_5',
+		'load_15',
+		'ram_free',
+		'ram_used',
+		'disk_free',
+		'disk_used',
+		'swap_free',
 		'swap_used'
 	];
 
@@ -41,7 +41,7 @@ class ServerMetric extends Model
 		'updated_at' => DateTime::class,
 		'deleted_at' => DateTime::class,
 		'hidden_at' => DateTime::class,
-		
+
 	];
 
     public function scopeTableSearch($query, $search) {
@@ -70,35 +70,35 @@ class ServerMetric extends Model
     public function allowedFilters() {
         return $this->defineFilters([
             'id' => 'integer',
-            'timestamp' => 'text', 
-			'uptime' => 'text', 
-			'logged_at' => 'text', 
-			'cpu_cores' => 'text', 
-			'cpu_threads' => 'text', 
-			'cpu_use' => 'text', 
-			'cpu_idle' => 'text', 
-			'load_1' => 'text', 
-			'load_5' => 'text', 
-			'load_15' => 'text', 
-			'ram_free' => 'text', 
-			'ram_used' => 'text', 
-			'disk_free' => 'text', 
-			'disk_used' => 'text', 
-			'swap_free' => 'text', 
+            'timestamp' => 'text',
+			'uptime' => 'text',
+			'logged_at' => 'text',
+			'cpu_cores' => 'text',
+			'cpu_threads' => 'text',
+			'cpu_use' => 'text',
+			'cpu_idle' => 'text',
+			'load_1' => 'text',
+			'load_5' => 'text',
+			'load_15' => 'text',
+			'ram_free' => 'text',
+			'ram_used' => 'text',
+			'disk_free' => 'text',
+			'disk_used' => 'text',
+			'swap_free' => 'text',
 			'swap_used' => 'text'
         ]);
     }
 
 	public function company()
 	{
-		abort(501, 'Server Metric: Company Not implemented');
-		//return $this->belongsTo(Company::class);
+		// abort(501, 'Server Metric: Company Not implemented');
+		return $this->belongsTo(Company::class);
 	}
 
 	public function server()
 	{
-		abort(501, 'Server Metric: Server Not implemented');
-		//return $this->belongsTo(Server::class);
+		// abort(501, 'Server Metric: Server Not implemented');
+		return $this->belongsTo(Server::class);
 	}
 
 }

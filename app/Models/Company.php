@@ -15,10 +15,10 @@ class Company extends Model
 {
     use SensesModel, HasTitleSlug;
 
-    
+
     protected $fillable = [
 		'app_id',
-		'title', 
+		'title',
 		'slug'
 	];
 
@@ -28,7 +28,7 @@ class Company extends Model
 		'updated_at' => DateTime::class,
 		'deleted_at' => DateTime::class,
 		'hidden_at' => DateTime::class,
-		
+
 	];
 
     public function scopeTableSearch($query, $search) {
@@ -57,21 +57,21 @@ class Company extends Model
     public function allowedFilters() {
         return $this->defineFilters([
             'id' => 'integer',
-            'title' => 'text', 
+            'title' => 'text',
 			'slug' => 'text'
         ]);
     }
 
 	public function servers()
 	{
-		abort(501, 'Company: Servers Not implemented');
-		//return $this->hasMany(Server::class);
+		// abort(501, 'Company: Servers Not implemented');
+		return $this->hasMany(Server::class);
 	}
 
 	public function users()
 	{
-		abort(501, 'Company: Users Not implemented');
-		//return $this->hasMany(User::class);
+		// abort(501, 'Company: Users Not implemented');
+		return $this->hasMany(User::class);
 	}
 
 }
