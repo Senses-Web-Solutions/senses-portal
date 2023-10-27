@@ -19,13 +19,24 @@
             "url": "api/v2/companies"
         },
         {
-            "name": "name",
+            "name": "title",
             "type": "string",
             "nullable": false,
             "default": null,
             "index": false,
             "unique": false,
             "params": [255],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "slug",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
             "options": [],
             "url": null
         },
