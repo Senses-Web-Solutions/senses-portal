@@ -5,7 +5,7 @@
                 <div class="text-zinc-500 group-hover:text-teal-500 shrink-0 -ml-1 mr-2 h-6 w-6">
                     <slot name="icon"></slot>
                 </div>
-                <p class="font-medium text-md capitalize">
+                <p class="font-medium text-md capitalize text-black">
                     <slot name="title"></slot>
                 </p>
             </div>

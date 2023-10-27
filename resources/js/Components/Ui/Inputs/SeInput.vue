@@ -28,7 +28,7 @@
             :max="max"
             :min="min"
             :step="step"
-            class="block bg-white w-full min-h-10 rounded-r-md border-zinc-300 shadow-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-200"
+            class="block bg-white w-full min-h-10 rounded-r-md border-zinc-300 shadow-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-200 text-black"
             :class="{
                 'border-danger-500': !isValid || externalError,
                 'rounded-l-0': $slots.icon || $slots.before,

@@ -1,11 +1,38 @@
 <template>
     <!-- TODO: Update the placeholder text from  "list is empty" to something more friendly e.g. start typing to search -->
-    <InputGroup :id="id" :label="label" :is-valid="isValid" inset-validation-icon>
-        <Multiselect v-if="!permissionDenied" :id="id" ref="multiselect" v-model="value" :name="name" :custom-label="customLabel" :options="options" :internal-search="false" :show-labels="showLabels"
-            :class="{ error: !isValid }" :loading="state.is(AjaxSelectState.LOADING)" :multiple="multiple" :track-by="trackBy"
-            class="multiselect--rounded block w-full rounded-md focus:border-primary-500 focus:ring-4 focus:ring-primary-200" deselect-label="Deselect" select-label="" :disabled="disabled"
-            :placeholder="placeholder" :group-select="groupSelect" :group-label="groupLabel" :group-values="groupValues" :hide-selected="hideSelected" :allow-empty="allowEmpty"
-            :autocomplete="autocomplete" :close-on-select="closeOnSelect" @select="hasDoneInitialLoad = true" @search-change="findOptions($event)">
+    <InputGroup
+        :id="id"
+        :label="label"
+        :is-valid="isValid"
+        inset-validation-icon>
+        <Multiselect
+            v-if="!permissionDenied"
+            :id="id"
+            ref="multiselect"
+            v-model="value"
+            :name="name"
+            :custom-label="customLabel"
+            :options="options"
+            :internal-search="false"
+            :show-labels="showLabels"
+            :class="{ error: !isValid }"
+            :loading="state.is(AjaxSelectState.LOADING)"
+            :multiple="multiple"
+            :track-by="trackBy"
+            class="multiselect--rounded block w-full rounded-md focus:border-primary-500 focus:ring-4 focus:ring-primary-200 bg-white"
+            deselect-label="Deselect"
+            select-label=""
+            :disabled="disabled"
+            :placeholder="placeholder"
+            :group-select="groupSelect"
+            :group-label="groupLabel"
+            :group-values="groupValues"
+            :hide-selected="hideSelected"
+            :allow-empty="allowEmpty"
+            :autocomplete="autocomplete"
+            :close-on-select="closeOnSelect"
+            @select="hasDoneInitialLoad = true"
+            @search-change="findOptions($event)">
             <template #tag="props">
                 <div v-if="!showLabels">
                     {{ '' }}

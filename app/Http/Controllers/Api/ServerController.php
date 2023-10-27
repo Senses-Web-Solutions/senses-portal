@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\ServerMetrics\CreateServerMetric;
 use App\Actions\Servers\CreateServer;
 use App\Actions\Servers\DeleteServer;
 use App\Actions\Servers\GenerateServerShowCache;
 use App\Actions\Servers\UpdateServer;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\BlockGroups\CreateServerRequest as BlockGroupsCreateServerRequest;
+use App\Http\Requests\ServerMetrics\CreateServerMetricRequest;
 use App\Http\Requests\Servers\CreateServerRequest;
 use App\Http\Requests\Servers\DeleteServerRequest;
 use App\Http\Requests\Servers\ListServerRequest;
@@ -88,9 +90,9 @@ class ServerController extends Controller
     }
 
 
-    public function collectData(CreateServerRequest $request)
+    public function collectData(CreateServerMetricRequest $request, CreateServerMetric $createServerMetric)
     {
-        logger($request->all());
+        return $this->respond($createServerMetric->execute($request->all()));
     }
 }
 

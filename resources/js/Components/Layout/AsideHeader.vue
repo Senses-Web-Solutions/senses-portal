@@ -2,7 +2,7 @@
     <header v-if="hasNormalHeader || slotEmpty($slots['header-content'])" class="border-b border-zinc-200 divide-y divide-zinc-200 dark:divide-zinc-800" :class="{'mt-6': hasNormalHeader}">
         <div class="flex items-center justify-between px-4 pb-6 sm:px-6" v-if="hasNormalHeader">
             <div class="flex items-center space-x-4">
-                <h2 class="text-3xl font-medium leading-7">
+                <h2 class="text-3xl font-medium leading-7 text-black">
                     <slot name="title"></slot>
                 </h2>
             </div>
