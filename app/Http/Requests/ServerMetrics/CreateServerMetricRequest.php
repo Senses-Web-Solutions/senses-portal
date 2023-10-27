@@ -12,11 +12,11 @@ class CreateServerMetricRequest extends FormRequest
 {
     public function authorize(): bool
     {
-		if (getCurrentUser()?->can('create-server-metric')) {
-			return true;
-		}
+		// if (getCurrentUser()?->can('create-server-metric')) {
+		// 	return true;
+		// }
 
-        return false;
+        return true;
     }
 
     public function rules()
