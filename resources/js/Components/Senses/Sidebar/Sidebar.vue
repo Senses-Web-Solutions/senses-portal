@@ -9,6 +9,7 @@
                 </SidebarItem>
 
 				<SidebarItem title="Users" v-if="user().can('list-user')" to="/users" :active="Route.is('users', 'any')" />
+				<SidebarItem title="Servers" v-if="user().can('list-server')" to="/servers" :active="Route.is('servers', 'any')" />
 				<!-- ---------- GENERATOR ---------- -->
 
                 <SidebarGroup title="Intel">

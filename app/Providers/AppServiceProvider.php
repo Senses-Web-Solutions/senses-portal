@@ -22,6 +22,8 @@ use App\Models\TagGroup;
 use App\Observers\TagGroupObserver;
 use App\Models\Tag;
 use App\Observers\TagObserver;
+use App\Observers\ServerObserver;
+use App\Models\Server;
 // ----- GENERATOR 1 -----
 
 class AppServiceProvider extends ServiceProvider
@@ -45,6 +47,7 @@ class AppServiceProvider extends ServiceProvider
         Status::observe(StatusObserver::class);
         TagGroup::observe(TagGroupObserver::class);
         Tag::observe(TagObserver::class);
+		Server::observe(ServerObserver::class);
 		// ----- GENERATOR 2 -----
 
         View::composer('*', function ($view) {

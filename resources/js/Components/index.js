@@ -57,6 +57,8 @@ import AbilityTable from './Senses/Abilities/AbilityTable.vue';
 import AbilityGroupTable from './Senses/AbilityGroups/AbilityGroupTable.vue';
 import AbilityGroupForm from './Senses/AbilityGroups/AbilityGroupForm.vue';
 import AbilityGroupAbilities from './Senses/AbilityGroups/AbilityGroupAbilities.vue';
+import ServerTable from './Senses/Servers/ServerTable.vue';
+import ServerForm from './Senses/Servers/ServerForm.vue';
 // ----- GENERATOR A -----
 
 export {
@@ -121,5 +123,7 @@ export {
 	AbilityGroupTable,
 	AbilityGroupForm,
 	AbilityGroupAbilities,
+	ServerTable,
+	ServerForm,
 	// ----- GENERATOR B -----
 }
