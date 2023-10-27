@@ -17,7 +17,8 @@ class Server extends Model
 
     protected $fillable = [
 		'app_id',
-		'name',
+		'title',
+		'slug',
 		'ip',
 		'os',
 		'priority'
@@ -42,7 +43,7 @@ class Server extends Model
 
     public function allowedSorts()
     {
-        return ['id', 'name', 'ip', 'os', 'priority'];
+        return ['id', 'title', 'slug', 'ip', 'os', 'priority'];
     }
 
     public function allowedEmbeds()
@@ -52,13 +53,13 @@ class Server extends Model
 
     public function allowedFields()
     {
-        return ['id', 'name', 'ip', 'os'];
+        return ['id', 'title', 'slug', 'ip', 'os', 'priority'];
     }
 
     public function allowedFilters() {
         return $this->defineFilters([
             'id' => 'integer',
-            'name' => 'text',
+            'title' => 'text',
 			'ip' => 'text',
 			'os' => 'text'
         ]);
