@@ -76,9 +76,10 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
     //Statuses
     Route::get('status-groups/{status_group}/statuses', [StatusController::class, 'statusGroupStatuses']);
 
-    // Scrape
-    Route::post('servers/scrape', [ServerController::class, 'collectData']);
 });
+
+// Scrape
+Route::post('servers/scrape', [ServerController::class, 'collectData']);
 
 Route::prefix('v2')->group(function () {
     //Signed URLs

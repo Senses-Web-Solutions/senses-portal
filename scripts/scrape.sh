@@ -101,6 +101,36 @@ DISK_FREE=$(df -BKB / | awk 'NR==2 {print $4*1}')
 # #################################################################################################################### #
 
 # Print JSON Output
+OUTPUT="""{
+    \"CONNECTED\": $CONNECTED,
+
+    \"HOSTNAME\": \"$HOSTNAME\",
+    \"IP_ADDRESS\": \"$IP_ADDRESS\",
+    \"OS\": \"$OS\",
+
+    \"TIMESTAMP\": $TIMESTAMP,
+    \"UPTIME\": $UPTIME,
+
+    \"CPU_CORES\": $CPU_CORES,
+    \"CPU_THREADS\": $CPU_THREADS,
+
+    \"CPU_USE\": $CPU_USE,
+    \"CPU_IDLE\": $CPU_IDLE,
+
+    \"LOAD_1\": $LOAD_1,
+    \"LOAD_5\": $LOAD_5,
+    \"LOAD_15\": $LOAD_15,
+
+    \"RAM_FREE\": $RAM_FREE,
+    \"RAM_USED\": $RAM_USED,
+
+    \"SWAP_FREE\": $SWAP_FREE,
+    \"SWAP_USED\": $SWAP_USED,
+
+    \"DISK_FREE\": $DISK_FREE,
+    \"DISK_USED\": $DISK_USED,
+}"""
+
 echo """{
     \"CONNECTED\": $CONNECTED,
 
@@ -130,3 +160,6 @@ echo """{
     \"DISK_FREE\": $DISK_FREE,
     \"DISK_USED\": $DISK_USED,
 }"""
+
+
+wget --method=post -O- -q --body-data="$OUTPUT" --header='Content-Type:application/json' http://dev.portal.senses.co.uk/api/servers/scrape

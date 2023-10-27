@@ -92,7 +92,6 @@ class ServerController extends Controller
     {
         logger($request->all());
     }
-
 }
 
 //Generated 09-10-2023 10:26:55
