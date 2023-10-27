@@ -1,0 +1,79 @@
+{
+    "name": "company",
+    "namePlural": "companies",
+
+    "frontend": true,
+
+    "traits": [
+        "HasTitleSlug"
+    ],
+
+    "fields": [
+        {
+            "name": "title",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [255],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "slug",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        }
+    ],
+    "relationshipFields": [],
+    "hasOne": [],
+    "belongsTo": [],
+    "belongsToMany": [],
+    "hasMany": [
+        "user",
+        "server"
+    ],
+
+    "hasOneThrough": [],
+    "hasManyThrough": [],
+    "morphMany": {},
+    "morphToMany": {},
+    "morphTo": [],
+    "morphOne": [],
+    "morphedByMany": [],
+
+    "seeder": 10,
+
+    "fillables": [
+        "title",
+        "slug"
+    ],
+
+    "casts": {},
+
+    "allowedSorts": [
+        "id",
+        "title",
+        "slug"
+    ],
+
+    "allowedEmbeds": [
+        "users",
+        "servers"
+    ],
+
+    "allowedFields": [
+        "id",
+        "title",
+        "slug"
+    ],
+
+    "revisionModel": null
+}

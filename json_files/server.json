@@ -1,0 +1,113 @@
+{
+    "name": "server",
+    "namePlural": "servers",
+
+    "frontend": true,
+
+    "traits": [],
+
+    "fields": [
+        {
+            "name": "company_id",
+            "type": "relationship",
+            "nullable": false,
+            "default": null,
+            "index": true,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": "api/v2/companies"
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [255],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "ip",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "os",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "priority",
+            "type": "integer",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        }
+    ],
+
+    "fillables": [
+        "name",
+        "ip",
+        "os",
+        "priority"
+    ],
+
+    "casts": {},
+
+    "allowedSorts": [
+        "name",
+        "ip",
+        "os",
+        "priority"
+    ],
+
+    "allowedEmbeds": [],
+
+    "allowedFields": [
+        "name",
+        "ip",
+        "os"
+    ],
+
+    "relationshipFields": [],
+
+    "hasOne": [],
+    "belongsTo": [
+        "company"
+    ],
+    "belongsToMany": [],
+    "hasMany": [
+        "server-metric"
+    ],
+    "hasOneThrough": [],
+    "hasManyThrough": [],
+
+    "morphMany": {},
+    "morphToMany": {},
+    "morphTo": [],
+    "morphOne": [],
+    "morphedByMany": [],
+
+    "seeder": 10,
+
+    "revisionModel": null
+}

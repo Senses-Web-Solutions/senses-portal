@@ -1,0 +1,298 @@
+{
+    "name": "serverMetric",
+    "namePlural": "serverMetrics",
+
+    "frontend": true,
+
+    "traits": [],
+
+    "fields": [
+        {
+            "name": "server_id",
+            "type": "relationship",
+            "nullable": false,
+            "default": null,
+            "index": true,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": "api/v2/servers"
+        },
+        {
+            "name": "company_id",
+            "type": "relationship",
+            "nullable": false,
+            "default": null,
+            "index": true,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": "api/v2/companies"
+        },
+        {
+            "name": "timestamp",
+            "type": "float",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "uptime",
+            "type": "float",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "logged_at",
+            "type": "datetime",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+
+        {
+            "name": "cpu_cores",
+            "type": "integer",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "cpu_threads",
+            "type": "integer",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+
+        {
+            "name": "cpu_use",
+            "type": "float",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "cpu_idle",
+            "type": "float",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+
+        {
+            "name": "load_1",
+            "type": "float",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "load_5",
+            "type": "float",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "load_15",
+            "type": "float",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+
+        {
+            "name": "ram_free",
+            "type": "integer",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "ram_used",
+            "type": "integer",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+
+        {
+            "name": "disk_free",
+            "type": "integer",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "disk_used",
+            "type": "integer",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+
+        {
+            "name": "swap_free",
+            "type": "integer",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "swap_used",
+            "type": "integer",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        }
+    ],
+
+    "fillables": [
+        "timestamp",
+        "uptime",
+        "logged_at",
+        "cpu_cores",
+        "cpu_threads",
+        "cpu_use",
+        "cpu_idle",
+        "load_1",
+        "load_5",
+        "load_15",
+        "ram_free",
+        "ram_used",
+        "disk_free",
+        "disk_used",
+        "swap_free",
+        "swap_used"
+    ],
+
+    "casts": {},
+
+    "allowedSorts": [
+        "timestamp",
+        "uptime",
+        "logged_at",
+        "cpu_cores",
+        "cpu_threads",
+        "cpu_use",
+        "cpu_idle",
+        "load_1",
+        "load_5",
+        "load_15",
+        "ram_free",
+        "ram_used",
+        "disk_free",
+        "disk_used",
+        "swap_free",
+        "swap_used"
+    ],
+
+    "allowedEmbeds": [],
+
+    "allowedFields": [
+        "timestamp",
+        "uptime",
+        "logged_at",
+        "cpu_cores",
+        "cpu_threads",
+        "cpu_use",
+        "cpu_idle",
+        "load_1",
+        "load_5",
+        "load_15",
+        "ram_free",
+        "ram_used",
+        "disk_free",
+        "disk_used",
+        "swap_free",
+        "swap_used"
+    ],
+
+    "relationshipFields": [],
+
+    "hasOne": [],
+    "belongsTo": [
+        "company",
+        "server"
+    ],
+    "belongsToMany": [],
+    "hasMany": [],
+    "hasOneThrough": [],
+    "hasManyThrough": [],
+
+    "morphMany": {},
+    "morphToMany": {},
+    "morphTo": [],
+    "morphOne": [],
+    "morphedByMany": [],
+
+    "seeder": 10,
+
+    "revisionModel": null
+}
