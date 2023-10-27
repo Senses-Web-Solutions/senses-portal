@@ -11,6 +11,13 @@ class CreateServerMetric
 
     public function execute(array $data)
     {
+
+        $data['server_id'] = 1;
+        $data['company_id'] = 1;
+        $data['timestamp'] = now()->timestamp;
+        $data['uptime'] = now()->timestamp;
+        $data['logged_at'] = now()->format('Y-m-d H:i:s');
+
         $serverMetric = new ServerMetric($data);
 
 		if(isset($data['server_id'])) {
