@@ -16,6 +16,8 @@
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="theme-color" content="#ffffff">
 
+        <script type="text/javascript" src="/js/circles.js"></script>
+
         @vite([
             'resources/css/senses.css',
             'resources/js/senses.js'

@@ -40,6 +40,8 @@ import AbilitiesReseeder from './Senses/Abilities/Reseed.vue';
 
 import UserImpersonationForm from './Senses/Users/UserImpersonationForm.vue';
 
+import Dashboard from './Senses/Dashboard.vue';
+
 // Models
 import UserTable from './Senses/Users/UserTable.vue';
 import UserForm from './Senses/Users/UserForm.vue';
@@ -109,6 +111,8 @@ export {
 	NotificationTable,
 
 	UserImpersonationForm,
+
+	Dashboard,
 
 	// Models
 	UserTable,
