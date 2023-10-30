@@ -49,7 +49,7 @@
                 role="img"
             >
                 <template v-for="(metric, index) in this.metrics">
-                    <g v-if="index > (this.metrics.length - 30)" class="bar" :transform="'translate(' + index * 4 + ',0)'">
+                    <g v-if="index > (this.metrics.length - 30)" class="bar" :transform="'translate(' + (index % 30) * 4 + ',0)'">
                         <rect
                             :height="metric.cpu_use / 100 * 20"
                             :y="20 - (metric.cpu_use / 100 * 20)"
