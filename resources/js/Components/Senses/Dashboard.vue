@@ -33,7 +33,7 @@
                                 class="relative isolate w-36 border-b border-zinc-200 bg-zinc-50 py-2 font-normal"
                             >
                                 <span
-                                    class="-ml-6 inline-flex gap-x-1.5 py-0 align-middle items-center"
+                                    class="inline-flex gap-x-1.5 py-0 align-middle items-center"
                                 >
                                     Load: 1 · 5 · 15
                                     <svg
@@ -58,7 +58,7 @@
                                 <span
                                     class="inline-flex gap-x-1.5 py-0 align-middle items-center"
                                 >
-                                    Trend
+                                    CPU Usage
                                     <svg
                                         class="mt-px h-4 w-4 fill-zinc-500 stroke-none"
                                         xmlns="http://www.w3.org/2000/svg"
