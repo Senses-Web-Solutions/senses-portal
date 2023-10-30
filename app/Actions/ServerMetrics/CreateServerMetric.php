@@ -11,6 +11,7 @@ class CreateServerMetric
 
     public function execute(array $data)
     {
+        logger($data);
 
         $data['server_id'] = 1;
         $data['company_id'] = 1;

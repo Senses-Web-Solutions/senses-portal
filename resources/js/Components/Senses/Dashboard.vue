@@ -58,7 +58,7 @@
                                 <span
                                     class="inline-flex gap-x-1.5 py-0 align-middle items-center"
                                 >
-                                    CPU Usage
+                                    Trend
                                     <svg
                                         class="mt-px h-4 w-4 fill-zinc-500 stroke-none"
                                         xmlns="http://www.w3.org/2000/svg"

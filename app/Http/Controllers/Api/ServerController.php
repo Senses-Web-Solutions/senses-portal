@@ -39,7 +39,7 @@ class ServerController extends Controller
      */
     public function index(ListServerRequest $request)
     {
-        return QueryBuilder::for(Server::with('latestServerMetric'))->list();
+        return QueryBuilder::for(Server::class)->list();
     }
 
     /**
@@ -87,12 +87,6 @@ class ServerController extends Controller
     public function destroy(DeleteServerRequest $request, int $id, DeleteServer $deleteServer)
     {
         return $this->respondDeleted($deleteServer->execute($id));
-    }
-
-
-    public function collectData(CreateServerMetricRequest $request, CreateServerMetric $createServerMetric)
-    {
-        return $this->respond($createServerMetric->execute($request->all()));
     }
 }
 

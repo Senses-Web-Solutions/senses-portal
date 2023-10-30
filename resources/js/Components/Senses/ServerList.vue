@@ -51,11 +51,11 @@
                 <template v-for="(metric, index) in this.metrics">
                     <g v-if="index < 30" class="bar" :transform="'translate(' + (116 - index * 4) + ',0)'">
                         <rect
-                            :height="metric.cpu_use / 100 * 20"
-                            :y="20 - (metric.cpu_use / 100 * 20)"
+                            :height="metric.load_1 / 4 * 20 + 1"
+                            :y="19 - (metric.load_1 / 4 * 20)"
                             width="3"
                             class=""
-                            :style="'fill: ' + getColour(metric.cpu_use / 100)"
+                            :style="'fill: ' + getColour(metric.load_1 / 4)"
                         ></rect>
                     </g>
                 </template>

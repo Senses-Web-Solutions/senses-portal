@@ -83,9 +83,6 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
 
 });
 
-// Scrape
-Route::post('servers/scrape', [ServerController::class, 'collectData']);
-
 Route::prefix('v2')->group(function () {
     //Signed URLs
     Route::get('/exports/{export}/download', [ExportController::class, 'download'])->name('api.exports.download');
