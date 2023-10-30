@@ -70,33 +70,33 @@ DISK_FREE=$(df -BKB / | awk 'NR==2 {print $4*1}')
 
 # Print JSON Output
 OUTPUT="""{
-    \"CONNECTED\": $CONNECTED,
+    \"connected\": $CONNECTED,
 
-    \"HOSTNAME\": \"$HOSTNAME\",
-    \"IP_ADDRESS\": \"$IP_ADDRESS\",
-    \"OS\": \"$OS\",
+    \"hostname\": \"$HOSTNAME\",
+    \"ip_address\": \"$IP_ADDRESS\",
+    \"os\": \"$OS\",
 
-    \"TIMESTAMP\": $TIMESTAMP,
-    \"UPTIME\": $UPTIME,
+    \"timestamp\": $TIMESTAMP,
+    \"uptime\": $UPTIME,
 
-    \"CPU_CORES\": $CPU_CORES,
-    \"CPU_THREADS\": $CPU_THREADS,
+    \"cpu_cores\": $CPU_CORES,
+    \"cpu_threads\": $CPU_THREADS,
 
-    \"CPU_USE\": $CPU_USE,
-    \"CPU_IDLE\": $CPU_IDLE,
+    \"cpu_use\": $CPU_USE,
+    \"cpu_idle\": $CPU_IDLE,
 
-    \"LOAD_1\": $LOAD_1,
-    \"LOAD_5\": $LOAD_5,
-    \"LOAD_15\": $LOAD_15,
+    \"load_1\": $LOAD_1,
+    \"load_5\": $LOAD_5,
+    \"load_15\": $LOAD_15,
 
-    \"RAM_FREE\": $RAM_FREE,
-    \"RAM_USED\": $RAM_USED,
+    \"ram_free\": $RAM_FREE,
+    \"ram_used\": $RAM_USED,
 
-    \"SWAP_FREE\": $SWAP_FREE,
-    \"SWAP_USED\": $SWAP_USED,
+    \"swap_free\": $SWAP_FREE,
+    \"swap_used\": $SWAP_USED,
 
-    \"DISK_FREE\": $DISK_FREE,
-    \"DISK_USED\": $DISK_USED
+    \"disk_free\": $DISK_FREE,
+    \"disk_used\": $DISK_USED
 }"""
 
 # echo -e """{
