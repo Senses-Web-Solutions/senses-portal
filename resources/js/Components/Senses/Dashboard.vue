@@ -1,14 +1,15 @@
 <template>
     <div class="w-full flex flex-wrap">
-        <ServerCard client="ietg">IETG</ServerCard>
-        <ServerCard client="lanes">Lanes</ServerCard>
-        <ServerCard client="iwjs">IWJS</ServerCard>
+        <div v-for="server in servers">
+            <ServerCard :data="server" :client="server.slug">{{ server.title }}</ServerCard>
+        </div>
     </div>
 </template>
 
 <script>
-import ServerCard from './ServerCard.vue';
 // Imports
+import ServerCard from './ServerCard.vue';
+import axios from 'axios';
 
 export default {
     components: {
@@ -20,17 +21,21 @@ export default {
     },
 
     mounted() {
-
+        this.load()
     },
 
     data() {
         return {
-
+            servers: [],
         };
     },
 
     methods: {
-
+        load() {
+            axios.get('api/v2/servers?format=all').then((response) => {
+                this.servers = response.data;
+            })
+        }
     },
 };
 </script>

@@ -48,36 +48,36 @@
                 </div>
                 <div v-if="metric" class="items-left text-left mt-1 space-y-4">
                     <div>
-                        <div class="text-sm text-zinc-500">Space: {{ Math.round(metric.disk_free / 1000000, 2) }}Gb / {{ Math.round((metric.disk_free + metric.disk_used) / 1000000, 2) }}Gb </div>
-                        <div class="w-100 rounded-full h-1.5 mt-1 fill-red-400 bg-zinc-200">
+                        <div class="text-sm text-zinc-500">Space: {{ Math.round(metric.disk_used / 1000000, 2) }}Gb / {{ Math.round((metric.disk_free + metric.disk_used) / 1000000, 2) }}Gb </div>
+                        <div class="w-100 rounded-full h-1.5 mt-1 fill-red-400 bg-zinc-200" :style="'fill: ' + this.getColour(metric.disk_free / (metric.disk_free + metric.disk_used))">
                             <svg width="100%" viewBox="0 0 400 13" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="85%" height="100%" rx="3"></rect>
+                                <rect :width="(metric.disk_free * 100) / (metric.disk_free + metric.disk_used) + '%'" height="100%" rx="3"></rect>
                             </svg>
                         </div>
                     </div>
                     <div>
-                        <div class="text-sm text-zinc-500">Volume: {{ Math.round(metric.disk_free / 1000000, 2) }}Gb / {{ Math.round((metric.disk_free + metric.disk_used) / 1000000, 2) }}Gb </div>
-                        <div class="w-100 rounded-full h-1.5 mt-1 fill-green-400 bg-zinc-200">
+                        <div class="text-sm text-zinc-500">Volume: {{ Math.round(metric.disk_used / 1000000, 2) }}Gb / {{ Math.round((metric.disk_free + metric.disk_used) / 1000000, 2) }}Gb </div>
+                        <div class="w-100 rounded-full h-1.5 mt-1 fill-green-400 bg-zinc-200" :style="'fill: ' + this.getColour(metric.disk_used / (metric.disk_free + metric.disk_used))">
                             <svg width="100%" viewBox="0 0 400 13" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="33%" height="100%" rx="3"></rect>
+                                <rect :width="(metric.disk_used * 100) / (metric.disk_free + metric.disk_used) + '%'" height="100%" rx="3"></rect>
                             </svg>
                         </div>
                     </div>
                     <div>
-                        <div class="text-sm text-zinc-500">RAM: {{ Math.round(metric.ram_free / 1000000, 2) }}Gb / {{ Math.round((metric.ram_free + metric.ram_used) / 1000000, 2) }}Gb </div>
+                        <div class="text-sm text-zinc-500">RAM: {{ Math.round(metric.ram_used / 1000000, 2) }}Gb / {{ Math.round((metric.ram_free + metric.ram_used) / 1000000, 2) }}Gb </div>
 
-                        <div class="w-100 rounded-full h-1.5 mt-1 fill-yellow-400 bg-zinc-200">
+                        <div class="w-100 rounded-full h-1.5 mt-1 fill-yellow-400 bg-zinc-200" :style="'fill: ' + this.getColour(metric.ram_us00 / (metric.ram_free + metric.ram_used))">
                             <svg width="100%" viewBox="0 0 400 13" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="66%" height="100%" rx="3"></rect>
+                                <rect :width="(metric.ram_used * 100) / (metric.ram_free + metric.ram_used) + '%'" height="100%" rx="3"></rect>
                             </svg>
                         </div>
                     </div>
                     <div>
-                        <div class="text-sm text-zinc-500">Swap: {{ Math.round(metric.swap_free / 1000000, 2) }}Gb / {{ Math.round((metric.swap_free + metric.swap_used) / 1000000, 2) }}Gb </div>
+                        <div class="text-sm text-zinc-500">Swap: {{ Math.round(metric.swap_used / 1000, 2) }}Mb / {{ Math.round((metric.swap_free + metric.swap_used) / 1000000, 2) }}Gb </div>
 
-                        <div class="w-100 rounded-full h-1.5 mt-1 fill-green-400 bg-zinc-200">
+                        <div class="w-100 rounded-full h-1.5 mt-1 fill-green-400 bg-zinc-200" :style="'fill: ' + this.getColour(metric.swap_used / (metric.swap_free + metric.swap_used))">
                             <svg width="100%" viewBox="0 0 400 13" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="24%" height="100%" rx="3"></rect>
+                                <rect :width="(metric.swap_used * 100) / (metric.swap_free + metric.swap_used) + '%'" height="100%" rx="3"></rect>
                             </svg>
                         </div>
                     </div>
@@ -99,6 +99,10 @@ export default {
     props: {
         client: {
             type: String
+        },
+        data: {
+            type: Object,
+            required: true
         }
     },
 
@@ -173,23 +177,17 @@ export default {
 
     methods: {
         load() {
-            axios.get('/api/v2/server-metrics?format=select-search').then((response) => {
+            axios.get('/api/v2/server-metrics?format=all').then((response) => {
                 this.metric = response.data[0]
+
+                this.circle1.update(this.metric.load_1);
+                this.circle5.update(this.metric.load_5);
+                this.circle15.update(this.metric.load_15);
+
+                this.circle1.updateColors(['#27272a', this.getColour(this.metric.load_1)]);
+                this.circle5.updateColors(['#27272a', this.getColour(this.metric.load_5)]);
+                this.circle15.updateColors(['#27272a', this.getColour(this.metric.load_15)]);
             });
-
-            var base = this.getRandom(0, 0.5);
-
-            var i = this.getRandom(0, 0.5);
-            var j = this.getRandom(0, 0.5);
-            var k = this.getRandom(0, 0.5);
-
-            this.circle1.update(base + i);
-            this.circle5.update(base + j);
-            this.circle15.update(base + k);
-
-            this.circle1.updateColors(['#27272a', this.getColour(base + i)]);
-            this.circle5.updateColors(['#27272a', this.getColour(base + j)]);
-            this.circle15.updateColors(['#27272a', this.getColour(base + k)]);
         },
 
         getColour(load) {

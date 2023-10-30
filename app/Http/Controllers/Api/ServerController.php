@@ -39,7 +39,7 @@ class ServerController extends Controller
      */
     public function index(ListServerRequest $request)
     {
-        return QueryBuilder::for(Server::class)->list();
+        return QueryBuilder::for(Server::with('latestServerMetric'))->list();
     }
 
     /**

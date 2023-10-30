@@ -17,7 +17,7 @@ class GenerateServerShowCache
     public function execute(int $id)
     {
         return TaggedCache::responseForever('server-' . $id, function () use ($id) {
-            return $this->respond(Server::findOrFail($id));
+            return $this->respond(Server::with('latestServerMetric')->findOrFail($id));
         });
     }
 }

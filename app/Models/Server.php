@@ -77,6 +77,11 @@ class Server extends Model
 		return $this->hasMany(ServerMetric::class);
 	}
 
+    public function latestServerMetric()
+    {
+        return $this->serverMetrics()->limit(1)->orderByDesc('timestamp');
+    }
+
 }
 
 //Generated 27-10-2023 10:53:42
