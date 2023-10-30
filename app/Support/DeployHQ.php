@@ -40,6 +40,12 @@ class DeployHQ
         return $response->json();
     }
 
+    public function getDeployments($projectID)
+    {
+        $response = $this->send('get', '/projects/'. $projectID . '/deployments');
+        return $response->json();
+    }
+
     public function createServer($projectID, $name, $ip, $domain, $atomic = true)
     {
         $response = $this->send('post', '/projects/'. $projectID . '/servers', [
