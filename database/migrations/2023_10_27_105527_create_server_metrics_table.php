@@ -12,22 +12,26 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('server_id')->index();
 			$table->unsignedBigInteger('company_id')->index();
+
 			$table->float('timestamp');
 			$table->float('uptime');
-			$table->datetime('logged_at');
-			$table->integer('cpu_cores')->nullable();
-			$table->integer('cpu_threads')->nullable();
+
 			$table->float('cpu_use')->nullable();
 			$table->float('cpu_idle')->nullable();
+
 			$table->float('load_1')->nullable();
 			$table->float('load_5')->nullable();
 			$table->float('load_15')->nullable();
+
 			$table->integer('ram_free')->nullable();
 			$table->integer('ram_used')->nullable();
+
 			$table->integer('disk_free')->nullable();
 			$table->integer('disk_used')->nullable();
+
 			$table->integer('swap_free')->nullable();
 			$table->integer('swap_used')->nullable();
+
 			$table->lockable();
             $table->sensesHiddenAt();
             $table->sensesTimestamps();

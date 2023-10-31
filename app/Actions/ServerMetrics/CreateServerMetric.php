@@ -2,6 +2,7 @@
 
 namespace App\Actions\ServerMetrics;
 
+use App\Models\Server;
 use App\Models\ServerMetric;
 use Spatie\QueueableAction\QueueableAction;
 
@@ -11,9 +12,7 @@ class CreateServerMetric
 
     public function execute(array $data)
     {
-        logger($data);
-
-        $data['server_id'] = 1;
+        $data['server_id'] = Server::where('ip', $data['ip'])->first()->id ?? null;
         $data['company_id'] = 1;
         $data['timestamp'] = now()->timestamp;
         $data['uptime'] = now()->timestamp;
