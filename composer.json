@@ -13,7 +13,7 @@
         "laravel/fortify": "^1.18",
         "laravel/framework": "^10.10",
         "laravel/passport": "^11.9",
-        "laravel/sanctum": "^3.2",
+        "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "pusher/pusher-php-server": "^7.2",
         "senses/tagged-cache": "dev-main",
