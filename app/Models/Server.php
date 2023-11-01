@@ -14,14 +14,20 @@ class Server extends Model
 {
     use SensesModel;
 
-
+    
     protected $fillable = [
 		'app_id',
-		'title',
-		'slug',
-		'ip',
-		'os',
-		'priority'
+		'title', 
+		'hostname', 
+		'ip_address', 
+		'os', 
+		'architecture', 
+		'cpu_cores', 
+		'cpu_threads', 
+		'distro', 
+		'distro_version', 
+		'kernel', 
+		'kernel_version'
 	];
 
     protected $casts = [
@@ -30,7 +36,7 @@ class Server extends Model
 		'updated_at' => DateTime::class,
 		'deleted_at' => DateTime::class,
 		'hidden_at' => DateTime::class,
-
+		
 	];
 
     public function scopeTableSearch($query, $search) {
@@ -43,7 +49,7 @@ class Server extends Model
 
     public function allowedSorts()
     {
-        return ['id', 'title', 'slug', 'ip', 'os', 'priority'];
+        return ['id', 'title', 'hostname', 'ip_address', 'os', 'architecture', 'cpu_cores', 'cpu_threads', 'distro', 'distro_version', 'kernel', 'kernel_version'];
     }
 
     public function allowedEmbeds()
@@ -53,29 +59,38 @@ class Server extends Model
 
     public function allowedFields()
     {
-        return ['id', 'title', 'slug', 'ip', 'os', 'priority'];
+        return ['id', 'title', 'hostname', 'ip_address', 'os', 'architecture', 'cpu_cores', 'cpu_threads', 'distro', 'distro_version', 'kernel', 'kernel_version'];
     }
 
     public function allowedFilters() {
         return $this->defineFilters([
             'id' => 'integer',
-            'title' => 'text',
-			'ip' => 'text',
-			'os' => 'text'
+            'title' => 'text', 
+			'hostname' => 'text', 
+			'ip_address' => 'text', 
+			'os' => 'text', 
+			'architecture' => 'text', 
+			'cpu_cores' => 'text', 
+			'cpu_threads' => 'text', 
+			'distro' => 'text', 
+			'distro_version' => 'text', 
+			'kernel' => 'text', 
+			'kernel_version' => 'text'
         ]);
     }
 
 	public function company()
 	{
-		// abort(501, 'Server: Company Not implemented');
-		return $this->belongsTo(Company::class);
+		abort(501, 'Server: Company Not implemented');
+		//return $this->belongsTo(Company::class);
 	}
 
 	public function serverMetrics()
 	{
-		// abort(501, 'Server: Server Metrics Not implemented');
-		return $this->hasMany(ServerMetric::class);
+		abort(501, 'Server: Server Metrics Not implemented');
+		//return $this->hasMany(ServerMetric::class);
 	}
+
 }
 
-//Generated 27-10-2023 10:53:42
+//Generated 01-11-2023 11:27:41

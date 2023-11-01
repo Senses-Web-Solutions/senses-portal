@@ -59,10 +59,10 @@ import AbilityTable from './Senses/Abilities/AbilityTable.vue';
 import AbilityGroupTable from './Senses/AbilityGroups/AbilityGroupTable.vue';
 import AbilityGroupForm from './Senses/AbilityGroups/AbilityGroupForm.vue';
 import AbilityGroupAbilities from './Senses/AbilityGroups/AbilityGroupAbilities.vue';
-import ServerTable from './Senses/Servers/ServerTable.vue';
-import ServerForm from './Senses/Servers/ServerForm.vue';
 import CompanyTable from './Senses/Companies/CompanyTable.vue';
 import CompanyForm from './Senses/Companies/CompanyForm.vue';
+import ServerTable from './Senses/Servers/ServerTable.vue';
+import ServerForm from './Senses/Servers/ServerForm.vue';
 // ----- GENERATOR A -----
 
 export {
@@ -129,9 +129,9 @@ export {
 	AbilityGroupTable,
 	AbilityGroupForm,
 	AbilityGroupAbilities,
-	ServerTable,
-	ServerForm,
 	CompanyTable,
 	CompanyForm,
+	ServerTable,
+	ServerForm,
 	// ----- GENERATOR B -----
 }

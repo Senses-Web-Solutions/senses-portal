@@ -19,12 +19,18 @@ class ServerFactory extends Factory
         return [
 			'company_id' => $this->faker->numberBetween(1,10),
 			'title' => $this->faker->text(10),
-			'slug' => $this->faker->text(10),
-			'ip' => $this->faker->text(10),
+			'hostname' => $this->faker->text(10),
+			'ip_address' => $this->faker->text(10),
 			'os' => $this->faker->text(10),
-			'priority' => $this->faker->randomDigit,
+			'architecture' => $this->faker->text(10),
+			'cpu_cores' => $this->faker->randomDigit,
+			'cpu_threads' => $this->faker->randomDigit,
+			'distro' => $this->faker->text(10),
+			'distro_version' => $this->faker->text(10),
+			'kernel' => $this->faker->text(10),
+			'kernel_version' => $this->faker->text(10),
         ];
     }
 }
 
-//Generated 27-10-2023 10:53:42
+//Generated 01-11-2023 11:27:41

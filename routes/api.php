@@ -43,9 +43,9 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
         'files' => FileController::class,
         'users' => UserController::class,
         'ability-groups' => AbilityGroupController::class,
-		'servers' => ServerController::class,
 		'companies' => CompanyController::class,
 		'server-metrics' => ServerMetricController::class,
+		'servers' => ServerController::class,
 		// ----- GENERATOR 2 -----
     ]);
 

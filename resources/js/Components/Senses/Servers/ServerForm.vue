@@ -40,10 +40,16 @@ export default {
             server: { 
 				company_id: null,
 				title: null,
-				slug: null,
-				ip: null,
+				hostname: null,
+				ip_address: null,
 				os: null,
-				priority: null,
+				architecture: null,
+				cpu_cores: null,
+				cpu_threads: null,
+				distro: null,
+				distro_version: null,
+				kernel: null,
+				kernel_version: null,
             },
 
             fields: [
@@ -53,10 +59,16 @@ export default {
 					fields: [
 						{ key: "company_id", type: "select-search", field: "id", url: "api/v2/companies?format=select-search"},
 						{ key: "title", type: "text"},
-						{ key: "slug", type: "text"},
-						{ key: "ip", type: "text"},
+						{ key: "hostname", type: "text"},
+						{ key: "ip_address", type: "text"},
 						{ key: "os", type: "text"},
-						{ key: "priority", type: "number"},
+						{ key: "architecture", type: "text"},
+						{ key: "cpu_cores", type: "number"},
+						{ key: "cpu_threads", type: "number"},
+						{ key: "distro", type: "text"},
+						{ key: "distro_version", type: "text"},
+						{ key: "kernel", type: "text"},
+						{ key: "kernel_version", type: "text"},
 					]
 				},
             ]
@@ -77,4 +89,4 @@ export default {
 
 </script>
 
-// Generated 27-10-2023 10:53:42
+// Generated 01-11-2023 11:27:41

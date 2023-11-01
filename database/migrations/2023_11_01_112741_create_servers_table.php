@@ -12,10 +12,16 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('company_id')->index();
 			$table->string('title', 255);
-			$table->string('slug');
-			$table->string('ip');
+			$table->string('hostname', 255);
+			$table->string('ip_address');
 			$table->string('os');
-			$table->integer('priority');
+			$table->string('architecture')->nullable();
+			$table->integer('cpu_cores')->nullable();
+			$table->integer('cpu_threads')->nullable();
+			$table->string('distro')->nullable();
+			$table->string('distro_version')->nullable();
+			$table->string('kernel')->nullable();
+			$table->string('kernel_version')->nullable();
 			$table->lockable();
             $table->sensesHiddenAt();
             $table->sensesTimestamps();
@@ -28,4 +34,4 @@ return new class extends Migration
     }
 };
 
-//Generated 27-10-2023 10:53:42
+//Generated 01-11-2023 11:27:41

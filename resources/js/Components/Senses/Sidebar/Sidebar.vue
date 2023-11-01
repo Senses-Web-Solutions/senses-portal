@@ -9,8 +9,8 @@
                 </SidebarItem>
 
 				<SidebarItem title="Users" v-if="user().can('list-user')" to="/users" :active="Route.is('users', 'any')" />
-				<SidebarItem title="Servers" v-if="user().can('list-server')" to="/servers" :active="Route.is('servers', 'any')" />
 				<SidebarItem title="Companies" v-if="user().can('list-company')" to="/companies" :active="Route.is('companies', 'any')" />
+				<SidebarItem title="Servers" v-if="user().can('list-server')" to="/servers" :active="Route.is('servers', 'any')" />
 				<!-- ---------- GENERATOR ---------- -->
 
                 <SidebarGroup title="Intel">

@@ -27,8 +27,17 @@ export default {
             fields: [
                 { label: "ID", key: "id" },
                     
-				{ label: "Ip", key: "ip" },
+				{ label: "Title", key: "title" },
+				{ label: "Hostname", key: "hostname" },
+				{ label: "Ip Address", key: "ip_address" },
 				{ label: "Os", key: "os" },
+				{ label: "Architecture", key: "architecture" },
+				{ label: "Cpu Cores", key: "cpu_cores", filter: { type: "integer" } },
+				{ label: "Cpu Threads", key: "cpu_threads", filter: { type: "integer" } },
+				{ label: "Distro", key: "distro" },
+				{ label: "Distro Version", key: "distro_version" },
+				{ label: "Kernel", key: "kernel" },
+				{ label: "Kernel Version", key: "kernel_version" },
 
             ]
         }
@@ -49,4 +58,4 @@ export default {
 
 </script>
 
-// Generated 27-10-2023 10:53:42
+// Generated 01-11-2023 11:27:41

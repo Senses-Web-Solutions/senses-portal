@@ -23,9 +23,17 @@ class UpdateServerRequest extends FormRequest
     {
         $rules = [
 			'company_id' => 'required|integer|exists:companies,id',
-			'ip' => 'required|string|max:255',
+			'title' => 'required|string|max:255',
+			'hostname' => 'required|string|max:255',
+			'ip_address' => 'required|string|max:255',
 			'os' => 'required|string|max:255',
-			'priority' => 'required|integer',
+			'architecture' => 'nullable|string|max:255',
+			'cpu_cores' => 'nullable|integer',
+			'cpu_threads' => 'nullable|integer',
+			'distro' => 'nullable|string|max:255',
+			'distro_version' => 'nullable|string|max:255',
+			'kernel' => 'nullable|string|max:255',
+			'kernel_version' => 'nullable|string|max:255',
         ];
 
         return $rules;
@@ -44,4 +52,4 @@ class UpdateServerRequest extends FormRequest
     }
 }
 
-//Generated 27-10-2023 10:53:42
+//Generated 01-11-2023 11:27:41
