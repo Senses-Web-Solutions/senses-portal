@@ -10,7 +10,6 @@
 
 				<SidebarItem title="Users" v-if="user().can('list-user')" to="/users" :active="Route.is('users', 'any')" />
 				<SidebarItem title="Servers" v-if="user().can('list-server')" to="/servers" :active="Route.is('servers', 'any')" />
-				<SidebarItem title="Server Metrics" v-if="user().can('list-server-metric')" to="/server-metrics" :active="Route.is('server-metrics', 'any')" />
 				<SidebarItem title="Companies" v-if="user().can('list-company')" to="/companies" :active="Route.is('companies', 'any')" />
 				<!-- ---------- GENERATOR ---------- -->
 

@@ -24,10 +24,10 @@ use App\Models\Tag;
 use App\Observers\TagObserver;
 use App\Observers\ServerObserver;
 use App\Models\Server;
-use App\Observers\ServerMetricObserver;
-use App\Models\ServerMetric;
 use App\Observers\CompanyObserver;
 use App\Models\Company;
+use App\Observers\ServerMetricObserver;
+use App\Models\ServerMetric;
 // ----- GENERATOR 1 -----
 
 class AppServiceProvider extends ServiceProvider
@@ -52,8 +52,8 @@ class AppServiceProvider extends ServiceProvider
         TagGroup::observe(TagGroupObserver::class);
         Tag::observe(TagObserver::class);
 		Server::observe(ServerObserver::class);
-		ServerMetric::observe(ServerMetricObserver::class);
 		Company::observe(CompanyObserver::class);
+		ServerMetric::observe(ServerMetricObserver::class);
 		// ----- GENERATOR 2 -----
 
         View::composer('*', function ($view) {

@@ -20,16 +20,31 @@ class ServerMetric extends Model
 		'timestamp',
 		'uptime',
 		'cpu_use',
-		'cpu_idle',
+		'cpu_us',
+		'cpu_sy',
+		'cpu_ni',
+		'cpu_id',
+		'cpu_wa',
+		'cpu_hi',
+		'cpu_si',
+		'cpu_st',
 		'load_1',
 		'load_5',
 		'load_15',
+		'ram_total',
 		'ram_free',
+		'ram_buffer',
+		'ram_cache',
 		'ram_used',
+		'swap_total',
+		'swap_free',
+		'swap_used',
+		'swap_cache',
+		'disk_total',
 		'disk_free',
 		'disk_used',
-		'swap_free',
-		'swap_used'
+		'disk_read',
+		'disk_write'
 	];
 
     protected $casts = [
@@ -51,7 +66,7 @@ class ServerMetric extends Model
 
     public function allowedSorts()
     {
-        return ['id', 'timestamp', 'uptime', 'cpu_use', 'cpu_idle', 'load_1', 'load_5', 'load_15', 'ram_free', 'ram_used', 'disk_free', 'disk_used', 'swap_free', 'swap_used'];
+        return ['id', 'timestamp', 'uptime', 'cpu_use', 'cpu_us', 'cpu_sy', 'cpu_ni', 'cpu_id', 'cpu_wa', 'cpu_hi', 'cpu_si', 'cpu_st', 'load_1', 'load_5', 'load_15', 'ram_total', 'ram_free', 'ram_buffer', 'ram_cache', 'ram_used', 'swap_total', 'swap_free', 'swap_used', 'swap_cache', 'disk_total', 'disk_free', 'disk_used', 'disk_read', 'disk_write'];
     }
 
     public function allowedEmbeds()
@@ -61,7 +76,7 @@ class ServerMetric extends Model
 
     public function allowedFields()
     {
-        return ['id', 'timestamp', 'uptime', 'cpu_use', 'cpu_idle', 'load_1', 'load_5', 'load_15', 'ram_free', 'ram_used', 'disk_free', 'disk_used', 'swap_free', 'swap_used'];
+        return ['id', 'timestamp', 'uptime', 'cpu_use', 'cpu_us', 'cpu_sy', 'cpu_ni', 'cpu_id', 'cpu_wa', 'cpu_hi', 'cpu_si', 'cpu_st', 'load_1', 'load_5', 'load_15', 'ram_total', 'ram_free', 'ram_buffer', 'ram_cache', 'ram_used', 'swap_total', 'swap_free', 'swap_used', 'swap_cache', 'disk_total', 'disk_free', 'disk_used', 'disk_read', 'disk_write'];
     }
 
     public function allowedFilters() {
@@ -70,16 +85,31 @@ class ServerMetric extends Model
             'timestamp' => 'text',
 			'uptime' => 'text',
 			'cpu_use' => 'text',
-			'cpu_idle' => 'text',
+			'cpu_us' => 'text',
+			'cpu_sy' => 'text',
+			'cpu_ni' => 'text',
+			'cpu_id' => 'text',
+			'cpu_wa' => 'text',
+			'cpu_hi' => 'text',
+			'cpu_si' => 'text',
+			'cpu_st' => 'text',
 			'load_1' => 'text',
 			'load_5' => 'text',
 			'load_15' => 'text',
+			'ram_total' => 'text',
 			'ram_free' => 'text',
+			'ram_buffer' => 'text',
+			'ram_cache' => 'text',
 			'ram_used' => 'text',
+			'swap_total' => 'text',
+			'swap_free' => 'text',
+			'swap_used' => 'text',
+			'swap_cache' => 'text',
+			'disk_total' => 'text',
 			'disk_free' => 'text',
 			'disk_used' => 'text',
-			'swap_free' => 'text',
-			'swap_used' => 'text'
+			'disk_read' => 'text',
+			'disk_write' => 'text'
         ]);
     }
 
@@ -97,4 +127,4 @@ class ServerMetric extends Model
 
 }
 
-//Generated 27-10-2023 10:55:27
+//Generated 01-11-2023 11:22:36
