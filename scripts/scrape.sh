@@ -22,7 +22,7 @@ CONNECTED=$(ping -c 1 google.com &> /dev/null && echo "true" || echo "false")
 # HOSTNAME, IP_ADDRESS & OS
 
 HOSTNAME=$(hostname)
-IP_ADDRESS=$(curl ifconfig.me/ip)
+IP_ADDRESS=$(curl -s ifconfig.me/ip)
 OS=$(uname -o)
 DISTRO=$(source /etc/os-release | echo $ID)
 DISTRO_VERSION=$(source /etc/os-release | echo $VERSION_ID)
@@ -65,6 +65,9 @@ LOAD_15=$(cat /proc/loadavg | awk '{print $3}')
 
 
 # RAM
+
+RAM_USED=$(free -k | awk 'NR==2 {print $3}')
+RAM_FREE=$(free -k | awk 'NR==2 {print $4}')
 
 RAM_TOTAL=$(cat /proc/meminfo | grep MemTotal | awk '{print $2}')
 RAM_FREE=$(cat /proc/meminfo | grep MemFree | awk '{print $2}')
@@ -144,6 +147,7 @@ OUTPUT="""{
 
     \"swap_total\": $SWAP_TOTAL,
     \"swap_free\": $SWAP_FREE,
+    \"swap_cache\": $SWAP_CACHE,
     \"swap_used\": $SWAP_USED,
 
     \"disk_total\": $DISK_TOTAL,
@@ -153,6 +157,76 @@ OUTPUT="""{
     \"disk_write\": $DISK_WRITE
 }"""
 
+
+# {
+#     "connected": true,
+
+#     "hostname": "Teamleaf8-Dev", // uname -n
+#     "ip_address": "165.227.225.119", // curl ifconfig.me/ip
+#     "os": "GNU/Linux", // uname -o
+#     "distro": "Ubuntu", // cat /etc/os-release (Name)
+#     "distro_version": "20.04", // cat /etc/os-release (Version ID)
+#     "architecture": "x86_64", // uname -p
+#     "kernel": "Linux", // uname -s
+#     "kernel_version": "5.4.0-148-generic", // uname -r
+
+#     "timestamp": 1698682711,
+#     "uptime": 15581366.81,
+
+#     "cpu_cores": 4,
+#     "cpu_threads": 4,
+
+#     "cpu_use": 100, // Non Idle
+
+#     "cpu_us": 0,
+#     "cpu_sy": 0,
+#     "cpu_ni": 0,
+#     "cpu_id": 0,
+#     "cpu_wa": 0,
+#     "cpu_hi": 0,
+#     "cpu_si": 0,
+#     "cpu_st": 0,
+
+#     "load_1": 0.01,
+#     "load_5": 0.03,
+#     "load_15": 0.05,
+
+#     "ram_total": 24348189, // MemTotal from /proc/meminfo
+#     "ram_free": 867880, // MemFree from /proc/meminfo
+#     "ram_buffer": 503456, // Buffers from /proc/meminfo
+#     "ram_cache": 503456, // Cached & SReclaimable from /proc/meminfo
+#     "ram_used": 2255308, // ram_total - ram_free - ram_buffer - ram_cache
+
+#     "swap_total": 24348189,
+#     "swap_free": 4984572,
+#     "swap_used": 258304,
+
+#     "disk_total": 24348189, // Will default to whichever drive is mounted on "/"
+#     "disk_free": 1456088,
+#     "disk_used": 24348189,
+
+#     "disk_read": 130416778, // Can use the difference of this / 60 to get average Kb/s
+#     "disk_write": 991372114,
+
+#     "volumes": {
+#         "sda": {
+#             "disk_free": 1456088,
+#             "disk_used": 24348189,
+#             "disk_total": 24348189,
+
+#             "disk_read": 435987345, // From iostat
+#             "disk_write": 34586345,
+#         },
+#         "sda1": {
+#             "disk_free": 1456088,
+#             "disk_used": 24348189,
+#             "disk_total": 24348189,
+
+#             "disk_read": 435987345,
+#             "disk_write": 34586345,
+#         },
+#     },
+# }
 
 # # Check if bc command is installed and if not then install it
 # if command -v bc > /dev/null 2>&1; then
@@ -168,4 +242,4 @@ OUTPUT="""{
 #     sudo apt install sysstat
 # fi
 
-wget -q --method=post -O- --body-data="$OUTPUT" --header="Content-Type: application/json" http://dev.portal.senses.co.uk/api/v2/server-metrics --header="Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTM1NGRiNGVjNDU4NzVhMTAwNWZiNzJhNGFlZDM5NDZiODZjMTg2NDhiZmM4ODBmNDAzZjNjMjAxN2I5ZWUxMTI0ZTI2YjM1OWYzMGNjNWIiLCJpYXQiOjE2OTg2ODA2MDguMTQ1NjYxLCJuYmYiOjE2OTg2ODA2MDguMTQ1NjY1LCJleHAiOjE3MzAzMDMwMDguMTQwMjc2LCJzdWIiOiI4Iiwic2NvcGVzIjpbXX0.HMX8shZPKWFMu525Cw09YHeyMHPich-MDozg3weDKTgXkNzV7mfpdG2uJlXJqINtowoF6m3Ff8ye7goff318dthq7PDW7MztcayNbBAIkKQ2ED-u82G1VOPyDDV9B35pvm9geFbWwu9vQZ5Vp9zukq0XQFvnfV9T9YBiTxBkjf90N42mmCH7B0K9G4s6Qg1cr7l3KhkmWva_jvxJDedDn4s2h_4GZG22AFsjyMFYyJqmLmjVjaJN-0c9S5SSeRDwO6DgsC3-k-nDcwYo7EktRdQ4dMdiZzIEuge8WT3D0b9YiNHLjQLC8oa8FHQ-T0WeXblqBvUU_qfPvJcFHPz7Wny_XO-GQUIh8pOkfW5zV7gITMSOopE4KYvl3t2b6qH2Zr-2pw4MK16RSwHp10G9uS3P9RolIueI27hbrR7Pe7Wko_24HTqXshjwtpEwrcht9cbuHZXYPwCiXJhJTIz0cQRvgyey_sGaMZsikQAikONCMzh8dlnk6c87RrL7b5kI7dUw83ozDeATO5yffNFiqg8kw3gkkimRnt7hMuWmVJn8Y6qAkjIWxXcOcXZoL5ogRsAk6el9FVRYjTUneT5I5XRhkALZOjP-GLf6e1PZgsshuZwDWlzhk7P5pIHn8JXL3MWYn8sAQeC9DBh1OIYyn53ejxXP5YqB-csGC6yYgr0"
+wget -q --method=post -O- --body-data="$OUTPUT" --header="Content-Type: application/json" http://dev.portal.senses.co.uk/api/v2/server-metrics --header="Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOTI5Njg3MjVkYWNjY2QwODZlN2YyNTQ1OGY3ZjkyMDQ2MDdlOWU4NjFiYTRlYWM0OGYzYWM4YmQyOTE2YmY1OTJjZGVmNGQ3OWMyMjZkZGMiLCJpYXQiOjE2OTg4MzkzNzMuOTg1NTIzLCJuYmYiOjE2OTg4MzkzNzMuOTg1NTI2LCJleHAiOjE3MzA0NjE3NzMuOTgxMDk2LCJzdWIiOiI4Iiwic2NvcGVzIjpbXX0.acmePiCPZUH0k8hNlIxnoJG3Mp8CfIlsMe4lGauP7MIM7aDocJ90vKPnU2Womqit3ZV02z_h_7UA8W2UopcuQqbZjktpD5XiREpFThTIeFnEEENVtw74CJb3VZOisxhnrg0pCXcklan1neaO5uOqgRr5rsqlXK_T25ixNXAI-Q7qIjUA-PkkvQBRM5YwnzWUVb0cMccrH97t9m1VvoFOpGEhcZ6lWw4XNT-sXhex0id0snhROXJiKx4vump_ImAfoczXMbJbutiS9KKofYmtkMI4GcUFPjB0wButHemNSm1eNqZ5UxP-xl7beVyJrB7FrKmJFlSgR-_PThalnLei9FYNVouLVUwbDmNs1ttv0lIhJWsSrLvk0XQOGOzV74mgWzN5IbxlpNgBm0tnKSiBpmopHCQDHqc2sduGGcvaYCDDiKJczJ0_vQ-wj2YXl64kh4GG_Ix78Zj7BtzUZzxUbSpmxGiwNf92HBQKjbDgQ-tRrRoQf0cffZ5aotEZTF2AobrUCA4gH-g3MDNDojUdN-TEC4QkKYkORNSPmNRANiLVOYa5WDRO4SXaEiAF-X2ByumXRPR6lt7OMvRTkHoQpAWbyKeeZBSG9kmXOQ4NcTMSjMl5KCvO2IBKRVjWCVUpUGwtSAhYXeAFWZOAmhjran4J0cD0rbPdYisxNA-HvAw"

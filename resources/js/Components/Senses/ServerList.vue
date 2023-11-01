@@ -236,7 +236,7 @@ export default {
 
         setInterval(() => {
             this.load();
-        }, 30000);
+        }, 15000);
     },
 
     data() {
