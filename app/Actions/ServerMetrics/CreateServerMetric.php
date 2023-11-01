@@ -12,11 +12,10 @@ class CreateServerMetric
 
     public function execute(array $data)
     {
-        $data['server_id'] = Server::where('ip', $data['ip'])->first()->id ?? null;
+        $data['server_id'] = Server::where('ip', $data['ip_address'])->first()->id ?? null;
         $data['company_id'] = 1;
         $data['timestamp'] = now()->timestamp;
         $data['uptime'] = now()->timestamp;
-        $data['logged_at'] = now()->format('Y-m-d H:i:s');
 
         $serverMetric = new ServerMetric($data);
 

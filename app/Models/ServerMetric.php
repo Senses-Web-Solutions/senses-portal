@@ -19,9 +19,6 @@ class ServerMetric extends Model
 		'app_id',
 		'timestamp',
 		'uptime',
-		'logged_at',
-		'cpu_cores',
-		'cpu_threads',
 		'cpu_use',
 		'cpu_idle',
 		'load_1',
@@ -54,7 +51,7 @@ class ServerMetric extends Model
 
     public function allowedSorts()
     {
-        return ['id', 'timestamp', 'uptime', 'logged_at', 'cpu_cores', 'cpu_threads', 'cpu_use', 'cpu_idle', 'load_1', 'load_5', 'load_15', 'ram_free', 'ram_used', 'disk_free', 'disk_used', 'swap_free', 'swap_used'];
+        return ['id', 'timestamp', 'uptime', 'cpu_use', 'cpu_idle', 'load_1', 'load_5', 'load_15', 'ram_free', 'ram_used', 'disk_free', 'disk_used', 'swap_free', 'swap_used'];
     }
 
     public function allowedEmbeds()
@@ -64,7 +61,7 @@ class ServerMetric extends Model
 
     public function allowedFields()
     {
-        return ['id', 'timestamp', 'uptime', 'logged_at', 'cpu_cores', 'cpu_threads', 'cpu_use', 'cpu_idle', 'load_1', 'load_5', 'load_15', 'ram_free', 'ram_used', 'disk_free', 'disk_used', 'swap_free', 'swap_used'];
+        return ['id', 'timestamp', 'uptime', 'cpu_use', 'cpu_idle', 'load_1', 'load_5', 'load_15', 'ram_free', 'ram_used', 'disk_free', 'disk_used', 'swap_free', 'swap_used'];
     }
 
     public function allowedFilters() {
@@ -72,9 +69,6 @@ class ServerMetric extends Model
             'id' => 'integer',
             'timestamp' => 'text',
 			'uptime' => 'text',
-			'logged_at' => 'text',
-			'cpu_cores' => 'text',
-			'cpu_threads' => 'text',
 			'cpu_use' => 'text',
 			'cpu_idle' => 'text',
 			'load_1' => 'text',

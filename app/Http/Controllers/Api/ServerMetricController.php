@@ -59,6 +59,7 @@ class ServerMetricController extends Controller
      */
     public function store(CreateServerMetricRequest $request, CreateServerMetric $createServerMetric)
     {
+        logger($request->all());
         return $this->respond($createServerMetric->execute($request->all()));
     }
 
