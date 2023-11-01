@@ -12,7 +12,7 @@ class CreateServerMetric
 
     public function execute(array $data)
     {
-        $data['server_id'] = Server::where('ip', $data['ip_address'])->first()->id ?? null;
+        $data['server_id'] = Server::where('ip_address', $data['ip_address'])->first()->id ?? null;
         $data['company_id'] = 1;
         $data['timestamp'] = now()->timestamp;
         $data['uptime'] = now()->timestamp;
