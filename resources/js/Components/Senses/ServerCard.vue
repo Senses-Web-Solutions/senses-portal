@@ -187,9 +187,9 @@ export default {
             axios.get('/api/v2/servers/' + this.data.id + '/server-metrics?format=all').then((response) => {
                 this.metric = response.data[0];
 
-                this.circle1.update(this.metric.load_1 / this.data.cpu_cores);
-                this.circle5.update(this.metric.load_5 / this.data.cpu_cores);
-                this.circle15.update(this.metric.load_15 / this.data.cpu_cores);
+                this.circle1.update(this.metric.load_1);
+                this.circle5.update(this.metric.load_5);
+                this.circle15.update(this.metric.load_15);
 
                 this.circle1.updateColors(['#27272a', this.getColour(this.metric.load_1 / this.data.cpu_cores)]);
                 this.circle5.updateColors(['#27272a', this.getColour(this.metric.load_5 / this.data.cpu_cores)]);
