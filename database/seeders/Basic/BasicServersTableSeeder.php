@@ -14,7 +14,7 @@ class BasicServersTableSeeder extends Seeder
      */
     public function run()
     {
-        Server::factory()->count(10)->create();
+        // Server::factory()->count(10)->create();
     }
 }
 

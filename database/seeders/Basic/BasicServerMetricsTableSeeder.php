@@ -14,7 +14,7 @@ class BasicServerMetricsTableSeeder extends Seeder
      */
     public function run()
     {
-        ServerMetric::factory()->count(10)->create();
+        // ServerMetric::factory()->count(10)->create();
     }
 }
 

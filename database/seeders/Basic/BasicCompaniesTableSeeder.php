@@ -14,7 +14,7 @@ class BasicCompaniesTableSeeder extends Seeder
      */
     public function run()
     {
-        Company::factory()->count(10)->create();
+        // Company::factory()->count(10)->create();
     }
 }
 

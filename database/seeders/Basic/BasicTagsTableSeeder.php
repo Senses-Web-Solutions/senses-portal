@@ -15,18 +15,18 @@ class BasicTagsTableSeeder extends Seeder
      */
     public function run()
     {
-        $titles = [
-            "Tag"
-        ];
+        // $titles = [
+        //     "Tag"
+        // ];
 
-        Tag::factory()
-        ->count(count($titles))
-        ->sequence(function (Sequence $sequence) use(&$titles) {
-            return [
-                'title' => $titles[$sequence->index],
-            ];
-        })
-        ->create();
+        // Tag::factory()
+        // ->count(count($titles))
+        // ->sequence(function (Sequence $sequence) use(&$titles) {
+        //     return [
+        //         'title' => $titles[$sequence->index],
+        //     ];
+        // })
+        // ->create();
     }
 }
 

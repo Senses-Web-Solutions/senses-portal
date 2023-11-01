@@ -14,7 +14,7 @@ class BasicTagGroupsTableSeeder extends Seeder
      */
     public function run()
     {
-        TagGroup::factory()->count(10)->create();
+        // TagGroup::factory()->count(10)->create();
     }
 }
 
