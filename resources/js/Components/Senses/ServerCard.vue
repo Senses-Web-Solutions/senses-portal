@@ -52,36 +52,36 @@
                     </div>
                     <div v-if="metric" class="items-left text-left mt-1 space-y-4">
                         <div>
-                            <div class="text-sm text-zinc-500">Space: {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_free + metric.disk_used) / 10000) / 100 }}Gb </div>
-                            <div class="w-100 rounded-full h-1.5 mt-1 fill-red-400 bg-zinc-200" :style="'fill: ' + this.getColour(metric.disk_used / (metric.disk_free + metric.disk_used))">
+                            <div class="text-sm text-zinc-500">Space: {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_total) / 10000) / 100 }}Gb </div>
+                            <div class="w-100 rounded-full h-1.5 mt-1 fill-red-400 bg-zinc-200" :style="'fill: ' + this.getColour(metric.disk_used / (metric.disk_total))">
                                 <svg width="100%" viewBox="0 0 400 13" xmlns="http://www.w3.org/2000/svg">
-                                    <rect :width="(metric.disk_used * 100) / (metric.disk_free + metric.disk_used) + '%'" height="100%" rx="3"></rect>
+                                    <rect :width="(metric.disk_used * 100) / (metric.disk_total) + '%'" height="100%" rx="3"></rect>
                                 </svg>
                             </div>
                         </div>
                         <div>
-                            <div class="text-sm text-zinc-500">Volume: {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_free + metric.disk_used) / 10000) / 100 }}Gb </div>
-                            <div class="w-100 rounded-full h-1.5 mt-1 fill-green-400 bg-zinc-200" :style="'fill: ' + this.getColour(metric.disk_used / (metric.disk_free + metric.disk_used))">
+                            <div class="text-sm text-zinc-500">Volume: {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_total) / 10000) / 100 }}Gb </div>
+                            <div class="w-100 rounded-full h-1.5 mt-1 fill-green-400 bg-zinc-200" :style="'fill: ' + this.getColour(metric.disk_used / (metric.disk_total))">
                                 <svg width="100%" viewBox="0 0 400 13" xmlns="http://www.w3.org/2000/svg">
-                                    <rect :width="(metric.disk_used * 100) / (metric.disk_free + metric.disk_used) + '%'" height="100%" rx="3"></rect>
+                                    <rect :width="(metric.disk_used * 100) / (metric.disk_total) + '%'" height="100%" rx="3"></rect>
                                 </svg>
                             </div>
                         </div>
                         <div>
-                            <div class="text-sm text-zinc-500">RAM: {{ Math.round(metric.ram_used / 10000) / 100 }}Gb / {{ Math.round((metric.ram_free + metric.ram_used) / 10000) / 100 }}Gb </div>
+                            <div class="text-sm text-zinc-500">RAM: {{ Math.round(metric.ram_used / 10000) / 100 }}Gb / {{ Math.round((metric.ram_total) / 10000) / 100 }}Gb </div>
 
-                            <div class="w-100 rounded-full h-1.5 mt-1 fill-yellow-400 bg-zinc-200" :style="'fill: ' + this.getColour(metric.ram_used / (metric.ram_free + metric.ram_used))">
+                            <div class="w-100 rounded-full h-1.5 mt-1 fill-yellow-400 bg-zinc-200" :style="'fill: ' + this.getColour(metric.ram_used / (metric.ram_total))">
                                 <svg width="100%" viewBox="0 0 400 13" xmlns="http://www.w3.org/2000/svg">
-                                    <rect :width="(metric.ram_used * 100) / (metric.ram_free + metric.ram_used) + '%'" height="100%" rx="3"></rect>
+                                    <rect :width="(metric.ram_used * 100) / (metric.ram_total) + '%'" height="100%" rx="3"></rect>
                                 </svg>
                             </div>
                         </div>
                         <div>
-                            <div class="text-sm text-zinc-500">Swap: {{ Math.round(metric.swap_used / 10000) / 100 }}Gb / {{ Math.round((metric.swap_free + metric.swap_used) / 10000) / 100 }}Gb </div>
+                            <div class="text-sm text-zinc-500">Swap: {{ Math.round(metric.swap_used / 10000) / 100 }}Gb / {{ Math.round((metric.swap_total) / 10000) / 100 }}Gb </div>
 
-                            <div class="w-100 rounded-full h-1.5 mt-1 fill-green-400 bg-zinc-200" :style="'fill: ' + this.getColour(metric.swap_used / (metric.swap_free + metric.swap_used))">
+                            <div class="w-100 rounded-full h-1.5 mt-1 fill-green-400 bg-zinc-200" :style="'fill: ' + this.getColour(metric.swap_used / (metric.swap_total))">
                                 <svg width="100%" viewBox="0 0 400 13" xmlns="http://www.w3.org/2000/svg">
-                                    <rect :width="(metric.swap_used * 100) / (metric.swap_free + metric.swap_used) + '%'" height="100%" rx="3"></rect>
+                                    <rect :width="(metric.swap_used * 100) / (metric.swap_total) + '%'" height="100%" rx="3"></rect>
                                 </svg>
                             </div>
                         </div>
@@ -118,7 +118,7 @@ export default {
             id: 'circles-load1-' + this.data.id,
             radius: 70,
             value: 0,
-            maxValue: 1,
+            maxValue: this.data.cpu_cores,
             width: 8,
             text: null,
             colors: ['#27272a', '#27272a'],
@@ -135,7 +135,7 @@ export default {
             id: 'circles-load5-' + this.data.id,
             radius: 60,
             value: 0,
-            maxValue: 1,
+            maxValue: this.data.cpu_cores,
             width: 8,
             text: null,
             colors: ['#27272a', '#27272a'],
@@ -152,7 +152,7 @@ export default {
             id: 'circles-load15-' + this.data.id,
             radius: 50,
             value: 0,
-            maxValue: 1,
+            maxValue: this.data.cpu_cores,
             width: 8,
             text: null,
             colors: ['#27272a', '#27272a'],
@@ -187,13 +187,13 @@ export default {
             axios.get('/api/v2/servers/' + this.data.id + '/server-metrics?format=all').then((response) => {
                 this.metric = response.data[0];
 
-                this.circle1.update(this.metric.load_1);
-                this.circle5.update(this.metric.load_5);
-                this.circle15.update(this.metric.load_15);
+                this.circle1.update(this.metric.load_1 / this.data.cpu_cores);
+                this.circle5.update(this.metric.load_5 / this.data.cpu_cores);
+                this.circle15.update(this.metric.load_15 / this.data.cpu_cores);
 
-                this.circle1.updateColors(['#27272a', this.getColour(this.metric.load_1)]);
-                this.circle5.updateColors(['#27272a', this.getColour(this.metric.load_5)]);
-                this.circle15.updateColors(['#27272a', this.getColour(this.metric.load_15)]);
+                this.circle1.updateColors(['#27272a', this.getColour(this.metric.load_1 / this.data.cpu_cores)]);
+                this.circle5.updateColors(['#27272a', this.getColour(this.metric.load_5 / this.data.cpu_cores)]);
+                this.circle15.updateColors(['#27272a', this.getColour(this.metric.load_15 / this.data.cpu_cores)]);
             });
         },
 

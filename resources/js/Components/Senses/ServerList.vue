@@ -29,11 +29,11 @@
 
         <td class="py-3 pr-6">
             <div class="text-zinc-500">
-                <span :style="'color: ' + getColour(this.metric?.load_1)">{{ this.metric?.load_1 }}</span>
+                <span :style="'color: ' + getColour(this.metric?.load_1 / this.data.cpu_cores)">{{ this.metric?.load_1 }}</span>
                 ·
-                <span :style="'color: ' + getColour(this.metric?.load_5)">{{ this.metric?.load_5 }}</span>
+                <span :style="'color: ' + getColour(this.metric?.load_5 / this.data.cpu_cores)">{{ this.metric?.load_5 }}</span>
                 ·
-                <span :style="'color: ' + getColour(this.metric?.load_15)">{{ this.metric?.load_15 }}</span>
+                <span :style="'color: ' + getColour(this.metric?.load_15 / this.data.cpu_cores)">{{ this.metric?.load_15 }}</span>
             </div>
         </td>
 
@@ -51,11 +51,11 @@
                 <template v-for="(metric, index) in this.metrics">
                     <g v-if="index < 30" class="bar" :transform="'translate(' + (116 - index * 4) + ',0)'">
                         <rect
-                            :height="metric.load_1 / 4 * 20 + 1"
-                            :y="19 - (metric.load_1 / 4 * 20)"
+                            :height="metric.load_1 / this.data.cpu_cores * 20 + 1"
+                            :y="19 - (metric.load_1 / this.data.cpu_cores * 20)"
                             width="3"
                             class=""
-                            :style="'fill: ' + getColour(metric.load_1 / 4)"
+                            :style="'fill: ' + getColour(metric.load_1 / this.data.cpu_cores)"
                         ></rect>
                     </g>
                 </template>
@@ -64,10 +64,10 @@
 
         <td class="py-3">
             <div class="text-sm text-zinc-500">
-                {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_free + metric.disk_used) / 10000) / 100 }}Gb
+                {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_total) / 10000) / 100 }}Gb
             </div>
             <div
-                class="rounded-full h-1.5 mt-1 bg-zinc-200 w-3/4" :style="'fill: ' + getColour(metric.disk_used / (metric.disk_used + metric.disk_free))"
+                class="rounded-full h-1.5 mt-1 bg-zinc-200 w-3/4" :style="'fill: ' + getColour(metric.disk_used / metric.disk_total)"
             >
                 <svg
                     width="100%"
@@ -75,7 +75,7 @@
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <rect
-                        :width="metric.disk_used / (metric.disk_used + metric.disk_free) * 100"
+                        :width="metric.disk_used / (metric.disk_total) * 100"
                         height="100%"
                         rx="3"
                     ></rect>
@@ -84,10 +84,10 @@
         </td>
         <td class="py-3">
             <div class="text-sm text-zinc-500">
-                {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_free + metric.disk_used) / 10000) / 100 }}Gb
+                {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_total) / 10000) / 100 }}Gb
             </div>
             <div
-                class="rounded-full h-1.5 mt-1 bg-zinc-200 w-3/4" :style="'fill: ' + getColour(metric.disk_used / (metric.disk_used + metric.disk_free))"
+                class="rounded-full h-1.5 mt-1 bg-zinc-200 w-3/4" :style="'fill: ' + getColour(metric.disk_used / metric.disk_total)"
             >
                 <svg
                     width="100%"
@@ -95,7 +95,7 @@
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <rect
-                        :width="metric.disk_used / (metric.disk_used + metric.disk_free) * 100"
+                        :width="metric.disk_used / metric.disk_total * 100"
                         height="100%"
                         rx="3"
                     ></rect>
@@ -104,10 +104,10 @@
         </td>
         <td class="py-3">
             <div class="text-sm text-zinc-500">
-                {{ Math.round(metric.ram_used / 10000) / 100 }}Gb / {{ Math.round((metric.ram_free + metric.ram_used) / 10000) / 100 }}Gb
+                {{ Math.round(metric.ram_used / 10000) / 100 }}Gb / {{ Math.round(metric.ram_total / 10000) / 100 }}Gb
             </div>
             <div
-                class="rounded-full h-1.5 mt-1 bg-zinc-200 w-3/4" :style="'fill: ' + getColour(metric.ram_used / (metric.ram_used + metric.ram_free))"
+                class="rounded-full h-1.5 mt-1 bg-zinc-200 w-3/4" :style="'fill: ' + getColour(metric.ram_used / metric.ram_total)"
             >
                 <svg
                     width="100%"
@@ -115,7 +115,7 @@
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <rect
-                        :width="metric.ram_used / (metric.ram_used + metric.ram_free) * 100"
+                        :width="metric.ram_used / metric.ram_total * 100"
                         height="100%"
                         rx="3"
                     ></rect>
@@ -125,10 +125,10 @@
 
         <td class="py-3">
             <div class="text-sm text-zinc-500">
-                {{ Math.round(metric.swap_used / 10000) / 100 }}Gb / {{ Math.round((metric.swap_free + metric.swap_used) / 10000) / 100 }}Gb
+                {{ Math.round(metric.swap_used / 10000) / 100 }}Gb / {{ Math.round(metric.swap_total / 10000) / 100 }}Gb
             </div>
             <div
-                class="rounded-full h-1.5 mt-1 bg-zinc-200 w-3/4" :style="'fill: ' + getColour(metric.swap_used / (metric.swap_used + metric.swap_free))"
+                class="rounded-full h-1.5 mt-1 bg-zinc-200 w-3/4" :style="'fill: ' + getColour(metric.swap_used / metric.swap_total)"
             >
                 <svg
                     width="100%"
@@ -136,7 +136,7 @@
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <rect
-                        :width="metric.swap_used / (metric.swap_used + metric.swap_free) * 100"
+                        :width="metric.swap_used / metric.swap_total * 100"
                         height="100%"
                         rx="3"
                     ></rect>
