@@ -2,7 +2,7 @@
     "name": "serverMetric",
     "namePlural": "serverMetrics",
 
-    "frontend": true,
+    "frontend": false,
 
     "traits": [],
 
@@ -29,10 +29,11 @@
             "options": [],
             "url": "api/v2/companies"
         },
+
         {
             "name": "timestamp",
-            "type": "float",
-            "nullable": false,
+            "type": "unsignedBigInteger",
+            "nullable": true,
             "default": null,
             "index": false,
             "unique": false,
@@ -42,8 +43,8 @@
         },
         {
             "name": "uptime",
-            "type": "float",
-            "nullable": false,
+            "type": "unsignedBigInteger",
+            "nullable": true,
             "default": null,
             "index": false,
             "unique": false,
@@ -63,8 +64,86 @@
             "options": [],
             "url": null
         },
+
         {
-            "name": "cpu_idle",
+            "name": "cpu_us",
+            "type": "float",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "cpu_sy",
+            "type": "float",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "cpu_ni",
+            "type": "float",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "cpu_id",
+            "type": "float",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "cpu_wa",
+            "type": "float",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "cpu_hi",
+            "type": "float",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "cpu_si",
+            "type": "float",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "cpu_st",
             "type": "float",
             "nullable": true,
             "default": null,
@@ -110,8 +189,41 @@
         },
 
         {
+            "name": "ram_total",
+            "type": "unsignedInteger",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
             "name": "ram_free",
-            "type": "integer",
+            "type": "unsignedInteger",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "ram_buffer",
+            "type": "unsignedInteger",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "ram_cache",
+            "type": "unsignedInteger",
             "nullable": true,
             "default": null,
             "index": false,
@@ -122,7 +234,7 @@
         },
         {
             "name": "ram_used",
-            "type": "integer",
+            "type": "unsignedInteger",
             "nullable": true,
             "default": null,
             "index": false,
@@ -133,8 +245,8 @@
         },
 
         {
-            "name": "disk_free",
-            "type": "integer",
+            "name": "swap_total",
+            "type": "unsignedInteger",
             "nullable": true,
             "default": null,
             "index": false,
@@ -143,21 +255,9 @@
             "options": [],
             "url": null
         },
-        {
-            "name": "disk_used",
-            "type": "integer",
-            "nullable": true,
-            "default": null,
-            "index": false,
-            "unique": false,
-            "params": [],
-            "options": [],
-            "url": null
-        },
-
         {
             "name": "swap_free",
-            "type": "integer",
+            "type": "unsignedInteger",
             "nullable": true,
             "default": null,
             "index": false,
@@ -168,7 +268,74 @@
         },
         {
             "name": "swap_used",
-            "type": "integer",
+            "type": "unsignedInteger",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "swap_cache",
+            "type": "unsignedInteger",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+
+        {
+            "name": "disk_total",
+            "type": "unsignedBigInteger",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "disk_free",
+            "type": "unsignedBigInteger",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "disk_used",
+            "type": "unsignedBigInteger",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "disk_read",
+            "type": "unsignedBigInteger",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "disk_write",
+            "type": "unsignedBigInteger",
             "nullable": true,
             "default": null,
             "index": false,
@@ -182,20 +349,32 @@
     "fillables": [
         "timestamp",
         "uptime",
-        "logged_at",
-        "cpu_cores",
-        "cpu_threads",
         "cpu_use",
-        "cpu_idle",
+        "cpu_us",
+        "cpu_sy",
+        "cpu_ni",
+        "cpu_id",
+        "cpu_wa",
+        "cpu_hi",
+        "cpu_si",
+        "cpu_st",
         "load_1",
         "load_5",
         "load_15",
+        "ram_total",
         "ram_free",
+        "ram_buffer",
+        "ram_cache",
         "ram_used",
+        "swap_total",
+        "swap_free",
+        "swap_used",
+        "swap_cache",
+        "disk_total",
         "disk_free",
         "disk_used",
-        "swap_free",
-        "swap_used"
+        "disk_read",
+        "disk_write"
     ],
 
     "casts": {},
@@ -203,20 +382,32 @@
     "allowedSorts": [
         "timestamp",
         "uptime",
-        "logged_at",
-        "cpu_cores",
-        "cpu_threads",
         "cpu_use",
-        "cpu_idle",
+        "cpu_us",
+        "cpu_sy",
+        "cpu_ni",
+        "cpu_id",
+        "cpu_wa",
+        "cpu_hi",
+        "cpu_si",
+        "cpu_st",
         "load_1",
         "load_5",
         "load_15",
+        "ram_total",
         "ram_free",
+        "ram_buffer",
+        "ram_cache",
         "ram_used",
+        "swap_total",
+        "swap_free",
+        "swap_used",
+        "swap_cache",
+        "disk_total",
         "disk_free",
         "disk_used",
-        "swap_free",
-        "swap_used"
+        "disk_read",
+        "disk_write"
     ],
 
     "allowedEmbeds": [],
@@ -224,20 +415,32 @@
     "allowedFields": [
         "timestamp",
         "uptime",
-        "logged_at",
-        "cpu_cores",
-        "cpu_threads",
         "cpu_use",
-        "cpu_idle",
+        "cpu_us",
+        "cpu_sy",
+        "cpu_ni",
+        "cpu_id",
+        "cpu_wa",
+        "cpu_hi",
+        "cpu_si",
+        "cpu_st",
         "load_1",
         "load_5",
         "load_15",
+        "ram_total",
         "ram_free",
+        "ram_buffer",
+        "ram_cache",
         "ram_used",
+        "swap_total",
+        "swap_free",
+        "swap_used",
+        "swap_cache",
+        "disk_total",
         "disk_free",
         "disk_used",
-        "swap_free",
-        "swap_used"
+        "disk_read",
+        "disk_write"
     ],
 
     "relationshipFields": [],
@@ -258,7 +461,7 @@
     "morphOne": [],
     "morphedByMany": [],
 
-    "seeder": 10,
+    "seeder": 0,
 
     "revisionModel": null
 }

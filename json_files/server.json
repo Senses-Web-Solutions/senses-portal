@@ -30,18 +30,18 @@
             "url": null
         },
         {
-            "name": "slug",
+            "name": "hostname",
             "type": "string",
             "nullable": false,
             "default": null,
             "index": false,
             "unique": false,
-            "params": [],
+            "params": [255],
             "options": [],
             "url": null
         },
         {
-            "name": "ip",
+            "name": "ip_address",
             "type": "string",
             "nullable": false,
             "default": null,
@@ -63,9 +63,75 @@
             "url": null
         },
         {
-            "name": "priority",
+            "name": "architecture",
+            "type": "string",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "cpu_cores",
             "type": "integer",
-            "nullable": false,
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "cpu_threads",
+            "type": "integer",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "distro",
+            "type": "string",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "distro_version",
+            "type": "string",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "kernel",
+            "type": "string",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "kernel_version",
+            "type": "string",
+            "nullable": true,
             "default": null,
             "index": false,
             "unique": false,
@@ -76,27 +142,49 @@
     ],
 
     "fillables": [
-        "name",
-        "ip",
+        "title",
+        "hostname",
+        "ip_address",
         "os",
-        "priority"
+        "architecture",
+        "cpu_cores",
+        "cpu_threads",
+        "distro",
+        "distro_version",
+        "kernel",
+        "kernel_version"
     ],
 
     "casts": {},
 
     "allowedSorts": [
-        "name",
-        "ip",
+        "title",
+        "hostname",
+        "ip_address",
         "os",
-        "priority"
+        "architecture",
+        "cpu_cores",
+        "cpu_threads",
+        "distro",
+        "distro_version",
+        "kernel",
+        "kernel_version"
     ],
 
     "allowedEmbeds": [],
 
     "allowedFields": [
-        "name",
-        "ip",
-        "os"
+        "title",
+        "hostname",
+        "ip_address",
+        "os",
+        "architecture",
+        "cpu_cores",
+        "cpu_threads",
+        "distro",
+        "distro_version",
+        "kernel",
+        "kernel_version"
     ],
 
     "relationshipFields": [],
@@ -118,7 +206,7 @@
     "morphOne": [],
     "morphedByMany": [],
 
-    "seeder": 10,
+    "seeder": 0,
 
     "revisionModel": null
 }
