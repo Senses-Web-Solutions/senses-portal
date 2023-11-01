@@ -111,10 +111,9 @@ class ServerMetricController extends Controller
 	public function serverServerMetrics(string $serverIDs)
 	{
 		$serverIDs = explode(',', $serverIDs);
-		abort(501, 'Server server metrics not implemented');
-		//return $this->respond(QueryBuilder::for(ServerMetric::class)->whereIn('server_id', $serverIDs)->list());
+		// abort(501, 'Server server metrics not implemented');
+		return $this->respond(QueryBuilder::for(ServerMetric::class)->whereIn('server_id', $serverIDs)->list());
 	}
-
 }
 
 //Generated 01-11-2023 11:22:36

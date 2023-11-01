@@ -8,13 +8,16 @@
                             <circle cx="3" cy="3" r="3"></circle>
                         </svg>
 
-                        <slot></slot>
+                        <div>
+                            {{ data.title }}
+                        </div>
                     </span>
+                    <SmallText>{{ data.ip_address }}</SmallText>
                 </div>
 
                 <div class="py-5">
                     <div class="h-40 text-center mx-auto relative">
-                        <div class="circle absolute left-0 right-0" :id="'circles-load1-' + this.client">
+                        <div class="circle absolute left-0 right-0" :id="'circles-load1-' + this.data.id">
                             <div class="circles-wrp text-zinc-200 dark:text-zinc-100" style="position: relative; display: inline-block;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="140" height="140">
                                     <path fill="transparent" stroke="currentColor" stroke-width="8" d="M 69.98655756855612 4.0000013689315495 A 66 66 0 1 1 69.90832732408728 4.000063665784566 Z"></path>
@@ -23,7 +26,7 @@
                                 <div class="circles-text" style="position: absolute; top: 0px; left: 0px; text-align: center; width: 100%; font-size: 49px; height: 140px; line-height: 140px;"></div>
                             </div>
                         </div>
-                        <div class="circle absolute left-0 right-0 top-[10px]" :id="'circles-load5-' + this.client">
+                        <div class="circle absolute left-0 right-0 top-[10px]" :id="'circles-load5-' + this.data.id">
                             <div class="circles-wrp text-zinc-200 dark:text-zinc-100" style="position: relative; display: inline-block;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120">
                                     <path fill="transparent" stroke="currentColor" stroke-width="8" d="M 59.98859430059307 4.00000116151768 A 56 56 0 1 1 59.92221712346799 4.0000540194535645 Z"></path>
@@ -32,7 +35,7 @@
                                 <div class="circles-text" style="position: absolute; top: 0px; left: 0px; text-align: center; width: 100%; font-size: 42px; height: 120px; line-height: 120px;"></div>
                             </div>
                         </div>
-                        <div class="circle absolute left-0 right-0 top-[20px]" :id="'circles-load15-' + this.client">
+                        <div class="circle absolute left-0 right-0 top-[20px]" :id="'circles-load15-' + this.data.id">
                             <div class="circles-wrp text-zinc-200 dark:text-zinc-100" style="position: relative; display: inline-block;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
                                     <path fill="transparent" stroke="currentColor" stroke-width="8" d="M 49.99063103263002 4.000000954103811 A 46 46 0 1 1 49.93610692284871 4.00004437312257 Z"></path>
@@ -93,10 +96,11 @@
 <script>
 // Imports
 import axios from 'axios';
+import SmallText from '../Ui/Text/SmallText.vue';
 
 export default {
     components: {
-
+        SmallText,
     },
 
     props: {
@@ -111,7 +115,7 @@ export default {
 
     mounted() {
         this.circle1 = window.Circles.create({
-            id: 'circles-load1-' + this.client,
+            id: 'circles-load1-' + this.data.id,
             radius: 70,
             value: 0,
             maxValue: 1,
@@ -128,7 +132,7 @@ export default {
         });
 
         this.circle5 = window.Circles.create({
-            id: 'circles-load5-' + this.client,
+            id: 'circles-load5-' + this.data.id,
             radius: 60,
             value: 0,
             maxValue: 1,
@@ -145,7 +149,7 @@ export default {
         });
 
         this.circle15 = window.Circles.create({
-            id: 'circles-load15-' + this.client,
+            id: 'circles-load15-' + this.data.id,
             radius: 50,
             value: 0,
             maxValue: 1,
@@ -180,8 +184,8 @@ export default {
 
     methods: {
         load() {
-            axios.get('/api/v2/server-metrics?format=all').then((response) => {
-                this.metric = response.data[0]
+            axios.get('/api/v2/servers/' + this.data.id + '/server-metrics?format=all').then((response) => {
+                this.metric = response.data[0];
 
                 this.circle1.update(this.metric.load_1);
                 this.circle5.update(this.metric.load_5);

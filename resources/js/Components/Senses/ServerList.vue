@@ -181,57 +181,6 @@ export default {
     },
 
     mounted() {
-        this.circle1 = window.Circles.create({
-            id: 'circles-load1-' + this.client,
-            radius: 70,
-            value: 0,
-            maxValue: 1,
-            width: 8,
-            text: null,
-            colors: ['#27272a', '#27272a'],
-            duration: 100,
-            wrpClass: 'circles-wrp',
-            textClass: 'circles-text',
-            valueStrokeClass: '',
-            maxValueStrokeClass: 'fill-zinc-900',
-            styleWrapper: true,
-            styleText: true
-        });
-
-        this.circle5 = window.Circles.create({
-            id: 'circles-load5-' + this.client,
-            radius: 60,
-            value: 0,
-            maxValue: 1,
-            width: 8,
-            text: null,
-            colors: ['#27272a', '#27272a'],
-            duration: 100,
-            wrpClass: 'circles-wrp',
-            textClass: 'circles-text',
-            valueStrokeClass: '',
-            maxValueStrokeClass: 'fill-zinc-900',
-            styleWrapper: true,
-            styleText: true
-        });
-
-        this.circle15 = window.Circles.create({
-            id: 'circles-load15-' + this.client,
-            radius: 50,
-            value: 0,
-            maxValue: 1,
-            width: 8,
-            text: null,
-            colors: ['#27272a', '#27272a'],
-            duration: 100,
-            wrpClass: 'circles-wrp',
-            textClass: 'circles-text',
-            valueStrokeClass: '',
-            maxValueStrokeClass: 'fill-zinc-900',
-            styleWrapper: true,
-            styleText: true
-        });
-
         this.load();
 
         setInterval(() => {
@@ -243,26 +192,14 @@ export default {
         return {
             metric: null,
             metrics: null,
-
-            circle1: null,
-            circle5: null,
-            circle15: null,
         };
     },
 
     methods: {
         load() {
-            axios.get('/api/v2/server-metrics?format=all').then((response) => {
-                this.metric = response.data[0]
+            axios.get('/api/v2/servers/' + this.data.id + '/server-metrics?format=all').then((response) => {
                 this.metrics = response.data;
-
-                this.circle1.update(this.metric.load_1);
-                this.circle5.update(this.metric.load_5);
-                this.circle15.update(this.metric.load_15);
-
-                this.circle1.updateColors(['#27272a', this.getColour(this.metric.load_1)]);
-                this.circle5.updateColors(['#27272a', this.getColour(this.metric.load_5)]);
-                this.circle15.updateColors(['#27272a', this.getColour(this.metric.load_15)]);
+                this.metric = response.data[0];
             });
         },
 

@@ -113,7 +113,7 @@
 
     <div class="w-full flex flex-wrap">
         <div v-for="server in servers">
-            <ServerCard :data="server" :client="server.slug">{{server.title}}</ServerCard>
+            <ServerCard :data="server" />
         </div>
     </div>
 </template>

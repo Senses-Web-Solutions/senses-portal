@@ -22,7 +22,7 @@ CONNECTED=$(ping -c 1 google.com &> /dev/null && echo "true" || echo "false")
 # HOSTNAME, IP_ADDRESS & OS
 
 HOSTNAME=$(hostname)
-IP_ADDRESS=$(curl -s ifconfig.me/ip)
+IP_ADDRESS=$(hostname -I | awk '{print $1}')
 OS=$(uname -o)
 DISTRO=$(source /etc/os-release | echo $ID)
 DISTRO_VERSION=$(source /etc/os-release | echo $VERSION_ID)

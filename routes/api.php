@@ -80,6 +80,8 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
     //Statuses
     Route::get('status-groups/{status_group}/statuses', [StatusController::class, 'statusGroupStatuses']);
 
+    //Servers
+    Route::get('servers/{server}/server-metrics', [ServerMetricController::class, 'serverServerMetrics']);
 });
 
 Route::prefix('v2')->group(function () {
