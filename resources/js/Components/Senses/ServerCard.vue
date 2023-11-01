@@ -44,15 +44,17 @@
                                 <div class="circles-text" style="position: absolute; top: 0px; left: 0px; text-align: center; width: 100%; font-size: 35px; height: 100px; line-height: 100px;"></div>
                             </div>
                         </div>
-                        <div class="circle absolute left-[70px] right-[70px] top-[40px]" id="">
-                            <svg class="text-red-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+
+                        <div class="absolute left-[70px] right-[70px] top-[40px]">
+                            <svg class="transition duration-300" :class="previousMetric && metric.load_15 > previousMetric.load_15 ? 'text-red-400 rotate-180' : 'text-green-400'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75"></path>
                             </svg>
                         </div>
                     </div>
+
                     <div v-if="metric" class="items-left text-left mt-1 space-y-4">
                         <div>
-                            <div class="text-sm text-zinc-500">Space: {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_total) / 10000) / 100 }}Gb </div>
+                            <div class="text-sm text-zinc-500">Disk: {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_total) / 10000) / 100 }}Gb </div>
                             <div class="w-100 rounded-full h-1.5 mt-1 fill-red-400 bg-zinc-200" :style="'fill: ' + this.getColour(metric.disk_used / (metric.disk_total))">
                                 <svg width="100%" viewBox="0 0 400 13" xmlns="http://www.w3.org/2000/svg">
                                     <rect :width="(metric.disk_used * 100) / (metric.disk_total) + '%'" height="100%" rx="3"></rect>
@@ -60,7 +62,7 @@
                             </div>
                         </div>
                         <div>
-                            <div class="text-sm text-zinc-500">Volume: {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_total) / 10000) / 100 }}Gb </div>
+                            <div class="text-sm text-zinc-500">Volume 1: {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_total) / 10000) / 100 }}Gb </div>
                             <div class="w-100 rounded-full h-1.5 mt-1 fill-green-400 bg-zinc-200" :style="'fill: ' + this.getColour(metric.disk_used / (metric.disk_total))">
                                 <svg width="100%" viewBox="0 0 400 13" xmlns="http://www.w3.org/2000/svg">
                                     <rect :width="(metric.disk_used * 100) / (metric.disk_total) + '%'" height="100%" rx="3"></rect>
@@ -175,6 +177,7 @@ export default {
     data() {
         return {
             metric: null,
+            previousMetric: null,
 
             circle1: null,
             circle5: null,
@@ -186,6 +189,7 @@ export default {
         load() {
             axios.get('/api/v2/servers/' + this.data.id + '/server-metrics?format=all').then((response) => {
                 this.metric = response.data[0];
+                this.previousMetric = response.data[1] ?? null;
 
                 this.circle1.update(this.metric.load_1);
                 this.circle5.update(this.metric.load_5);
