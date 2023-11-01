@@ -14,19 +14,19 @@ class Server extends Model
 {
     use SensesModel;
 
-    
+
     protected $fillable = [
 		'app_id',
-		'title', 
-		'hostname', 
-		'ip_address', 
-		'os', 
-		'architecture', 
-		'cpu_cores', 
-		'cpu_threads', 
-		'distro', 
-		'distro_version', 
-		'kernel', 
+		'title',
+		'hostname',
+		'ip_address',
+		'os',
+		'architecture',
+		'cpu_cores',
+		'cpu_threads',
+		'distro',
+		'distro_version',
+		'kernel',
 		'kernel_version'
 	];
 
@@ -36,7 +36,7 @@ class Server extends Model
 		'updated_at' => DateTime::class,
 		'deleted_at' => DateTime::class,
 		'hidden_at' => DateTime::class,
-		
+
 	];
 
     public function scopeTableSearch($query, $search) {
@@ -65,30 +65,30 @@ class Server extends Model
     public function allowedFilters() {
         return $this->defineFilters([
             'id' => 'integer',
-            'title' => 'text', 
-			'hostname' => 'text', 
-			'ip_address' => 'text', 
-			'os' => 'text', 
-			'architecture' => 'text', 
-			'cpu_cores' => 'text', 
-			'cpu_threads' => 'text', 
-			'distro' => 'text', 
-			'distro_version' => 'text', 
-			'kernel' => 'text', 
+            'title' => 'text',
+			'hostname' => 'text',
+			'ip_address' => 'text',
+			'os' => 'text',
+			'architecture' => 'text',
+			'cpu_cores' => 'text',
+			'cpu_threads' => 'text',
+			'distro' => 'text',
+			'distro_version' => 'text',
+			'kernel' => 'text',
 			'kernel_version' => 'text'
         ]);
     }
 
 	public function company()
 	{
-		abort(501, 'Server: Company Not implemented');
-		//return $this->belongsTo(Company::class);
+		// abort(501, 'Server: Company Not implemented');
+		return $this->belongsTo(Company::class);
 	}
 
 	public function serverMetrics()
 	{
-		abort(501, 'Server: Server Metrics Not implemented');
-		//return $this->hasMany(ServerMetric::class);
+		// abort(501, 'Server: Server Metrics Not implemented');
+		return $this->hasMany(ServerMetric::class);
 	}
 
 }
