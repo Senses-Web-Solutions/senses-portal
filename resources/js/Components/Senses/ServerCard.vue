@@ -198,11 +198,11 @@ export default {
         },
 
         getColour(load) {
-            if (load <= 0.33) {
+            if (load <= 0.50) {
                 return '#4ade80';
             }
 
-            if (load <= 0.66) {
+            if (load <= 0.90) {
                 return '#fbbf24';
             }
 
