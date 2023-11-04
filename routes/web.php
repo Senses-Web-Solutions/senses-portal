@@ -15,6 +15,7 @@ use App\Http\Controllers\Web\CompanyController;
 use App\Http\Controllers\Web\ServerController;
 use App\Http\Controllers\Web\RevenueController;
 use App\Http\Controllers\Web\SubscriptionController;
+use App\Http\Controllers\Web\CommunicationLogController;
 // ----- GENERATOR 1 -----
 
 /*
@@ -43,6 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('servers', ServerController::class)->only('index', 'show');
 		Route::resource('revenues', RevenueController::class)->only('index', 'show');
 		Route::resource('subscriptions', SubscriptionController::class)->only('index', 'show');
+		Route::resource('communication-logs', CommunicationLogController::class)->only('index', 'show');
 		// ----- GENERATOR 2 -----
 
 	//Abilities

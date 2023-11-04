@@ -67,6 +67,8 @@ import RevenueTable from './Senses/Revenues/RevenueTable.vue';
 import RevenueForm from './Senses/Revenues/RevenueForm.vue';
 import SubscriptionTable from './Senses/Subscriptions/SubscriptionTable.vue';
 import SubscriptionForm from './Senses/Subscriptions/SubscriptionForm.vue';
+import CommunicationLogTable from './Senses/CommunicationLogs/CommunicationLogTable.vue';
+import CommunicationLogForm from './Senses/CommunicationLogs/CommunicationLogForm.vue';
 // ----- GENERATOR A -----
 
 export {
@@ -141,5 +143,7 @@ export {
 	RevenueForm,
 	SubscriptionTable,
 	SubscriptionForm,
+	CommunicationLogTable,
+	CommunicationLogForm,
 	// ----- GENERATOR B -----
 }

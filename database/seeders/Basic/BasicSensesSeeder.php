@@ -19,6 +19,7 @@ class BasicSensesSeeder extends Seeder
 
  			BasicRevenuesTableSeeder::class,
  			BasicSubscriptionsTableSeeder::class,
+ 			BasicCommunicationLogsTableSeeder::class,
  			// ----- GENERATOR -----
         ]);
     }

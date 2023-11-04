@@ -32,6 +32,8 @@ use App\Observers\RevenueObserver;
 use App\Models\Revenue;
 use App\Observers\SubscriptionObserver;
 use App\Models\Subscription;
+use App\Observers\CommunicationLogObserver;
+use App\Models\CommunicationLog;
 // ----- GENERATOR 1 -----
 
 class AppServiceProvider extends ServiceProvider
@@ -60,6 +62,7 @@ class AppServiceProvider extends ServiceProvider
 		Server::observe(ServerObserver::class);
 		Revenue::observe(RevenueObserver::class);
 		Subscription::observe(SubscriptionObserver::class);
+		CommunicationLog::observe(CommunicationLogObserver::class);
 		// ----- GENERATOR 2 -----
 
         View::composer('*', function ($view) {

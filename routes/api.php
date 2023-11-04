@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\ServerMetricController;
 use App\Http\Controllers\Api\RevenueController;
 use App\Http\Controllers\Api\SubscriptionController;
+use App\Http\Controllers\Api\CommunicationLogController;
 // ----- GENERATOR 1 -----
 
 /*
@@ -50,6 +51,7 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
 		'servers' => ServerController::class,
 		'revenues' => RevenueController::class,
 		'subscriptions' => SubscriptionController::class,
+		'communication-logs' => CommunicationLogController::class,
 		// ----- GENERATOR 2 -----
     ]);
 
