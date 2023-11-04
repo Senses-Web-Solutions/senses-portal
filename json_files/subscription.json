@@ -1,0 +1,199 @@
+{
+    "name": "server",
+    "namePlural": "servers",
+
+    "frontend": true,
+
+    "traits": [],
+
+    "fields": [
+        {
+            "name": "company_id",
+            "type": "relationship",
+            "nullable": false,
+            "default": null,
+            "index": true,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": "api/v2/companies"
+        },
+
+        {
+            "name": "revenue_date",
+            "type": "dateTime",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "reference",
+            "type": "string",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [
+                255
+            ],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "description",
+            "type": "longText",
+            "nullable": true,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": null,
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "amount",
+            "type": "money",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "quantity",
+            "type": "double",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [ 10, 2],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "vat",
+            "type": "double",
+            "nullable": false,
+            "default": 0,
+            "index": false,
+            "unique": false,
+            "params": [ 10, 2],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "sub_total",
+            "type": "money",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "vat_total",
+            "type": "money",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        },
+        {
+            "name": "total",
+            "type": "money",
+            "nullable": false,
+            "default": null,
+            "index": false,
+            "unique": false,
+            "params": [],
+            "options": [],
+            "url": null
+        }
+    ],
+
+    "fillables": [
+        "revenue_date",
+        "reference",
+        "description",
+        "amount",
+        "quantity",
+        "vat",
+        "sub_total",
+        "vat_total",
+        "total"
+    ],
+
+    "casts": {
+        "revenue_date":"datetime",
+        "amount":"float",
+        "quantity":"float",
+        "vat":"float",
+        "sub_total":"float",
+        "vat_total":"float",
+        "total":"float"
+    },
+
+    "allowedSorts": [
+        "id",
+        "revenue_date",
+        "reference",
+        "description",
+        "amount",
+        "quantity",
+        "vat",
+        "sub_total",
+        "vat_total",
+        "total"
+    ],
+
+    "allowedEmbeds": [],
+
+    "allowedFields": [
+        "id",
+        "revenue_date",
+        "reference",
+        "description",
+        "amount",
+        "quantity",
+        "vat",
+        "sub_total",
+        "vat_total",
+        "total"
+    ],
+
+    "relationshipFields": [],
+
+    "hasOne": [],
+
+    "belongsTo": [
+        "company"
+    ],
+
+    "belongsToMany": [],
+
+    "hasMany": [],
+
+    "hasOneThrough": [],
+    "hasManyThrough": [],
+
+    "morphMany": {},
+    "morphToMany": {},
+    "morphTo": [],
+    "morphOne": [],
+    "morphedByMany": [],
+
+    "seeder": 0,
+
+    "revisionModel": null
+}
