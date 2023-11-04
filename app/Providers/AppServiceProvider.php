@@ -28,6 +28,8 @@ use App\Observers\ServerMetricObserver;
 use App\Models\ServerMetric;
 use App\Observers\ServerObserver;
 use App\Models\Server;
+use App\Observers\RevenueObserver;
+use App\Models\Revenue;
 // ----- GENERATOR 1 -----
 
 class AppServiceProvider extends ServiceProvider
@@ -54,6 +56,7 @@ class AppServiceProvider extends ServiceProvider
 		Company::observe(CompanyObserver::class);
 		ServerMetric::observe(ServerMetricObserver::class);
 		Server::observe(ServerObserver::class);
+		Revenue::observe(RevenueObserver::class);
 		// ----- GENERATOR 2 -----
 
         View::composer('*', function ($view) {

@@ -13,6 +13,7 @@ use App\Http\Controllers\Web\TagGroupController;
 use App\Http\Controllers\Web\AbilityGroupController;
 use App\Http\Controllers\Web\CompanyController;
 use App\Http\Controllers\Web\ServerController;
+use App\Http\Controllers\Web\RevenueController;
 // ----- GENERATOR 1 -----
 
 /*
@@ -39,6 +40,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('ability-groups', AbilityGroupController::class)->only('index', 'show');
 	Route::resource('companies', CompanyController::class)->only('index', 'show');
 	Route::resource('servers', ServerController::class)->only('index', 'show');
+		Route::resource('revenues', RevenueController::class)->only('index', 'show');
 		// ----- GENERATOR 2 -----
 
 	//Abilities
