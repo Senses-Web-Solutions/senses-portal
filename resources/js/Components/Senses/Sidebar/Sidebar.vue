@@ -12,6 +12,7 @@
 				<SidebarItem title="Companies" v-if="user().can('list-company')" to="/companies" :active="Route.is('companies', 'any')" />
 				<SidebarItem title="Servers" v-if="user().can('list-server')" to="/servers" :active="Route.is('servers', 'any')" />
 				<SidebarItem title="Revenues" v-if="user().can('list-revenue')" to="/revenues" :active="Route.is('revenues', 'any')" />
+				<SidebarItem title="Subscriptions" v-if="user().can('list-subscription')" to="/subscriptions" :active="Route.is('subscriptions', 'any')" />
 				<!-- ---------- GENERATOR ---------- -->
 
                 <SidebarGroup title="Intel">

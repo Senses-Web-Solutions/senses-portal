@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\ServerController;
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\ServerMetricController;
 use App\Http\Controllers\Api\RevenueController;
+use App\Http\Controllers\Api\SubscriptionController;
 // ----- GENERATOR 1 -----
 
 /*
@@ -48,6 +49,7 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
 		'server-metrics' => ServerMetricController::class,
 		'servers' => ServerController::class,
 		'revenues' => RevenueController::class,
+		'subscriptions' => SubscriptionController::class,
 		// ----- GENERATOR 2 -----
     ]);
 

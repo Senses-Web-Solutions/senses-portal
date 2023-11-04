@@ -117,6 +117,7 @@ class GenerateAbilities
 			'server-metric',
 			'server',
 			'revenue',
+			'subscription',
 			// ----- GENERATOR -----
             //PLEASE remember to add a comma to the above, or the generator will get angry!
         ];
