@@ -1,6 +1,6 @@
 {
-    "name": "server",
-    "namePlural": "servers",
+    "name": "revenue",
+    "namePlural": "revenues",
 
     "frontend": true,
 

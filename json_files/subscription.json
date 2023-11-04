@@ -1,6 +1,6 @@
 {
-    "name": "server",
-    "namePlural": "servers",
+    "name": "subscription",
+    "namePlural": "subscriptions",
 
     "frontend": true,
 
@@ -20,8 +20,8 @@
         },
 
         {
-            "name": "revenue_date",
-            "type": "dateTime",
+            "name": "type",
+            "type": "string",
             "nullable": false,
             "default": null,
             "index": false,
@@ -31,21 +31,8 @@
             "url": null
         },
         {
-            "name": "reference",
-            "type": "string",
-            "nullable": false,
-            "default": null,
-            "index": false,
-            "unique": false,
-            "params": [
-                255
-            ],
-            "options": [],
-            "url": null
-        },
-        {
-            "name": "description",
-            "type": "longText",
+            "name": "data",
+            "type": "jsonb",
             "nullable": true,
             "default": null,
             "index": false,
@@ -53,123 +40,28 @@
             "params": null,
             "options": [],
             "url": null
-        },
-        {
-            "name": "amount",
-            "type": "money",
-            "nullable": false,
-            "default": null,
-            "index": false,
-            "unique": false,
-            "params": [],
-            "options": [],
-            "url": null
-        },
-        {
-            "name": "quantity",
-            "type": "double",
-            "nullable": false,
-            "default": null,
-            "index": false,
-            "unique": false,
-            "params": [ 10, 2],
-            "options": [],
-            "url": null
-        },
-        {
-            "name": "vat",
-            "type": "double",
-            "nullable": false,
-            "default": 0,
-            "index": false,
-            "unique": false,
-            "params": [ 10, 2],
-            "options": [],
-            "url": null
-        },
-        {
-            "name": "sub_total",
-            "type": "money",
-            "nullable": false,
-            "default": null,
-            "index": false,
-            "unique": false,
-            "params": [],
-            "options": [],
-            "url": null
-        },
-        {
-            "name": "vat_total",
-            "type": "money",
-            "nullable": false,
-            "default": null,
-            "index": false,
-            "unique": false,
-            "params": [],
-            "options": [],
-            "url": null
-        },
-        {
-            "name": "total",
-            "type": "money",
-            "nullable": false,
-            "default": null,
-            "index": false,
-            "unique": false,
-            "params": [],
-            "options": [],
-            "url": null
         }
     ],
 
     "fillables": [
-        "revenue_date",
-        "reference",
-        "description",
-        "amount",
-        "quantity",
-        "vat",
-        "sub_total",
-        "vat_total",
-        "total"
+        "type",
+        "meta"
     ],
 
     "casts": {
-        "revenue_date":"datetime",
-        "amount":"float",
-        "quantity":"float",
-        "vat":"float",
-        "sub_total":"float",
-        "vat_total":"float",
-        "total":"float"
+        "meta":"array"
     },
 
     "allowedSorts": [
         "id",
-        "revenue_date",
-        "reference",
-        "description",
-        "amount",
-        "quantity",
-        "vat",
-        "sub_total",
-        "vat_total",
-        "total"
+        "type"
     ],
 
     "allowedEmbeds": [],
 
     "allowedFields": [
         "id",
-        "revenue_date",
-        "reference",
-        "description",
-        "amount",
-        "quantity",
-        "vat",
-        "sub_total",
-        "vat_total",
-        "total"
+        "type"
     ],
 
     "relationshipFields": [],
