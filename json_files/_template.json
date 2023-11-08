@@ -1,74 +1,12 @@
 {
-    "name": "empty",
-    "namePlural": "empties",
+    "name": "template",
+    "namePlural": "templates",
 
     "frontend": true,
 
-    "traits": [
-        "HasComments",
-        "HasFiles",
-        "HasStatus",
-        "HasTags",
-        "HasTextColour"
-    ],
+    "traits": [],
 
-    "fields": [
-        {
-            "name": "string",
-            "type": "string",
-            "nullable": false,
-            "default": null,
-            "index": false,
-            "unique": false,
-            "params": [255],
-            "options": [],
-            "url": null
-        },
-        {
-            "name": "integer",
-            "type": "integer",
-            "nullable": false,
-            "default": null,
-            "index": false,
-            "unique": false,
-            "params": null,
-            "options": [],
-            "url": null
-        },
-        {
-            "name": "longText",
-            "type": "longText",
-            "nullable": false,
-            "default": null,
-            "index": false,
-            "unique": false,
-            "params": null,
-            "options": [],
-            "url": null
-        },
-        {
-            "name": "colour",
-            "type": "colour",
-            "nullable": false,
-            "default": null,
-            "index": false,
-            "unique": false,
-            "params": null,
-            "options": [],
-            "url": null
-        },
-        {
-            "name": "datetime",
-            "type": "datetime",
-            "nullable": true,
-            "default": null,
-            "index": false,
-            "unique": false,
-            "params": null,
-            "options": [],
-            "url": null
-        }
-    ],
+    "fields": [],
 
     "fillables": [],
     "casts": {},
