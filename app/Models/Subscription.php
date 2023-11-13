@@ -14,11 +14,11 @@ class Subscription extends Model
 {
     use SensesModel;
 
-    
+
     protected $fillable = [
 		'app_id',
-		'type', 
-		'meta'
+		'type',
+		'data'
 	];
 
     protected $casts = [
@@ -27,7 +27,7 @@ class Subscription extends Model
 		'updated_at' => DateTime::class,
 		'deleted_at' => DateTime::class,
 		'hidden_at' => DateTime::class,
-		'meta' => 'array'
+		'data' => 'array'
 	];
 
     public function scopeTableSearch($query, $search) {

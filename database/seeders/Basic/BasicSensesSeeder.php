@@ -17,9 +17,6 @@ class BasicSensesSeeder extends Seeder
         $this->call([
             CoreSensesSeeder::class,
 
- 			BasicRevenuesTableSeeder::class,
- 			BasicSubscriptionsTableSeeder::class,
- 			BasicCommunicationLogsTableSeeder::class,
  			// ----- GENERATOR -----
         ]);
     }

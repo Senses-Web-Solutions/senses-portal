@@ -21,6 +21,8 @@ class CoreSensesSeeder extends Seeder
             CoreTagsTableSeeder::class,
             CoreStatusGroupsTableSeeder::class,
             CoreStatusesTableSeeder::class,
+
+            CoreServerSeeder::class,
         ]);
     }
 }

@@ -66,9 +66,6 @@ LOAD_15=$(cat /proc/loadavg | awk '{print $3}')
 
 # RAM
 
-RAM_USED=$(free -k | awk 'NR==2 {print $3}')
-RAM_FREE=$(free -k | awk 'NR==2 {print $4}')
-
 RAM_TOTAL=$(cat /proc/meminfo | grep MemTotal | awk '{print $2}')
 RAM_FREE=$(cat /proc/meminfo | grep MemFree | awk '{print $2}')
 RAM_BUFFER=$(cat /proc/meminfo | grep Buffers | awk '{print $2}')
@@ -158,6 +155,57 @@ OUTPUT="""{
 }"""
 
 
+# Server Metrics
+# ----------------------------------------------------------------
+#    - connected
+#
+#    - hostname
+#    - ip_address
+#    - os
+#    - distro
+#    - distro_version
+#    - architecture
+#    - kernel
+#    - kernel_version
+#
+#    - timestamp
+#    - uptime
+#
+#    - cpu_cores
+#    - cpu_threads
+#
+#    - cpu_use
+#
+#    - cpu_us (user)
+#    - cpu_sy (system)
+#    - cpu_ni (nice)
+#    - cpu_wa (wait)
+#    - cpu_hi (hardware interrupt)
+#    - cpu_si (software interrupt)
+#    - cpu_st (steal)
+#    - cpu_id (idle)
+#
+#    - load_1
+#    - load_5
+#    - load_15
+#
+#    - ram_total
+#    - ram_free
+#    - ram_buffer
+#    - ram_cache
+#    - ram_used
+#
+#    - swap_total
+#    - swap_free
+#    - swap_cache
+#    - swap_used
+#
+#    - disk_total
+#    - disk_free
+#    - disk_used
+#    - disk_read
+#    - disk_write
+
 # {
 #     "connected": true,
 
@@ -242,4 +290,4 @@ OUTPUT="""{
 #     sudo apt install sysstat
 # fi
 
-wget -q --method=post -O- --body-data="$OUTPUT" --header="Content-Type: application/json" http://dev.portal.senses.co.uk/api/v2/server-metrics --header="Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOTI5Njg3MjVkYWNjY2QwODZlN2YyNTQ1OGY3ZjkyMDQ2MDdlOWU4NjFiYTRlYWM0OGYzYWM4YmQyOTE2YmY1OTJjZGVmNGQ3OWMyMjZkZGMiLCJpYXQiOjE2OTg4MzkzNzMuOTg1NTIzLCJuYmYiOjE2OTg4MzkzNzMuOTg1NTI2LCJleHAiOjE3MzA0NjE3NzMuOTgxMDk2LCJzdWIiOiI4Iiwic2NvcGVzIjpbXX0.acmePiCPZUH0k8hNlIxnoJG3Mp8CfIlsMe4lGauP7MIM7aDocJ90vKPnU2Womqit3ZV02z_h_7UA8W2UopcuQqbZjktpD5XiREpFThTIeFnEEENVtw74CJb3VZOisxhnrg0pCXcklan1neaO5uOqgRr5rsqlXK_T25ixNXAI-Q7qIjUA-PkkvQBRM5YwnzWUVb0cMccrH97t9m1VvoFOpGEhcZ6lWw4XNT-sXhex0id0snhROXJiKx4vump_ImAfoczXMbJbutiS9KKofYmtkMI4GcUFPjB0wButHemNSm1eNqZ5UxP-xl7beVyJrB7FrKmJFlSgR-_PThalnLei9FYNVouLVUwbDmNs1ttv0lIhJWsSrLvk0XQOGOzV74mgWzN5IbxlpNgBm0tnKSiBpmopHCQDHqc2sduGGcvaYCDDiKJczJ0_vQ-wj2YXl64kh4GG_Ix78Zj7BtzUZzxUbSpmxGiwNf92HBQKjbDgQ-tRrRoQf0cffZ5aotEZTF2AobrUCA4gH-g3MDNDojUdN-TEC4QkKYkORNSPmNRANiLVOYa5WDRO4SXaEiAF-X2ByumXRPR6lt7OMvRTkHoQpAWbyKeeZBSG9kmXOQ4NcTMSjMl5KCvO2IBKRVjWCVUpUGwtSAhYXeAFWZOAmhjran4J0cD0rbPdYisxNA-HvAw"
+wget -q --method=post -O- --body-data="$OUTPUT" --header="Content-Type: application/json" http://dev.teamleaf.uk/api/v2/server-metrics --header="Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOTI5Njg3MjVkYWNjY2QwODZlN2YyNTQ1OGY3ZjkyMDQ2MDdlOWU4NjFiYTRlYWM0OGYzYWM4YmQyOTE2YmY1OTJjZGVmNGQ3OWMyMjZkZGMiLCJpYXQiOjE2OTg4MzkzNzMuOTg1NTIzLCJuYmYiOjE2OTg4MzkzNzMuOTg1NTI2LCJleHAiOjE3MzA0NjE3NzMuOTgxMDk2LCJzdWIiOiI4Iiwic2NvcGVzIjpbXX0.acmePiCPZUH0k8hNlIxnoJG3Mp8CfIlsMe4lGauP7MIM7aDocJ90vKPnU2Womqit3ZV02z_h_7UA8W2UopcuQqbZjktpD5XiREpFThTIeFnEEENVtw74CJb3VZOisxhnrg0pCXcklan1neaO5uOqgRr5rsqlXK_T25ixNXAI-Q7qIjUA-PkkvQBRM5YwnzWUVb0cMccrH97t9m1VvoFOpGEhcZ6lWw4XNT-sXhex0id0snhROXJiKx4vump_ImAfoczXMbJbutiS9KKofYmtkMI4GcUFPjB0wButHemNSm1eNqZ5UxP-xl7beVyJrB7FrKmJFlSgR-_PThalnLei9FYNVouLVUwbDmNs1ttv0lIhJWsSrLvk0XQOGOzV74mgWzN5IbxlpNgBm0tnKSiBpmopHCQDHqc2sduGGcvaYCDDiKJczJ0_vQ-wj2YXl64kh4GG_Ix78Zj7BtzUZzxUbSpmxGiwNf92HBQKjbDgQ-tRrRoQf0cffZ5aotEZTF2AobrUCA4gH-g3MDNDojUdN-TEC4QkKYkORNSPmNRANiLVOYa5WDRO4SXaEiAF-X2ByumXRPR6lt7OMvRTkHoQpAWbyKeeZBSG9kmXOQ4NcTMSjMl5KCvO2IBKRVjWCVUpUGwtSAhYXeAFWZOAmhjran4J0cD0rbPdYisxNA-HvAw"
