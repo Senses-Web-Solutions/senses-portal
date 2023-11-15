@@ -42,10 +42,10 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('ability-groups', AbilityGroupController::class)->only('index', 'show');
 	Route::resource('companies', CompanyController::class)->only('index', 'show');
 	Route::resource('servers', ServerController::class)->only('index', 'show');
-		Route::resource('revenues', RevenueController::class)->only('index', 'show');
-		Route::resource('subscriptions', SubscriptionController::class)->only('index', 'show');
-		Route::resource('communication-logs', CommunicationLogController::class)->only('index', 'show');
-		// ----- GENERATOR 2 -----
+	Route::resource('revenues', RevenueController::class)->only('index', 'show');
+	Route::resource('subscriptions', SubscriptionController::class)->only('index', 'show');
+	Route::resource('communication-logs', CommunicationLogController::class)->only('index', 'show');
+	// ----- GENERATOR 2 -----
 
 	//Abilities
 	Route::get('abilities/reseed', [AbilityController::class, 'index']);

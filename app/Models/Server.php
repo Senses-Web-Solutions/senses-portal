@@ -62,7 +62,8 @@ class Server extends Model
         return ['id', 'title', 'hostname', 'ip_address', 'os', 'architecture', 'cpu_cores', 'cpu_threads', 'distro', 'distro_version', 'kernel', 'kernel_version'];
     }
 
-    public function allowedFilters() {
+    public function allowedFilters()
+	{
         return $this->defineFilters([
             'id' => 'integer',
             'title' => 'text',
@@ -91,6 +92,10 @@ class Server extends Model
 		return $this->hasMany(ServerMetric::class);
 	}
 
+	public function apiTokens()
+	{
+		return $this->hasMany(ApiToken::class);
+	}
 }
 
 //Generated 01-11-2023 11:27:41

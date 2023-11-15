@@ -37,6 +37,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware(['auth:server'])->group(function () {
+    Route::sensesApiResources([
+        'server-metrics' => ServerMetricController::class,
+    ]);
+});
+
 Route::middleware(['auth:api'])->prefix('v2')->group(function () {
     Route::sensesApiResources([
         'tags' => TagController::class,
@@ -47,7 +53,6 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
         'users' => UserController::class,
         'ability-groups' => AbilityGroupController::class,
 		'companies' => CompanyController::class,
-		'server-metrics' => ServerMetricController::class,
 		'servers' => ServerController::class,
 		'revenues' => RevenueController::class,
 		'subscriptions' => SubscriptionController::class,

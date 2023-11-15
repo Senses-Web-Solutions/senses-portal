@@ -34,7 +34,7 @@ KERNEL_VERSION=$(uname -r)
 # TIMESTAMP & UPTIME
 
 TIMESTAMP=$EPOCHSECONDS
-UPTIME=$(cat /proc/uptime | awk '{print $1}')
+UPTIME=$(cat /proc/uptime | awk -F "." '{print $1}')
 
 
 # CPU_CORES & THREADS

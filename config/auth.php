@@ -44,6 +44,10 @@ return [
             'driver' => 'passport',
             'provider' => 'users',
         ],
+        'server' => [
+            'driver' => 'server-token',
+            'provider' => 'servers',
+        ],
     ],
 
     /*
@@ -67,6 +71,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'servers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Server::class,
         ],
 
         // 'users' => [

@@ -59,8 +59,10 @@ class ServerMetricController extends Controller
      */
     public function store(CreateServerMetricRequest $request, CreateServerMetric $createServerMetric)
     {
-        logger($request->all());
-        return $this->respond($createServerMetric->execute($request->all()));
+        $data = $request->all();
+        $data['server_id'] = $request->user()->id; // user() is actually the Server model that has the API Key
+
+        return $this->respond($createServerMetric->execute($data));
     }
 
     /**
