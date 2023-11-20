@@ -84,37 +84,25 @@ export default {
             }
         });
 
-        if (!this.getCookie('theme') && window.matchMedia("(prefers-color-scheme: dark)")) {
-            this.setCookie('theme', 'dark');
+        if (!window.getCookie('theme') && window.matchMedia("(prefers-color-scheme: dark)")) {
+            window.setCookie('theme', 'dark');
         }
 
-        this.darkMode = this.getCookie('theme') == 'dark';
+        this.darkMode = window.getCookie('theme') == 'dark';
     },
 
     methods: {
         capitalize,
-
-        setCookie(name, value) {
-            document.cookie = name + "=" + value + ";" + "expires=Fri, 31 Dec 9999 23:59:59 UTC";
-        },
-
-        removeCookie(name, value) {
-            document.cookie = name + "=" + value + ";" + "expires=Thu, 01 Jan 1970 00:00:00 UTC";
-        },
-
-        getCookie(name) {
-            return Object.fromEntries(document.cookie.split('; ').map(cookie => { return cookie.split('=') }))[name] ?? '';
-        }
     },
 
     watch: {
         darkMode(v) {
             if (v) {
                 document.getElementById('app').classList.add('dark');
-                this.setCookie('theme', 'dark');
+                window.setCookie('theme', 'dark');
             } else {
                 document.getElementById('app').classList.remove('dark');
-                this.setCookie('theme', 'light');
+                window.setCookie('theme', 'light');
             }
         }
     },

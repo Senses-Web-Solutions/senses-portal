@@ -86,6 +86,28 @@ window.onerror = throttle((msg, errUrl, lineNo, columnNo, error) => {
 window.user = user;
 window.SENSES_CLIENT = client; //so we can check what js is using.
 
+
+/* ##################################################### Cookies #################################################### */
+
+function setCookie(name, value) {
+    document.cookie = name + "=" + value + ";" + "expires=Fri, 31 Dec 9999 23:59:59 UTC";
+}
+
+function removeCookie(name, value) {
+    document.cookie = name + "=" + value + ";" + "expires=Thu, 01 Jan 1970 00:00:00 UTC";
+}
+
+function getCookie(name) {
+    return Object.fromEntries(document.cookie.split('; ').map(cookie => { return cookie.split('=') }))[name] ?? '';
+}
+
+window.setCookie = setCookie;
+window.removeCookie = removeCookie;
+window.getCookie = getCookie;
+
+/* ################################################################################################################## */
+
+
 const app = createApp({
     name: 'CommunityInformation',
     components: {
