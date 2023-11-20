@@ -22,6 +22,9 @@ class ServerMetricCreated implements ShouldBroadcastNow
 
     public function broadcastOn()
     {
-        return [];
+        return [
+            new PrivateChannel('server-metrics.' . $this->serverMetric->id . '.main'),
+            new PrivateChannel('servers.' . $this->serverMetric->server_id . '.server-metrics')
+        ];
     }
 }

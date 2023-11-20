@@ -4,6 +4,7 @@
             <div class="flex flex-1 flex-col px-1">
                 <div class="items-center w-full text-zinc-600">
                     <span class="text-md text-zinc-700 inline-flex items-center gap-x-1.5 py-0 align-middle font-normal">
+                        <!-- Online Indicator -->
                         <svg class="fill-green-500 h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
                             <circle cx="3" cy="3" r="3"></circle>
                         </svg>
@@ -12,53 +13,43 @@
                             {{ data.title }}
                         </div>
                     </span>
+
                     <SmallText>{{ data.ip_address }}</SmallText>
                 </div>
 
                 <div class="py-5">
                     <div class="h-40 text-center mx-auto relative">
-                        <div class="circle absolute left-0 right-0" :id="'circles-load1-' + this.data.id">
-                            <div class="circles-wrp text-zinc-200 dark:text-zinc-100" style="position: relative; display: inline-block;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="140" height="140">
-                                    <path fill="transparent" stroke="currentColor" stroke-width="8" d="M 69.98655756855612 4.0000013689315495 A 66 66 0 1 1 69.90832732408728 4.000063665784566 Z"></path>
-                                    <path fill="transparent" stroke="#f87171" stroke-width="8" d="M 69.98655756855612 4.0000013689315495 A 66 66 0 1 1 20.12413963534663 26.27643167846428 " class="circles-valueStroke"></path>
-                                </svg>
-                                <div class="circles-text" style="position: absolute; top: 0px; left: 0px; text-align: center; width: 100%; font-size: 49px; height: 140px; line-height: 140px;"></div>
-                            </div>
-                        </div>
-                        <div class="circle absolute left-0 right-0 top-[10px]" :id="'circles-load5-' + this.data.id">
-                            <div class="circles-wrp text-zinc-200 dark:text-zinc-100" style="position: relative; display: inline-block;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120">
-                                    <path fill="transparent" stroke="currentColor" stroke-width="8" d="M 59.98859430059307 4.00000116151768 A 56 56 0 1 1 59.92221712346799 4.0000540194535645 Z"></path>
-                                    <path fill="transparent" stroke="#4ade80" stroke-width="8" d="M 59.98859430059307 4.00000116151768 A 56 56 0 0 1 98.28619947769383 19.132324147876503 " class="circles-valueStroke"></path>
-                                </svg>
-                                <div class="circles-text" style="position: absolute; top: 0px; left: 0px; text-align: center; width: 100%; font-size: 42px; height: 120px; line-height: 120px;"></div>
-                            </div>
-                        </div>
-                        <div class="circle absolute left-0 right-0 top-[20px]" :id="'circles-load15-' + this.data.id">
-                            <div class="circles-wrp text-zinc-200 dark:text-zinc-100" style="position: relative; display: inline-block;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-                                    <path fill="transparent" stroke="currentColor" stroke-width="8" d="M 49.99063103263002 4.000000954103811 A 46 46 0 1 1 49.93610692284871 4.00004437312257 Z"></path>
-                                    <path fill="transparent" stroke="#fbbf24" stroke-width="8" d="M 49.99063103263002 4.000000954103811 A 46 46 0 1 1 11.188199306076577 74.69097257896425 " class="circles-valueStroke"></path>
-                                </svg>
-                                <div class="circles-text" style="position: absolute; top: 0px; left: 0px; text-align: center; width: 100%; font-size: 35px; height: 100px; line-height: 100px;"></div>
-                            </div>
-                        </div>
+                        <!-- Rings -->
+                        <div class="circle absolute left-0 right-0" :id="'load-1-' + this.data.id" />
+                        <div class="circle absolute left-0 right-0 top-[10px]" :id="'load-5-' + this.data.id" />
+                        <div class="circle absolute left-0 right-0 top-[20px]" :id="'load-15-' + this.data.id" />
 
-                        <div class="absolute left-[70px] right-[70px] top-[40px]">
-                            <svg v-if="metric && metric.disk_used / metric.disk_total > 0.9" xmlns="http://www.w3.org/2000/svg" class="text-red-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <!-- Middle Bit -->
+                        <div @click="icon += 1; icon %= 4" class="absolute left-[70px] right-[70px] top-[40px]">
+                            <svg v-if="icon == 0" xmlns="http://www.w3.org/2000/svg" class="text-red-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                             </svg>
-                            <svg v-else class="transition duration-300" :class="previousMetric && metric.load_15 > previousMetric.load_15 ? 'text-red-400 rotate-180' : 'text-green-400'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+
+                            <svg v-if="icon == 1" xmlns="http://www.w3.org/2000/svg" class="text-violet-400 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                                <path d="M21 3v5h-5" />
+                                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                                <path d="M8 16H3v5" />
+                            </svg>
+
+                            <svg v-if="icon == 2 || icon == 3" class="transition duration-300" :class="icon == 3 ? 'text-red-400 rotate-180' : 'text-green-400'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75"></path>
                             </svg>
+                            <!-- <svg v-if="icon == 3" class="transition duration-300" :class="previousMetric && metric.load_15 > previousMetric.load_15 ? 'text-red-400 rotate-180' : 'text-green-400'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75"></path>
+                            </svg> -->
                         </div>
                     </div>
 
                     <div v-if="metric" class="items-left text-left mt-1 space-y-4">
                         <div>
                             <div class="text-sm text-zinc-500">Disk: {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_total) / 10000) / 100 }}Gb </div>
-                            <div class="w-100 rounded-full h-1.5 mt-1 fill-red-400 bg-zinc-200" :style="'fill: ' + this.getColour(metric.disk_used / (metric.disk_total))">
+                            <div class="w-100 rounded-full h-1.5 mt-1 fill-red-400 bg-zinc-300" :style="'fill: ' + this.getColour(metric.disk_used / (metric.disk_total))">
                                 <svg width="100%" viewBox="0 0 400 13" xmlns="http://www.w3.org/2000/svg">
                                     <rect :width="(metric.disk_used * 100) / (metric.disk_total) + '%'" height="100%" rx="3"></rect>
                                 </svg>
@@ -66,7 +57,7 @@
                         </div>
                         <div>
                             <div class="text-sm text-zinc-500">Volume 1: {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_total) / 10000) / 100 }}Gb </div>
-                            <div class="w-100 rounded-full h-1.5 mt-1 fill-green-400 bg-zinc-200" :style="'fill: ' + this.getColour(metric.disk_used / (metric.disk_total))">
+                            <div class="w-100 rounded-full h-1.5 mt-1 fill-green-400 bg-zinc-300" :style="'fill: ' + this.getColour(metric.disk_used / (metric.disk_total))">
                                 <svg width="100%" viewBox="0 0 400 13" xmlns="http://www.w3.org/2000/svg">
                                     <rect :width="(metric.disk_used * 100) / (metric.disk_total) + '%'" height="100%" rx="3"></rect>
                                 </svg>
@@ -75,7 +66,7 @@
                         <div>
                             <div class="text-sm text-zinc-500">RAM: {{ Math.round(metric.ram_used / 10000) / 100 }}Gb / {{ Math.round((metric.ram_total) / 10000) / 100 }}Gb </div>
 
-                            <div class="w-100 rounded-full h-1.5 mt-1 fill-yellow-400 bg-zinc-200" :style="'fill: ' + this.getColour(metric.ram_used / (metric.ram_total))">
+                            <div class="w-100 rounded-full h-1.5 mt-1 fill-yellow-400 bg-zinc-300" :style="'fill: ' + this.getColour(metric.ram_used / (metric.ram_total))">
                                 <svg width="100%" viewBox="0 0 400 13" xmlns="http://www.w3.org/2000/svg">
                                     <rect :width="(metric.ram_used * 100) / (metric.ram_total) + '%'" height="100%" rx="3"></rect>
                                 </svg>
@@ -84,7 +75,7 @@
                         <div>
                             <div class="text-sm text-zinc-500">Swap: {{ Math.round(metric.swap_used / 10000) / 100 }}Gb / {{ Math.round((metric.swap_total) / 10000) / 100 }}Gb </div>
 
-                            <div class="w-100 rounded-full h-1.5 mt-1 fill-green-400 bg-zinc-200" :style="'fill: ' + this.getColour(metric.swap_used / (metric.swap_total))">
+                            <div class="w-100 rounded-full h-1.5 mt-1 fill-green-400 bg-zinc-300" :style="'fill: ' + this.getColour(metric.swap_used / (metric.swap_total))">
                                 <svg width="100%" viewBox="0 0 400 13" xmlns="http://www.w3.org/2000/svg">
                                     <rect :width="(metric.swap_used * 100) / (metric.swap_total) + '%'" height="100%" rx="3"></rect>
                                 </svg>
@@ -103,6 +94,10 @@
 import axios from 'axios';
 import SmallText from '../Ui/Text/SmallText.vue';
 
+import useEcho from '../../../Support/useEcho';
+
+const echo = useEcho();
+
 export default {
     components: {
         SmallText,
@@ -119,62 +114,25 @@ export default {
     },
 
     mounted() {
-        this.circle1 = window.Circles.create({
-            id: 'circles-load1-' + this.data.id,
-            radius: 70,
-            value: 0,
-            maxValue: this.data.cpu_cores,
-            width: 8,
-            text: null,
-            colors: ['#27272a', '#27272a'],
-            duration: 100,
-            wrpClass: 'circles-wrp',
-            textClass: 'circles-text',
-            valueStrokeClass: '',
-            maxValueStrokeClass: 'fill-zinc-900',
-            styleWrapper: true,
-            styleText: true
-        });
+        echo.private(`servers.${this.data.id}.server-metrics`).listen('ServerMetrics\\ServerMetricCreated', ({serverMetric}) => {
+            this.previousMetric = this.metric;
+            this.metric = serverMetric;
 
-        this.circle5 = window.Circles.create({
-            id: 'circles-load5-' + this.data.id,
-            radius: 60,
-            value: 0,
-            maxValue: this.data.cpu_cores,
-            width: 8,
-            text: null,
-            colors: ['#27272a', '#27272a'],
-            duration: 100,
-            wrpClass: 'circles-wrp',
-            textClass: 'circles-text',
-            valueStrokeClass: '',
-            maxValueStrokeClass: 'fill-zinc-900',
-            styleWrapper: true,
-            styleText: true
-        });
+            this.updateCircle(this.circle1, this.metric.load_1, this.getColour(this.metric.load_1 / this.data.cpu_cores));
+            this.updateCircle(this.circle5, this.metric.load_5, this.getColour(this.metric.load_5 / this.data.cpu_cores));
+            this.updateCircle(this.circle15, this.metric.load_15, this.getColour(this.metric.load_15 / this.data.cpu_cores));
+        })
 
-        this.circle15 = window.Circles.create({
-            id: 'circles-load15-' + this.data.id,
-            radius: 50,
-            value: 0,
-            maxValue: this.data.cpu_cores,
-            width: 8,
-            text: null,
-            colors: ['#27272a', '#27272a'],
-            duration: 100,
-            wrpClass: 'circles-wrp',
-            textClass: 'circles-text',
-            valueStrokeClass: '',
-            maxValueStrokeClass: 'fill-zinc-900',
-            styleWrapper: true,
-            styleText: true
-        });
+        echo.private(`servers.${this.data.id}.server-metrics`).listen('ServerMetrics\\ServerMetricUpdated', ({serverMetric}) => {
+            this.previousMetric = this.metric;
+            this.metric = serverMetric;
+
+            this.updateCircle(this.circle1, this.metric.load_1, this.getColour(this.metric.load_1 / this.data.cpu_cores));
+            this.updateCircle(this.circle5, this.metric.load_5, this.getColour(this.metric.load_5 / this.data.cpu_cores));
+            this.updateCircle(this.circle15, this.metric.load_15, this.getColour(this.metric.load_15 / this.data.cpu_cores));
+        })
 
         this.load();
-
-        setInterval(() => {
-            this.load();
-        }, 15000);
     },
 
     data() {
@@ -185,22 +143,29 @@ export default {
             circle1: null,
             circle5: null,
             circle15: null,
+
+            icon: 0,
         };
     },
 
     methods: {
+        updateCircle(circle, value, colour) {
+            circle.update(value);
+            circle.updateColors(['currentColor', colour]);
+        },
+
         load() {
             axios.get('/api/v2/servers/' + this.data.id + '/server-metrics?format=all').then((response) => {
                 this.metric = response.data[0];
                 this.previousMetric = response.data[1] ?? null;
 
-                this.circle1.update(this.metric.load_1);
-                this.circle5.update(this.metric.load_5);
-                this.circle15.update(this.metric.load_15);
+                this.circle1 = this.createCircle('load-1-' + this.data.id, 70, this.data.cpu_cores);
+                this.circle5 = this.createCircle('load-5-' + this.data.id, 60, this.data.cpu_cores);
+                this.circle15 = this.createCircle('load-15-' + this.data.id, 50, this.data.cpu_cores);
 
-                this.circle1.updateColors(['#27272a', this.getColour(this.metric.load_1 / this.data.cpu_cores)]);
-                this.circle5.updateColors(['#27272a', this.getColour(this.metric.load_5 / this.data.cpu_cores)]);
-                this.circle15.updateColors(['#27272a', this.getColour(this.metric.load_15 / this.data.cpu_cores)]);
+                this.updateCircle(this.circle1, this.metric.load_1, this.getColour(this.metric.load_1 / this.data.cpu_cores));
+                this.updateCircle(this.circle5, this.metric.load_5, this.getColour(this.metric.load_5 / this.data.cpu_cores));
+                this.updateCircle(this.circle15, this.metric.load_15, this.getColour(this.metric.load_15 / this.data.cpu_cores));
             });
         },
 
@@ -222,9 +187,31 @@ export default {
             }
         },
 
-        getRandom(min, max) {
-          return Math.random() * (max - min) + min;
+        createCircle(id, radius, max) {
+            return window.Circles.create({
+                id: id,
+                radius: radius,
+                value: 0,
+                maxValue: max,
+                width: 8,
+                text: null,
+                colors: ['currentColor', 'currentColor'],
+                duration: 100,
+                wrpClass: 'text-zinc-200',
+                maxValueStrokeClass: 'text-zinc-200',
+            });
         }
     },
 };
 </script>
+
+<style>
+    @keyframes pulse {
+        50% {
+            opacity: 0.1;
+        }
+    }
+    .animate-pulse {
+        animation: pulse 0.5s linear infinite;
+    }
+</style>
