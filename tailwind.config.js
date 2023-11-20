@@ -4,7 +4,7 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 
 const customColours = ['blue', 'gray', 'green', 'purple', 'red', 'yellow', 'orange', 'sky', 'violet', 'lime', 'primary', 'secondary', 'success', 'info', 'danger', 'warning'];
 const customColourVariants = ['dark', 'darker', 'light', 'lighter', '50', '100', '200', '300', '400', '500', '600', '700', '800', '900'];
-const prefixes = ['hover:bg', 'bg', 'hover:border', 'border', 'hover:text', 'text', 'bg-stripes'];
+const prefixes = ['hover:bg', 'bg', 'hover:border', 'border', 'hover:text', 'text', 'bg-stripes', 'fill'];
 
 const customColourSafelist = [];
 
@@ -38,6 +38,14 @@ module.exports = {
         transitionClasses: false,
         transitionDuration: false,
         typography: true,
+
+        colorClasses: [
+          "gradient",
+          "ring",
+          "ring-offset",
+          "divide",
+          "placeholder",
+        ],
 
         colors: {
           white: 'zinc.900',

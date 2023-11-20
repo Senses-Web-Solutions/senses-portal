@@ -25,7 +25,7 @@
                     </label>
                     <div class="mt-1 rounded-md shadow-sm">
                         <input id="email" name="email" type="email" value="{{ old('email') }}" autocomplete="email" autofocus placeholder="Email" required
-                            class="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md placeholder-zinc-400 focus:outline-none focus:ring-primary focus:border-primary-300 transition duration-150 ease-in-out sm:sm:leading-5 @error('email') form-input-error @endif">
+                            class="appearance-none block w-full px-3 py-2 border border-zinc-300 bg-zinc-100 rounded-md placeholder-zinc-400 text-black focus:outline-none focus:ring-primary focus:border-primary-300 transition duration-150 ease-in-out sm:sm:leading-5 @error('email') form-input-error @endif">
                     </div>
                     @error('email')
                         <p class="text-base text-red-600">{{ $message }}</p>
@@ -38,7 +38,7 @@
                     </label>
                     <div class="mt-1 rounded-md shadow-sm">
                         <input id="password" name="password" type="password" required autocomplete="current-password" autofocus placeholder="******************"
-                            class="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md placeholder-zinc-400 focus:outline-none focus:ring-primary focus:border-primary-300 transition duration-150 ease-in-out sm:sm:leading-5 @error('password') form-input-error @endif">
+                            class="appearance-none block w-full px-3 py-2 border border-zinc-300 bg-zinc-100 rounded-md placeholder-zinc-400 text-black focus:outline-none focus:ring-primary focus:border-primary-300 transition duration-150 ease-in-out sm:sm:leading-5 @error('password') form-input-error @endif">
                     </div>
                     @error('password')
                         <p class="form-error">{{ $message }}</p>
@@ -48,7 +48,7 @@
                 <div class="flex items-center justify-between mt-6">
                     <div class="flex items-center">
                         <input id="remember-me" name="remember-me" type="checkbox" checked value="{{ old('remember-me') ? 'checked' : '' }}" class="w-4 h-4 cursor-pointer rounded border-zinc-300 text-primary-600 focus:ring-primary-500 transition duration-150 ease-in-out">
-                        <label for="remember-me" class="block ml-2 leading-5 text-base">
+                        <label for="remember-me" class="block ml-2 leading-5 text-base text-black">
                             {{ __('Remember Me') }}
                         </label>
                     </div>

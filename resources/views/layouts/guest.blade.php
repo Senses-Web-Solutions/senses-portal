@@ -39,7 +39,7 @@
         <meta http-equiv="refresh" content="{{ (config('session.lifetime') * 60) - 5 }}">
     </head>
 
-    <body class="@yield('body-class') bg-gradient-to-br from-sky-100 via-yellow-50 to-primary-200 h-screen guest-page">
+    <body class="@yield('body-class') bg-gradient-to-br from-sky-100 via-yellow-50 to-primary-200 h-screen guest-page" :class="window.getCookie('theme')">
         <div id="{{ env('SENSES_CLIENT') }}" />
 
         <div id="app">
