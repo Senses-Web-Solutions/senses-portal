@@ -12,6 +12,10 @@ class CreateServerMetric
 
     public function execute(array $data)
     {
+        if (!isset($data['timestamp'])) {
+            $data['timestamp'] = now()->timestamp;
+        }
+
         $serverMetric = new ServerMetric($data);
 
 		if (isset($data['server_id'])) {

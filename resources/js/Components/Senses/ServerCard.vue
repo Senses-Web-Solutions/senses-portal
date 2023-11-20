@@ -26,18 +26,18 @@
 
                         <!-- Middle Bit -->
                         <div @click="icon += 1; icon %= 4" class="absolute left-[70px] right-[70px] top-[40px]">
-                            <svg v-if="icon == 0" xmlns="http://www.w3.org/2000/svg" class="text-red-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <svg v-if="icon == 3" xmlns="http://www.w3.org/2000/svg" class="text-red-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                             </svg>
 
-                            <svg v-if="icon == 1" xmlns="http://www.w3.org/2000/svg" class="text-violet-400 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg v-if="icon == 2" xmlns="http://www.w3.org/2000/svg" class="text-violet-400 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
                                 <path d="M21 3v5h-5" />
                                 <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
                                 <path d="M8 16H3v5" />
                             </svg>
 
-                            <svg v-if="icon == 2 || icon == 3" class="transition duration-300" :class="icon == 3 ? 'text-red-400 rotate-180' : 'text-green-400'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <svg v-if="icon == 0 || icon == 1" class="transition duration-300" :class="icon == 1 ? 'text-red-400 rotate-180' : 'text-green-400'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75"></path>
                             </svg>
                             <!-- <svg v-if="icon == 3" class="transition duration-300" :class="previousMetric && metric.load_15 > previousMetric.load_15 ? 'text-red-400 rotate-180' : 'text-green-400'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">

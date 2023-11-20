@@ -155,7 +155,7 @@
                 >
                     <circle cx="3" cy="3" r="3"></circle>
                 </svg>
-                1 min
+                {{ timeSinceLastUpdate }} min
             </span>
         </td>
     </tr>
@@ -164,10 +164,15 @@
 <script>
 // Imports
 import axios from 'axios';
+import SmallText from '../Ui/Text/SmallText.vue';
+
+import useEcho from '../../../Support/useEcho';
+
+const echo = useEcho();
 
 export default {
     components: {
-
+        SmallText,
     },
 
     props: {
@@ -181,25 +186,48 @@ export default {
     },
 
     mounted() {
-        this.load();
+        echo.private(`servers.${this.data.id}.server-metrics`).listen('ServerMetrics\\ServerMetricCreated', ({serverMetric}) => {
+            this.previousMetric = this.metric;
+            this.metric = serverMetric;
+
+            this.timeSinceLastUpdate = 1;
+
+            this.metrics.unshift(serverMetric);
+        })
+
+        echo.private(`servers.${this.data.id}.server-metrics`).listen('ServerMetrics\\ServerMetricUpdated', ({serverMetric}) => {
+            this.previousMetric = this.metric;
+            this.metric = serverMetric;
+
+            this.timeSinceLastUpdate = 1;
+
+            this.metrics.unshift(serverMetric);
+        })
 
         setInterval(() => {
-            this.load();
-        }, 15000);
+            this.timeSinceLastUpdate = Math.ceil(new Date().getTime() / 60000 - this.metric.timestamp / 60);
+        }, 5000);
+
+        this.load();
     },
 
     data() {
         return {
             metric: null,
             metrics: null,
+            previousMetric: null,
+
+            timeSinceLastUpdate: 1,
         };
     },
 
     methods: {
         load() {
             axios.get('/api/v2/servers/' + this.data.id + '/server-metrics?format=all').then((response) => {
-                this.metrics = response.data;
                 this.metric = response.data[0];
+                this.metrics = response.data;
+
+                this.previousMetric = response.data[1] ?? null;
             });
         },
 
@@ -220,10 +248,6 @@ export default {
                 return '#ae81ff';
             }
         },
-
-        getRandom(min, max) {
-          return Math.random() * (max - min) + min;
-        }
     },
 };
 </script>
