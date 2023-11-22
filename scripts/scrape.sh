@@ -24,8 +24,8 @@ CONNECTED=$(ping -c 1 google.com &> /dev/null && echo "true" || echo "false")
 HOSTNAME=$(hostname)
 IP_ADDRESS=$(hostname -I | awk '{print $1}')
 OS=$(uname -o)
-DISTRO=$(source /etc/os-release | echo $ID)
-DISTRO_VERSION=$(source /etc/os-release | echo $VERSION_ID)
+DISTRO=$(source /etc/os-release; echo $ID)
+DISTRO_VERSION=$(source /etc/os-release; echo $VERSION_ID)
 ARCHITECTURE=$(uname -p)
 KERNEL=$(uname -s)
 KERNEL_VERSION=$(uname -r)
@@ -45,14 +45,14 @@ CPU_THREADS=$(nproc) # Threads per Core X Cores per Socket X Sockets
 
 # CPU_USE & CPU_IDLE
 
-CPU_US=$(top -bn1 -E k | grep "Cpu(s)" | awk '{print $2}')
-CPU_SY=$(top -bn1 -E k | grep "Cpu(s)" | awk '{print $4}')
-CPU_NI=$(top -bn1 -E k | grep "Cpu(s)" | awk '{print $6}')
-CPU_ID=$(top -bn1 -E k | grep "Cpu(s)" | awk '{print $8}')
-CPU_WA=$(top -bn1 -E k | grep "Cpu(s)" | awk '{print $10}')
-CPU_HI=$(top -bn1 -E k | grep "Cpu(s)" | awk '{print $12}')
-CPU_SI=$(top -bn1 -E k | grep "Cpu(s)" | awk '{print $14}')
-CPU_ST=$(top -bn1 -E k | grep "Cpu(s)" | awk '{print $16}')
+CPU_US=$(top -bn1 -E k | grep "Cpu(s)" | awk -F ":" '{print $2}' | awk -F "," '{print $1*1}')
+CPU_SY=$(top -bn1 -E k | grep "Cpu(s)" | awk -F ":" '{print $2}' | awk -F "," '{print $2*1}')
+CPU_NI=$(top -bn1 -E k | grep "Cpu(s)" | awk -F ":" '{print $2}' | awk -F "," '{print $3*1}')
+CPU_ID=$(top -bn1 -E k | grep "Cpu(s)" | awk -F ":" '{print $2}' | awk -F "," '{print $4*1}')
+CPU_WA=$(top -bn1 -E k | grep "Cpu(s)" | awk -F ":" '{print $2}' | awk -F "," '{print $5*1}')
+CPU_HI=$(top -bn1 -E k | grep "Cpu(s)" | awk -F ":" '{print $2}' | awk -F "," '{print $6*1}')
+CPU_SI=$(top -bn1 -E k | grep "Cpu(s)" | awk -F ":" '{print $2}' | awk -F "," '{print $7*1}')
+CPU_ST=$(top -bn1 -E k | grep "Cpu(s)" | awk -F ":" '{print $2}' | awk -F "," '{print $8*1}')
 
 CPU_USE=$(echo "100 - $CPU_ID" | bc)
 
@@ -290,4 +290,4 @@ OUTPUT="""{
 #     sudo apt install sysstat
 # fi
 
-wget -q --method=post -O- --body-data="$OUTPUT" --header="Content-Type: application/json" http://dev.teamleaf.uk/api/v2/server-metrics --header="Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOTI5Njg3MjVkYWNjY2QwODZlN2YyNTQ1OGY3ZjkyMDQ2MDdlOWU4NjFiYTRlYWM0OGYzYWM4YmQyOTE2YmY1OTJjZGVmNGQ3OWMyMjZkZGMiLCJpYXQiOjE2OTg4MzkzNzMuOTg1NTIzLCJuYmYiOjE2OTg4MzkzNzMuOTg1NTI2LCJleHAiOjE3MzA0NjE3NzMuOTgxMDk2LCJzdWIiOiI4Iiwic2NvcGVzIjpbXX0.acmePiCPZUH0k8hNlIxnoJG3Mp8CfIlsMe4lGauP7MIM7aDocJ90vKPnU2Womqit3ZV02z_h_7UA8W2UopcuQqbZjktpD5XiREpFThTIeFnEEENVtw74CJb3VZOisxhnrg0pCXcklan1neaO5uOqgRr5rsqlXK_T25ixNXAI-Q7qIjUA-PkkvQBRM5YwnzWUVb0cMccrH97t9m1VvoFOpGEhcZ6lWw4XNT-sXhex0id0snhROXJiKx4vump_ImAfoczXMbJbutiS9KKofYmtkMI4GcUFPjB0wButHemNSm1eNqZ5UxP-xl7beVyJrB7FrKmJFlSgR-_PThalnLei9FYNVouLVUwbDmNs1ttv0lIhJWsSrLvk0XQOGOzV74mgWzN5IbxlpNgBm0tnKSiBpmopHCQDHqc2sduGGcvaYCDDiKJczJ0_vQ-wj2YXl64kh4GG_Ix78Zj7BtzUZzxUbSpmxGiwNf92HBQKjbDgQ-tRrRoQf0cffZ5aotEZTF2AobrUCA4gH-g3MDNDojUdN-TEC4QkKYkORNSPmNRANiLVOYa5WDRO4SXaEiAF-X2ByumXRPR6lt7OMvRTkHoQpAWbyKeeZBSG9kmXOQ4NcTMSjMl5KCvO2IBKRVjWCVUpUGwtSAhYXeAFWZOAmhjran4J0cD0rbPdYisxNA-HvAw"
+wget -q --method POST --body-data="$OUTPUT" --header="Content-Type: application/json" --header="Authorization: Bearer 485b591f145faaf2e5f775c9dbcaeb1d" -O- http://dev.portal.senses.co.uk/api/server-metrics
