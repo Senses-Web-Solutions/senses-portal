@@ -223,7 +223,7 @@ export default {
 
     methods: {
         load() {
-            axios.get('/api/v2/servers/' + this.data.id + '/server-metrics?format=all').then((response) => {
+            axios.get('/api/v2/servers/' + this.data.id + '/server-metrics?format=limited&limit=50').then((response) => {
                 this.metric = response.data[0];
                 this.metrics = response.data;
 
