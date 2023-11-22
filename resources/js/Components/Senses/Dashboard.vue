@@ -120,8 +120,8 @@
 
 <script>
 // Imports
-import ServerList from "./ServerList.vue";
-import ServerCard from "./ServerCard.vue";
+import ServerList from "./Servers/ServerList.vue";
+import ServerCard from "./Servers/ServerCard.vue";
 import axios from "axios";
 
 export default {

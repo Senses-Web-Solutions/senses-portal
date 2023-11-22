@@ -42,6 +42,8 @@ import UserImpersonationForm from './Senses/Users/UserImpersonationForm.vue';
 
 import Dashboard from './Senses/Dashboard.vue';
 
+import SeChart from './Senses/UI/SeChart.vue';
+
 // Models
 import UserTable from './Senses/Users/UserTable.vue';
 import UserForm from './Senses/Users/UserForm.vue';
@@ -63,6 +65,7 @@ import CompanyTable from './Senses/Companies/CompanyTable.vue';
 import CompanyForm from './Senses/Companies/CompanyForm.vue';
 import ServerTable from './Senses/Servers/ServerTable.vue';
 import ServerForm from './Senses/Servers/ServerForm.vue';
+import ServerDashboard from './Senses/Servers/ServerDashboard.vue';
 import RevenueTable from './Senses/Revenues/RevenueTable.vue';
 import RevenueForm from './Senses/Revenues/RevenueForm.vue';
 import SubscriptionTable from './Senses/Subscriptions/SubscriptionTable.vue';
@@ -118,6 +121,8 @@ export {
 
 	Dashboard,
 
+	SeChart,
+
 	// Models
 	UserTable,
 	UserForm,
@@ -139,6 +144,7 @@ export {
 	CompanyForm,
 	ServerTable,
 	ServerForm,
+	ServerDashboard,
 	RevenueTable,
 	RevenueForm,
 	SubscriptionTable,

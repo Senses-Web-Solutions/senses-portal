@@ -2,7 +2,7 @@
     <Card flush>
         <template #title>{{ title }} Details</template>
 
-        <div class="divide-y divide-zinc-200 dark:divide-zinc-800">
+        <div class="divide-y divide-zinc-200">
             <InfoAlert class="rounded-t-lg" flush v-if="data?.locked_at">
                 <template #icon>
                     <LockClosedIcon/>

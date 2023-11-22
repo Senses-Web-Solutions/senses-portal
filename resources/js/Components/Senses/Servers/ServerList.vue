@@ -1,5 +1,5 @@
 <template>
-    <tr v-if="this.metric" class="border-b border-zinc-200 hover:bg-zinc-100/20" onclick="window.location.href = '/projects-show';">
+    <tr v-if="this.metric" class="border-b border-zinc-200 hover:bg-zinc-100/20">
         <td class="py-3 pl-6">
             <div class="flex items-center gap-x-2">
                 <svg
@@ -18,11 +18,11 @@
                     ></path>
                 </svg>
                 <div class="flex-auto">
-                    <div
-                        class="text-md font-medium leading-6 text-zinc-700"
+                    <a :href="'/servers/' + this.data.id"
+                        class="text-md font-medium leading-6 text-zinc-700 cursor-pointer"
                     >
                         {{ data.title }}
-                    </div>
+                    </a>
                 </div>
             </div>
         </td>
@@ -164,9 +164,9 @@
 <script>
 // Imports
 import axios from 'axios';
-import SmallText from '../Ui/Text/SmallText.vue';
+import SmallText from '../../Ui/Text/SmallText.vue';
 
-import useEcho from '../../../Support/useEcho';
+import useEcho from '../../../../Support/useEcho';
 
 const echo = useEcho();
 

@@ -92,9 +92,9 @@
 <script>
 // Imports
 import axios from 'axios';
-import SmallText from '../Ui/Text/SmallText.vue';
+import SmallText from '../../Ui/Text/SmallText.vue';
 
-import useEcho from '../../../Support/useEcho';
+import useEcho from '../../../../Support/useEcho';
 
 const echo = useEcho();
 

@@ -17,6 +17,7 @@
         <meta name="theme-color" content="#ffffff">
 
         <script type="text/javascript" src="/js/circles.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.umd.js"></script>
 
         @vite([
             'resources/css/senses.css',

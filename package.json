@@ -51,6 +51,7 @@
         "velocity-animate": "^1.5.2",
         "vue": "^3.3.4",
         "vue-multiselect": "^3.0.0-beta.2",
-        "vuedraggable": "^2.24.3"
+        "vuedraggable": "^2.24.3",
+        "chart.js": "^4.4.0"
     }
 }

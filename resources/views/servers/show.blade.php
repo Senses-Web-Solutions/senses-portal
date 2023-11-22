@@ -6,7 +6,7 @@
 
 <data-hydrator url="/api/v2/servers/{{ $id }}" v-slot="{ data, loading }" model="server">
     <page-header>
-        <template #title>@{{ data.id }}: @{{ data.title }}</template>
+        <template #title>@{{ data.title }}</template>
 
         <template #actions>
             <edit-button form="ServerForm" id="{{$id}}" model="server" :data="data"></edit-button>
@@ -14,13 +14,7 @@
         </template>
     </page-header>
 
-    <div class="grid grid-cols-3 gap-8 px-8 py-8">
-        <div class="col-span-2"></div>
-
-        <div class="col-span-1">
-            <basic-fields title="Server" :data="data" model="servers" :id="{{ $id }}"></basic-fields>
-        </div>
-    </div>
+    <server-dashboard :data="data"></server-dashboard>
 </data-hydrator>
 
 @endsection
