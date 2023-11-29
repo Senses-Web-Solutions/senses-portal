@@ -1,6 +1,6 @@
 #! /bin/bash
 
-KEY=$(<"$HOME/senses-portal/.api_token")
+KEY=$(<"$HOME/senses-portal/api_token")
 
 # Ansi color code variables
 red="\e[0;91m"

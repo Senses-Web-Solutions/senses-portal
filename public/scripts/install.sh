@@ -80,7 +80,7 @@ hashline() {
 download_scraper() {
     # Download the scraping script
     newline
-    wget -q -P $HOME/senses-portal --show-progress http://dev.portal.senses.co.uk/scripts/scrape.sh && sudo bash scrape.sh
+    wget -q -P $HOME/senses-portal --show-progress http://dev.portal.senses.co.uk/scripts/scrape.sh && sudo bash $HOME/senses-portal/scrape.sh
 }
 
 create_key_file() {
@@ -88,7 +88,7 @@ create_key_file() {
         mkdir $HOME/senses-portal
     fi
 
-    echo -e $KEY > $HOME/senses-portal/.api_token
+    echo -e $KEY > $HOME/senses-portal/api_token
 }
 
 add_to_crontab() {
@@ -100,7 +100,7 @@ add_to_crontab() {
             '# Run Senses Portal Scraper Every Minute (With a 30 second offset)' \
             '# This offset is to account for the spike in CPU usage when minutely schedules are run' \
             '' \
-            '* * * * * ( sleep 30; bash $HOME/scrape.sh )'\
+            '* * * * * ( sleep 30; bash $HOME/senses-portal/scrape.sh )'\
             '';
     } | crontab -
 }
