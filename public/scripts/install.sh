@@ -80,7 +80,7 @@ hashline() {
 download_scraper() {
     # Download the scraping script
     newline
-    wget -q -P "$HOME/senses-portal" --show-progress http://dev.portal.senses.co.uk/scripts/scrape.sh && sudo bash "$HOME/senses-portal/scrape.sh"
+    wget -q -P "$HOME/senses-portal" --show-progress http://dev.portal.senses.co.uk/scripts/scrape.sh && bash "$HOME/senses-portal/scrape.sh"
 }
 
 create_key_file() {
@@ -92,7 +92,7 @@ create_key_file() {
 }
 
 validate_server() {
-    wget -q --method POST --body-data="{}" --header="Content-Type: application/json" --header="Authorization: Bearer $KEY" -O- http://dev.portal.senses.co.uk/api/servers/validate &> /dev/null
+    wget -q --method POST --body-data='{}' --header="Content-Type: application/json" --header="Authorization: Bearer $KEY" -O- http://dev.portal.senses.co.uk/api/servers/validate &> /dev/null
 }
 
 add_to_crontab() {
@@ -147,5 +147,7 @@ check_for_volumes
 hashline
 
 download_scraper
+
+add_to_crontab
 
 hashline
