@@ -47,44 +47,49 @@ CPU_THREADS=$(nproc) # Threads per Core X Cores per Socket X Sockets
 
 # CPU_USE & CPU_IDLE
 
-CPU_US=$(top -bn1 -E k | grep "Cpu(s)" | awk -F ":" '{print $2}' | awk -F "," '{print $1*1}')
-CPU_SY=$(top -bn1 -E k | grep "Cpu(s)" | awk -F ":" '{print $2}' | awk -F "," '{print $2*1}')
-CPU_NI=$(top -bn1 -E k | grep "Cpu(s)" | awk -F ":" '{print $2}' | awk -F "," '{print $3*1}')
-CPU_ID=$(top -bn1 -E k | grep "Cpu(s)" | awk -F ":" '{print $2}' | awk -F "," '{print $4*1}')
-CPU_WA=$(top -bn1 -E k | grep "Cpu(s)" | awk -F ":" '{print $2}' | awk -F "," '{print $5*1}')
-CPU_HI=$(top -bn1 -E k | grep "Cpu(s)" | awk -F ":" '{print $2}' | awk -F "," '{print $6*1}')
-CPU_SI=$(top -bn1 -E k | grep "Cpu(s)" | awk -F ":" '{print $2}' | awk -F "," '{print $7*1}')
-CPU_ST=$(top -bn1 -E k | grep "Cpu(s)" | awk -F ":" '{print $2}' | awk -F "," '{print $8*1}')
+CPU_METRICS=$(top -bn1 -E k | grep "Cpu(s)" | awk -F ":" '{print $2}')
+
+CPU_US=$(echo "$CPU_METRICS" | awk -F "," '{print $1*1}')
+CPU_SY=$(echo "$CPU_METRICS" | awk -F "," '{print $2*1}')
+CPU_NI=$(echo "$CPU_METRICS" | awk -F "," '{print $3*1}')
+CPU_ID=$(echo "$CPU_METRICS" | awk -F "," '{print $4*1}')
+CPU_WA=$(echo "$CPU_METRICS" | awk -F "," '{print $5*1}')
+CPU_HI=$(echo "$CPU_METRICS" | awk -F "," '{print $6*1}')
+CPU_SI=$(echo "$CPU_METRICS" | awk -F "," '{print $7*1}')
+CPU_ST=$(echo "$CPU_METRICS" | awk -F "," '{print $8*1}')
 
 CPU_USE=$(echo "100 - $CPU_ID" | bc)
 
 
 # LOAD
 
-LOAD_1=$(cat /proc/loadavg | awk '{print $1}')
-LOAD_5=$(cat /proc/loadavg | awk '{print $2}')
-LOAD_15=$(cat /proc/loadavg | awk '{print $3}')
+LOADAVG=$(cat /proc/loadavg)
+
+LOAD_1=$(echo "$LOADAVG" | awk '{print $1}')
+LOAD_5=$(echo "$LOADAVG" | awk '{print $2}')
+LOAD_15=$(echo "$LOADAVG" | awk '{print $3}')
 
 
 # RAM
 
-RAM_TOTAL=$(cat /proc/meminfo | grep MemTotal | awk '{print $2}')
-RAM_FREE=$(cat /proc/meminfo | grep MemFree | awk '{print $2}')
-RAM_BUFFER=$(cat /proc/meminfo | grep Buffers | awk '{print $2}')
-RAM_USED=$(echo "$RAM_TOTAL - $RAM_FREE - $RAM_BUFFER - $RAM_CACHE" | bc)
+MEMINFO=$(cat /proc/meminfo)
 
-RAM_CACHED=$(cat /proc/meminfo | grep Cached | awk '{print $2}')
-RAM_RECLAIM=$(cat /proc/meminfo | grep SReclaimable | awk '{print $2}')
+
+RAM_CACHED=$(echo "$MEMINFO" | grep Cached | awk '{print $2}')
+RAM_RECLAIM=$(echo "$MEMINFO" | grep SReclaimable | awk '{print $2}')
 RAM_CACHE=$(echo "$RAM_CACHED + $RAM_RECLAIM" | bc)
 
+RAM_TOTAL=$(echo "$MEMINFO" | grep MemTotal | awk '{print $2}')
+RAM_FREE=$(echo "$MEMINFO" | grep MemFree | awk '{print $2}')
+RAM_BUFFER=$(echo "$MEMINFO" | grep Buffers | awk '{print $2}')
+RAM_USED=$(echo "$RAM_TOTAL - $RAM_FREE - $RAM_BUFFER - $RAM_CACHE" | bc)
 
 # SWAP
 
-SWAP_TOTAL=$(cat /proc/meminfo | grep SwapTotal | awk '{print $2}')
-SWAP_FREE=$(cat /proc/meminfo | grep SwapFree | awk '{print $2}')
-SWAP_CACHE=$(cat /proc/meminfo | grep SwapCached | awk '{print $2}')
+SWAP_TOTAL=$(echo "$MEMINFO" | grep SwapTotal | awk '{print $2}')
+SWAP_FREE=$(echo "$MEMINFO" | grep SwapFree | awk '{print $2}')
+SWAP_CACHE=$(echo "$MEMINFO" | grep SwapCached | awk '{print $2}')
 SWAP_USED=$(echo "$SWAP_TOTAL - $SWAP_FREE" | bc)
-
 
 # DISK_USED & DISK_FREE
 
@@ -93,6 +98,7 @@ DISK_USED=$(df / | awk 'NR==2 {print $3*1}')
 DISK_FREE=$(df / | awk 'NR==2 {print $4*1}')
 DISK_READ=$(iostat | grep -w vda | awk '{print $6}')
 DISK_WRITE=$(iostat | grep -w vda | awk '{print $7}')
+
 
 # #################################################################################################################### #
 

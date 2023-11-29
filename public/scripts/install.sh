@@ -85,7 +85,7 @@ download_scraper() {
 
 create_key_file() {
     if [ ! -d $HOME/senses-portal ]; then
-        mkdir $HOME/senses-portal
+        sudo mkdir $HOME/senses-portal
     fi
 
     echo -e $KEY > $HOME/senses-portal/api_token
