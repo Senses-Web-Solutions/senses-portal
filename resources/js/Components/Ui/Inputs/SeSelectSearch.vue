@@ -19,7 +19,7 @@
             :loading="state.is(AjaxSelectState.LOADING)"
             :multiple="multiple"
             :track-by="trackBy"
-            class="multiselect--rounded block w-full rounded-md focus:border-primary-500 focus:ring-4 focus:ring-primary-200 bg-white"
+            class="multiselect--rounded block w-full rounded-md focus:border-primary-500 focus:ring-4 focus:ring-primary-200"
             deselect-label="Deselect"
             select-label=""
             :disabled="disabled"

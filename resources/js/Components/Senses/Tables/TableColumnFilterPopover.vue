@@ -1,7 +1,7 @@
 <template>
     <div class="p-5 w-80">
 
-        <div :class="sortable || filterable ? 'divide-y divide-zinc-200 dark:divide-zinc-800' : 'divide-y divide-zinc-200 dark:divide-zinc-800'">
+        <div :class="sortable || filterable ? 'divide-y divide-zinc-200' : 'divide-y divide-zinc-200'">
             <div class="py-3 first:pt-0 last:pb-0" v-if="sortable">
                 <!-- Active: "bg-zinc-100", Not Active: "text-zinc-700" -->
                 <div class="flex justify-between items-center">

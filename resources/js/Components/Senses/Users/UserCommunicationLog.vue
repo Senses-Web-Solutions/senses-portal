@@ -7,7 +7,7 @@
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div class="shadow overflow-hidden border-zinc-200 sm:rounded-lg">
-                        <table class="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800">
+                        <table class="min-w-full divide-y divide-zinc-200">
                             <thead class="bg-zinc-50">
                             <tr>
                                 <th scope="col">
@@ -27,8 +27,8 @@
                             </tr>
                             </thead>
 
-                            <tbody class="bg-white divide-y divide-zinc-200 dark:divide-zinc-800">
-                            <tr class="divide-x divide-zinc-200 dark:divide-zinc-800">
+                            <tbody class="bg-white divide-y divide-zinc-200">
+                            <tr class="divide-x divide-zinc-200">
                                 <td class="px-4 py-2 whitespace-nowrap">
                                     <Text>Email</Text>
                                 </td>
@@ -37,7 +37,7 @@
                                 </td>
                             </tr>
 
-                            <tr class="divide-x divide-zinc-200 dark:divide-zinc-800">
+                            <tr class="divide-x divide-zinc-200">
                                 <td class="px-4 py-2 whitespace-nowrap ">
                                     <Text>Letter</Text>
                                 </td>
@@ -46,7 +46,7 @@
                                 </td>
                             </tr>
 
-                            <tr class="divide-x divide-zinc-200 dark:divide-zinc-800">
+                            <tr class="divide-x divide-zinc-200">
                                 <td class="px-4 py-2 whitespace-nowrap">
                                     <Text>SMS</Text>
                                 </td>
@@ -55,7 +55,7 @@
                                 </td>
                             </tr>
 
-                            <tr class="divide-x divide-zinc-200 dark:divide-zinc-800">
+                            <tr class="divide-x divide-zinc-200">
                                 <td class="px-4 py-2 whitespace-nowrap">
                                     <Text>Telephone call</Text>
                                 </td>

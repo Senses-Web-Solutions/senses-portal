@@ -6,6 +6,9 @@
         <template #subtitle>
             {{ data.subtitle }}
         </template>
+        <template #command>
+            {{ data.command }}
+        </template>
         <template #button>
             Ok
         </template>

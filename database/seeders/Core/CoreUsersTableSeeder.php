@@ -82,6 +82,7 @@ class CoreUsersTableSeeder extends Seeder
         foreach ($users as $userData) {
             $user = User::factory()->create(array_merge($userData, [
                 'password' => '$2y$10$xfqkRSdhbc8BK9MsN3OzJuN6qXDnNIgMvfm9YTA.QedNE2Agwhbwq',
+                'company_id' => 1,
                 'locked_at' => now(),
                 'locked_by' => 1,
                 'lock_type' => LockType::CORE,

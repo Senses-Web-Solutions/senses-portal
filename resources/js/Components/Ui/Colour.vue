@@ -11,7 +11,7 @@ export default {
         // },
         colour: {
             type: String,
-            default: 'gray-500'
+            default: 'zinc-500'
         }
     }
 }

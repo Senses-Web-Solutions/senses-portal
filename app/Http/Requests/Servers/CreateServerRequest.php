@@ -2,11 +2,7 @@
 
 namespace App\Http\Requests\Servers;
 
-use App\Rules\Colour;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 
 class CreateServerRequest extends FormRequest
 {
@@ -18,6 +14,8 @@ class CreateServerRequest extends FormRequest
     public function rules()
     {
         $rules = [
+            // 'company_id' => 'required',
+            'title' => 'required',
         ];
 
         return $rules;

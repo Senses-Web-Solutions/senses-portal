@@ -20,10 +20,10 @@
                         class="overflow-hidden border-b border-zinc-200 shadow sm:rounded-b-lg"
                     >
                         <table
-                            class="relative min-w-full divide-y divide-zinc-200 dark:divide-zinc-800"
+                            class="relative min-w-full divide-y divide-zinc-200"
                         >
                             <thead
-                                class="bg-zinc-white divide-x divide-zinc-200 dark:divide-zinc-800"
+                                class="bg-zinc-white divide-x divide-zinc-200"
                             >
                                 <tr>
                                     <th scope="col">
@@ -125,10 +125,10 @@
                             </thead>
 
                             <tbody
-                                class="divide-y divide-zinc-200 bg-white dark:divide-zinc-800"
+                                class="divide-y divide-zinc-200 bg-white"
                             >
                                 <tr
-                                    class="divide-x divide-zinc-200 dark:divide-zinc-800"
+                                    class="divide-x divide-zinc-200"
                                 >
                                     <td
                                         class="relative h-20 w-28 truncate whitespace-nowrap bg-zinc-50 bg-opacity-50 px-2 py-2 text-zinc-700"
@@ -249,7 +249,7 @@
                                 </tr>
 
                                 <tr
-                                    class="divide-x divide-zinc-200 dark:divide-zinc-800"
+                                    class="divide-x divide-zinc-200"
                                 >
                                     <td
                                         class="relative h-20 w-28 truncate whitespace-nowrap bg-blue-100 px-4 py-2 text-zinc-700 opacity-50"
@@ -379,7 +379,7 @@
                                 </tr>
 
                                 <tr
-                                    class="divide-x divide-zinc-200 dark:divide-zinc-800"
+                                    class="divide-x divide-zinc-200"
                                 >
                                     <td
                                         class="relative h-20 w-28 truncate whitespace-nowrap bg-blue-100 bg-opacity-50 px-4 py-2 text-zinc-700"
@@ -510,7 +510,7 @@
                                 </tr>
 
                                 <tr
-                                    class="divide-x divide-zinc-200 dark:divide-zinc-800"
+                                    class="divide-x divide-zinc-200"
                                 >
                                     <td
                                         class="relative h-20 w-28 truncate whitespace-nowrap bg-blue-100 bg-opacity-50 px-4 py-2 text-zinc-700"
@@ -640,7 +640,7 @@
                                 </tr>
 
                                 <tr
-                                    class="divide-x divide-zinc-200 dark:divide-zinc-800"
+                                    class="divide-x divide-zinc-200"
                                 >
                                     <td
                                         class="relative h-20 w-28 truncate whitespace-nowrap bg-blue-100 bg-opacity-50 px-4 py-2 text-zinc-700"

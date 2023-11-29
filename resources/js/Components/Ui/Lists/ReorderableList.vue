@@ -15,8 +15,8 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-zinc-200 dark:divide-zinc-800">
-                        <tr v-for="(datum, index) in data" @click="executeRowClick(datum, index)" :key="index" class="divide-x divide-zinc-200 dark:divide-zinc-800" :class="rowClick && datum.hover !== false ? 'hover:cursor-pointer hover:bg-secondary-50' : null">
+                    <tbody class="divide-y divide-zinc-200">
+                        <tr v-for="(datum, index) in data" @click="executeRowClick(datum, index)" :key="index" class="divide-x divide-zinc-200" :class="rowClick && datum.hover !== false ? 'hover:cursor-pointer hover:bg-secondary-50' : null">
                             <template v-for="(column) in tableColumns" :key="column.key">
                                 <td v-if="column.type === 'string'" class="px-6 py-3 text-zinc-700 max-w-md whitespace-normal">
                                     <SeInput :class="column.classes ?? null" :name="column.title" :id="column.field" v-if="column.editable" v-model="datum[column.field]" />

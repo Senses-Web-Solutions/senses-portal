@@ -21,15 +21,15 @@
                     <div v-else class="-mt-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="min-w-full overflow-hidden pt-2 align-middle sm:px-6 lg:px-8">
                             <div class="overflow-x-auto">
-                                <table :class="{'border': bordered}" class="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800">
-                                    <thead class="divide-y divide-zinc-200 dark:divide-zinc-800">
+                                <table :class="{'border': bordered}" class="min-w-full divide-y divide-zinc-200">
+                                    <thead class="divide-y divide-zinc-200">
                                         <template v-if="doubleColumns">
-                                            <tr class="divide-x divide-zinc-200 dark:divide-zinc-800">
+                                            <tr class="divide-x divide-zinc-200">
                                                 <th v-for="(header, index) in columns" :key="index" :name="index + '_header'" class="whitespace-nowrap border-r px-4 py-table text-zinc-500" :class="header.columns ? 'text-center' : 'text-left align-bottom'" :colspan="header.columns ? header.columns.length : 1" :rowspan="header.columns ? 1 : 2" :width="header.width">
                                                     {{ header.title }}
                                                 </th>
                                             </tr>
-                                            <tr class="divide-x divide-zinc-200 dark:divide-zinc-800">
+                                            <tr class="divide-x divide-zinc-200">
                                                 <template v-for="(header, index) in columns">
                                                     <th v-if="header.columns" v-for="(subHeader, index) in header.columns" :key="index" :name="index + '_sub_header'" class="whitespace-nowrap px-4 py-table text-zinc-500">
                                                         {{ subHeader.title }}
@@ -38,7 +38,7 @@
                                             </tr>
                                         </template>
                                         <template v-else>
-                                            <tr class="divide-x divide-zinc-200 dark:divide-zinc-800">
+                                            <tr class="divide-x divide-zinc-200">
                                                 <th v-for="(header, index) in columns" :key="index" :name="index + '_header'" class="whitespace-nowrap px-4 py-table text-left text-zinc-500 capitalize" :width="header.width">
                                                     {{ header.title }}
                                                 </th>
@@ -46,8 +46,8 @@
                                         </template>
                                     </thead>
 
-                                    <tbody :class="{ border: bordered }" class="divide-y divide-zinc-200 dark:divide-zinc-800">
-                                        <tr v-for="(row, rowIndex) in rows" :ref="'row-' + rowIndex" :key="`row${rowIndex}`" :class="rowClasses(row, rowIndex)" class="divide-x divide-zinc-200 dark:divide-zinc-800" :style="{'--tw-transition-delay': `${rowIndex * 25}ms`}" @click="$emit('rowClick', row)">
+                                    <tbody :class="{ border: bordered }" class="divide-y divide-zinc-200">
+                                        <tr v-for="(row, rowIndex) in rows" :ref="'row-' + rowIndex" :key="`row${rowIndex}`" :class="rowClasses(row, rowIndex)" class="divide-x divide-zinc-200" :style="{'--tw-transition-delay': `${rowIndex * 25}ms`}" @click="$emit('rowClick', row)">
                                             <template v-for="(data, key) in destructuredColumns" :key="key">
                                                 <td :class="columnClass(row[data.id], data.id, rowIndex)">
                                                     <slot v-if="isTemplate(row[data.id], data.id, rowIndex)" :col="row[data.id]" :row="row" :index="data.id" :name="data.id"></slot>

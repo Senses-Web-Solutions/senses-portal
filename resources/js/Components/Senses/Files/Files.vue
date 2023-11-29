@@ -77,7 +77,7 @@
             <div v-if="visibleFiles && Object.keys(visibleFiles).length">
                 <div v-bind="$attrs" :class="{
                         'flex flex-wrap gap-5': view === 'grid',
-                        'divide-y divide-zinc-200 dark:divide-zinc-800':
+                        'divide-y divide-zinc-200':
                             view !== 'grid',
                         'p-5': view === 'grid' && !condensed,
                     }">

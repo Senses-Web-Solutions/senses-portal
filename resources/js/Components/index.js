@@ -66,6 +66,8 @@ import CompanyForm from './Senses/Companies/CompanyForm.vue';
 import ServerTable from './Senses/Servers/ServerTable.vue';
 import ServerForm from './Senses/Servers/ServerForm.vue';
 import ServerDashboard from './Senses/Servers/ServerDashboard.vue';
+import ServerSetup from './Senses/Servers/ServerSetup.vue';
+import ServerList from './Senses/Servers/ServerList.vue';
 import RevenueTable from './Senses/Revenues/RevenueTable.vue';
 import RevenueForm from './Senses/Revenues/RevenueForm.vue';
 import SubscriptionTable from './Senses/Subscriptions/SubscriptionTable.vue';
@@ -145,6 +147,8 @@ export {
 	ServerTable,
 	ServerForm,
 	ServerDashboard,
+	ServerSetup,
+	ServerList,
 	RevenueTable,
 	RevenueForm,
 	SubscriptionTable,

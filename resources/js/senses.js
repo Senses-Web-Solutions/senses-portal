@@ -130,21 +130,21 @@ const app = createApp({
     mounted() {
         let count = 0;
 
-        const check = debounce((num) => {
-            if (num >= 3) {
-                // console.log('we got there');
-                this.$modals.push('GlobalSearch', { hideCloseButton: true, flush: true });
-            }
-            count = 0;
-        }, 250);
+        // const check = debounce((num) => {
+        //     if (num >= 3) {
+        //         // console.log('we got there');
+        //         this.$modals.push('GlobalSearch', { hideCloseButton: true, flush: true });
+        //     }
+        //     count = 0;
+        // }, 250);
 
-        // triple shift
-        onKeyDown('Shift', (e) => {
-            if (!e.repeat) {
-                count += 1;
-            }
-            check(count);
-        });
+        // // triple shift
+        // onKeyDown('Shift', (e) => {
+        //     if (!e.repeat) {
+        //         count += 1;
+        //     }
+        //     check(count);
+        // });
 
         // slash key opens search
         onKeyDown('/', (e) => {

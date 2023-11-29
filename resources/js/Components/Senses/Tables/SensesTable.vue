@@ -126,7 +126,7 @@
                                     :style="{
                                         'max-height': height === true ? viewportHeightCss : null
                                     }">
-                                    <table class="rounded-lg min-w-full divide-y divide-zinc-200 dark:divide-zinc-800" :id="tableId">
+                                    <table class="rounded-lg min-w-full divide-y divide-zinc-200" :id="tableId">
                                         <thead class="sticky top-0 bg-white z-10 transition" :class="{'shadow': tableScroll > 0}">
                                             <tr>
                                                 <th class="px-4 py-table overflow-hidden whitespace-nowrap text-left text-zinc-500 first:rounded-tl-lg last:rounded-tr-lg w-12 bg-white" v-if="rowExternalLinks || isSelecting">
@@ -168,12 +168,12 @@
                                             </tr>
                                         </thead>
 
-                                        <tbody class="divide-y divide-zinc-200 dark:divide-zinc-800">
+                                        <tbody class="divide-y divide-zinc-200">
                                             <tr
                                                 v-for="(row, index) in rowData"
                                                 :ref="'row-' + index"
                                                 :key="`row${row.id}`"
-                                                class="divide-x divide-zinc-200 dark:divide-zinc-800"
+                                                class="divide-x divide-zinc-200"
                                                 :class="{
                                                     'bg-white': !row.row_colour && index % 2 === 0,
                                                     'bg-zinc-50': !row.row_colour && index % 2 !== 0,

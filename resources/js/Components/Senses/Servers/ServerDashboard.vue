@@ -1,171 +1,174 @@
 <template>
-    <div>
+    <div class="lg:mx-0 lg:max-w-none">
+        <div class="bg-zinc-50">
+            <dl class="mx-auto grid max-w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:px-2 xl:px-0">
+                <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 border-r border-zinc-100 px-8 py-8">
+                    <dt class="text-md font-medium leading-6 text-zinc-600">
+                        <p>Loads</p>
 
-        <div class="overflow-hidden border-t border-zinc-200">
-            <div class="">
-                <div class="lg:mx-0 lg:max-w-none">
-                    <div class="bg-zinc-50">
-                        <dl class="mx-auto grid max-w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:px-2 xl:px-0">
-                            <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 border-r border-zinc-100 px-8 py-8">
-                                <dt class="text-md font-medium leading-6 text-zinc-600">
-                                    <p>Loads</p>
-
-                                    <p class="text-sm text-zinc-400">4 CPU Server</p>
-
-                                </dt>
-                                <dd>
-                                    <div class="inline-flex rounded-md whitespace-nowrap px-2 py-0.5 text-sm font-normal ring-1 ring-inset text-zinc-600 bg-zinc-100 ring-zinc-400/20 !text-sky-700 !bg-sky-100 !ring-sky-300/20">
-                                        Normal
-                                    </div>
-                                </dd>
-                                <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-zinc-400">
-                                    22% · 28% · 31%</dd>
-                            </div>
-                            <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 border-r border-zinc-100 px-8 py-8">
-                                <dt class="text-md font-medium leading-6 text-zinc-600">
-                                    <p>RAM</p>
-
-                                    <p class="text-sm text-zinc-400">2.2GB of 4GB</p>
-
-                                </dt>
-                                <dd>
-                                    <div class="inline-flex rounded-md whitespace-nowrap px-2 py-0.5 text-sm font-normal ring-1 ring-inset text-zinc-600 bg-zinc-100 ring-zinc-400/20 !text-red-700 !bg-red-100 !ring-red-300/20">
-                                        High
-                                    </div>
-                                </dd>
-                                <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-zinc-400">
-                                    52%</dd>
-                            </div>
-                            <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 border-r border-zinc-100 px-8 py-8">
-                                <dt class="text-md font-medium leading-6 text-zinc-600">
-                                    <p>SWAP</p>
-
-                                    <p class="text-sm text-zinc-400">8.0GB of 10GB</p>
-
-                                </dt>
-                                <dd>
-                                    <div class="inline-flex rounded-md whitespace-nowrap px-2 py-0.5 text-sm font-normal ring-1 ring-inset text-zinc-600 bg-zinc-100 ring-zinc-400/20 !text-sky-700 !bg-sky-100 !ring-sky-300/20">
-                                        Normal
-                                    </div>
-                                </dd>
-                                <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-zinc-400">
-                                    81%</dd>
-                            </div>
-                            <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 border-r border-zinc-100 px-8 py-8">
-                                <dt class="text-md font-medium leading-6 text-zinc-600">
-                                    <p>Disks</p>
-
-                                    <p class="text-sm text-zinc-400">Primary &amp; 2 Volumes</p>
-
-                                </dt>
-                                <dd>
-                                    <div class="inline-flex rounded-md whitespace-nowrap px-2 py-0.5 text-sm font-normal ring-1 ring-inset text-zinc-600 bg-zinc-100 ring-zinc-400/20">
-                                        Safe
-                                    </div>
-                                </dd>
-                                <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-zinc-400">
-                                    22% · 28% · 31%
-                                </dd>
-                            </div>
-
-                        </dl>
-                    </div>
-
-                    <div class="w-full max-w-full px-4 pt-4">
-                        <div class="relative min-w-0 flex-col break-words rounded-2xl border border-zinc-400 bg-zinc-50">
-
-                            <div class="mb-0 p-6 pb-0 flex w-full ">
-                                <div class="flex-1 text-2xl font-medium leading-10 tracking-tight text-zinc-400">
-                                    Load</div>
-
-                                <div class="flex ">
-                                    <p class="text-sm leading-normal">
-                                    </p>
-                                    <div class="gap-x-1.5  items-center inline-flex whitespace-nowrap px-1 py-0.5 text-md font-normal inset  fill-pink-700 text-pink-700">
-                                        <svg class="h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
-                                            <circle cx="3" cy="3" r="3"></circle>
-                                        </svg> 1 Minute
-                                    </div>
-                                    <div class="gap-x-1.5  items-center inline-flex whitespace-nowrap px-1 py-0.5 text-md font-normal inset  fill-purple-700 text-purple-700">
-                                        <svg class="h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
-                                            <circle cx="3" cy="3" r="3"></circle>
-                                        </svg> 5 Minutes
-                                    </div>
-                                    <div class="gap-x-1.5  items-center inline-flex whitespace-nowrap px-1 py-0.5 text-md font-normal inset  fill-indigo-700 text-indigo-700">
-                                        <svg class="h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
-                                            <circle cx="3" cy="3" r="3"></circle>
-                                        </svg> 15 Minutes
-                                    </div>
-                                    <p></p>
-                                </div>
-                            </div>
-                            <div class="p-4">
-                                <div>
-                                    <canvas id="chart-line-1" class="h-48 w-max" style="display: block; box-sizing: border-box; height: 192px; width: 1614px;" width="1614" height="192"></canvas>
-                                </div>
-                            </div>
+                        <p class="text-sm text-zinc-400">4 CPU Server</p>
+                    </dt>
+                    <dd>
+                        <div class="inline-flex rounded-md whitespace-nowrap px-2 py-0.5 text-sm font-normal ring-1 ring-inset text-zinc-600 bg-zinc-100 ring-zinc-400/20 !text-sky-700 !bg-sky-100 !ring-sky-300/20">
+                            Normal
                         </div>
-                    </div>
+                    </dd>
+                    <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-zinc-400">
+                        22% · 28% · 31%</dd>
+                </div>
+                <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 border-r border-zinc-100 px-8 py-8">
+                    <dt class="text-md font-medium leading-6 text-zinc-600">
+                        <p>RAM</p>
 
-                    <div class="w-full max-w-full px-4 pt-4">
-                        <div class="relative min-w-0 flex-col break-words rounded-2xl border border-zinc-400 bg-zinc-50">
+                        <p class="text-sm text-zinc-400">2.2GB of 4GB</p>
 
-                            <div class="mb-0 p-6 pb-0 flex w-full ">
-                                <div class="flex-1 text-2xl font-medium leading-10 tracking-tight text-zinc-400">
-                                    RAM</div>
-
-                                <div class="flex ">
-                                    <p class="text-sm leading-normal">
-                                    </p>
-                                    <div class="gap-x-1.5  items-center inline-flex whitespace-nowrap px-1 py-0.5 text-md font-normal inset  fill-pink-700 text-pink-700">
-                                        <svg class="h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
-                                            <circle cx="3" cy="3" r="3"></circle>
-                                        </svg> Usage
-                                    </div>
-
-                                    <p></p>
-                                </div>
-                            </div>
-                            <div class="p-4">
-                                <div>
-                                    <canvas id="chart-line-2" class="h-48 w-max" style="display: block; box-sizing: border-box; height: 192px; width: 1614px;" width="1614" height="192"></canvas>
-                                </div>
-                            </div>
+                    </dt>
+                    <dd>
+                        <div class="inline-flex rounded-md whitespace-nowrap px-2 py-0.5 text-sm font-normal ring-1 ring-inset text-zinc-600 bg-zinc-100 ring-zinc-400/20 !text-red-700 !bg-red-100 !ring-red-300/20">
+                            High
                         </div>
-                    </div>
+                    </dd>
+                    <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-zinc-400">
+                        52%</dd>
+                </div>
+                <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 border-r border-zinc-100 px-8 py-8">
+                    <dt class="text-md font-medium leading-6 text-zinc-600">
+                        <p>SWAP</p>
 
+                        <p class="text-sm text-zinc-400">8.0GB of 10GB</p>
 
-                    <div class="w-full max-w-full px-4 pt-4">
-                        <div class="relative min-w-0 flex-col break-words rounded-2xl border border-zinc-400 bg-zinc-50">
-
-                            <div class="mb-0 p-6 pb-0 flex w-full ">
-                                <div class="flex-1 text-2xl font-medium leading-10 tracking-tight text-zinc-400">
-                                    RAM</div>
-
-                                <div class="flex ">
-                                    <p class="text-sm leading-normal">
-                                    </p>
-                                    <div class="gap-x-1.5  items-center inline-flex whitespace-nowrap px-1 py-0.5 text-md font-normal inset  fill-pink-700 text-pink-700">
-                                        <svg class="h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
-                                            <circle cx="3" cy="3" r="3"></circle>
-                                        </svg> Usage
-                                    </div>
-
-                                    <p></p>
-                                </div>
-                            </div>
-                            <div class="p-4">
-                                <div>
-                                    <SeChart :data="data" class="h-48 w-max" style="display: block; box-sizing: border-box; height: 192px; width: 1614px;" width="1614" height="192"></SeChart>
-                                </div>
-                            </div>
+                    </dt>
+                    <dd>
+                        <div class="inline-flex rounded-md whitespace-nowrap px-2 py-0.5 text-sm font-normal ring-1 ring-inset text-zinc-600 bg-zinc-100 ring-zinc-400/20 !text-sky-700 !bg-sky-100 !ring-sky-300/20">
+                            Normal
                         </div>
-                    </div>
+                    </dd>
+                    <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-zinc-400">
+                        81%</dd>
+                </div>
+                <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 border-r border-zinc-100 px-8 py-8">
+                    <dt class="text-md font-medium leading-6 text-zinc-600">
+                        <p>Disks</p>
 
+                        <p class="text-sm text-zinc-400">Primary &amp; 2 Volumes</p>
+
+                    </dt>
+                    <dd>
+                        <div class="inline-flex rounded-md whitespace-nowrap px-2 py-0.5 text-sm font-normal ring-1 ring-inset text-zinc-600 bg-zinc-100 ring-zinc-400/20">
+                            Safe
+                        </div>
+                    </dd>
+                    <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-zinc-400">
+                        22% · 28% · 31%
+                    </dd>
+                </div>
+
+            </dl>
+        </div>
+
+        <div class="w-full max-w-full px-4 pt-4">
+            <div class="relative min-w-0 flex-col break-words rounded-2xl border border-zinc-400 bg-zinc-50">
+
+                <div class="mb-0 p-6 pb-0 flex w-full ">
+                    <div class="flex-1 text-2xl font-medium leading-10 tracking-tight text-zinc-400">
+                        Load</div>
+
+                    <div class="flex ">
+                        <p class="text-sm leading-normal">
+                        </p>
+                        <div class="gap-x-1.5  items-center inline-flex whitespace-nowrap px-1 py-0.5 text-md font-normal inset  fill-pink-700 text-pink-700">
+                            <svg class="h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
+                                <circle cx="3" cy="3" r="3"></circle>
+                            </svg> 1 Minute
+                        </div>
+                        <div class="gap-x-1.5  items-center inline-flex whitespace-nowrap px-1 py-0.5 text-md font-normal inset  fill-purple-700 text-purple-700">
+                            <svg class="h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
+                                <circle cx="3" cy="3" r="3"></circle>
+                            </svg> 5 Minutes
+                        </div>
+                        <div class="gap-x-1.5  items-center inline-flex whitespace-nowrap px-1 py-0.5 text-md font-normal inset  fill-indigo-700 text-indigo-700">
+                            <svg class="h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
+                                <circle cx="3" cy="3" r="3"></circle>
+                            </svg> 15 Minutes
+                        </div>
+                        <p></p>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <div>
+                        <canvas id="chart-line-1" class="h-48 w-max" style="display: block; box-sizing: border-box; height: 192px; width: 1614px;" width="1614" height="192"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="w-full max-w-full px-4 pt-4">
+            <div class="relative min-w-0 flex-col break-words rounded-2xl border border-zinc-400 bg-zinc-50">
+
+                <div class="mb-0 p-6 pb-0 flex w-full ">
+                    <div class="flex-1 text-2xl font-medium leading-10 tracking-tight text-zinc-400">
+                        RAM</div>
+
+                    <div class="flex ">
+                        <p class="text-sm leading-normal">
+                        </p>
+                        <div class="gap-x-1.5  items-center inline-flex whitespace-nowrap px-1 py-0.5 text-md font-normal inset  fill-pink-700 text-pink-700">
+                            <svg class="h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
+                                <circle cx="3" cy="3" r="3"></circle>
+                            </svg> Usage
+                        </div>
+
+                        <p></p>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <div>
+                        <canvas id="chart-line-2" class="h-48 w-max" style="display: block; box-sizing: border-box; height: 192px; width: 1614px;" width="1614" height="192"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="w-full max-w-full px-4 pt-4">
+            <div class="relative min-w-0 flex-col break-words rounded-2xl border border-zinc-400 bg-zinc-50">
+
+                <div class="mb-0 p-6 pb-0 flex w-full ">
+                    <div class="flex-1 text-2xl font-medium leading-10 tracking-tight text-zinc-400">
+                        RAM</div>
+
+                    <div class="flex ">
+                        <p class="text-sm leading-normal">
+                        </p>
+                        <div class="gap-x-1.5  items-center inline-flex whitespace-nowrap px-1 py-0.5 text-md font-normal inset  fill-pink-700 text-pink-700">
+                            <svg class="h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
+                                <circle cx="3" cy="3" r="3"></circle>
+                            </svg> Usage
+                        </div>
+
+                        <p></p>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <div>
+                        <SeChart :data="data" class="h-48 w-max" style="display: block; box-sizing: border-box; height: 192px; width: 1614px;" width="1614" height="192"></SeChart>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+    <!-- <div class="w-full h-[calc(100vh-128px)] flex items-center justify-center">
+        <div class="bg-zinc-200 rounded-lg w-1/2 p-8 space-y-4">
+            <div class="text-black">
+                To intitialise your server, SSH into your server and run this command.
+            </div>
+            <div class="bg-zinc-300 rounded-lg w-1/2 p-8">
+
+            </div>
+        </div>
+    </div> -->
 </template>
 
 <script>
@@ -245,7 +248,7 @@ export default {
         },
 
         load() {
-            axios.get('/api/v2/servers/' + this.data.id + '/server-metrics?format=limited&limit=50').then((response) => {
+            axios.get('/api/v2/servers/' + this.data.id + '/server-metrics?format=all').then((response) => {
                 this.metric = response.data[0];
                 this.previousMetric = response.data[1] ?? null;
 

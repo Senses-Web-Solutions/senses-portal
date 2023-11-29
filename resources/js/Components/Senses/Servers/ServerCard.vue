@@ -1,6 +1,6 @@
 <template>
     <div class="flex">
-        <div class="ml-6 mt-6 relative items-center space-x-3 rounded-lg border border-zinc-200 bg-zinc-50 px-6 py-4 shadow-sm focus-within:ring-2 hover:border-zinc-500 w-64 text-center">
+        <div class="ml-6 mt-6 relative items-center space-x-3 rounded-lg border border-zinc-200 bg-zinc-50 px-6 py-4 shadow-sm focus-within:ring-2 hover:border-zinc-300 hover:bg-zinc-100 cursor-pointer w-64 text-center" @click="goToServer">
             <div class="flex flex-1 flex-col px-1">
                 <div class="items-center w-full text-zinc-600">
                     <span class="text-md text-zinc-700 inline-flex items-center gap-x-1.5 py-0 align-middle font-normal">
@@ -114,6 +114,10 @@ export default {
     },
 
     mounted() {
+        this.circle1 = this.createCircle('load-1-' + this.data.id, 70, this.data.cpu_cores);
+        this.circle5 = this.createCircle('load-5-' + this.data.id, 60, this.data.cpu_cores);
+        this.circle15 = this.createCircle('load-15-' + this.data.id, 50, this.data.cpu_cores);
+
         echo.private(`servers.${this.data.id}.server-metrics`).listen('ServerMetrics\\ServerMetricCreated', ({serverMetric}) => {
             this.previousMetric = this.metric;
             this.metric = serverMetric;
@@ -137,7 +141,24 @@ export default {
 
     data() {
         return {
-            metric: null,
+            metric: {
+                load_1: 0,
+                load_5: 0,
+                load_15: 0,
+
+                disk_free: 0,
+                disk_used: 0,
+                disk_total: 0,
+
+                ram_free: 0,
+                ram_used: 0,
+                ram_total: 0,
+
+                swap_free: 0,
+                swap_used: 0,
+                swap_total: 0,
+            },
+
             previousMetric: null,
 
             circle1: null,
@@ -154,14 +175,14 @@ export default {
             circle.updateColors(['currentColor', colour]);
         },
 
+        goToServer() {
+            window.location.href = '/servers/' + this.data.id;
+        },
+
         load() {
-            axios.get('/api/v2/servers/' + this.data.id + '/server-metrics?format=limited&limit=50').then((response) => {
+            axios.get('/api/v2/servers/' + this.data.id + '/server-metrics?format=all').then((response) => {
                 this.metric = response.data[0];
                 this.previousMetric = response.data[1] ?? null;
-
-                this.circle1 = this.createCircle('load-1-' + this.data.id, 70, this.data.cpu_cores);
-                this.circle5 = this.createCircle('load-5-' + this.data.id, 60, this.data.cpu_cores);
-                this.circle15 = this.createCircle('load-15-' + this.data.id, 50, this.data.cpu_cores);
 
                 this.updateCircle(this.circle1, this.metric.load_1, this.getColour(this.metric.load_1 / this.data.cpu_cores));
                 this.updateCircle(this.circle5, this.metric.load_5, this.getColour(this.metric.load_5 / this.data.cpu_cores));

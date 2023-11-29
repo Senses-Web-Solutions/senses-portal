@@ -11,6 +11,7 @@
             @stateChange="state = $event"
             @success='formSuccess'
             :aside-index="asideIndex"
+            :onSubmit="save"
         />
     </AsideLayout>
 </template>
@@ -22,6 +23,8 @@ import SensesForm from '../Common/SensesForm.vue';
 import Aside from "../../../Mixins/Aside";
 import eventHub from '../../../Support/EventHub';
 import AsideState from "../../../States/AsideState";
+
+import axios from 'axios';
 
 export default {
     components: {
@@ -37,7 +40,7 @@ export default {
             AsideState,
             error: null,
 
-            server: { 
+            server: {
 				company_id: null,
 				title: null,
 				hostname: null,
@@ -57,18 +60,18 @@ export default {
 					title: "Server Information",
 					description: "Basic information about the server",
 					fields: [
-						{ key: "company_id", type: "select-search", field: "id", url: "api/v2/companies?format=select-search"},
+						// { key: "company_id", type: "select-search", field: "id", url: "api/v2/companies?format=select-search"},
 						{ key: "title", type: "text"},
-						{ key: "hostname", type: "text"},
-						{ key: "ip_address", type: "text"},
-						{ key: "os", type: "text"},
-						{ key: "architecture", type: "text"},
-						{ key: "cpu_cores", type: "number"},
-						{ key: "cpu_threads", type: "number"},
-						{ key: "distro", type: "text"},
-						{ key: "distro_version", type: "text"},
-						{ key: "kernel", type: "text"},
-						{ key: "kernel_version", type: "text"},
+						// { key: "hostname", type: "text"},
+						// { key: "ip_address", type: "text"},
+						{ label: 'Operating System', key: "os", type: "select", field: 'title', options: [{id: 1, title: 'Linux'}]},
+						// { key: "architecture", type: "text"},
+						// { key: "cpu_cores", type: "number"},
+						// { key: "cpu_threads", type: "number"},
+						// { key: "distro", type: "text"},
+						// { key: "distro_version", type: "text"},
+						// { key: "kernel", type: "text"},
+						// { key: "kernel_version", type: "text"},
 					]
 				},
             ]
@@ -76,6 +79,17 @@ export default {
     },
 
     methods: {
+        save() {
+            axios.post('/api/v2/servers', this.server).then((response) => {
+                // console.log(response);
+                eventHub.emit('server-updated', response.data);
+
+                const confirmed = this.$modals.push('ServerSetup', {
+                    token: response.data.token
+                });
+            });
+        },
+
         formSuccess(data) {
             eventHub.emit('server-updated', data);
             if (this.data.id) {

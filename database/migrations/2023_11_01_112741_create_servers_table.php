@@ -12,9 +12,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('company_id')->index();
 			$table->string('title', 255);
-			$table->string('hostname', 255);
-			$table->string('ip_address');
-			$table->string('os');
+			$table->string('hostname')->nullable();
+			$table->string('ip_address')->nullable();
+			$table->string('os')->nullable();
 			$table->string('architecture')->nullable();
 			$table->integer('cpu_cores')->nullable();
 			$table->integer('cpu_threads')->nullable();
@@ -22,6 +22,7 @@ return new class extends Migration
 			$table->string('distro_version')->nullable();
 			$table->string('kernel')->nullable();
 			$table->string('kernel_version')->nullable();
+            $table->datetime('verified_at')->nullable();
 			$table->lockable();
             $table->sensesHiddenAt();
             $table->sensesTimestamps();

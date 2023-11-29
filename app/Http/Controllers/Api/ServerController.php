@@ -62,7 +62,10 @@ class ServerController extends Controller
      */
     public function store(CreateServerRequest $request, CreateServer $createServer)
     {
-        return $this->respond($createServer->execute($request->all()));
+        $data = $request->all();
+        $data['company_id'] = $request->user()->company_id;
+
+        return $this->respond($createServer->execute($data));
     }
 
     /**

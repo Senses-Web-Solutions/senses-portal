@@ -40,7 +40,7 @@
                             </div>
                         </a>
 
-                        <div class="flex flex-col flex-1 overflow-y-auto bg-white border-r border-gray-200">
+                        <div class="flex flex-col flex-1 overflow-y-auto bg-white border-r border-zinc-200">
                             <Sidebar />
                         </div>
                     </div>

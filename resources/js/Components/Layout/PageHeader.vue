@@ -1,5 +1,5 @@
 <template>
-    <section class="sticky top-0 z-40 flex w-full items-center justify-between border-b border-b-zinc-200 bg-white p-4 backdrop-blur-lg dark:border-b-zinc-800" :class="{
+    <section class="sticky top-0 z-40 flex w-full items-center justify-between border-b border-b-zinc-200 bg-white p-4 backdrop-blur-lg dark:border-b-zinc-700" :class="{
             'shadow-sm': !flushLayout,
             'border-b': flushLayout,
         }" data-component="PageHeader">

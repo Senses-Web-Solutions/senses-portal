@@ -16,7 +16,7 @@
             </template>
         </DetailsHeader>
         <slot name="alerts"></slot>
-        <div class="border-t border-zinc-200 divide-y divide-zinc-200 dark:divide-zinc-800">
+        <div class="border-t border-zinc-200 divide-y divide-zinc-200">
             <slot></slot>
         </div>
     </Card>

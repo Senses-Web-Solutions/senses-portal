@@ -33,6 +33,7 @@
                                         <slot name="subtitle"></slot>
                                     </p>
                                 </div>
+                                <slot name="command"></slot>
                             </div>
                         </div>
                         <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">

@@ -12,8 +12,8 @@
     </template>
 </page-header>
 
-<page-layout>
-    <server-table></server-table>
+<page-layout :flush="true">
+    <server-list></server-list>
 </page-layout>
 
 @endsection

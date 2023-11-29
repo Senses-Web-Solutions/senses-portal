@@ -27,7 +27,8 @@ class Server extends Model
 		'distro',
 		'distro_version',
 		'kernel',
-		'kernel_version'
+		'kernel_version',
+		'verified_at'
 	];
 
     protected $casts = [
@@ -49,7 +50,7 @@ class Server extends Model
 
     public function allowedSorts()
     {
-        return ['id', 'title', 'hostname', 'ip_address', 'os', 'architecture', 'cpu_cores', 'cpu_threads', 'distro', 'distro_version', 'kernel', 'kernel_version'];
+        return ['id', 'title', 'hostname', 'ip_address', 'os', 'architecture', 'cpu_cores', 'cpu_threads', 'distro', 'distro_version', 'kernel', 'kernel_version', 'verified_at'];
     }
 
     public function allowedEmbeds()
@@ -59,7 +60,7 @@ class Server extends Model
 
     public function allowedFields()
     {
-        return ['id', 'title', 'hostname', 'ip_address', 'os', 'architecture', 'cpu_cores', 'cpu_threads', 'distro', 'distro_version', 'kernel', 'kernel_version'];
+        return ['id', 'title', 'hostname', 'ip_address', 'os', 'architecture', 'cpu_cores', 'cpu_threads', 'distro', 'distro_version', 'kernel', 'kernel_version', 'verified_at'];
     }
 
     public function allowedFilters()
@@ -76,7 +77,8 @@ class Server extends Model
 			'distro' => 'text',
 			'distro_version' => 'text',
 			'kernel' => 'text',
-			'kernel_version' => 'text'
+			'kernel_version' => 'text',
+			'verified_at' => 'datetime',
         ]);
     }
 

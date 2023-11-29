@@ -2,6 +2,7 @@
 
 namespace App\Actions\Servers;
 
+use App\Actions\ApiTokens\CreateApiToken;
 use App\Models\Server;
 use Spatie\QueueableAction\QueueableAction;
 
@@ -13,11 +14,18 @@ class CreateServer
     {
         $server = new Server($data);
 
-		if(isset($data['company_id'])) {
+		if (isset($data['company_id'])) {
 			$server->company()->associate($data['company_id']);
 		}
 
         $server->save();
+
+        $apiToken = app(CreateApiToken::class)->execute([
+            'title' => 'Automatically Generated API Token',
+            'server_id' => $server->id,
+        ]);
+
+        $server['token'] = $apiToken['token'];
 
         return $server;
     }

@@ -30,7 +30,7 @@
                 }"
                 >
                 <div v-if="!modal.data.hideCloseButton" class="absolute top-0 right-0 hidden pt-3 pr-3 sm:block">
-                    <button type="button" class="rounded-md bg-white text-zinc-400 hover:text-zinc-500 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:ring-offset-2" @click="$modals.pop()">
+                    <button type="button" class="rounded-md bg-white text-zinc-400 hover:bg-zinc-100 hover:text-zinc-500 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:ring-offset-2" @click="$modals.pop()">
                         <XIcon class="w-5 h-5 text-zinc-500" />
                     </button>
                 </div>
