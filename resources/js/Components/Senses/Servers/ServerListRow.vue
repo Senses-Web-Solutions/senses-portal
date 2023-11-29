@@ -14,7 +14,7 @@
         </td>
 
         <td class="py-3 pr-6">
-            <div class="text-zinc-500">
+            <div class="text-zinc-500 text-center">
                 <span :style="'color: ' + getColour(this.metric?.load_1 / (this.data.cpu_cores ?? 1))">{{ this.metric?.load_1 }}</span>
                 ·
                 <span :style="'color: ' + getColour(this.metric?.load_5 / (this.data.cpu_cores ?? 1))">{{ this.metric?.load_5 }}</span>
@@ -31,6 +31,9 @@
                     </g>
                 </template>
             </svg>
+            <div v-else class="text-sm text-zinc-500">
+                N/A
+            </div>
         </td>
 
         <td class="py-3">
@@ -38,8 +41,8 @@
                 {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_total) / 10000) / 100 }}Gb
             </div>
             <div class="rounded-full h-1.5 mt-1 bg-zinc-200 w-3/4" :style="'fill: ' + getColour(metric.disk_used / metric.disk_total)">
-                <svg v-if="this.metric.disk_total" width="100%" viewBox="0 0 100 5" xmlns="http://www.w3.org/2000/svg">
-                    <rect v-if="metric.disk_total > 0" :width="metric.disk_used / (metric.disk_total) * 100" height="100%" rx="3"></rect>
+                <svg v-if="this.metric.disk_total > 0" width="100%" viewBox="0 0 100 5" xmlns="http://www.w3.org/2000/svg">
+                    <rect :width="metric.disk_used / (metric.disk_total) * 100" height="100%" rx="3"></rect>
                 </svg>
             </div>
         </td>
@@ -48,8 +51,8 @@
                 {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_total) / 10000) / 100 }}Gb
             </div>
             <div class="rounded-full h-1.5 mt-1 bg-zinc-200 w-3/4" :style="'fill: ' + getColour(metric.disk_used / metric.disk_total)">
-                <svg v-if="this.metric.disk_total" width="100%" viewBox="0 0 100 5" xmlns="http://www.w3.org/2000/svg">
-                    <rect v-if="metric.disk_total > 0" :width="metric.disk_used / metric.disk_total * 100" height="100%" rx="3"></rect>
+                <svg v-if="this.metric.disk_total > 0" width="100%" viewBox="0 0 100 5" xmlns="http://www.w3.org/2000/svg">
+                    <rect :width="metric.disk_used / metric.disk_total * 100" height="100%" rx="3"></rect>
                 </svg>
             </div>
         </td>
@@ -58,8 +61,8 @@
                 {{ Math.round(metric.ram_used / 10000) / 100 }}Gb / {{ Math.round(metric.ram_total / 10000) / 100 }}Gb
             </div>
             <div class="rounded-full h-1.5 mt-1 bg-zinc-200 w-3/4" :style="'fill: ' + getColour(metric.ram_used / metric.ram_total)">
-                <svg v-if="this.metric.ram_total" width="100%" viewBox="0 0 100 5" xmlns="http://www.w3.org/2000/svg">
-                    <rect v-if="metric.ram_total > 0" :width="metric.ram_used / metric.ram_total * 100" height="100%" rx="3"></rect>
+                <svg v-if="this.metric.ram_total > 0" width="100%" viewBox="0 0 100 5" xmlns="http://www.w3.org/2000/svg">
+                    <rect :width="metric.ram_used / metric.ram_total * 100" height="100%" rx="3"></rect>
                 </svg>
             </div>
         </td>
@@ -69,18 +72,27 @@
                 {{ Math.round(metric.swap_used / 10000) / 100 }}Gb / {{ Math.round(metric.swap_total / 10000) / 100 }}Gb
             </div>
             <div class="rounded-full h-1.5 mt-1 bg-zinc-200 w-3/4" :style="'fill: ' + getColour(metric.swap_used / metric.swap_total)">
-                <svg v-if="this.metric.swap_total" width="100%" viewBox="0 0 100 5" xmlns="http://www.w3.org/2000/svg">
-                    <rect v-if="metric.swap_total > 0" :width="metric.swap_used / metric.swap_total * 100" height="100%" rx="3"></rect>
+                <svg v-if="this.metric.swap_total > 0" width="100%" viewBox="0 0 100 5" xmlns="http://www.w3.org/2000/svg">
+                    <rect :width="metric.swap_used / metric.swap_total * 100" height="100%" rx="3"></rect>
                 </svg>
             </div>
         </td>
 
-        <td v-if="this.metric" class="py-3 text-zinc-500">
+        <td v-if="this.data.verified_at" class="py-3 text-zinc-500">
             <span class="text-md text-green-500 inline-flex items-center gap-x-1.5 py-0 align-middle font-normal">
                 <svg class="fill-green-500 h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
                     <circle cx="3" cy="3" r="3"></circle>
                 </svg>
                 {{ timeSinceLastUpdate }} min
+            </span>
+        </td>
+
+        <td v-else class="py-3 text-zinc-500" title="Install script to verify server.">
+            <span class="text-md text-red-500 inline-flex items-center gap-x-1.5 py-0 align-middle font-normal">
+                <svg class="fill-red-500 h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
+                    <circle cx="3" cy="3" r="3"></circle>
+                </svg>
+                Un-Verified
             </span>
         </td>
     </tr>
