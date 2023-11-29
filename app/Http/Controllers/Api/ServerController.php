@@ -7,6 +7,7 @@ use App\Actions\Servers\CreateServer;
 use App\Actions\Servers\DeleteServer;
 use App\Actions\Servers\GenerateServerShowCache;
 use App\Actions\Servers\UpdateServer;
+use App\Actions\Servers\ValidateServer;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\BlockGroups\CreateServerRequest as BlockGroupsCreateServerRequest;
 use App\Http\Requests\ServerMetrics\CreateServerMetricRequest;
@@ -15,6 +16,7 @@ use App\Http\Requests\Servers\DeleteServerRequest;
 use App\Http\Requests\Servers\ListServerRequest;
 use App\Http\Requests\Servers\ShowServerRequest;
 use App\Http\Requests\Servers\UpdateServerRequest;
+use App\Http\Requests\Servers\ValidateServerRequest;
 use App\Models\Server;
 use App\Support\QueryBuilder;
 use App\Traits\ApiResponse;
@@ -90,6 +92,22 @@ class ServerController extends Controller
     public function destroy(DeleteServerRequest $request, int $id, DeleteServer $deleteServer)
     {
         return $this->respondDeleted($deleteServer->execute($id));
+    }
+
+
+    /**
+     * validate()
+     *
+     * Deletes a tag-group.
+     * <aside><ul><li>delete-tag-group</li></ul></aside>
+     * @urlParam tag-group integer Server ID. Example: 1
+     */
+    public function validateServer(ValidateServerRequest $request, ValidateServer $validateServer)
+    {
+        $data = $request->all();
+        $data['server_id'] = $request->user()->id; // user() is actually the Server model that has the API Key
+
+        return $this->respond($validateServer->execute($data));
     }
 }
 

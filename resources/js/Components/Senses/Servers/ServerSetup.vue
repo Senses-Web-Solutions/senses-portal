@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-4">
-        <div class="pr-8">
+        <div class="pr-8 text-black">
             To initialise your server, SSH in and run this command at the root
         </div>
         <div class="select-all bg-zinc-100 text-black p-4 rounded-lg flex items-center">

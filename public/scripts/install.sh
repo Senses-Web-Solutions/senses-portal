@@ -91,6 +91,10 @@ create_key_file() {
     echo -e $KEY > "$HOME/senses-portal/api_token"
 }
 
+validate_server() {
+    wget -q --method POST --body-data="{}" --header="Content-Type: application/json" --header="Authorization: Bearer $KEY" -O- http://dev.portal.senses.co.uk/api/servers/validate &> /dev/null
+}
+
 add_to_crontab() {
     # Add the job to the crontab
     crontab -l | {
@@ -103,6 +107,22 @@ add_to_crontab() {
             '* * * * * ( sleep 30; bash $HOME/senses-portal/scrape.sh )'\
             '';
     } | crontab -
+}
+
+check_things() {
+    # # Check if bc command is installed and if not then install it
+    # if command -v bc > /dev/null 2>&1; then
+    #     echo "bc is installed."
+    # else
+    #     sudo apt install bc
+    # fi
+
+    # # Check if iostat command is installed and if not then install it
+    # if command -v iostat > /dev/null 2>&1; then
+    #     echo "iostat is installed."
+    # else
+    #     sudo apt install sysstat
+    # fi
 }
 
 # validateServerModel() {
@@ -120,6 +140,7 @@ asciiTitle
 scriptDescription
 
 create_key_file
+validate_server
 
 check_for_volumes
 

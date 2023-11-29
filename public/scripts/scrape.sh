@@ -75,7 +75,7 @@ LOAD_15=$(echo "$LOADAVG" | awk '{print $3}')
 MEMINFO=$(cat /proc/meminfo)
 
 
-RAM_CACHED=$(echo "$MEMINFO" | grep Cached | awk '{print $2}')
+RAM_CACHED=$(echo "$MEMINFO" | grep -w Cached | awk '{print $2}')
 RAM_RECLAIM=$(echo "$MEMINFO" | grep SReclaimable | awk '{print $2}')
 RAM_CACHE=$(echo "$RAM_CACHED + $RAM_RECLAIM" | bc)
 

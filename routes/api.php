@@ -41,6 +41,8 @@ Route::middleware(['auth:server'])->group(function () {
     Route::sensesApiResources([
         'server-metrics' => ServerMetricController::class,
     ]);
+
+    Route::post('servers/validate', [ServerController::class, 'validateServer']);
 });
 
 Route::middleware(['auth:api'])->prefix('v2')->group(function () {
