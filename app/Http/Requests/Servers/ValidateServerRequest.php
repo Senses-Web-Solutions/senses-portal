@@ -18,7 +18,7 @@ class ValidateServerRequest extends FormRequest
     public function rules()
     {
         $rules = [
-			'server_id' => 'required|integer|exists:servers,id',
+			// 'server_id' => 'required|integer|exists:servers,id',
         ];
 
         return $rules;

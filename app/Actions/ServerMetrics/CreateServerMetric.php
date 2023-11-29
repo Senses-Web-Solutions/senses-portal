@@ -16,6 +16,25 @@ class CreateServerMetric
             $data['timestamp'] = now()->timestamp;
         }
 
+        $serverData = [
+            "hostname" => $data['hostname'],
+            "ip_address" => $data['ip_address'],
+            "os" => $data['os'],
+            "distro" => $data['distro'],
+            "distro_version" => $data['distro_version'],
+            "architecture" => $data['architecture'],
+            "kernel" => $data['kernel'],
+            "kernel_version" => $data['kernel_version'],
+
+            "cpu_cores" => $data['cpu_cores'],
+            "cpu_threads" => $data['cpu_threads'],
+        ];
+
+        $server = Server::find($data['server_id']);
+        if ($server->cpu_cores == null) {
+            $server->update($serverData);
+        }
+
         $serverMetric = new ServerMetric($data);
 
 		if (isset($data['server_id'])) {

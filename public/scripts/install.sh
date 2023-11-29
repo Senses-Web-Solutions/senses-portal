@@ -109,21 +109,21 @@ add_to_crontab() {
     } | crontab -
 }
 
-check_things() {
-    # # Check if bc command is installed and if not then install it
-    # if command -v bc > /dev/null 2>&1; then
-    #     echo "bc is installed."
-    # else
-    #     sudo apt install bc
-    # fi
+# check_things() {
+#     # # Check if bc command is installed and if not then install it
+#     # if command -v bc > /dev/null 2>&1; then
+#     #     echo "bc is installed."
+#     # else
+#     #     sudo apt install bc
+#     # fi
 
-    # # Check if iostat command is installed and if not then install it
-    # if command -v iostat > /dev/null 2>&1; then
-    #     echo "iostat is installed."
-    # else
-    #     sudo apt install sysstat
-    # fi
-}
+#     # # Check if iostat command is installed and if not then install it
+#     # if command -v iostat > /dev/null 2>&1; then
+#     #     echo "iostat is installed."
+#     # else
+#     #     sudo apt install sysstat
+#     # fi
+# }
 
 # validateServerModel() {
 #     # Checks to see if there is a server model with the API key that you have provided in the install url.
