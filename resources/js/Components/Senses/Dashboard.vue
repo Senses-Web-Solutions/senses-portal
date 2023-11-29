@@ -1,6 +1,6 @@
 <template>
-    <div class="w-full flex flex-wrap">
-        <div v-for="server in servers">
+    <div class="w-full flex flex-wrap p-2">
+        <div class="p-2" v-for="server in servers">
             <ServerCard :data="server" />
         </div>
     </div>
