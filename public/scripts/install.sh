@@ -80,15 +80,15 @@ hashline() {
 download_scraper() {
     # Download the scraping script
     newline
-    wget -q -P $HOME/senses-portal --show-progress http://dev.portal.senses.co.uk/scripts/scrape.sh && sudo bash $HOME/senses-portal/scrape.sh
+    wget -q -P "$HOME/senses-portal" --show-progress http://dev.portal.senses.co.uk/scripts/scrape.sh && sudo bash "$HOME/senses-portal/scrape.sh"
 }
 
 create_key_file() {
-    if [ ! -d $HOME/senses-portal ]; then
-        sudo mkdir $HOME/senses-portal
+    if [ ! -d "$HOME/senses-portal" ]; then
+        mkdir "$HOME/senses-portal"
     fi
 
-    echo -e $KEY > $HOME/senses-portal/api_token
+    echo -e $KEY > "$HOME/senses-portal/api_token"
 }
 
 add_to_crontab() {
