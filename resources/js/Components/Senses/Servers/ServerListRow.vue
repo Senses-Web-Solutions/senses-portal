@@ -141,7 +141,7 @@ export default {
         })
 
         setInterval(() => {
-            this.timeSinceLastUpdate = formatDistanceToNow(new Date().getTime() - this.metric.timestamp, {includeSeconds: true});
+            this.timeSinceLastUpdate = formatDistanceToNow((new Date().getTime() / 1000) - this.metric.timestamp, {includeSeconds: true});
         }, 1000);
 
         this.load();

@@ -46,7 +46,7 @@
                                 Swap
                             </th>
                             <th class="relative isolate w-36 border-b border-zinc-200 bg-zinc-50 py-2 pr-6 font-normal">
-                                Data
+                                Status
                             </th>
                         </tr>
 
@@ -81,6 +81,8 @@ export default {
 
     mounted() {
         eventHub.on('server-updated', (newServer) => {
+            console.log(newServer);
+
             var found = false;
             this.servers.forEach((server, index) => {
                 if (server.id == newServer.id) {
