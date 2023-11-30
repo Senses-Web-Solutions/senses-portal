@@ -54,7 +54,7 @@
                                     class="w-6 h-6 text-warning-500"
                                 />
                             </div>
-                            <div class="ml-3 w-0 flex-1 pt-0.5">
+                            <div class="ml-3 w-0 flex-1 pt-0.5 text-black">
                                 <p class="font-medium leading-5">{{ notification.title }}</p>
                                 <p
                                     v-if="notification.description"

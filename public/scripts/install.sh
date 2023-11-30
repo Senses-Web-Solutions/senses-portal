@@ -100,27 +100,17 @@ check_for_volumes() {
 #     # fi
 # }
 
-# validate_user() {
-#     validation=$(curl -X GET \
-#         "$xitoring_url"/validate-key/"$KEY" \
-#         -H 'cache-control: no-cache' \
-#         -H 'content-type: multipart/form-data;')
-#     if (($(echo "$validation" | grep -c "invalid_key") > 0)); then
-#         echo -e "\e[41mERROR\e[0m ""Your API key is invalid."
-#         exit 1
-#     elif (($(echo "$validation" | grep -c "no_access") > 0)); then
-#         echo -e "\e[41mERROR\e[0m ""You don't have access to add a server."
-#         exit 1
-#     elif (($(echo "$validation" | grep -c "reached_maximum") > 0)); then
-#         echo -e "\e[41mERROR\e[0m ""You have reached the maximum number of servers you can add."
-#         exit 1
-#     elif (($(echo "$validation" | grep -c "unconfirmed_email") > 0)); then
-#         echo -e "\e[41mERROR\e[0m ""You have to confirm your accounts Email address first."
-#         exit 1
-#     else
-#         return 0
-#     fi
-# }
+validate_token() {
+    validation=$(wget -q --method POST --body-data='{}' --header="Content-Type: application/json" --header="Authorization: Bearer $KEY" -O- http://dev.portal.senses.co.uk/api/servers/validate)
+    if (($(echo "$validation" | grep -c "<head>") > 0)); then
+        echo -e "\e[41mERROR\e[0m" "Unable to validate your API Token"
+        newline
+        exit 1
+    else
+        echo -e "\e[42mSUCCESS\e[0m" "API Token was successfully validated"
+        newline
+    fi
+}
 
 # #################################################### The Script #################################################### #
 
@@ -134,21 +124,30 @@ scriptDescription
 
 hashline
 
-if [ -d "$HOME/senses-portal" ]; then
-    echo -e "Removing previous installation of Senses Portal..."
-    rm -r "$HOME/senses-portal"
+# Check if the user is the root user
+if [ "$(whoami)" == root ]; then
+    return 0
+else
+    echo -e "\e[41mERROR\e[0m ""You are not logged in as root, please switch to root user and retry."
+    newline
+    exit 0
 fi
-
-if [ ! -d "$HOME/senses-portal" ]; then
-    echo -e "Creating new installation of Senses Portal..."
-    mkdir "$HOME/senses-portal"
-fi
-
-echo -e "Creating API Token file..."
-echo -e $KEY > "$HOME/senses-portal/.api_token"
 
 echo -e "Validating API Token..."
-wget -q --method POST --body-data='{}' --header="Content-Type: application/json" --header="Authorization: Bearer $KEY" -O- http://dev.portal.senses.co.uk/api/servers/validate &> /dev/null
+validate_token
+
+if [ -d "/root/senses-portal" ]; then
+    echo -e "Removing previous installation of Senses Portal..."
+    rm -r "/root/senses-portal"
+fi
+
+if [ ! -d "/root/senses-portal" ]; then
+    echo -e "Creating new installation of Senses Portal..."
+    mkdir "/root/senses-portal"
+fi
+
+echo -e "Storing API Token..."
+echo -e $KEY > "/root/senses-portal/.api_token"
 
 hashline
 
@@ -157,24 +156,24 @@ check_for_volumes
 hashline
 
 echo -e "Installing data scraping script..."
-wget -q -P "$HOME/senses-portal" http://dev.portal.senses.co.uk/scripts/scrape.sh && bash "$HOME/senses-portal/scrape.sh"
+wget -q -P "/root/senses-portal" http://dev.portal.senses.co.uk/scripts/scrape.sh && sudo bash /root/senses-portal/scrape.sh
 
 echo -e "Adding script to Crontab..."
-crontab -l | {
+sudo crontab -l | {
     cat;
     printf '%s\n' \
         '' \
         '# Run Senses Portal Scraper Every Minute (With a 30 second offset)' \
         '# This offset is to account for the spike in CPU usage when minutely schedules are run' \
         '' \
-        '* * * * * ( sleep 30; bash $HOME/senses-portal/scrape.sh )'\
+        '* * * * * ( sleep 30; sudo bash /root/senses-portal/scrape.sh )'\
         '';
-} | crontab -
+} | sudo crontab -
 
 hashline
 
 echo -e "Removing installer script..."
-rm install.sh
+sudo rm /root/install.sh
 
 newline
 

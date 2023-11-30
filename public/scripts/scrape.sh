@@ -1,6 +1,6 @@
 #! /bin/bash
 
-KEY=$(<"$HOME/senses-portal/.api_token")
+KEY=$(<"/root/senses-portal/.api_token")
 
 
 # CONNECTED
