@@ -141,7 +141,7 @@ export default {
         })
 
         setInterval(() => {
-            this.timeSinceLastUpdate = formatDistanceToNow(new Date(this.metric.timestamp * 1000), {includeSeconds: true});
+            this.timeSinceLastUpdate = this.hrDuration(new Date().getTime() / 1000 - this.metric.timestamp);
         }, 1000);
 
         this.load();
@@ -178,6 +178,34 @@ export default {
 
     methods: {
         formatDistanceToNow,
+        hrDuration (seconds) {
+            if (!seconds) {
+                return 'N/A';
+            }
+
+            const days = Math.floor(seconds / 86400);
+            const hours = Math.floor(seconds / 3600);
+            const mins = Math.floor(seconds / 60) % 60;
+            const secs = seconds % 60;
+
+            const dayString = days > 1 ? ' Days' : ' Day';
+            const hourString = hours > 1 ? ' Hrs' : ' Hr';
+            const minString = mins > 1 ? ' Mins' : ' Min';
+            const secString = secs > 1 ? ' Secs' : ' Sec';
+
+            let string = [];
+
+            hours ? string.push(`${hours} ${hourString}`) : string;
+            mins ? string.push(`${mins} ${minString}`) : string;
+            hours ? string : string.push(`${secs} ${secString}`);
+
+            days ? string = [`${days} ${dayString}`] : string;
+
+            string = string.join(" ");
+
+            return string;
+        },
+
         load() {
             axios.get('/api/v2/servers/' + this.data.id + '/server-metrics?format=limited&limit=50').then((response) => {
                 if (response.data.length > 0) {
