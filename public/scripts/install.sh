@@ -55,15 +55,14 @@ asciiTitle() {
     echo -e "$purple ____   ____   __ _   ____   ____   ____     ____    __   ____   ____   __    __    "
     echo -e "/ ___) (  __) (  ( \ / ___) (  __) / ___)   (  _ \  /  \ (  _ \ (_  _) / _\  (  )   "
     echo -e "\___ \  ) _)  /    / \___ \  ) _)  \___ \    ) __/ (  O ) )   /   )(  /    \ / (_/\ "
-    echo -e "(____/ (____) \_)__) (____/ (____) (____/   (__)    \__/ (__\_)  (__) \_/\_/ \____/ "
-    echo -e "                                                                                     $reset"
+    echo -e "(____/ (____) \_)__) (____/ (____) (____/   (__)    \__/ (__\_)  (__) \_/\_/ \____/ $reset"
 }
 
 scriptDescription() {
     echo -e "This script will install all of the necessary components to allow Senses Portal to "
     echo -e "function as intended.                                                              "
     echo -e "                                                                                   "
-    echo -e "If you have any issues or questions, Please get in contact at $boldjack@senses.co.uk$reset"
+    echo -e "If you have any issues or questions, Please get in contact at$bold jack@senses.co.uk$reset"
 }
 
 check_for_volumes() {
@@ -156,6 +155,8 @@ if [ ! -d "/root/senses-portal" ]; then
     mkdir "/root/senses-portal"
 fi
 
+newline
+
 echo -e "Storing API Token..."
 echo -e $KEY > "/root/senses-portal/.api_token"
 
@@ -167,6 +168,8 @@ hashline
 
 echo -e "Installing data scraping script..."
 wget -q -P "/root/senses-portal" http://dev.portal.senses.co.uk/scripts/scrape.sh && sudo bash /root/senses-portal/scrape.sh
+
+newline
 
 echo -e "Adding script to Crontab..."
 if (($(crontab -l | grep -c "Senses Portal") > 0)); then

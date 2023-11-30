@@ -17,11 +17,11 @@ class ValidateServer
             $server = Server::find($data['server_id']);
         }
 
-        broadcast_safely(new ServerValidated($server));
-
         $server->verified_at = now();
 
         $server->save();
+
+        broadcast_safely(new ServerValidated($server));
 
         return $server;
     }

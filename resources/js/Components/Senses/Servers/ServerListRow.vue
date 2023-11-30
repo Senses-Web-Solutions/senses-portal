@@ -130,16 +130,12 @@ export default {
             this.previousMetric = this.metric;
             this.metric = serverMetric;
 
-            this.timeSinceLastUpdate = 1;
-
             this.metrics.unshift(serverMetric);
         })
 
         echo.private(`servers.${this.data.id}.server-metrics`).listen('ServerMetrics\\ServerMetricUpdated', ({serverMetric}) => {
             this.previousMetric = this.metric;
             this.metric = serverMetric;
-
-            this.timeSinceLastUpdate = 1;
 
             this.metrics.unshift(serverMetric);
         })
