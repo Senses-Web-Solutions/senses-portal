@@ -82,11 +82,9 @@ export default {
         save() {
             axios.post('/api/v2/servers', this.server).then((response) => {
                 // console.log(response);
-                eventHub.emit('server-updated', response.data);
+                this.$asides.pop();
 
-                const confirmed = this.$modals.push('ServerSetup', {
-                    token: response.data.token
-                });
+                const confirmed = this.$modals.push('ServerSetup', response.data);
             });
         },
 
