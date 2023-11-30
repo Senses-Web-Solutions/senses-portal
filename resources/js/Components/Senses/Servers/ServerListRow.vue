@@ -83,7 +83,7 @@
                 <svg class="fill-green-500 h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
                     <circle cx="3" cy="3" r="3"></circle>
                 </svg>
-                {{ timeSinceLastUpdate }} min
+                {{ timeSinceLastUpdate }}
             </span>
         </td>
 
@@ -145,7 +145,7 @@ export default {
         })
 
         setInterval(() => {
-            this.timeSinceLastUpdate = formatDistanceToNow(this.metric.timestamp / 60);
+            this.timeSinceLastUpdate = formatDistanceToNow(new Date().getTime() - this.metric.timestamp, {includeSeconds: true});
         }, 1000);
 
         this.load();
