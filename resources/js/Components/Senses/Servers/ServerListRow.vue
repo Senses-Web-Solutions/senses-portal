@@ -105,6 +105,8 @@ import SmallText from '../../Ui/Text/SmallText.vue';
 
 import useEcho from '../../../../Support/useEcho';
 
+import { formatDistanceToNow } from 'date-fns';
+
 const echo = useEcho();
 
 export default {
@@ -143,7 +145,7 @@ export default {
         })
 
         setInterval(() => {
-            this.timeSinceLastUpdate = Math.ceil(new Date().getTime() / 60000 - this.metric.timestamp / 60);
+            this.timeSinceLastUpdate = formatDistanceToNow(this.metric.timestamp / 60);
         }, 1000);
 
         this.load();
@@ -179,6 +181,7 @@ export default {
     },
 
     methods: {
+        formatDistanceToNow,
         load() {
             axios.get('/api/v2/servers/' + this.data.id + '/server-metrics?format=limited&limit=50').then((response) => {
                 if (response.data.length > 0) {
