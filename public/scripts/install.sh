@@ -35,53 +35,53 @@ newline() {
 }
 
 hashline() {
+    newline
     echo -e '###################################################################################'
+    newline
 }
 
 asciiTitle() {
-    echo -e " ____   ____   __ _   ____   ____   ____     ____    __   ____   ____   __    __     "
-    echo -e "/ ___) (  __) (  ( \ / ___) (  __) / ___)   (  _ \  /  \ (  _ \ (_  _) / _\  (  )    "
-    echo -e "\___ \  ) _)  /    / \___ \  ) _)  \___ \    ) __/ (  O ) )   /   )(  /    \ / (_/\  "
-    echo -e "(____/ (____) \_)__) (____/ (____) (____/   (__)    \__/ (__\_)  (__) \_/\_/ \____/  "
-
-    newline
+    echo " ____   ____   __ _   ____   ____   ____     ____    __   ____   ____   __    __     "
+    echo "/ ___) (  __) (  ( \ / ___) (  __) / ___)   (  _ \  /  \ (  _ \ (_  _) / _\  (  )    "
+    echo "\___ \  ) _)  /    / \___ \  ) _)  \___ \    ) __/ (  O ) )   /   )(  /    \ / (_/\  "
+    echo "(____/ (____) \_)__) (____/ (____) (____/   (__)    \__/ (__\_)  (__) \_/\_/ \____/  "
+    echo "                                                                                     "
 }
 
 scriptDescription() {
-    hashline
-    newline
-    echo -e 'This script will install all of the necessary components to allow Senses Portal to'
-    echo -e 'function as intended.'
-    newline
-    echo -e 'If you have any issues or questions, Please get in contact at \e[1mjack@senses.co.uk\e[0m'
-    newline
-    hashline
-    newline
+    echo -e "This script will install all of the necessary components to allow Senses Portal to "
+    echo -e "function as intended.                                                              "
+    echo -e "                                                                                   "
+    echo -e "If you have any issues or questions, Please get in contact at \e[1mjack@senses.co.uk\e[0m"
 }
 
 check_for_volumes() {
-    echo -e "Checking for volumes..."
-    echo -e "Found \e[1m2 Volumes\e[0m"
+    echo -e "Checking for volumes in /mnt..."
 
-    newline
+    VOLUME_COUNT=$(ls /mnt | wc -l)
 
-    printf '%s\n' \
-        'Name,Size,Location' \
-        '------------------------,------,------------' \
-        'volume_iwjs_iwjs,500GB,/dev/sda' \
-        'volume_iwjs_iwjs_2,2TB,/dev/sda4' | column -s "," -t
+    if [ VOLUME_COUNT > 0 ] then
+        # Server has Volumes
+        echo -e "Found \e[1m$VOLUME_COUNT Volumes\e[0m"
 
-    for volume in volume_iwjs_iwjs volume_iwjs_iwjs_2; do
         newline
 
-        read -p "Would you like to monitor $volume? (y/n) [n]: " confirmed
+        DF=$(df -h | grep /mnt | awk '{print $6, $2, $3, $4, $5, $1}')
 
-        if [ "$confirmed" = "y" ]; then
-            echo "Added $volume to monitor script."
-        fi
-    done
+        echo -e "Name Size Used Avail Use% Filesystem\n-------------------------------- ------ ------ ------ ------ ----------------\n$DF" | column -t
 
-    newline
+        for volume in $(ls /mnt); do
+            newline
+            read -p "Would you like to monitor $volume? (y/n) [n]: " confirmed
+
+            if [ "$confirmed" = "y" ]; then
+                echo "Added $volume to monitor script."
+            fi
+        done
+    else
+        # Server does not have Volumes
+        echo -e "Found \e[1m$VOLUME_COUNT Volumes\e[0m"
+    fi
 }
 
 # check_things() {
@@ -100,22 +100,49 @@ check_for_volumes() {
 #     # fi
 # }
 
+# validate_user() {
+#     validation=$(curl -X GET \
+#         "$xitoring_url"/validate-key/"$KEY" \
+#         -H 'cache-control: no-cache' \
+#         -H 'content-type: multipart/form-data;')
+#     if (($(echo "$validation" | grep -c "invalid_key") > 0)); then
+#         echo -e "\e[41mERROR\e[0m ""Your API key is invalid."
+#         exit 1
+#     elif (($(echo "$validation" | grep -c "no_access") > 0)); then
+#         echo -e "\e[41mERROR\e[0m ""You don't have access to add a server."
+#         exit 1
+#     elif (($(echo "$validation" | grep -c "reached_maximum") > 0)); then
+#         echo -e "\e[41mERROR\e[0m ""You have reached the maximum number of servers you can add."
+#         exit 1
+#     elif (($(echo "$validation" | grep -c "unconfirmed_email") > 0)); then
+#         echo -e "\e[41mERROR\e[0m ""You have to confirm your accounts Email address first."
+#         exit 1
+#     else
+#         return 0
+#     fi
+# }
+
 # #################################################### The Script #################################################### #
-
-if [ -d "$HOME/senses-portal" ]; then
-    rm -r "$HOME/senses-portal"
-fi
-
-if [ ! -d "$HOME/senses-portal" ]; then
-    mkdir "$HOME/senses-portal"
-fi
 
 clear
 
 asciiTitle
 
+hashline
+
 scriptDescription
 
+hashline
+
+if [ -d "$HOME/senses-portal" ]; then
+    echo -e "Removing previous installation of Senses Portal..."
+    rm -r "$HOME/senses-portal"
+fi
+
+if [ ! -d "$HOME/senses-portal" ]; then
+    echo -e "Creating new installation of Senses Portal..."
+    mkdir "$HOME/senses-portal"
+fi
 
 echo -e "Creating API Token file..."
 echo -e $KEY > "$HOME/senses-portal/.api_token"
@@ -123,15 +150,11 @@ echo -e $KEY > "$HOME/senses-portal/.api_token"
 echo -e "Validating API Token..."
 wget -q --method POST --body-data='{}' --header="Content-Type: application/json" --header="Authorization: Bearer $KEY" -O- http://dev.portal.senses.co.uk/api/servers/validate &> /dev/null
 
-
 hashline
-
 
 check_for_volumes
 
-
 hashline
-newline
 
 echo -e "Installing data scraping script..."
 wget -q -P "$HOME/senses-portal" http://dev.portal.senses.co.uk/scripts/scrape.sh && bash "$HOME/senses-portal/scrape.sh"
@@ -148,11 +171,11 @@ crontab -l | {
         '';
 } | crontab -
 
+hashline
+
 echo -e "Removing installer script..."
 rm install.sh
 
-newline
-hashline
 newline
 
 echo -e "Installation Complete, Thank you for using Senses Portal."
