@@ -141,7 +141,7 @@ export default {
         })
 
         setInterval(() => {
-            this.timeSinceLastUpdate = this.hrDuration(new Date().getTime() / 1000 - this.metric.timestamp);
+            this.timeSinceLastUpdate = this.hrDuration(Math.round(new Date().getTime() / 1000 - this.metric.timestamp));
         }, 1000);
 
         this.load();

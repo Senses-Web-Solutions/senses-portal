@@ -45,6 +45,10 @@ Route::middleware(['auth:server'])->group(function () {
     Route::post('servers/validate', [ServerController::class, 'validateServer']);
 });
 
+Route::middleware(['auth.basic'])->group(function () {
+    Route::post('/servers/deploy', [ServerController::class, 'deploy']);
+});
+
 Route::middleware(['auth:api'])->prefix('v2')->group(function () {
     Route::sensesApiResources([
         'tags' => TagController::class,

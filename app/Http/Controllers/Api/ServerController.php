@@ -109,6 +109,12 @@ class ServerController extends Controller
 
         return $this->respond($validateServer->execute($data));
     }
+
+    public function deploy(ValidateServerRequest $request, ValidateServer $validateServer)
+    {
+        // return $this->respond($validateServer->execute($data));
+        logger($request->all());
+    }
 }
 
 //Generated 09-10-2023 10:26:55
