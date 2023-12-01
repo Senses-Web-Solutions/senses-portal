@@ -143,17 +143,6 @@ export default {
                 this.updateStatus();
             })
 
-            echo.private(`servers.${this.data.id}.server-metrics`).listen('ServerMetrics\\ServerMetricUpdated', ({serverMetric}) => {
-                this.previousMetric = this.metric;
-                this.metric = serverMetric;
-
-                this.updateCircle(this.circle1, this.metric.load_1, this.getColour(this.metric.load_1 / this.data.cpu_cores));
-                this.updateCircle(this.circle5, this.metric.load_5, this.getColour(this.metric.load_5 / this.data.cpu_cores));
-                this.updateCircle(this.circle15, this.metric.load_15, this.getColour(this.metric.load_15 / this.data.cpu_cores));
-
-                this.updateStatus();
-            })
-
             echo.private(`servers.${this.data.id}.deploy`).listen('Servers\\ServerDeployed', ({data}) => {
                 console.log(data);
 

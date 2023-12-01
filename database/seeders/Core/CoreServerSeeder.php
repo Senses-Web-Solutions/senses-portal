@@ -30,30 +30,36 @@ class CoreServerSeeder extends Seeder
             ]
         ]);
 
-        $server = Server::create([
-            "company_id" => $company->id,
+        $servers = ["Dev", "Teamleaf 8", "CI", "Test", "Teamleaf 6"];
 
-            "title" => "Dev",
+        for ($i=0; $i < 5; $i++) {
+            $server = Server::create([
+                "company_id" => $company->id,
 
-            "hostname" => "Teamleaf8-Dev",
-            "ip_address" => "165.227.225.119",
+                "title" => $servers[$i],
 
-            "os" => "GNU/Linux",
-            "architecture" => "x86_64",
+                "hostname" => $servers[$i],
+                "ip_address" => "165.227.225.119",
 
-            "cpu_cores" => 4,
-            "cpu_threads" => 4,
+                "os" => "GNU/Linux",
+                "architecture" => "x86_64",
 
-            "distro" => "Ubuntu",
-            "distro_version" => "",
+                "cpu_cores" => 4,
+                "cpu_threads" => 4,
 
-            "kernel" => "Linux",
-            "kernel_version" => ""
-        ]);
+                "distro" => "Ubuntu",
+                "distro_version" => "",
 
-        $serverMetrics = ServerMetric::factory()->count(100)->create([
-            'server_id' => 1,
-            'company_id' => 1,
-        ]);
+                "kernel" => "Linux",
+                "kernel_version" => "",
+
+                "verified_at" => now(),
+            ]);
+
+            $serverMetrics = ServerMetric::factory()->count(100)->create([
+                'server_id' => $server->id,
+                'company_id' => 1,
+            ]);
+        }
     }
 }

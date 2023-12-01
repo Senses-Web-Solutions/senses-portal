@@ -24,13 +24,16 @@
         </td>
 
         <td class="py-3 pr-6">
-            <svg v-if="this.metrics.length > 0 && this.data.cpu_cores" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="chart" height="20" width="100%" aria-labelledby="title" role="img">
+            <div v-if="this.metrics.length > 0 && this.data.cpu_cores" class="flex" style="transform: scaleX(-1);">
                 <template v-for="(serverMetric, index) in this.metrics">
-                    <g v-if="index < 30" class="bar" :transform="'translate(' + (116 - index * 4) + ',0)'">
-                        <rect width="3" :height="serverMetric.load_1 / this.data.cpu_cores * 20 + 1" :y="19 - (serverMetric.load_1 / this.data.cpu_cores * 20)" :style="'fill: ' + getColour(serverMetric.load_1 / this.data.cpu_cores)"></rect>
-                    </g>
+                    <div v-if="index < 30" :title="serverMetric.load_1">
+                        <svg style="transform: scaleY(-1);" height="20" width="4" viewbox="24 24 0 0" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="3" :height="serverMetric.load_1 / this.data.cpu_cores * 20 + 1" :style="'fill: ' + getColour(serverMetric.load_1 / this.data.cpu_cores)"></rect>
+                        </svg>
+                    </div>
                 </template>
-            </svg>
+            </div>
+
             <div v-else class="text-sm text-zinc-500">
                 N/A
             </div>
@@ -151,20 +154,14 @@ export default {
 
     mounted() {
         if (!this.data.verified_at) {
+            this.updateStatus();
             return;
         }
 
         echo.private(`servers.${this.data.id}.server-metrics`).listen('ServerMetrics\\ServerMetricCreated', ({serverMetric}) => {
-            this.lastRecievedTimestamp = new Date().getTime();
-
-            this.previousMetric = this.metric;
-            this.metric = serverMetric;
-
-            this.metrics.unshift(serverMetric);
-        })
-
-        echo.private(`servers.${this.data.id}.server-metrics`).listen('ServerMetrics\\ServerMetricUpdated', ({serverMetric}) => {
             this.lastRecievedTimestamp = new Date().getTime() / 1000;
+
+            this.updateStatus();
 
             this.previousMetric = this.metric;
             this.metric = serverMetric;
