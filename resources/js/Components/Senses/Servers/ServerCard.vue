@@ -205,21 +205,21 @@ export default {
     },
 
     methods: {
-        updateStatus(status) {
+        updateStatus(status=null) {
             if (!this.data.verified_at) {
                 this.icon = "unverified";
                 console.log("Setting status to " + "unverified")
                 return;
             }
 
-            if (this.icon == 'deploying') {
-                console.log("Blocked status change as serve ris currently deploying");
-                return;
-            }
-
             if (status) {
                 this.icon = status;
                 console.log("Setting status to " + status)
+                return;
+            }
+
+            if (this.icon == 'deploying') {
+                console.log("Blocked status change as server is currently deploying");
                 return;
             }
 

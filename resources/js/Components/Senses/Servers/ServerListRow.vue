@@ -127,6 +127,8 @@ export default {
         }
 
         echo.private(`servers.${this.data.id}.server-metrics`).listen('ServerMetrics\\ServerMetricCreated', ({serverMetric}) => {
+            this.lastRecievedTimestamp = new Date().getTime();
+
             this.previousMetric = this.metric;
             this.metric = serverMetric;
 
@@ -134,6 +136,8 @@ export default {
         })
 
         echo.private(`servers.${this.data.id}.server-metrics`).listen('ServerMetrics\\ServerMetricUpdated', ({serverMetric}) => {
+            this.lastRecievedTimestamp = new Date().getTime();
+
             this.previousMetric = this.metric;
             this.metric = serverMetric;
 
@@ -141,7 +145,7 @@ export default {
         })
 
         setInterval(() => {
-            this.timeSinceLastUpdate = this.hrDuration(Math.round(new Date().getTime() / 1000 - this.metric.timestamp));
+            this.timeSinceLastUpdate = this.hrDuration(Math.round(new Date().getTime() / 1000 - (this.lastRecievedTimestamp ?? this.metric.timestamp)));
         }, 1000);
 
         this.load();
@@ -173,6 +177,7 @@ export default {
             previousMetric: null,
 
             timeSinceLastUpdate: 'N/A',
+            lastRecievedTimestamp: null,
         };
     },
 
