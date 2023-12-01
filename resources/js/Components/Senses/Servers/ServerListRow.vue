@@ -78,7 +78,35 @@
             </div>
         </td>
 
-        <td v-if="this.data.verified_at" class="py-3 text-zinc-500">
+        <td v-if="status == 'deploying'" class="py-3 text-zinc-500">
+            <span class="text-md text-violet-500 inline-flex items-center gap-x-1.5 py-0 align-middle font-normal">
+                <!-- <svg class="fill-violet-500 h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
+                    <circle cx="3" cy="3" r="3"></circle>
+                </svg> -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-violet-500 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                    <path d="M21 3v5h-5" />
+                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                    <path d="M8 16H3v5" />
+                </svg>
+                Deploying
+            </span>
+        </td>
+
+        <td v-else-if="status == 'danger'" class="py-3 text-zinc-500">
+            <span class="text-md text-red-500 inline-flex items-center gap-x-1.5 py-0 align-middle font-normal">
+                <!-- <svg class="fill-violet-500 h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
+                    <circle cx="3" cy="3" r="3"></circle>
+                </svg> -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+
+                Warning
+            </span>
+        </td>
+
+        <td v-else-if="this.data.verified_at" class="py-3 text-zinc-500">
             <span class="text-md text-green-500 inline-flex items-center gap-x-1.5 py-0 align-middle font-normal">
                 <svg class="fill-green-500 h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
                     <circle cx="3" cy="3" r="3"></circle>
@@ -144,6 +172,22 @@ export default {
             this.metrics.unshift(serverMetric);
         })
 
+        echo.private(`servers.${this.data.id}.deploy`).listen('Servers\\ServerDeployed', ({data}) => {
+            console.log(data);
+
+            if (data.status == 'running') {
+                this.updateStatus('deploying');
+            } else if (data.status == 'completed') {
+                this.updateStatus('deploy_success');
+
+                setTimeout(() => {
+                    this.updateStatus();
+                }, 10000);
+            } else {
+                this.updateStatus('danger');
+            }
+        })
+
         setInterval(() => {
             this.timeSinceLastUpdate = this.hrDuration(Math.round(new Date().getTime() / 1000 - (this.lastRecievedTimestamp ?? this.metric.timestamp)));
         }, 1000);
@@ -178,11 +222,53 @@ export default {
 
             timeSinceLastUpdate: 'N/A',
             lastRecievedTimestamp: null,
+
+            status: 'normal',
         };
     },
 
     methods: {
         formatDistanceToNow,
+
+        updateStatus(status=null) {
+            if (!this.data.verified_at) {
+                this.icon = "unverified";
+                console.log("Setting status to " + "unverified")
+                return;
+            }
+
+            if (status) {
+                this.icon = status;
+                console.log("Setting status to " + status)
+                return;
+            }
+
+            if (this.icon == 'deploying') {
+                console.log("Blocked status change as server is currently deploying");
+                return;
+            }
+
+            if (this.metric.disk_used / this.metric.disk_total >= 0.9) {
+                this.icon = 'danger';
+                console.log("Setting status to " + 'danger')
+            } else if (this.metric.ram_used / this.metric.ram_total >= 0.9) {
+                this.icon = 'danger';
+                console.log("Setting status to " + 'danger')
+            } else if (this.metric.swap_used / this.metric.swap_total >= 0.9) {
+                this.icon = 'danger';
+                console.log("Setting status to " + 'danger')
+            } else if (this.metric.load_15 <= this.previousMetric.load_15) {
+                this.icon = 'load_down';
+                console.log("Setting status to " + 'load_down')
+            } else if (this.metric.load_15 > this.previousMetric.load_15) {
+                this.icon = 'load_up';
+                console.log("Setting status to " + 'load_up')
+            } else {
+                this.icon = 'idle';
+                console.log("Setting status to " + 'idle')
+            }
+        },
+
         hrDuration (seconds) {
             if (!seconds) {
                 return 'N/A';
