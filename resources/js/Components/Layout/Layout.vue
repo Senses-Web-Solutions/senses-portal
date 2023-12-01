@@ -36,7 +36,7 @@
                         <a href="/" class="flex items-center px-4 bg-white border-b border-zinc-200 h-14 shrink-0">
                             <img class="w-auto h-8" src="/images/logo.svg" alt="Community Information">
                             <div class='pl-2 pt-1 text-xl font-medium text-black'>
-                                Senses
+                                Portal
                             </div>
                         </a>
 

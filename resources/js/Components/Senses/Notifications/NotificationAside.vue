@@ -10,7 +10,7 @@
                                 <h2 class="text-xl font-medium leading-6 text-zinc-900">
                                     Notifications
                                 </h2>
-                                <a class="cursor-pointer" href="/notifications">
+                                <a class="text-zinc-900 cursor-pointer" href="/notifications">
                                     <ExternalLinkIcon class="h-5 w-5 hover:text-purple" />
                                 </a>
                             </div>

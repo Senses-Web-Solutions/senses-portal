@@ -4,13 +4,27 @@
             <div class="space-y-1">
                 <SidebarItem title="Dashboard" to="/" :active="Route.matches('/')">
                     <template #icon>
-                        <HomeIcon />
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="3" x2="21" y1="9" y2="9"/><line x1="9" x2="9" y1="21" y2="9"/></svg>
                     </template>
                 </SidebarItem>
 
-				<SidebarItem title="Servers" v-if="user().can('list-server')" to="/servers" :active="Route.is('servers', 'any')" />
-				<SidebarItem title="Users" v-if="user().can('list-user')" to="/users" :active="Route.is('users', 'any')" />
-				<SidebarItem title="Companies" v-if="user().can('list-company')" to="/companies" :active="Route.is('companies', 'any')" />
+				<SidebarItem title="Servers" v-if="user().can('list-server')" to="/servers" :active="Route.is('servers', 'any')">
+                    <template #icon>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-server"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
+                    </template>
+                </SidebarItem>
+
+				<SidebarItem title="Users" v-if="user().can('list-user')" to="/users" :active="Route.is('users', 'any')">
+                    <template #icon>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </template>
+                </SidebarItem>
+
+				<SidebarItem title="Companies" v-if="user().can('list-company')" to="/companies" :active="Route.is('companies', 'any')">
+                    <template #icon>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building-2"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>
+                    </template>
+                </SidebarItem>
 				<!-- <SidebarItem title="Revenues" v-if="user().can('list-revenue')" to="/revenues" :active="Route.is('revenues', 'any')" /> -->
 				<!-- <SidebarItem title="Subscriptions" v-if="user().can('list-subscription')" to="/subscriptions" :active="Route.is('subscriptions', 'any')" /> -->
 				<!-- <SidebarItem title="Communication Logs" v-if="user().can('list-communication-log')" to="/communication-logs" :active="Route.is('communication-logs', 'any')" /> -->

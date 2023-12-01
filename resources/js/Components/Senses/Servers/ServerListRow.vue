@@ -153,9 +153,8 @@ export default {
     },
 
     mounted() {
-        this.updateStatus();
-
         if (!this.data.verified_at) {
+            this.updateStatus();
             return;
         }
 
@@ -302,6 +301,8 @@ export default {
                     this.metrics = response.data;
 
                     this.previousMetric = response.data[1] ?? null;
+
+                    this.updateStatus();
                 }
             });
         },
