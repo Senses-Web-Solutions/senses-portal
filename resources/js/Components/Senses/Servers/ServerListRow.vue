@@ -229,39 +229,39 @@ export default {
 
         updateStatus(status=null) {
             if (!this.data.verified_at) {
-                this.icon = "unverified";
+                this.status = "unverified";
                 console.log("Setting status to " + "unverified")
                 return;
             }
 
             if (status) {
-                this.icon = status;
+                this.status = status;
                 console.log("Setting status to " + status)
                 return;
             }
 
-            if (this.icon == 'deploying') {
+            if (this.status == 'deploying') {
                 console.log("Blocked status change as server is currently deploying");
                 return;
             }
 
             if (this.metric.disk_used / this.metric.disk_total >= 0.9) {
-                this.icon = 'danger';
+                this.status = 'danger';
                 console.log("Setting status to " + 'danger')
             } else if (this.metric.ram_used / this.metric.ram_total >= 0.9) {
-                this.icon = 'danger';
+                this.status = 'danger';
                 console.log("Setting status to " + 'danger')
             } else if (this.metric.swap_used / this.metric.swap_total >= 0.9) {
-                this.icon = 'danger';
+                this.status = 'danger';
                 console.log("Setting status to " + 'danger')
             } else if (this.metric.load_15 <= this.previousMetric.load_15) {
-                this.icon = 'load_down';
+                this.status = 'load_down';
                 console.log("Setting status to " + 'load_down')
             } else if (this.metric.load_15 > this.previousMetric.load_15) {
-                this.icon = 'load_up';
+                this.status = 'load_up';
                 console.log("Setting status to " + 'load_up')
             } else {
-                this.icon = 'idle';
+                this.status = 'idle';
                 console.log("Setting status to " + 'idle')
             }
         },
