@@ -129,6 +129,10 @@ Broadcast::channel('servers.{server}.server-metrics', function ($server, $id) {
     return true;
 });
 
+Broadcast::channel('servers.{server}.deploy', function ($server, $id) {
+    return true;
+});
+
 Broadcast::channel('venues.{venue}.main', function ($venue, $id) {
     return true;
 });

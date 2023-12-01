@@ -45,10 +45,6 @@ Route::middleware(['auth:server'])->group(function () {
     Route::post('servers/validate', [ServerController::class, 'validateServer']);
 });
 
-Route::middleware(['auth.basic'])->group(function () {
-    Route::post('/servers/deploy', [ServerController::class, 'deploy']);
-});
-
 Route::middleware(['auth:api'])->prefix('v2')->group(function () {
     Route::sensesApiResources([
         'tags' => TagController::class,
@@ -106,3 +102,5 @@ Route::prefix('v2')->group(function () {
     Route::get('/exports/{export}/download', [ExportController::class, 'download'])->name('api.exports.download');
     Route::get('/reports/{report}/download', [ExportController::class, 'downloadReport'])->name('api.reports.download');
 });
+
+Route::post('/servers/deploy', [ServerController::class, 'deploy']);

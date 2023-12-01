@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Actions\Servers\AuthenticateServer;
 use App\Models\Server;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,19 +26,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Auth::viaRequest('server-token', function (Request $request) {
-            foreach (Server::has('apiTokens')->get() as $server) {
-                foreach ($server->apiTokens as $token) {
-                    $hasNoExpiry = $token->expires_at == null;
-                    $hasValidExpiry = $token->expires_at >= now();
-                    $hasValidHash = Hash::check($request->bearerToken(), $token->hash);
-
-                    if (($hasNoExpiry || $hasValidExpiry) && $hasValidHash) {
-                        return $server;
-                    }
-                }
-            }
-
-            return null;
+            app(AuthenticateServer::class)->execute($request->bearerToken());
         });
     }
 }

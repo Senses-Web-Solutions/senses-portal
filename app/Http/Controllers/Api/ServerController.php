@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Actions\ServerMetrics\CreateServerMetric;
+use App\Actions\Servers\AuthenticateServer;
 use App\Actions\Servers\CreateServer;
 use App\Actions\Servers\DeleteServer;
 use App\Actions\Servers\GenerateServerShowCache;
 use App\Actions\Servers\UpdateServer;
 use App\Actions\Servers\ValidateServer;
+use App\Events\Servers\ServerDeployed;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\BlockGroups\CreateServerRequest as BlockGroupsCreateServerRequest;
 use App\Http\Requests\ServerMetrics\CreateServerMetricRequest;
@@ -112,8 +114,14 @@ class ServerController extends Controller
 
     public function deploy(ValidateServerRequest $request, ValidateServer $validateServer)
     {
-        // return $this->respond($validateServer->execute($data));
-        logger($request->all());
+        $server = app(AuthenticateServer::class)->execute($request->getPassword());
+
+        if (!$server) {
+            logger("Deploy detected with invalid token: " . $request->getPassword());
+            return;
+        }
+
+        broadcast_safely(new ServerDeployed($server, $request->all()));
     }
 }
 

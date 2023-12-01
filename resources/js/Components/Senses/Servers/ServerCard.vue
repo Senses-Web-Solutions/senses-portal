@@ -130,6 +130,10 @@ export default {
                 this.updateCircle(this.circle15, this.metric.load_15, this.getColour(this.metric.load_15 / this.data.cpu_cores));
             })
 
+            echo.private(`servers.${this.data.id}.deploy`).listen('Servers\\ServerDeployed', (data) => {
+                console.log(data);
+            })
+
             this.load();
         }
     },
