@@ -153,8 +153,9 @@ export default {
     },
 
     mounted() {
+        this.updateStatus();
+
         if (!this.data.verified_at) {
-            this.updateStatus();
             return;
         }
 
