@@ -172,7 +172,7 @@ export default {
             metrics: [],
             previousMetric: null,
 
-            timeSinceLastUpdate: 1,
+            timeSinceLastUpdate: 'N/A',
         };
     },
 

@@ -73,6 +73,11 @@ class CoreUsersTableSeeder extends Seeder
                     'first_name' => 'Tilly',
                     'last_name' => 'Cooper',
                     'email' => 'tilly@senses.co.uk',
+                ],
+                [
+                    'first_name' => 'Accelerate',
+                    'last_name' => 'People',
+                    'email' => 'ap@senses.co.uk',
                 ]
             ]);
         }
