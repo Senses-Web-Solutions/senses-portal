@@ -155,6 +155,8 @@ export default {
             })
 
             echo.private(`servers.${this.data.id}.deploy`).listen('Servers\\ServerDeployed', ({data}) => {
+                console.log(data);
+
                 if (data.status == 'running') {
                     this.updateStatus('deploying');
                 } else if (data.status == 'completed') {
@@ -206,26 +208,34 @@ export default {
         updateStatus(status) {
             if (!this.data.verified_at) {
                 this.icon = "unverified";
+                console.log("Setting status to " + "unverified")
                 return;
             }
 
             if (status) {
                 this.icon = status;
+                console.log("Setting status to " + status)
                 return;
             }
 
             if (this.metric.disk_free / this.metric.disk_total >= 0.9) {
                 this.icon = 'warning';
+                console.log("Setting status to " + 'warning')
             } else if (this.metric.ram_free / this.metric.ram_total >= 0.9) {
                 this.icon = 'warning';
+                console.log("Setting status to " + 'warning')
             } else if (this.metric.swap_free / this.metric.swap_total >= 0.9) {
                 this.icon = 'warning';
+                console.log("Setting status to " + 'warning')
             } else if (this.metric.load_15 <= this.previousMetric.load_15) {
                 this.icon = 'load_down';
+                console.log("Setting status to " + 'load_down')
             } else if (this.metric.load_15 > this.previousMetric.load_15) {
                 this.icon = 'load_up';
+                console.log("Setting status to " + 'load_up')
             } else {
                 this.icon = 'idle';
+                console.log("Setting status to " + 'idle')
             }
         },
 
