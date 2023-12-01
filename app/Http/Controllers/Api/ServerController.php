@@ -112,7 +112,7 @@ class ServerController extends Controller
         return $this->respond($validateServer->execute($data));
     }
 
-    public function deploy(ValidateServerRequest $request, ValidateServer $validateServer)
+    public function deploy(ValidateServerRequest $request)
     {
         $server = app(AuthenticateServer::class)->execute($request->getPassword());
 
@@ -121,7 +121,9 @@ class ServerController extends Controller
             return;
         }
 
-        broadcast_safely(new ServerDeployed($server, $request->all()));
+        $data = $request->all();
+
+        broadcast_safely(new ServerDeployed($server, json_decode($data['payload'])));
     }
 }
 

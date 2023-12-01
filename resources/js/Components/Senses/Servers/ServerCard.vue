@@ -126,9 +126,7 @@ export default {
         this.circle15 = this.createCircle('load-15-' + this.data.id, 50, this.data.cpu_cores ?? 1);
 
         if (this.data.verified_at) {
-            echo.private(`servers.${this.data.id}.server-metrics`).listen('ServerMetrics\\ServerMetricCreated', ({
-                serverMetric
-            }) => {
+            echo.private(`servers.${this.data.id}.server-metrics`).listen('ServerMetrics\\ServerMetricCreated', ({serverMetric}) => {
                 this.previousMetric = this.metric;
                 this.metric = serverMetric;
 
@@ -139,9 +137,7 @@ export default {
                 this.updateStatus();
             })
 
-            echo.private(`servers.${this.data.id}.server-metrics`).listen('ServerMetrics\\ServerMetricUpdated', ({
-                serverMetric
-            }) => {
+            echo.private(`servers.${this.data.id}.server-metrics`).listen('ServerMetrics\\ServerMetricUpdated', ({serverMetric}) => {
                 this.previousMetric = this.metric;
                 this.metric = serverMetric;
 
@@ -152,9 +148,7 @@ export default {
                 this.updateStatus();
             })
 
-            echo.private(`servers.${this.data.id}.deploy`).listen('Servers\\ServerDeployed', ({
-                data
-            }) => {
+            echo.private(`servers.${this.data.id}.deploy`).listen('Servers\\ServerDeployed', ({data}) => {
                 if (data.status == 'running') {
                     this.updateStatus('deploying');
                 } else if (data.status == 'completed') {
@@ -240,13 +234,15 @@ export default {
             axios.get('/api/v2/servers/' + this.data.id + '/server-metrics?format=limited&limit=50').then((response) => {
                 if (response.data.length > 0) {
                     this.metric = response.data[0];
-                    this.previousMetric = response.data[1] ? ? null;
+                    this.previousMetric = response.data[1] ?? null;
 
                     if (this.data.cpu_cores) {
                         this.updateCircle(this.circle1, this.metric.load_1, this.getColour(this.metric.load_1 / this.data.cpu_cores));
                         this.updateCircle(this.circle5, this.metric.load_5, this.getColour(this.metric.load_5 / this.data.cpu_cores));
                         this.updateCircle(this.circle15, this.metric.load_15, this.getColour(this.metric.load_15 / this.data.cpu_cores));
                     }
+
+                    this.updateStatus();
                 }
             });
         },
