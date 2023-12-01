@@ -30,7 +30,11 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
 
-                    <svg v-if="icon == 'unverified'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg v-if="icon == 'idle'" xmlns="http://www.w3.org/2000/svg" class="text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
+                    </svg>
+
+                    <svg v-if="icon == 'unverified'" xmlns="http://www.w3.org/2000/svg" class="text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="m19 5 3-3" />
                         <path d="m2 22 3-3" />
                         <path d="M6.3 20.3a2.4 2.4 0 0 0 3.4 0L12 18l-6-6-2.3 2.3a2.4 2.4 0 0 0 0 3.4Z" />
@@ -127,6 +131,8 @@ export default {
 
         if (this.data.verified_at) {
             echo.private(`servers.${this.data.id}.server-metrics`).listen('ServerMetrics\\ServerMetricCreated', ({serverMetric}) => {
+                console.log(serverMetric);
+
                 this.previousMetric = this.metric;
                 this.metric = serverMetric;
 
@@ -218,6 +224,8 @@ export default {
                 this.icon = 'load_down';
             } else if (this.metric.load_15 > this.previousMetric.load_15) {
                 this.icon = 'load_up';
+            } else {
+                this.icon = 'idle';
             }
         },
 
