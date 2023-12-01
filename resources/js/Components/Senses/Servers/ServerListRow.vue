@@ -268,7 +268,7 @@ export default {
 
         hrDuration (seconds) {
             if (!seconds) {
-                return 'N/A';
+                return '0 Secs';
             }
 
             const days = Math.floor(seconds / 86400);
