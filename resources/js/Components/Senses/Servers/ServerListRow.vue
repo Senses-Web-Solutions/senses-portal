@@ -136,7 +136,7 @@ export default {
         })
 
         echo.private(`servers.${this.data.id}.server-metrics`).listen('ServerMetrics\\ServerMetricUpdated', ({serverMetric}) => {
-            this.lastRecievedTimestamp = new Date().getTime();
+            this.lastRecievedTimestamp = new Date().getTime() / 1000;
 
             this.previousMetric = this.metric;
             this.metric = serverMetric;

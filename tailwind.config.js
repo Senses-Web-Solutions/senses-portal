@@ -62,8 +62,10 @@ module.exports = {
       },
 
       screens: {
-        '3xl': '1920px',
-        '4xl': '2560px',
+        'laptop': '1366px',
+        'desktop': '1920px',
+        '1440': '2560px',
+        '4K': '3840px',
       },
 
       //updating lighter,light,default,dark,darker will require php enum for Colour to be updated with correct hex values!
