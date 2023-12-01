@@ -218,15 +218,15 @@ export default {
                 return;
             }
 
-            if (this.metric.disk_free / this.metric.disk_total >= 0.9) {
-                this.icon = 'warning';
-                console.log("Setting status to " + 'warning')
-            } else if (this.metric.ram_free / this.metric.ram_total >= 0.9) {
-                this.icon = 'warning';
-                console.log("Setting status to " + 'warning')
-            } else if (this.metric.swap_free / this.metric.swap_total >= 0.9) {
-                this.icon = 'warning';
-                console.log("Setting status to " + 'warning')
+            if (this.metric.disk_used / this.metric.disk_total >= 0.9) {
+                this.icon = 'danger';
+                console.log("Setting status to " + 'danger')
+            } else if (this.metric.ram_used / this.metric.ram_total >= 0.9) {
+                this.icon = 'danger';
+                console.log("Setting status to " + 'danger')
+            } else if (this.metric.swap_used / this.metric.swap_total >= 0.9) {
+                this.icon = 'danger';
+                console.log("Setting status to " + 'danger')
             } else if (this.metric.load_15 <= this.previousMetric.load_15) {
                 this.icon = 'load_down';
                 console.log("Setting status to " + 'load_down')
