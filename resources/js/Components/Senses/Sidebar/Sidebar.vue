@@ -8,15 +8,15 @@
                     </template>
                 </SidebarItem>
 
+				<SidebarItem title="Servers" v-if="user().can('list-server')" to="/servers" :active="Route.is('servers', 'any')" />
 				<SidebarItem title="Users" v-if="user().can('list-user')" to="/users" :active="Route.is('users', 'any')" />
 				<SidebarItem title="Companies" v-if="user().can('list-company')" to="/companies" :active="Route.is('companies', 'any')" />
-				<SidebarItem title="Servers" v-if="user().can('list-server')" to="/servers" :active="Route.is('servers', 'any')" />
-				<SidebarItem title="Revenues" v-if="user().can('list-revenue')" to="/revenues" :active="Route.is('revenues', 'any')" />
-				<SidebarItem title="Subscriptions" v-if="user().can('list-subscription')" to="/subscriptions" :active="Route.is('subscriptions', 'any')" />
-				<SidebarItem title="Communication Logs" v-if="user().can('list-communication-log')" to="/communication-logs" :active="Route.is('communication-logs', 'any')" />
+				<!-- <SidebarItem title="Revenues" v-if="user().can('list-revenue')" to="/revenues" :active="Route.is('revenues', 'any')" /> -->
+				<!-- <SidebarItem title="Subscriptions" v-if="user().can('list-subscription')" to="/subscriptions" :active="Route.is('subscriptions', 'any')" /> -->
+				<!-- <SidebarItem title="Communication Logs" v-if="user().can('list-communication-log')" to="/communication-logs" :active="Route.is('communication-logs', 'any')" /> -->
 				<!-- ---------- GENERATOR ---------- -->
 
-                <SidebarGroup title="Intel">
+                <!-- <SidebarGroup title="Intel">
                     <template #icon>
                         <CogIcon />
                     </template>
@@ -26,7 +26,7 @@
                     <SidebarSubItem title="Tags" v-if="user().can('list-tag')" to="/tags" :active="Route.is('tags', 'any')" />
                     <SidebarSubItem title="Tag Groups" v-if="user().can('list-tag-group')" to="/tag-groups" :active="Route.is('tag-groups', 'any')" />
                     <SidebarSubItem title="Ability Groups" v-if="user().can('list-ability-group')" to="/ability-groups" :active="Route.is('ability-groups', 'any')" />
-                </SidebarGroup>
+                </SidebarGroup> -->
 
                 <!-- <SidebarGroup title="Communications">
                     <template #icon>
@@ -37,7 +37,7 @@
                     <SidebarSubItem title="SMS Logs" v-if="user().can('list-sms-log')" to="/sms-logs" :active="Route.is('sms-logs', 'any')" />
                 </SidebarGroup> -->
 
-                <SidebarGroup title="Senses" v-if="user()?.email?.endsWith('@senses.co.uk')">
+                <!-- <SidebarGroup title="Senses" v-if="user()?.email?.endsWith('@senses.co.uk')">
                     <template #icon>
                         <EmojiHappyIcon />
                     </template>
@@ -46,7 +46,7 @@
                             <LockClosedIcon />
                         </template>
                     </SidebarSubItem>
-                </SidebarGroup>
+                </SidebarGroup> -->
             </div>
 
             <!-- <div class="border-t border-zinc-200  inset-x-0 bottom-8 px-2 mt-4">
