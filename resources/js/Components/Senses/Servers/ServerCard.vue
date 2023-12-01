@@ -212,6 +212,11 @@ export default {
                 return;
             }
 
+            if (this.icon == 'deploying') {
+                console.log("Blocked status change as serve ris currently deploying");
+                return;
+            }
+
             if (status) {
                 this.icon = status;
                 console.log("Setting status to " + status)
