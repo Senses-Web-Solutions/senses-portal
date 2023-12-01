@@ -26,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Auth::viaRequest('server-token', function (Request $request) {
-            app(AuthenticateServer::class)->execute($request->bearerToken());
+            return app(AuthenticateServer::class)->execute($request->bearerToken());
         });
     }
 }
