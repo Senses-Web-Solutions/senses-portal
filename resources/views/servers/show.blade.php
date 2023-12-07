@@ -14,7 +14,7 @@
         </template>
     </page-header>
 
-    <server-dashboard :data="data"></server-dashboard>
+    <server-dashboard :server="data"></server-dashboard>
 </data-hydrator>
 
 @endsection

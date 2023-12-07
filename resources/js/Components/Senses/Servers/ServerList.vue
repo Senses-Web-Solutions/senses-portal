@@ -48,6 +48,9 @@
                             <th class="relative isolate w-36 border-b border-zinc-200 bg-zinc-50 py-2 pr-6 font-normal">
                                 Status
                             </th>
+                            <th class="relative isolate w-36 border-b border-zinc-200 bg-zinc-50 py-2 pr-6 font-normal">
+                                Last Updated
+                            </th>
                         </tr>
 
                         <template v-for="server in servers">

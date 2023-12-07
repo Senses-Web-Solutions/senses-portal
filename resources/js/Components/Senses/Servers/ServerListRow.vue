@@ -109,7 +109,20 @@
             </span>
         </td>
 
-        <td v-else-if="this.data.verified_at" class="py-3 text-zinc-500">
+        <td v-else class="py-3 text-zinc-500">
+            <span class="text-md text-gray-500 inline-flex items-center gap-x-1.5 py-0 align-middle font-normal">
+                <!-- <svg class="fill-violet-500 h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
+                    <circle cx="3" cy="3" r="3"></circle>
+                </svg> -->
+                <svg class="fill-gray-500 h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
+                    <circle cx="3" cy="3" r="3"></circle>
+                </svg>
+
+                Normal
+            </span>
+        </td>
+
+        <td v-if="this.data.verified_at" class="py-3 text-zinc-500">
             <span class="text-md text-green-500 inline-flex items-center gap-x-1.5 py-0 align-middle font-normal">
                 <svg class="fill-green-500 h-1.5 w-1.5" viewBox="0 0 6 6" aria-hidden="true">
                     <circle cx="3" cy="3" r="3"></circle>
