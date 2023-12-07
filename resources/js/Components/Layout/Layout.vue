@@ -164,6 +164,14 @@ export default {
 
     mounted() {
         this.sidebarOpen = !!this.isDesktop;
+
+        echo.private(`servers.11.deploy`).listen('Servers\\ServerDeployed', ({data}) => {
+            console.log(data);
+
+            if (data.status == 'completed') {
+                window.location.reload();
+            }
+        })
     },
 
     methods: {
