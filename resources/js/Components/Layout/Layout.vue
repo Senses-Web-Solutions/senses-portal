@@ -113,6 +113,10 @@ import useTailwindConfig from '../../Support/useTailwindConfig';
 // the composition api. Use it like a regular data var.
 const flushLayout = ref(false);
 
+import useEcho from '../../Support/useEcho';
+
+const echo = useEcho();
+
 export default {
     components: {
         FadeTransition,
