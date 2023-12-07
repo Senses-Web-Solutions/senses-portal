@@ -14,7 +14,15 @@
         </td>
 
         <td class="py-3 pr-6">
-            <div class="text-zinc-500 text-center">
+            <div v-if="options['load_view'] == 'percentage'" class="text-zinc-500 text-center">
+                <span :style="'color: ' + getColour(this.metric?.load_1 / (this.data.cpu_cores ?? 1))">{{ Math.round(this.metric?.load_1 / (this.data.cpu_cores ?? 1) * 100) }}%</span>
+                ·
+                <span :style="'color: ' + getColour(this.metric?.load_5 / (this.data.cpu_cores ?? 1))">{{ Math.round(this.metric?.load_5 / (this.data.cpu_cores ?? 1) * 100) }}%</span>
+                ·
+                <span :style="'color: ' + getColour(this.metric?.load_15 / (this.data.cpu_cores ?? 1))">{{ Math.round(this.metric?.load_15 / (this.data.cpu_cores ?? 1) * 100) }}%</span>
+            </div>
+
+            <div v-else class="text-zinc-500 text-center">
                 <span :style="'color: ' + getColour(this.metric?.load_1 / (this.data.cpu_cores ?? 1))">{{ this.metric?.load_1 }}</span>
                 ·
                 <span :style="'color: ' + getColour(this.metric?.load_5 / (this.data.cpu_cores ?? 1))">{{ this.metric?.load_5 }}</span>
@@ -162,6 +170,10 @@ export default {
         data: {
             type: Object,
             required: true
+        },
+
+        options: {
+            type: Object,
         }
     },
 

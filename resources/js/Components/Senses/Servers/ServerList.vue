@@ -15,7 +15,7 @@
                                 </span>
                             </th>
 
-                            <th class="relative isolate w-36 border-b border-zinc-200 bg-zinc-50 py-2 font-normal">
+                            <th class="relative isolate w-36 border-b border-zinc-200 bg-zinc-50 py-2 font-normal" @click="options['load_view'] = options['load_view'] == 'percentage' ? 'decimal' : 'percentage'">
                                 <span class="inline-flex gap-x-1.5 py-0 align-middle items-center">
                                     Load: 1 · 5 · 15
                                     <svg class="mt-px h-4 w-4 fill-zinc-500 stroke-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -54,7 +54,7 @@
                         </tr>
 
                         <template v-for="server in servers">
-                            <ServerListRow :data="server"></ServerListRow>
+                            <ServerListRow :data="server" :options="options"></ServerListRow>
                         </template>
                     </tbody>
                 </table>
@@ -105,6 +105,9 @@ export default {
     data() {
         return {
             servers: [],
+            options: {
+                load_view: 'percentage',
+            }
         };
     },
 
