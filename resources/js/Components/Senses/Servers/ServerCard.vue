@@ -1,7 +1,7 @@
 <template>
     <div class="rounded-lg border border-zinc-200 bg-zinc-50 px-7 py-4 shadow-sm hover:border-zinc-300 hover:bg-zinc-100 cursor-pointer w-64 text-center flex flex-col" @click="goToServer">
         <div class="w-full">
-            <span class="flex items-center justify-center text-md text-zinc-700">
+            <span class="flex items-center justify-center text-xl font-medium text-zinc-700">
                 <!-- Verified Indicator -->
                 <svg :class="'mr-2 h-1.5 w-1.5 ' + (this.data.verified_at ? 'fill-green-500' : 'fill-red-500')" viewBox="0 0 6 6" aria-hidden="true">
                     <circle cx="3" cy="3" r="3"></circle>
@@ -69,14 +69,14 @@
                         </svg>
                     </div>
                 </div>
-                <div>
+                <!-- <div>
                     <div class="text-sm text-zinc-500">Volume 1: {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_total) / 10000) / 100 }}Gb </div>
                     <div class="w-100 rounded-full h-1.5 mt-1 fill-green-400 bg-zinc-300" :style="'fill: ' + this.getColour(metric.disk_used / (metric.disk_total ?? 1))">
                         <svg v-if="this.metric.disk_used" width="100%" viewBox="0 0 400 13" xmlns="http://www.w3.org/2000/svg">
                             <rect :width="(metric.disk_used * 100) / (metric.disk_total ?? 1) + '%'" height="100%" rx="3"></rect>
                         </svg>
                     </div>
-                </div>
+                </div> -->
                 <div>
                     <div class="text-sm text-zinc-500">RAM: {{ Math.round(metric.ram_used / 10000) / 100 }}Gb / {{ Math.round((metric.ram_total) / 10000) / 100 }}Gb </div>
 
