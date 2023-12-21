@@ -1,5 +1,5 @@
 <template>
-    <div class="rounded-lg border border-zinc-200 bg-zinc-50 px-7 py-4 shadow-sm hover:border-zinc-300 hover:bg-zinc-100 cursor-pointer w-64 text-center flex flex-col" @click="goToServer">
+    <div class="rounded-lg border border-zinc-200 bg-zinc-50 px-6 py-4 shadow-sm hover:border-zinc-300 hover:bg-zinc-100 cursor-pointer w-64 text-center flex flex-col" @click="goToServer">
         <div class="w-full">
             <span class="flex items-center justify-center text-xl font-medium text-zinc-700">
                 <!-- Verified Indicator -->
