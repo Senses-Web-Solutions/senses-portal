@@ -54,6 +54,15 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75"></path>
                     </svg>
 
+                    <div v-if="icon == 'show_load'" @click.stop="showLoadAsPercentage = !showLoadAsPercentage" class="font-bold text-2xl mt-1 text-purple-400">
+                        <div class="mt-4" v-if="showLoadAsPercentage">
+                            {{ Math.round(metric.load_1 / data.cpu_cores * 1000) / 10 }}%
+                        </div>
+                        <div v-else>
+                            {{ metric.load_1 }} <br><div class="border-b mx-2 h-0 border-purple-400"></div> {{ data.cpu_cores }}
+                        </div>
+                    </div>
+
                     <!-- <svg v-if="icon == 3" class="transition duration-300" :class="previousMetric && metric.load_15 > previousMetric.load_15 ? 'text-red-400 rotate-180' : 'text-green-400'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75"></path>
                         </svg> -->
@@ -194,6 +203,7 @@ export default {
             icon: 0,
 
             dangerIgnored: false,
+            showLoadAsPercentage: true,
         };
     },
 
@@ -225,6 +235,9 @@ export default {
             } else if (!this.dangerIgnored && (this.metric.swap_used / this.metric.swap_total >= 0.9)) {
                 this.icon = 'danger';
                 console.log("Setting status to " + 'danger')
+            } else if (this.metric.load_1 >= this.data.cpu_cores) {
+                this.icon = 'show_load';
+                console.log("Setting status to " + 'show_load')
             } else if (this.metric.load_15 <= this.previousMetric.load_15) {
                 this.icon = 'load_down';
                 console.log("Setting status to " + 'load_down')
