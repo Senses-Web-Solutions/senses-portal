@@ -272,11 +272,11 @@ export default {
             }
 
             if (load <= 1.00) {
-                return '#f87171';
+                return '#ef4444';
             }
 
             if (load > 1.00) {
-                return '#ae81ff';
+                return '#ef4444';
             }
         },
 

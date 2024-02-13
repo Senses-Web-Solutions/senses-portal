@@ -1,9 +1,10 @@
 <template>
-    <div class="rounded-lg border border-zinc-200 bg-zinc-50 px-6 py-4 shadow-sm hover:border-zinc-300 hover:bg-zinc-100 cursor-pointer w-64 text-center flex flex-col" @click="goToServer">
+    <div class="rounded-lg border px-6 py-4 shadow-sm cursor-pointer w-64 text-center flex flex-col"
+        :class="timeSinceLastUpdate <= 120 ? 'border-zinc-200 bg-zinc-50 hover:border-zinc-300 hover:bg-zinc-100' : 'border-red-200 bg-red-50 hover:border-red-300 hover:bg-red-100'" @click="goToServer">
         <div class="w-full">
             <span class="flex items-center justify-center text-xl font-medium text-zinc-700">
                 <!-- Verified Indicator -->
-                <svg :class="'mr-2 h-1.5 w-1.5 ' + (this.data.verified_at ? 'fill-green-500' : 'fill-red-500')" viewBox="0 0 6 6" aria-hidden="true">
+                <svg :class="'mr-2 h-1.5 w-1.5 ' + (this.data.verified_at && timeSinceLastUpdate <= 120 ? 'fill-green-500' : 'fill-red-500')" viewBox="0 0 6 6" aria-hidden="true">
                     <circle cx="3" cy="3" r="3"></circle>
                 </svg>
 
@@ -54,12 +55,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75"></path>
                     </svg>
 
-                    <div v-if="icon == 'show_load'" @click.stop="showLoadAsPercentage = !showLoadAsPercentage" class="font-bold text-2xl mt-1 text-purple-400">
+                    <div v-if="icon == 'show_load'" @click.stop="showLoadAsPercentage = !showLoadAsPercentage" class="font-bold text-2xl mt-1 text-red-400">
                         <div class="mt-4" v-if="showLoadAsPercentage">
-                            {{ Math.round(metric.load_1 / data.cpu_cores * 1000) / 10 }}%
+                            {{ Math.round(metric.load_1 / data.cpu_cores * 100) }}%
                         </div>
                         <div v-else>
-                            {{ metric.load_1 }} <br><div class="border-b mx-2 h-0 border-purple-400"></div> {{ data.cpu_cores }}
+                            {{ metric.load_1 }} <br><div class="border-b mx-2 h-0 border-red-400"></div> {{ data.cpu_cores }}
                         </div>
                     </div>
 
@@ -142,6 +143,8 @@ export default {
             echo.private(`servers.${this.data.id}.server-metrics`).listen('ServerMetrics\\ServerMetricCreated', ({serverMetric}) => {
                 console.log(serverMetric);
 
+                this.lastRecievedTimestamp = new Date().getTime() / 1000;
+
                 this.previousMetric = this.metric;
                 this.metric = serverMetric;
 
@@ -167,6 +170,10 @@ export default {
                     this.updateStatus('danger');
                 }
             })
+
+            setInterval(() => {
+                this.timeSinceLastUpdate = Math.round(new Date().getTime() / 1000 - (this.lastRecievedTimestamp ?? this.metric.timestamp));
+            }, 1000);
 
             this.load();
         } else {
@@ -204,6 +211,8 @@ export default {
 
             dangerIgnored: false,
             showLoadAsPercentage: true,
+
+            timeSinceLastUpdate: 0,
         };
     },
 
@@ -286,11 +295,11 @@ export default {
             }
 
             if (load <= 1.00) {
-                return '#f87171';
+                return '#ef4444';
             }
 
             if (load > 1.00) {
-                return '#ae81ff';
+                return '#ef4444';
             }
         },
 

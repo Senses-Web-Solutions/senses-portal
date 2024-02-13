@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import SmallText from '../Ui/Text/SmallText.vue';
 // Imports
 import ServerList from "./Servers/ServerListRow.vue";
 import ServerCard from "./Servers/ServerCard.vue";
@@ -16,6 +17,7 @@ export default {
     components: {
         ServerList,
         ServerCard,
+        SmallText,
     },
 
     props: {},
