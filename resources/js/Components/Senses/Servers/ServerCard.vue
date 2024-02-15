@@ -1,10 +1,10 @@
 <template>
     <div class="rounded-lg border px-6 py-4 shadow-sm cursor-pointer w-64 text-center flex flex-col"
-        :class="timeSinceLastUpdate >= 300 ? 'border-zinc-200 bg-zinc-50 hover:border-zinc-300 hover:bg-zinc-100' : 'border-red-200 bg-red-50 hover:border-red-300 hover:bg-red-100'" @click="goToServer">
+        :class="timeSinceLastUpdate <= 300 ? 'border-zinc-200 bg-zinc-50 hover:border-zinc-300 hover:bg-zinc-100' : 'border-red-200 bg-red-50 hover:border-red-300 hover:bg-red-100'" @click="goToServer">
         <div class="w-full">
             <span class="flex items-center justify-center text-xl font-medium text-zinc-700">
                 <!-- Verified Indicator -->
-                <svg :class="'mr-2 h-1.5 w-1.5 ' + (this.data.verified_at && timeSinceLastUpdate >= 300 ? 'fill-green-500' : 'fill-red-500')" viewBox="0 0 6 6" aria-hidden="true">
+                <svg :class="'mr-2 h-1.5 w-1.5 ' + (this.data.verified_at && timeSinceLastUpdate <= 300 ? 'fill-green-500' : 'fill-red-500')" viewBox="0 0 6 6" aria-hidden="true">
                     <circle cx="3" cy="3" r="3"></circle>
                 </svg>
 
