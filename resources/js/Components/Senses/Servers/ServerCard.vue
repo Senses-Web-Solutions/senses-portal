@@ -1,10 +1,10 @@
 <template>
     <div class="rounded-lg border px-6 py-4 shadow-sm cursor-pointer w-64 text-center flex flex-col"
-        :class="timeSinceLastUpdate <= 300 ? 'border-zinc-200 bg-zinc-50 hover:border-zinc-300 hover:bg-zinc-100' : 'border-red-200 bg-red-50 hover:border-red-300 hover:bg-red-100'" @click="goToServer">
+        :class="timeSinceLastUpdate >= 300 ? 'border-zinc-200 bg-zinc-50 hover:border-zinc-300 hover:bg-zinc-100' : 'border-red-200 bg-red-50 hover:border-red-300 hover:bg-red-100'" @click="goToServer">
         <div class="w-full">
             <span class="flex items-center justify-center text-xl font-medium text-zinc-700">
                 <!-- Verified Indicator -->
-                <svg :class="'mr-2 h-1.5 w-1.5 ' + (this.data.verified_at && timeSinceLastUpdate <= 300 ? 'fill-green-500' : 'fill-red-500')" viewBox="0 0 6 6" aria-hidden="true">
+                <svg :class="'mr-2 h-1.5 w-1.5 ' + (this.data.verified_at && timeSinceLastUpdate >= 300 ? 'fill-green-500' : 'fill-red-500')" viewBox="0 0 6 6" aria-hidden="true">
                     <circle cx="3" cy="3" r="3"></circle>
                 </svg>
 
@@ -55,12 +55,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75"></path>
                     </svg>
 
-                    <div v-if="icon == 'show_load'" @click.stop="showLoadAsPercentage = !showLoadAsPercentage" class="font-bold text-2xl mt-1 text-red-400">
+                    <div v-if="icon == 'show_load'" @click.stop="showLoadAsPercentage = !showLoadAsPercentage" class="font-bold text-2xl mt-1 text-red-400" :style="`color: ${getColour(metric.load_1 / data.cpu_cores)}`">
                         <div class="mt-4" v-if="showLoadAsPercentage">
                             {{ Math.round(metric.load_1 / data.cpu_cores * 100) }}%
                         </div>
                         <div v-else>
-                            {{ metric.load_1 }} <br><div class="border-b mx-2 h-0 border-red-400"></div> {{ data.cpu_cores }}
+                            {{ metric.load_1 }} <br><div class="border-b mx-2 h-0 border-red-400" :style="`border-color: ${getColour(metric.load_1 / data.cpu_cores)}`"></div> {{ data.cpu_cores }}
                         </div>
                     </div>
 
@@ -248,10 +248,10 @@ export default {
                 this.icon = 'show_load';
                 console.log("Setting status to " + 'show_load')
             } else if (this.metric.load_15 <= this.previousMetric.load_15) {
-                this.icon = 'load_down';
+                this.icon = 'show_load';
                 console.log("Setting status to " + 'load_down')
             } else if (this.metric.load_15 > this.previousMetric.load_15) {
-                this.icon = 'load_up';
+                this.icon = 'show_load';
                 console.log("Setting status to " + 'load_up')
             } else {
                 this.icon = 'idle';
@@ -286,38 +286,6 @@ export default {
         },
 
         getColour(load) {
-            // if (load <= 0.50) {
-            //     return '#4ade80';
-            // }
-
-            // if (load <= 0.90) {
-            //     return '#fbbf24';
-            // }
-
-            // if (load <= 1.00) {
-            //     return '#f87171';
-            // }
-
-            // if (load > 1.00) {
-            //     return '#ef4444';
-            // }
-
-            // if (load <= 0.50) {
-            //     return '#4ade80';
-            // }
-
-            // if (load <= 0.90) {
-            //     return '#fbbf24';
-            // }
-
-            // if (load <= 1.00) {
-            //     return '#f87171';
-            // }
-
-            // if (load > 1.00) {
-            //     return '#ae81ff';
-            // }
-
             if (load <= 0.50) {
                 return '#4ade80';
             }
@@ -327,12 +295,44 @@ export default {
             }
 
             if (load <= 1.00) {
-                return '#fb723c';
+                return '#f87171';
             }
 
             if (load > 1.00) {
                 return '#ef4444';
             }
+
+            // if (load <= 0.50) {
+            //     return '#4ade80';
+            // }
+
+            // if (load <= 0.90) {
+            //     return '#fbbf24';
+            // }
+
+            // if (load <= 1.00) {
+            //     return '#ef4444';
+            // }
+
+            // if (load > 1.00) {
+            //     return '#ae81ff';
+            // }
+
+            // if (load <= 0.50) {
+            //     return '#4ade80';
+            // }
+
+            // if (load <= 0.90) {
+            //     return '#fbbf24';
+            // }
+
+            // if (load <= 1.00) {
+            //     return '#fb723c';
+            // }
+
+            // if (load > 1.00) {
+            //     return '#ef4444';
+            // }
         },
 
         createCircle(id, radius, max) {

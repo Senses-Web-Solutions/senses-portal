@@ -34,7 +34,7 @@ export default {
 
     methods: {
         load() {
-            axios.get("api/v2/servers?format=all").then((response) => {
+            axios.get("api/v2/servers?format=all&sort=title").then((response) => {
                 this.servers = response.data;
             });
         },
