@@ -56,11 +56,11 @@ function getCurrentUserOrSystemUser()
 }
 
 function broadcast_safely($event, $rescue = null, bool $report = false) {
-    //PendingBroadcasts are returned by broadcast() these trigger the broadcast on destruction
-    //This makes it annoying to capture the exception
-    //So we will detect if its broadcasting 'now', logic for detection is from
-    //https://github.com/laravel/framework/blob/b6f47323da0f0052680d337fe49ffdfe12692ad6/src/Illuminate/Broadcasting/BroadcastManager.php#L154
-    //In these instances we will fire the destructor immediatly via unassigning so we can capture it and you will not get a return value from the broadcast method
+    // PendingBroadcasts are returned by broadcast() these trigger the broadcast on destruction
+    // This makes it annoying to capture the exception
+    // So we will detect if its broadcasting 'now', logic for detection is from
+    // https://github.com/laravel/framework/blob/b6f47323da0f0052680d337fe49ffdfe12692ad6/src/Illuminate/Broadcasting/BroadcastManager.php#L154
+    // In these instances we will fire the destructor immediatly via unassigning so we can capture it and you will not get a return value from the broadcast method
 
     if ($event instanceof Illuminate\Contracts\Broadcasting\ShouldBroadcastNow || (is_object($event) && method_exists($event, 'shouldBroadcastNow') && $event->shouldBroadcastNow())) {
         rescue(function() use($event) {

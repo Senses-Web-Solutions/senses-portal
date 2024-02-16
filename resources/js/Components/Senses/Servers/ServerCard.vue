@@ -1,10 +1,10 @@
 <template>
-    <div class="rounded-lg border px-6 py-4 shadow-sm cursor-pointer w-64 text-center flex flex-col"
-        :class="timeSinceLastUpdate <= 300 ? 'border-zinc-200 bg-zinc-50 hover:border-zinc-300 hover:bg-zinc-100' : 'border-red-200 bg-red-50 hover:border-red-300 hover:bg-red-100'" @click="goToServer">
+    <div :title="hrDuration(timeSinceLastUpdate)" class="rounded-lg border px-6 py-4 shadow-sm cursor-pointer w-64 text-center flex flex-col"
+        :class="true ? 'border-zinc-200 bg-zinc-50 hover:border-zinc-300 hover:bg-zinc-100' : 'border-red-200 bg-red-50 hover:border-red-300 hover:bg-red-100'" @click="goToServer">
         <div class="w-full">
             <span class="flex items-center justify-center text-xl font-medium text-zinc-700">
                 <!-- Verified Indicator -->
-                <svg :class="'mr-2 h-1.5 w-1.5 ' + (this.data.verified_at && timeSinceLastUpdate <= 300 ? 'fill-green-500' : 'fill-red-500')" viewBox="0 0 6 6" aria-hidden="true">
+                <svg :class="'mr-2 h-1.5 w-1.5 ' + (this.data.verified_at && true ? 'fill-green-500' : 'fill-red-500')" viewBox="0 0 6 6" aria-hidden="true">
                     <circle cx="3" cy="3" r="3"></circle>
                 </svg>
 
@@ -241,18 +241,18 @@ export default {
             } else if (!this.dangerIgnored && (this.metric.ram_used / this.metric.ram_total >= 0.9)) {
                 this.icon = 'danger';
                 console.log("Setting status to " + 'danger')
-            } else if (!this.dangerIgnored && (this.metric.swap_used / this.metric.swap_total >= 0.9)) {
-                this.icon = 'danger';
-                console.log("Setting status to " + 'danger')
+            // } else if (!this.dangerIgnored && (this.metric.swap_used / this.metric.swap_total >= 0.9)) {
+            //     this.icon = 'danger';
+            //     console.log("Setting status to " + 'danger')
             } else if (this.metric.load_1 >= this.data.cpu_cores) {
                 this.icon = 'show_load';
                 console.log("Setting status to " + 'show_load')
-            } else if (this.metric.load_15 <= this.previousMetric.load_15) {
-                this.icon = 'show_load';
-                console.log("Setting status to " + 'load_down')
-            } else if (this.metric.load_15 > this.previousMetric.load_15) {
-                this.icon = 'show_load';
-                console.log("Setting status to " + 'load_up')
+            // } else if (this.metric.load_15 <= this.previousMetric.load_15) {
+            //     this.icon = 'load_down';
+            //     console.log("Setting status to " + 'load_down')
+            // } else if (this.metric.load_15 > this.previousMetric.load_15) {
+            //     this.icon = 'load_up';
+            //     console.log("Setting status to " + 'load_up')
             } else {
                 this.icon = 'idle';
                 console.log("Setting status to " + 'idle')
@@ -333,6 +333,34 @@ export default {
             // if (load > 1.00) {
             //     return '#ef4444';
             // }
+        },
+
+        hrDuration (seconds) {
+            if (!seconds) {
+                return '0 Secs';
+            }
+
+            const days = Math.floor(seconds / 86400);
+            const hours = Math.floor(seconds / 3600);
+            const mins = Math.floor(seconds / 60) % 60;
+            const secs = seconds % 60;
+
+            const dayString = days > 1 ? 'Days' : 'Day';
+            const hourString = hours > 1 ? 'Hrs' : 'Hr';
+            const minString = mins > 1 ? 'Mins' : 'Min';
+            const secString = secs > 1 ? 'Secs' : 'Sec';
+
+            let string = [];
+
+            hours ? string.push(`${hours} ${hourString}`) : string;
+            mins ? string.push(`${mins} ${minString}`) : string;
+            hours ? string : string.push(`${secs} ${secString}`);
+
+            days ? string = [`${days} ${dayString}`] : string;
+
+            string = string.join(" ");
+
+            return string;
         },
 
         createCircle(id, radius, max) {
