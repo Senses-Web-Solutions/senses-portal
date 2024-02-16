@@ -244,7 +244,8 @@ export default {
             // } else if (!this.dangerIgnored && (this.metric.swap_used / this.metric.swap_total >= 0.9)) {
             //     this.icon = 'danger';
             //     console.log("Setting status to " + 'danger')
-            } else if (this.metric.load_1 >= this.data.cpu_cores) {
+            // } else if (this.metric.load_1 >= this.data.cpu_cores) {
+            } else {
                 this.icon = 'show_load';
                 console.log("Setting status to " + 'show_load')
             // } else if (this.metric.load_15 <= this.previousMetric.load_15) {
@@ -253,9 +254,9 @@ export default {
             // } else if (this.metric.load_15 > this.previousMetric.load_15) {
             //     this.icon = 'load_up';
             //     console.log("Setting status to " + 'load_up')
-            } else {
-                this.icon = 'idle';
-                console.log("Setting status to " + 'idle')
+            // } else {
+                // this.icon = 'idle';
+                // console.log("Setting status to " + 'idle')
             }
         },
 
