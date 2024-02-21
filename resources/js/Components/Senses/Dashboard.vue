@@ -1,7 +1,7 @@
 <template>
     <div class="w-full flex flex-wrap p-2">
         <div class="p-2" v-for="server in servers">
-            <ServerCard :data="server" />
+            <ServerCard v-if="server['title'] != 'Senses Portal'" :data="server" />
         </div>
     </div>
 </template>
