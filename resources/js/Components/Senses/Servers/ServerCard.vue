@@ -59,7 +59,7 @@
                         <div class="mt-5" v-if="showLoadAsPercentage">
                             {{ Math.round(metric.load_1 / data.cpu_cores * 100) }}%
                         </div>
-                        <div v-else>
+                        <div v-else class="mt-2">
                             {{ metric.load_1 }} <br><div class="border-b mx-2 h-0 border-red-400" :style="`border-color: ${getColour(metric.load_1 / data.cpu_cores)}`"></div> {{ data.cpu_cores }}
                         </div>
                     </div>
