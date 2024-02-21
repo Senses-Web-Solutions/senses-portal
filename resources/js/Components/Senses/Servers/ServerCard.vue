@@ -22,7 +22,7 @@
                 <div class="circle absolute left-0 right-0 top-[20px]" :id="'load-15-' + this.data.id" />
 
                 <!-- Middle Bit -->
-                <div class="absolute left-[70px] right-[70px] top-[40px]">
+                <div class="absolute left-[70px] right-[70px] top-[37px]">
                     <svg v-if="icon == 'danger' && !dangerIgnored" @click.stop="dangerIgnored = true; updateStatus();" xmlns="http://www.w3.org/2000/svg" class="text-red-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
@@ -44,7 +44,7 @@
                         <path d="m12 6 6 6 2.3-2.3a2.4 2.4 0 0 0 0-3.4l-2.6-2.6a2.4 2.4 0 0 0-3.4 0Z" />
                     </svg>
 
-                    <svg v-if="icon == 'deploying'" xmlns="http://www.w3.org/2000/svg" class="text-violet-400 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg v-if="icon == 'deploying'" xmlns="http://www.w3.org/2000/svg" class="text-violet-500 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
                         <path d="M21 3v5h-5" />
                         <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
@@ -56,7 +56,7 @@
                     </svg>
 
                     <div v-if="icon == 'show_load'" @click.stop="showLoadAsPercentage = !showLoadAsPercentage" class="font-bold text-2xl mt-1 text-red-400" :style="`color: ${getColour(metric.load_1 / data.cpu_cores)}`">
-                        <div class="mt-4" v-if="showLoadAsPercentage">
+                        <div class="mt-5" v-if="showLoadAsPercentage">
                             {{ Math.round(metric.load_1 / data.cpu_cores * 100) }}%
                         </div>
                         <div v-else>
