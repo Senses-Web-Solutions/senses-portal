@@ -72,6 +72,16 @@
 
             <div class="items-left text-left mt-1 space-y-4">
                 <div>
+                    <div class="text-sm text-zinc-500">CPU: {{ metric.cpu_use }}% / 100% </div>
+
+                    <div class="w-100 rounded-full h-1.5 mt-1 fill-yellow-400 bg-zinc-300" :style="'fill: ' + this.getColour(metric.cpu_use / 100)">
+                        <svg v-if="this.metric.cpu_use" width="100%" viewBox="0 0 400 13" xmlns="http://www.w3.org/2000/svg">
+                            <rect :width="metric.cpu_use + '%'" height="100%" rx="3"></rect>
+                        </svg>
+                    </div>
+                </div>
+
+                <div>
                     <div class="text-sm text-zinc-500">Disk: {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_total) / 10000) / 100 }}Gb </div>
                     <div class="w-100 rounded-full h-1.5 mt-1 fill-red-400 bg-zinc-300" :style="'fill: ' + this.getColour(metric.disk_used / (metric.disk_total ?? 1))">
                         <svg v-if="this.metric.disk_used" width="100%" viewBox="0 0 400 13" xmlns="http://www.w3.org/2000/svg">
@@ -199,6 +209,8 @@ export default {
                 swap_free: 0,
                 swap_used: 0,
                 swap_total: 0,
+
+                cpu_use: 0,
             },
 
             previousMetric: null,
@@ -287,19 +299,19 @@ export default {
         },
 
         getColour(load) {
-            if (load <= 0.50) {
+            if (load < 0.50) {
                 return '#4ade80';
             }
 
-            if (load <= 0.90) {
+            if (load < 0.90) {
                 return '#fbbf24';
             }
 
-            if (load <= 1.00) {
+            if (load < 1.00) {
                 return '#f87171';
             }
 
-            if (load > 1.00) {
+            if (load >= 1.00) {
                 return '#ef4444';
             }
 
