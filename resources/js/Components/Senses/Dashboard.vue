@@ -1,7 +1,7 @@
 <template>
     <div class="w-full flex flex-wrap p-2">
         <div class="p-2" v-for="server in servers">
-            <ServerCard v-if="server['title'] != 'Senses Portal'" :data="server" />
+            <ServerCard :data="server" />
         </div>
     </div>
 </template>
@@ -35,7 +35,7 @@ export default {
     methods: {
         load() {
             axios.get("api/v2/servers?format=all&sort=title").then((response) => {
-                this.servers = response.data;
+                this.servers = response.data.filter(server => server['title'] != 'Senses Portal');
             });
         },
     },
