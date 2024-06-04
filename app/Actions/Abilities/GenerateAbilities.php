@@ -119,6 +119,7 @@ class GenerateAbilities
 			'revenue',
 			'subscription',
 			'communication-log',
+            'chat',
 			// ----- GENERATOR -----
             //PLEASE remember to add a comma to the above, or the generator will get angry!
         ];
