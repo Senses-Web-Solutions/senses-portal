@@ -11,6 +11,7 @@ use App\Http\Controllers\Web\StatusGroupController;
 use App\Http\Controllers\Web\TagController;
 use App\Http\Controllers\Web\TagGroupController;
 use App\Http\Controllers\Web\AbilityGroupController;
+use App\Http\Controllers\Web\ChatController;
 use App\Http\Controllers\Web\CompanyController;
 use App\Http\Controllers\Web\ServerController;
 use App\Http\Controllers\Web\RevenueController;
@@ -45,6 +46,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('revenues', RevenueController::class)->only('index', 'show');
 	Route::resource('subscriptions', SubscriptionController::class)->only('index', 'show');
 	Route::resource('communication-logs', CommunicationLogController::class)->only('index', 'show');
+	Route::resource('chats', ChatController::class)->only('index', 'show');
 	// ----- GENERATOR 2 -----
 
 	//Abilities
