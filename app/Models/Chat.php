@@ -14,6 +14,7 @@ class Chat extends Model
 
     protected $fillable = [
         'system',
+        'name',
         'meta',
     ];
 
@@ -76,6 +77,26 @@ class Chat extends Model
     public function status()
     {
         return $this->belongsTo(Status::class);
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function getLastMessageAttribute()
+    {
+        return Message::where('chat_id', $this->id)->latest()->first();
+    }
+
+    public function getUnreadMessagesAttribute()
+    {
+        return Message::where('chat_id', $this->id)->where('read_at', null)->get();
+    }
+
+    public function getUnreadMessagesCountAttribute()
+    {
+        return Message::where('chat_id', $this->id)->where('read_at', null)->count();
     }
 }
 
