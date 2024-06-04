@@ -2,7 +2,6 @@
 
 namespace Database\Seeders\Basic;
 
-use App\Models\StatusGroup;
 use Illuminate\Database\Seeder;
 
 class BasicStatusGroupsTableSeeder extends Seeder

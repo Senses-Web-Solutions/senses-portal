@@ -17,7 +17,9 @@ class CoreStatusGroupsTableSeeder extends Seeder
     public function run()
     {
         $titles = [
-            ['title' => 'Page' ],
+            [ 'title' => 'Page' ],
+            [ 'title' => 'Chat' ],
+            [ 'title' => 'Message' ]
         ];
 
         $nonExistingTitles = [];
