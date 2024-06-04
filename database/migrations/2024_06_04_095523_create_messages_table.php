@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('content')->max(255);
             $table->jsonb('meta')->nullable();
             $table->datetime('sent_at');
+            $table->datetime('read_at')->nullable();
             $table->unsignedBigInteger('status_id')->index();
 
             $table->lockable();
