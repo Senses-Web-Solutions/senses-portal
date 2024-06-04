@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\StatusGroupController;
 use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\UserSettingController;
 use App\Http\Controllers\Api\AbilityGroupController;
+use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\ServerController;
 use App\Http\Controllers\Api\CompanyController;
@@ -59,6 +60,7 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
 		'revenues' => RevenueController::class,
 		'subscriptions' => SubscriptionController::class,
 		'communication-logs' => CommunicationLogController::class,
+        // 'chats' => ChatController::class,
 		// ----- GENERATOR 2 -----
     ]);
 
@@ -95,6 +97,17 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
 
     //Servers
     Route::get('servers/{server}/server-metrics', [ServerMetricController::class, 'serverServerMetrics']);
+
+    // Chats
+    Route::get('chats', [ChatController::class, 'index']);
+    Route::post('chats', [ChatController::class, 'store']);
+
+    Route::get('/test', function () {
+        return response()->json(['message' => 'Hello World!']);
+    });
+
+    // Messages
+    // Route::post('chats', [ChatController::class, 'store']);
 });
 
 Route::prefix('v2')->group(function () {
