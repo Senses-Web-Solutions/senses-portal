@@ -41,6 +41,7 @@ class CoreStatusesTableSeeder extends Seeder
         $unassignedStatus = Status::firstOrCreate(['title' => 'Unassigned'], ['colour' => 'red-light', 'text_colour' => 'red-darker']);
         $resolvedStatus = Status::firstOrCreate(['title' => 'Resolved'], ['colour' => 'green-light', 'text_colour' => 'green-darker']);
         $unresolvedStatus = Status::firstOrCreate(['title' => 'Unresolved'], ['colour' => 'red-light', 'text_colour' => 'red-darker']);
+        $missedStatus = Status::firstOrCreate(['title' => 'Missed'], ['colour' => 'red-light', 'text_colour' => 'red-darker']);
 
         // Message Statuses
         $sentStatus = Status::firstOrCreate(['title' => 'Sent'], ['colour' => 'gray-light', 'text_colour' => 'gray-darker']);
@@ -62,6 +63,7 @@ class CoreStatusesTableSeeder extends Seeder
             $assignedStatus->id,
             $unresolvedStatus->id,
             $resolvedStatus->id,
+            $missedStatus->id,
         ]);
 
         $statusGroup = StatusGroup::where('slug', 'message')->first();
