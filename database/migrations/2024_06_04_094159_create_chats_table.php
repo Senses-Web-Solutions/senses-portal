@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->index()->nullable();
+            $table->unsignedBigInteger('invited_user_id')->index()->nullable();
             $table->unsignedBigInteger('company_id')->index();
             $table->unsignedBigInteger('status_id')->index();
+            $table->string('name')->default('Visitor');
             $table->string('system');
             $table->jsonb('meta')->nullable();
             $table->dateTime('completed_at')->nullable();
