@@ -13,6 +13,8 @@ use App\Http\Requests\Chats\ListChatRequest;
 use App\Http\Requests\Chats\ShowChatRequest;
 use App\Http\Requests\Chats\UpdateChatRequest;
 use App\Models\Chat;
+use App\Models\Status;
+use App\Models\StatusGroup;
 use App\Support\QueryBuilder;
 use App\Traits\ApiResponse;
 
@@ -86,31 +88,55 @@ class ChatController extends Controller
     }
 
     /**
-     * companyChats()
+     * inboxChats()
      *
-     * Lists server metrics based on their company.
+     * Fetches your assigned chats and incoming chats.
      * <aside><ul><li>list-chat</li></ul></aside>
-     * @urlParam companies integer[] Company IDs Example: [1,2,3]
      */
-    public function companyChats(string $companyIDs)
+    public function inbox(ListChatRequest $request)
     {
-        $companyIDs = explode(',', $companyIDs);
-        abort(501, 'Company server metrics not implemented');
-        //return $this->respond(QueryBuilder::for(Chat::class)->whereIn('company_id', $companyIDs)->list());
-    }
+        $userID = auth()->user()->id;
+        $companyID = auth()->user()->company_id;
 
-    /**
-     * serverChats()
-     *
-     * Lists server metrics based on their server.
-     * <aside><ul><li>list-chat</li></ul></aside>
-     * @urlParam servers integer[] Server IDs Example: [1,2,3]
-     */
-    public function serverChats(string $serverIDs)
-    {
-        $serverIDs = explode(',', $serverIDs);
-        abort(501, 'Server server metrics not implemented');
-        // return $this->respond(QueryBuilder::for(Chat::class)->whereIn('server_id', $serverIDs)->list());
+        $statusGroupID = StatusGroup::where('slug', 'chat')->pluck('id')->first();
+
+        $statusIDs = Status::whereHas('statusGroups', function ($query) use ($statusGroupID) {
+            $query->where('status_group_id', $statusGroupID);
+        })->pluck('id', 'slug');
+
+        $newStatus = $statusIDs['new'];
+        $unassignedStatus = $statusIDs['unassigned'];
+        $assignedStatus = $statusIDs['assigned'];
+        $resolvedStatus = $statusIDs['resolved'];
+        $unresolvedStatus = $statusIDs['unresolved'];
+        $missedStatus = $statusIDs['missed'];
+        $agentInvitedStatus = $statusIDs['agent-invited'];
+
+        $chats = Chat::with(['messages'])->where(function ($query) use ($newStatus, $assignedStatus, $userID, $agentInvitedStatus, $companyID, $unresolvedStatus, $resolvedStatus, $missedStatus) {
+            $query->where('status_id', $newStatus)
+                ->orWhere(function ($query) use ($assignedStatus, $userID) {
+                    $query->where('status_id', $assignedStatus)
+                        ->where('user_id', $userID);
+                })
+                ->orWhere(function ($query) use ($agentInvitedStatus, $companyID, $userID) {
+                    $query->where('status_id', $agentInvitedStatus)
+                        ->where('company_id', $companyID)
+                        ->where('invited_user_id', $userID);
+                })
+                ->orWhere(function ($query) use ($companyID, $unresolvedStatus, $resolvedStatus, $missedStatus, $agentInvitedStatus) {
+                    $query->where('company_id', $companyID)
+                        ->whereNotIn('status_id', [$unresolvedStatus, $resolvedStatus, $missedStatus, $agentInvitedStatus]);
+                });
+        })->get()->append(['last_message', 'unread_messages_count',]);
+
+        $data = [
+            'all' => $chats,
+            'new' => $chats->where('status_id', $newStatus),
+            'assigned' => $chats->where('status_id', $assignedStatus)->where('user_id', $userID),
+            'agent_invited' => $chats->where('status_id', $agentInvitedStatus)->where('invited_user_id', $userID),
+        ];
+
+        return $this->respond($data);
     }
 }
 

@@ -5,14 +5,10 @@
 @section('content')
 
 <page-header>
-    <template #title>Chats</template>
-
-    <template #actions>
-        <chat-actions></chat-actions>
-    </template>
+    <template #title>Resolved Chats</template>
 </page-header>
 
-<page-layout flush>
+<page-layout>
     <chat-inbox></chat-inbox>
 </page-layout>
 

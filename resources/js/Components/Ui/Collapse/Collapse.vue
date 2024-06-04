@@ -39,7 +39,7 @@
         <CollapseTransition>
             <div v-if="isOpen" class="select-text" :class="{
                 'p-4': !flush,
-                'border-t': divider && !alternate,
+                'border-t border-zinc-200': divider && !alternate,
                 'border-b border-b-purple-200': bottomBorder && isOpen
             }">
                 <slot />

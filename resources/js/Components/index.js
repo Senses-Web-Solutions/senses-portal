@@ -76,6 +76,7 @@ import CommunicationLogTable from './Senses/CommunicationLogs/CommunicationLogTa
 import CommunicationLogForm from './Senses/CommunicationLogs/CommunicationLogForm.vue';
 
 import ChatInbox from "./Senses/Chats/ChatInbox.vue";
+import ChatActions from "./Senses/Chats/ChatActions.vue";
 // ----- GENERATOR A -----
 
 export {
@@ -155,5 +156,6 @@ export {
     CommunicationLogTable,
     CommunicationLogForm,
     ChatInbox,
+    ChatActions,
     // ----- GENERATOR B -----
 };

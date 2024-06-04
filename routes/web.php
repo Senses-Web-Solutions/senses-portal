@@ -51,4 +51,11 @@ Route::group(['middleware' => ['auth']], function () {
 
 	//Abilities
 	Route::get('abilities/reseed', [AbilityController::class, 'index']);
+
+	// Chats
+	Route::get('/current/chats', [ChatController::class, 'current']);
+	Route::get('/resolved/chats', [ChatController::class, 'resolved']);
+	Route::get('/unresolved/chats', [ChatController::class, 'unresolved']);
+	Route::get('/missed/chats', [ChatController::class, 'missed']);
+	Route::get('/chats/feedback', [ChatController::class, 'feedback']);
 });

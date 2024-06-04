@@ -60,7 +60,7 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
 		'revenues' => RevenueController::class,
 		'subscriptions' => SubscriptionController::class,
 		'communication-logs' => CommunicationLogController::class,
-        // 'chats' => ChatController::class,
+        'chats' => ChatController::class,
 		// ----- GENERATOR 2 -----
     ]);
 
@@ -99,12 +99,7 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
     Route::get('servers/{server}/server-metrics', [ServerMetricController::class, 'serverServerMetrics']);
 
     // Chats
-    Route::get('chats', [ChatController::class, 'index']);
-    Route::post('chats', [ChatController::class, 'store']);
-
-    Route::get('/test', function () {
-        return response()->json(['message' => 'Hello World!']);
-    });
+    Route::get('inbox/chats', [ChatController::class, 'inbox']);
 
     // Messages
     // Route::post('chats', [ChatController::class, 'store']);
