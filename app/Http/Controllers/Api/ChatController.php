@@ -112,7 +112,7 @@ class ChatController extends Controller
         $missedStatus = $statusIDs['missed'];
         $agentInvitedStatus = $statusIDs['agent-invited'];
 
-        $chats = Chat::with(['messages'])->where(function ($query) use ($newStatus, $assignedStatus, $userID, $agentInvitedStatus, $companyID, $unresolvedStatus, $resolvedStatus, $missedStatus) {
+        $chats = Chat::with(['messages', 'user', 'status'])->where(function ($query) use ($newStatus, $assignedStatus, $userID, $agentInvitedStatus, $companyID, $unresolvedStatus, $resolvedStatus, $missedStatus) {
             $query->where('status_id', $newStatus)
                 ->orWhere(function ($query) use ($assignedStatus, $userID) {
                     $query->where('status_id', $assignedStatus)
@@ -127,16 +127,43 @@ class ChatController extends Controller
                     $query->where('company_id', $companyID)
                         ->whereNotIn('status_id', [$unresolvedStatus, $resolvedStatus, $missedStatus, $agentInvitedStatus]);
                 });
-        })->get()->append(['last_message', 'unread_messages_count',]);
+        })
+            ->get()
+            ->append(['last_message', 'unread_messages_count',])
+            ->sortByDesc(function ($chat) {
+                return $chat->last_message ? $chat->last_message->sent_at : null;
+            })
+            ->values();;
 
-        $data = [
-            'all' => $chats,
-            'new' => $chats->where('status_id', $newStatus),
-            'assigned' => $chats->where('status_id', $assignedStatus)->where('user_id', $userID),
-            'agent_invited' => $chats->where('status_id', $agentInvitedStatus)->where('invited_user_id', $userID),
-        ];
+        // $data = [
+        //     'all' => $chats,
+        //     'new' => $chats->where('status_id', $newStatus),
+        //     'assigned' => $chats->where('status_id', $assignedStatus)->where('user_id', $userID),
+        //     'invited' => $chats->where('status_id', $agentInvitedStatus)->where('invited_user_id', $userID),
+        // ];
 
-        return $this->respond($data);
+        $chats->keyBy('id');
+
+        return $this->respond($chats);
+    }
+
+    public function accept(Chat|int $chat)
+    {
+
+        if (is_int($chat)) {
+            $chat = Chat::findOrFail($chat);
+        }
+
+        $assignedStatus = Status::where('slug', 'assigned')->first();
+        $chat->status()->associate($assignedStatus);
+        $userID = auth()->user()->id;
+        $chat->user()->associate($userID);
+
+        $chat->save();
+
+        $chat->load('user');
+
+        return $this->respond($chat);
     }
 }
 

@@ -21,7 +21,9 @@ class CreateChatRequest extends FormRequest
             'company_id' => 'required|integer|exists:companies,id',
             'system' => 'required|string|max:255',
             'meta' => 'nullable|array|max:255',
-            'message' => 'required|string|max:255',
+            'message' => 'required|array|max:255',
+            'message.content' => 'required|string|max:255',
+            'message.author' => 'required|string|max:255',
         ];
 
         return $rules;

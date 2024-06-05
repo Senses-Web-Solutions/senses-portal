@@ -2,9 +2,10 @@
 
 namespace App\Actions\Chats;
 
-use App\Actions\Messages\CreateMessage;
 use App\Models\Chat;
 use App\Models\Status;
+use App\Events\Chats\ChatCreated;
+use App\Actions\Messages\CreateMessage;
 use Spatie\QueueableAction\QueueableAction;
 
 class CreateChat
@@ -27,7 +28,8 @@ class CreateChat
         if (isset($data['message'])) {
             $messageData = [
                 'chat_id' => $chat->id,
-                'content' => $data['message'],
+                'content' => $data['message']['content'],
+                'author' => $data['message']['author'],
                 'sent_at' => now(),
             ];
             app(CreateMessage::class)->execute($messageData);

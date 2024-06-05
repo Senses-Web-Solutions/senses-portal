@@ -64,6 +64,8 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
 		// ----- GENERATOR 2 -----
     ]);
 
+    Route::get("users/{user}/popover-content", [UserController::class, "userPopoverContent"]);
+
     //Abilities
     Route::get("abilities", [AbilityController::class, "index"]);
     Route::post('abilities/reseed', [AbilityController::class, 'reseed']);
@@ -100,6 +102,8 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
 
     // Chats
     Route::get('inbox/chats', [ChatController::class, 'inbox']);
+
+    Route::get('accept/chats/{chat}', [ChatController::class, 'accept']);
 
     // Messages
     // Route::post('chats', [ChatController::class, 'store']);

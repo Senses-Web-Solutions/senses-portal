@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Broadcasting\BroadcastManager;
 use Illuminate\Broadcasting\Broadcasters\PusherBroadcaster;
+use Psr\Log\LoggerInterface;
 
 class BroadcastServiceProvider extends ServiceProvider
 {

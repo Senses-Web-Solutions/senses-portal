@@ -100,6 +100,19 @@ class UserController extends Controller
 		//return $this->respond(QueryBuilder::for(User::class)->whereHas('favourites', function ($q) use ($favouriteIDs) {$q->whereIn('id', $favouriteIDs);})->list());
 	}
 
+    /**
+     * userPopoverContent()
+     *
+     * Reads and returns a user with the data needed for a popover.
+     * <aside><ul><li>show-user</li></ul></aside>
+     * @urlParam user integer User ID. Example: 1
+     */
+    public function userPopoverContent(ShowUserRequest $request, int $id)
+    {
+        $user = User::find($id);
+
+        return $user;
+    }
 }
 
 //Generated 10-10-2023 10:05:12

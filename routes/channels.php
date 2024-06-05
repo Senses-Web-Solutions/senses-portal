@@ -137,6 +137,15 @@ Broadcast::channel('venues.{venue}.main', function ($venue, $id) {
     return true;
 });
 
+// Chats
+Broadcast::channel('companies.{company}.chat', function ($server, $id) {
+    return true;
+});
+
+Broadcast::channel('companies.{company}.message', function ($server, $id) {
+    return true;
+});
+
 Broadcast::channel('users.{user}.notifications', function ($user) {
     return getCurrentUser()->id === $user->id;
 });

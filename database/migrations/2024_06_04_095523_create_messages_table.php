@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('chat_id')->index();
             $table->boolean('from_agent')->default(false);
+            $table->string('author')->index();
             $table->string('content')->max(255);
             $table->jsonb('meta')->nullable();
             $table->datetime('sent_at');

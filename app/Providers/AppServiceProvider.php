@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Chat;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\View;
@@ -34,6 +35,10 @@ use App\Observers\SubscriptionObserver;
 use App\Models\Subscription;
 use App\Observers\CommunicationLogObserver;
 use App\Models\CommunicationLog;
+use App\Models\Message;
+use App\Observers\ChatObserver;
+use App\Observers\MessageObserver;
+
 // ----- GENERATOR 1 -----
 
 class AppServiceProvider extends ServiceProvider
@@ -63,6 +68,8 @@ class AppServiceProvider extends ServiceProvider
 		Revenue::observe(RevenueObserver::class);
 		Subscription::observe(SubscriptionObserver::class);
 		CommunicationLog::observe(CommunicationLogObserver::class);
+		Chat::observe(ChatObserver::class);
+		Message::observe(MessageObserver::class);
 		// ----- GENERATOR 2 -----
 
         View::composer('*', function ($view) {

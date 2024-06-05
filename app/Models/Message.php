@@ -13,6 +13,7 @@ class Message extends Model
 
 
     protected $fillable = [
+        'author',
         'content',
         'meta',
         'sent_at'
