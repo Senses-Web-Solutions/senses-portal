@@ -14,6 +14,8 @@ class ChatCreated implements ShouldBroadcastNow
     {
         $chat->load(['messages', 'status']);
         $chat->append(['last_message', 'unread_messages_count']);
+        $chat->user_id = $chat->user_id ?? null;
+        $chat->invited_user_id = $chat->invited_user_id ?? null;
         $this->chat = $chat;
     }
 

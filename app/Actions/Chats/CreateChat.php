@@ -32,7 +32,7 @@ class CreateChat
                 'author' => $data['message']['author'],
                 'sent_at' => now(),
             ];
-            app(CreateMessage::class)->execute($messageData);
+            app(CreateMessage::class)->onQueue()->execute($messageData);
         }
 
         return $chat;

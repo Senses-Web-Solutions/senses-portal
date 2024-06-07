@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\Chats\AcceptChat;
 use App\Actions\Chats\CreateChat;
 use App\Actions\Chats\DeleteChat;
 use App\Actions\Chats\GenerateChatShowCache;
@@ -11,6 +12,7 @@ use App\Http\Requests\Chats\CreateChatRequest;
 use App\Http\Requests\Chats\DeleteChatRequest;
 use App\Http\Requests\Chats\ListChatRequest;
 use App\Http\Requests\Chats\ShowChatRequest;
+use App\Http\Requests\Chats\StartChatRequest;
 use App\Http\Requests\Chats\UpdateChatRequest;
 use App\Models\Chat;
 use App\Models\Status;
@@ -87,6 +89,21 @@ class ChatController extends Controller
         return $this->respondDeleted($deleteChat->execute($id));
     }
 
+    public function start(StartChatRequest $request, CreateChat $createChat)
+    {
+        $data = $request->all();
+
+        $chat = $data['chat'];
+        $referrerUrl = $request->headers->get('referer');
+
+        // Parse the referrer URL to get just the protocol and domain name
+        $parsedUrl = parse_url($referrerUrl);
+        $protocolAndDomain = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
+        $chat['system'] = $protocolAndDomain;
+
+        return $this->respond($createChat->execute($chat));
+    }
+
     /**
      * inboxChats()
      *
@@ -112,7 +129,9 @@ class ChatController extends Controller
         $missedStatus = $statusIDs['missed'];
         $agentInvitedStatus = $statusIDs['agent-invited'];
 
-        $chats = Chat::with(['messages', 'user', 'status'])->where(function ($query) use ($newStatus, $assignedStatus, $userID, $agentInvitedStatus, $companyID, $unresolvedStatus, $resolvedStatus, $missedStatus) {
+        $chats = Chat::with(['messages' => function ($query) {
+            $query->orderBy('id');
+        }, 'user', 'status'])->where(function ($query) use ($newStatus, $assignedStatus, $userID, $agentInvitedStatus, $companyID, $unresolvedStatus, $resolvedStatus, $missedStatus) {
             $query->where('status_id', $newStatus)
                 ->orWhere(function ($query) use ($assignedStatus, $userID) {
                     $query->where('status_id', $assignedStatus)
@@ -129,20 +148,16 @@ class ChatController extends Controller
                 });
         })
             ->get()
+            ->each(function ($chat) {
+                $chat->setRelation('messages', $chat->messages->keyBy('id'));
+            })
             ->append(['last_message', 'unread_messages_count',])
             ->sortByDesc(function ($chat) {
                 return $chat->last_message ? $chat->last_message->sent_at : null;
             })
-            ->values();;
+            ->values();
 
-        // $data = [
-        //     'all' => $chats,
-        //     'new' => $chats->where('status_id', $newStatus),
-        //     'assigned' => $chats->where('status_id', $assignedStatus)->where('user_id', $userID),
-        //     'invited' => $chats->where('status_id', $agentInvitedStatus)->where('invited_user_id', $userID),
-        // ];
-
-        $chats->keyBy('id');
+        $chats = $chats->keyBy('id');
 
         return $this->respond($chats);
     }
@@ -154,16 +169,7 @@ class ChatController extends Controller
             $chat = Chat::findOrFail($chat);
         }
 
-        $assignedStatus = Status::where('slug', 'assigned')->first();
-        $chat->status()->associate($assignedStatus);
-        $userID = auth()->user()->id;
-        $chat->user()->associate($userID);
-
-        $chat->save();
-
-        $chat->load('user');
-
-        return $this->respond($chat);
+        return app(AcceptChat::class)->execute($chat);
     }
 }
 

@@ -6,7 +6,7 @@ use App\Models\Message;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-class MessageUpdated implements ShouldBroadcastNow
+class MessageRead implements ShouldBroadcastNow
 {
     public Message $message;
 

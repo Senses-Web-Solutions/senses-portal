@@ -1,5 +1,5 @@
 <template>
-    <div class="border-t border-zinc-200 pt-3">
+    <div v-if="chats?.length > 0" class="border-t border-zinc-200 pt-3">
         <div class="flex justify-between">
             <h2 class="px-4 text-black font-semibold text-lg capitalize mb-1">
                 {{ type }}
@@ -8,7 +8,7 @@
                 {{ chats.length }}
             </h2>
         </div>
-        <div class="h-80 max-h-1/4 overflow-y-scroll hide-scrollbar">
+        <div class="max-h-1/4 overflow-y-scroll hide-scrollbar">
             <div
                 v-for="chat in chats"
                 :key="chat.id"
@@ -37,6 +37,7 @@
                             {{ truncateMessage(chat?.last_message?.content) ?? '...' }}
                         </p>
                         <div
+                            v-if="chat.unread_messages_count > 0"
                             class="h-5 w-5 bg-primary-400 rounded-full flex justify-center items-center text-white text-xs"
                         >
                             {{ chat.unread_messages_count ?? 1 }}

@@ -29,7 +29,7 @@
                 v-for="(message, index) in chat?.messages"
                 :key="'message:' + message.id"
                 :message="message"
-                :in-chain="isInChain(message, index)"
+                :in-chain="isInChain(message)"
             />
         </div>
         <div v-if="typers.length > 0" class="transition duration-200" :class="{ 'opacity-0' : !typers.length }">
@@ -115,6 +115,7 @@ export default {
     },
     mounted() {
         this.chatForm.message = this.defaultMessage;
+        console.log(this.chat);
     },
     methods: {
         acceptChat() {
@@ -137,11 +138,13 @@ export default {
                     }
                 });
         },
-        isInChain(message, index) {
-            if (index === 0) {
+        isInChain(message) {
+            let messages = Object.values(this.chat.messages);
+            if (messages.length <= 1) {
                 return false;
             }
-            return message.author === this.chat.messages[index - 1].author;
+            let lastMessage = messages[messages.length - 1];
+            return message.author === lastMessage.author;
         },
         textareaKeydown(event) {
             if (event.key === 'Enter' && event.shiftKey) {

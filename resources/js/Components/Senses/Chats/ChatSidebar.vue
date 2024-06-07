@@ -23,7 +23,7 @@
             </SeInput>
         </div>
 
-        <div v-if="formattedChats" class="h-full space-y-4">
+        <div v-if="formattedChats && !loadingChats" class="h-full space-y-4">
             <ChatSidebarChatType
                 v-for="(chats, type) in this.formattedChats"
                 :key="type"
@@ -34,6 +34,10 @@
                 @select-chat="selectChat"
             />
         </div>
+
+        <div v-if="loadingChats" class="flex items-center justify-center h-full">
+            <LoadingIcon class="w-12 h-12 text-primary-600" />
+        </div>
     </div>
 </template>
 <script>
@@ -43,13 +47,15 @@ import { SearchIcon } from '@heroicons/vue/outline';
 import SeInput from '../../Ui/Inputs/SeInput.vue';
 import EmptyState from '../../Ui/EmptyState.vue';
 import ChatSidebarChatType from './ChatSidebarChatType.vue';
+import LoadingIcon from '../../Ui/LoadingIcon.vue';
 
 export default {
     components: {
         SeInput,
         EmptyState,
         SearchIcon,
-        ChatSidebarChatType
+        ChatSidebarChatType,
+        LoadingIcon
     },
     props: {
         chats: {
@@ -59,38 +65,40 @@ export default {
         selectedChat: {
             type: Object,
             required: false
+        },
+        loadingChats: {
+            type: Boolean,
+            required: true
         }
     },
     emits: ['chatSelected'],
     data() {
         return {
             filteredChats: {
-                new: [],
                 assigned: [],
+                new: [],
             },
 
             searchQuery: '',
-            loadingChats: true,
-            loadingState: true,
             emptyMessages: {
+                assigned: 'You have no chats assigned to you',
                 new: 'There are no new chats',
-                assigned: 'You have no chats assigned to you'
             }
         }
     },
     computed: {
-        newChats() {
-            return this.getChats('new') ?? [];
-        },
-
         assignedChats() {
             return this.getChats('assigned') ?? [];
         },
 
+        newChats() {
+            return this.getChats('new') ?? [];
+        },
+
         formattedChats() {
             return {
+                assigned: this.assignedChats,
                 new: this.newChats,
-                assigned: this.assignedChats
             };
         },
 

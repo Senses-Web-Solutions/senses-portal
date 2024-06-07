@@ -109,6 +109,7 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
     // Route::post('chats', [ChatController::class, 'store']);
 });
 
+
 Route::prefix('v2')->group(function () {
     //Signed URLs
     Route::get('/exports/{export}/download', [ExportController::class, 'download'])->name('api.exports.download');
@@ -116,3 +117,4 @@ Route::prefix('v2')->group(function () {
 });
 
 Route::post('/servers/deploy', [ServerController::class, 'deploy']);
+Route::post('/start/chat', [ChatController::class, 'start']);
