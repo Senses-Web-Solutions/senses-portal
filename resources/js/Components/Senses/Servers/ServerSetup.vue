@@ -15,7 +15,7 @@
 <script>
 // Imports
 
-import useEcho from '../../../../Support/useEcho';
+import useEcho from '../../../Support/useEcho';
 import eventHub from '../../../Support/EventHub';
 
 const echo = useEcho();

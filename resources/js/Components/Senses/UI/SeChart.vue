@@ -5,7 +5,7 @@
 <script>
 import PrimaryButton from '../../Ui/Buttons/PrimaryButton.vue';
 
-import useEcho from '../../../../Support/useEcho';
+import useEcho from '../../../Support/useEcho';
 
 const echo = useEcho();
 

@@ -70,9 +70,6 @@ import axios from 'axios';
 import SmallText from '../../Ui/Text/SmallText.vue';
 
 import eventHub from '../../../Support/EventHub';
-import useEcho from '../../../../Support/useEcho';
-
-const echo = useEcho();
 
 export default {
     components: {

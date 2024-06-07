@@ -178,10 +178,6 @@ import SmallText from '../../Ui/Text/SmallText.vue';
 import SeChart from '../UI/SeChart.vue';
 import PrimaryButton from '../../Ui/Buttons/PrimaryButton.vue';
 
-import useEcho from '../../../../Support/useEcho';
-
-const echo = useEcho();
-
 export default {
     components: {
         SmallText,
