@@ -24,12 +24,12 @@
                 </ButtonGroup>
             </div>
         </div>
-        <div class="flex-grow overflow-y-auto overflow-x-hidden p-3 relative bg-white">
+        <div id="messages" class="flex-grow overflow-y-auto overflow-x-hidden p-3 relative bg-white">
             <Message
                 v-for="(message, index) in chat?.messages"
                 :key="'message:' + message.id"
                 :message="message"
-                :in-chain="isInChain(message)"
+                :in-chain="isInChain(message, index)"
             />
         </div>
         <div v-if="typers.length > 0" class="transition duration-200" :class="{ 'opacity-0' : !typers.length }">
@@ -41,7 +41,7 @@
                 :class="{
                     'cursor-not-allowed': !yourAssigned,
                 }"
-                v-model="chatForm.message"
+                v-model="message.content"
                 :disabled="!yourAssigned"
                 @keydown="textareaKeydown"
             >
@@ -64,6 +64,7 @@ import WarningButton from '../../Ui/Buttons/WarningButton.vue';
 import SuccessButton from '../../Ui/Buttons/SuccessButton.vue';
 
 import user from '../../../Support/user';
+import sanitiseContent from '../../../Support/sanitiseContent';
 
 export default {
     components: {
@@ -89,8 +90,12 @@ export default {
     },
     data() {
         return {
-            chatForm: {
-                message: ''
+            message: {
+                chat_id: this.chat.id,
+                content: '',
+                author: user().full_name,
+                from_agent: true,
+                sent_at: null
             },
             user: user()
         }
@@ -107,14 +112,14 @@ export default {
         },
         defaultMessage() {
             if (this.yourAssigned) {
-                return 'You are not assigned to this chat';
-            } else {
                 return 'Hi, my name is Josh. How can I help you today?';
+                } else {
+                return 'You are not assigned to this chat';
             }
         }
     },
     mounted() {
-        this.chatForm.message = this.defaultMessage;
+        this.message.content = this.defaultMessage;
         console.log(this.chat);
     },
     methods: {
@@ -140,10 +145,14 @@ export default {
         },
         isInChain(message) {
             let messages = Object.values(this.chat.messages);
-            if (messages.length <= 1) {
+            // Find index of message in array of messages
+            const index = messages.findIndex(m => m.id === message.id);
+
+            if (messages.length <= 1 || index === 0) {
                 return false;
             }
-            let lastMessage = messages[messages.length - 1];
+
+            let lastMessage = messages[index - 1];
             return message.author === lastMessage.author;
         },
         textareaKeydown(event) {
@@ -155,9 +164,42 @@ export default {
 
             if (event.key === 'Enter') {
                 event.preventDefault();
-                // this.sendMessage();
+                this.sendMessage();
             }
         },
+        sendMessage() {
+            this.message.content = sanitiseContent(this.message.content);
+
+            if (!this.message.content) {
+                return;
+            }
+
+            const date = new Date();
+            const formattedDate =
+                date.getFullYear() +
+                "-" +
+                String(date.getMonth() + 1).padStart(2, "0") +
+                "-" +
+                String(date.getDate()).padStart(2, "0") +
+                " " +
+                String(date.getHours()).padStart(2, "0") +
+                ":" +
+                String(date.getMinutes()).padStart(2, "0") +
+                ":" +
+                String(date.getSeconds()).padStart(2, "0");
+
+            this.message.sent_at = formattedDate;
+            
+            axios.post(`/api/v2/messages`, this.message)
+            .then(response => {
+                if (response.data) {
+                    // this.chat.messages.push(response.data.message);
+                    const element = document.getElementById("messages");
+                    element.scrollTo({ top: element.scrollHeight, behavior: 'smooth' });
+                    this.message.content = '';
+                }
+            });
+        }
     }
 }
 </script>

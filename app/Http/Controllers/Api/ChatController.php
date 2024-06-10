@@ -12,6 +12,7 @@ use App\Http\Requests\Chats\CreateChatRequest;
 use App\Http\Requests\Chats\DeleteChatRequest;
 use App\Http\Requests\Chats\ListChatRequest;
 use App\Http\Requests\Chats\ShowChatRequest;
+use App\Http\Requests\Chats\ShowSensesChatRequest;
 use App\Http\Requests\Chats\StartChatRequest;
 use App\Http\Requests\Chats\UpdateChatRequest;
 use App\Models\Chat;
@@ -89,7 +90,7 @@ class ChatController extends Controller
         return $this->respondDeleted($deleteChat->execute($id));
     }
 
-    public function start(StartChatRequest $request, CreateChat $createChat)
+    public function sensesChatStart(StartChatRequest $request, CreateChat $createChat)
     {
         $data = $request->all();
 
@@ -102,6 +103,11 @@ class ChatController extends Controller
         $chat['system'] = $protocolAndDomain;
 
         return $this->respond($createChat->execute($chat));
+    }
+
+    public function sensesChatFetch(ShowSensesChatRequest $request, int $id, GenerateChatShowCache $generateChatShowCache)
+    {
+        return $generateChatShowCache->execute($id);
     }
 
     /**

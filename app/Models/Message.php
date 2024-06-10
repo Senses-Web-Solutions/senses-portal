@@ -16,7 +16,8 @@ class Message extends Model
         'author',
         'content',
         'meta',
-        'sent_at'
+        'sent_at',
+        'from_agent'
     ];
 
     protected $casts = [

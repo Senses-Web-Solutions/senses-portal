@@ -16,7 +16,7 @@ class GenerateChatShowCache
     public function execute(int $id)
     {
         return TaggedCache::responseForever('chat-' . $id, function () use ($id) {
-            return $this->respond(Chat::findOrFail($id)->with(['messages', 'user'])->append(['last_message', 'unread_messages_count', 'unread_messages']));
+            return $this->respond(Chat::with(['messages.status', 'user'])->findOrFail($id)->append(['last_message', 'unread_messages_count', 'unread_messages']));
         });
     }
 }

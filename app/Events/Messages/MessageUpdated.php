@@ -3,6 +3,7 @@
 namespace App\Events\Messages;
 
 use App\Models\Message;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
@@ -25,6 +26,7 @@ class MessageUpdated implements ShouldBroadcastNow
     {
         return [
             new PrivateChannel('companies.' . $this->message->chat->company_id . '.message'),
+            new Channel('chats.' . $this->message->chat_id . '.message'),
         ];
     }
 }

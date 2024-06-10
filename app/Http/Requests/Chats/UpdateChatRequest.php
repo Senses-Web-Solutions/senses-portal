@@ -8,7 +8,7 @@ class UpdateChatRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        if (getCurrentUser()?->can('update-company')) {
+        if (getCurrentUser()?->can('update-chat')) {
             return true;
         }
 

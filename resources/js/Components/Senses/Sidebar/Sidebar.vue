@@ -37,6 +37,7 @@
                     <SidebarSubItem title="Unresolved" v-if="user().can('list-chat')" to="/unresolved/chats" :active="Route.is('unresolved', 'chats')" />
                     <SidebarSubItem title="Missed" v-if="user().can('list-chat')" to="/missed/chats" :active="Route.is('missed', 'chats')" />
                     <SidebarSubItem title="Feedback" v-if="user().can('list-chat')" to="/feedback/chats" :active="Route.is('feedback', 'chats')" />
+                    <SidebarSubItem title="Setup" v-if="user().can('list-chat')" to="/setup/chats" :active="Route.is('setup', 'chats')" />
                 </SidebarGroup>
 				<!-- <SidebarItem title="Revenues" v-if="user().can('list-revenue')" to="/revenues" :active="Route.is('revenues', 'any')" /> -->
 				<!-- <SidebarItem title="Subscriptions" v-if="user().can('list-subscription')" to="/subscriptions" :active="Route.is('subscriptions', 'any')" /> -->

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Chats;
 
+use App\Models\AllowedChatSite;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StartChatRequest extends FormRequest
@@ -15,17 +16,12 @@ class StartChatRequest extends FormRequest
         $parsedUrl = parse_url($referrerUrl);
         $protocolAndDomain = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
 
-        // TODO: Setup a new table that contains company_id, key, and url
-        if ($protocolAndDomain == 'http://127.0.0.1') {
-            $keyValue = $this->input('key');
-            logger($keyValue);
-            if ($keyValue == '1234') {
-                logger('Key is correct');
-                return true;
-            }
-            logger('Key is incorrect');
+        // Find AllowedChatSite with the given protocol and domain
+        $allowedChatSite = AllowedChatSite::where('url', $protocolAndDomain)->first();
 
-            return false;
+        // TODO: Setup a new table that contains company_id, key, and url
+        if ($allowedChatSite) {
+            return true;
         }
 
         logger('Referrer URL is not correct');

@@ -120,6 +120,8 @@ class GenerateAbilities
 			'subscription',
 			'communication-log',
             'chat',
+            'message',
+            'allowed-chat-site'
 			// ----- GENERATOR -----
             //PLEASE remember to add a comma to the above, or the generator will get angry!
         ];

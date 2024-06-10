@@ -21,6 +21,7 @@ class MessageObserver
     public function updated(Message $message)
     {
         TaggedCache::forgetWithTag($message->cacheKey);
+        TaggedCache::forgetWithTag($message->chat->cacheKey);
         broadcast_safely(new MessageUpdated($message));
 
         if ($message->wasChanged('read')) {

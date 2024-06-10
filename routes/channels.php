@@ -138,11 +138,17 @@ Broadcast::channel('venues.{venue}.main', function ($venue, $id) {
 });
 
 // Chats
-Broadcast::channel('companies.{company}.chat', function ($server, $id) {
+// Portal Side
+Broadcast::channel('companies.{company}.chat', function ($company, $id) {
     return true;
 });
 
-Broadcast::channel('companies.{company}.message', function ($server, $id) {
+Broadcast::channel('companies.{company}.message', function ($company, $id) {
+    return true;
+});
+
+// Package Side
+Broadcast::channel('chats.{chat}.message', function ($chat, $id) {
     return true;
 });
 

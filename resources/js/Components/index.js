@@ -77,6 +77,10 @@ import CommunicationLogForm from './Senses/CommunicationLogs/CommunicationLogFor
 
 import ChatInbox from "./Senses/Chats/ChatInbox.vue";
 import ChatActions from "./Senses/Chats/ChatActions.vue";
+import AllowedChatSites from "./Senses/AllowedChatSites/AllowedChatSites.vue";
+import AllowedChatSiteActions from "./Senses/AllowedChatSites/AllowedChatSiteActions.vue";
+import AllowedChatSiteForm from "./Senses/AllowedChatSites/AllowedChatSiteForm.vue";
+import AllowedChatSiteView from "./Senses/AllowedChatSites/AllowedChatSiteView.vue";
 // ----- GENERATOR A -----
 
 export {
@@ -157,5 +161,9 @@ export {
     CommunicationLogForm,
     ChatInbox,
     ChatActions,
+    AllowedChatSites,
+    AllowedChatSiteActions,
+    AllowedChatSiteForm,
+    AllowedChatSiteView,
     // ----- GENERATOR B -----
 };

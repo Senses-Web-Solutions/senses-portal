@@ -105,14 +105,14 @@ export default {
             })
 
             echo.private(`companies.${this.user.company_id}.message`).listen('Messages\\MessageCreated', ({message}) => {
-                console.log('Message created');
+                console.log('Message Created');
 
                 // Find chat in chats, update last message and unread messages count and add to messages
                 this.createOrUpdateMessage(message);
             })
 
             echo.private(`companies.${this.user.company_id}.message`).listen('Messages\\MessageUpdated', ({message}) => {
-                console.log('Message Read');
+                console.log('Message Updated');
 
                 // Find chat in chats, update last message and unread messages count and add to messages
                 this.createOrUpdateMessage(message);

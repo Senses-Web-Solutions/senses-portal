@@ -1,11 +1,12 @@
 <template>
     <div
-        class="w-80 p-3 relative shadow rounded text-black space-y-1"
+        class="w-80 p-3 relative shadow rounded-lg text-black space-y-1"
         :class="{ 
             'bg-zinc-200 ml-auto' : message.from_agent, 
             'bg-primary-200': !message.from_agent,
             'mt-1': inChain,
             'mt-3': !inChain }"
+            :id="'message-' + message.id"
     >
         <p v-if="!inChain" class="font-semibold">{{ message.author }}</p>
         <p>{{ message.content }}</p>
@@ -21,6 +22,7 @@
     </div>
 </template>
 <script>
+import axios from 'axios';
 import { CheckIcon } from '@heroicons/vue/outline';
 
 import FormatTime from '../../../Filters/FormatTime';
@@ -39,8 +41,44 @@ export default {
             default: false,
         },
     },
+    data() {
+        return {
+            observer: null,
+        };
+    },
+    mounted() {
+        this.setupObserver();
+    },
+    beforeUnmount() {
+        if (this.observer) {
+            this.observer.disconnect();
+        }
+    },
     methods: {
-        FormatTime
+        FormatTime,
+
+        setupObserver() {
+            if (this.message.from_agent || this.message.read_at) return;
+
+            this.observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                if (entry.isIntersecting && document.visibilityState === "visible") {
+                    console.log(`Message ${entry.target.id} has been read`);
+
+                    const id = entry.target.id.split("-")[1];
+
+                    axios.get(`/api/v2/messages/${id}/read`).then((response) => {
+                    if (response.data?.read_at) {
+                        // Remove this entry from the observer
+                        this.observer.unobserve(entry.target);
+                    }
+                    });
+                }
+                });
+            });
+
+            this.observer.observe(this.$el);
+        }
     },
 };
 </script>

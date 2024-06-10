@@ -66,6 +66,15 @@ class ChatController extends Controller
 
         return view('chats.feedback');
     }
+
+    public function setup()
+    {
+        if (!getCurrentUser()->can('list-chat')) {
+            abort(403);
+        }
+
+        return view('chats.setup');
+    }
 }
 
 //Generated 04-11-2023 16:09:50

@@ -57,5 +57,6 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/resolved/chats', [ChatController::class, 'resolved']);
 	Route::get('/unresolved/chats', [ChatController::class, 'unresolved']);
 	Route::get('/missed/chats', [ChatController::class, 'missed']);
-	Route::get('/chats/feedback', [ChatController::class, 'feedback']);
+	Route::get('/feedback/chats', [ChatController::class, 'feedback']);
+	Route::get('/setup/chats', [ChatController::class, 'setup']);
 });

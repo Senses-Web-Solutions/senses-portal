@@ -24,6 +24,7 @@ class MessageDeleted implements ShouldBroadcastNow
     {
         return [
             new PrivateChannel('companies.' . $this->message->chat->company_id . '.message'),
+            new PrivateChannel('chats.' . $this->message->chat_id . '.message'),
         ];
     }
 }

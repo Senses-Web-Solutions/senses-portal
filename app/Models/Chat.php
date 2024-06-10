@@ -96,7 +96,17 @@ class Chat extends Model
 
     public function getUnreadMessagesCountAttribute()
     {
-        return Message::where('chat_id', $this->id)->where('read_at', null)->count();
+        return Message::where('chat_id', $this->id)->where('read_at', null)->where('from_agent', false)->count();
+    }
+
+    public function toArray()
+    {
+        $array = parent::toArray();
+
+        // Convert messages to an object keyed by message id
+        $array['messages'] = (object) $this->messages->keyBy('id')->all();
+
+        return $array;
     }
 }
 

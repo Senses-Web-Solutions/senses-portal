@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\StatusGroupController;
 use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\UserSettingController;
 use App\Http\Controllers\Api\AbilityGroupController;
+use App\Http\Controllers\Api\AllowedChatSiteController;
 use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\ServerController;
@@ -21,6 +22,8 @@ use App\Http\Controllers\Api\ServerMetricController;
 use App\Http\Controllers\Api\RevenueController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\CommunicationLogController;
+use App\Http\Controllers\Api\MessageController;
+
 // ----- GENERATOR 1 -----
 
 /*
@@ -61,6 +64,8 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
 		'subscriptions' => SubscriptionController::class,
 		'communication-logs' => CommunicationLogController::class,
         'chats' => ChatController::class,
+        'allowed-chat-sites' => AllowedChatSiteController::class,
+        'messages' => MessageController::class,
 		// ----- GENERATOR 2 -----
     ]);
 
@@ -100,13 +105,15 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
     //Servers
     Route::get('servers/{server}/server-metrics', [ServerMetricController::class, 'serverServerMetrics']);
 
+    // Allowed Chat Sites
+    Route::get('company/{company}/allowed-chat-sites', [AllowedChatSiteController::class, 'companyAllowedChatSites']);
+
     // Chats
     Route::get('inbox/chats', [ChatController::class, 'inbox']);
-
     Route::get('accept/chats/{chat}', [ChatController::class, 'accept']);
 
     // Messages
-    // Route::post('chats', [ChatController::class, 'store']);
+    Route::get('/messages/{message}/read', [MessageController::class, 'read']);
 });
 
 
@@ -117,4 +124,7 @@ Route::prefix('v2')->group(function () {
 });
 
 Route::post('/servers/deploy', [ServerController::class, 'deploy']);
-Route::post('/start/chat', [ChatController::class, 'start']);
+Route::post('/start/chat', [ChatController::class, 'sensesChatStart']);
+Route::get('/chats/{chat}', [ChatController::class, 'sensesChatFetch']);
+Route::post('/messages', [MessageController::class, 'sensesChatStore']);
+Route::get('/messages/{message}/read', [MessageController::class, 'sensesChatRead']);

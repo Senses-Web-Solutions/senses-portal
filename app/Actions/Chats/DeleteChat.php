@@ -11,11 +11,11 @@ class DeleteChat
 
     public function execute(int $id)
     {
-        $company = Chat::findOrFail($id);
+        $chat = Chat::findOrFail($id);
 
-        $company->delete();
+        $chat->delete();
 
-        return $company;
+        return $chat;
     }
 }
 
