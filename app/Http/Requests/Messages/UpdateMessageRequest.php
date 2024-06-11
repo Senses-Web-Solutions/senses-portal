@@ -19,7 +19,7 @@ class UpdateMessageRequest extends FormRequest
     {
         $rules = [
             'chat_id' => 'required|integer|exists:chats,id',
-            'content' => 'required|string|max:255',
+            'content' => 'required|string',
             'author' => 'required|string|max:255',
             'from_agent' => 'required|boolean',
             'meta' => 'nullable|array|max:255',

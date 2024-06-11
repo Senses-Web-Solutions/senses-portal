@@ -24,7 +24,7 @@
         </div>
 
         <div v-if="formattedChats && !loadingChats" class="h-full space-y-4">
-            <ChatSidebarChatType
+            <ChatSidebarChatList
                 v-for="(chats, type) in this.formattedChats"
                 :key="type"
                 :type="type"
@@ -46,7 +46,7 @@ import { SearchIcon } from '@heroicons/vue/outline';
 
 import SeInput from '../../Ui/Inputs/SeInput.vue';
 import EmptyState from '../../Ui/EmptyState.vue';
-import ChatSidebarChatType from './ChatSidebarChatType.vue';
+import ChatSidebarChatList from './ChatSidebarChatList.vue';
 import LoadingIcon from '../../Ui/LoadingIcon.vue';
 
 export default {
@@ -54,7 +54,7 @@ export default {
         SeInput,
         EmptyState,
         SearchIcon,
-        ChatSidebarChatType,
+        ChatSidebarChatList,
         LoadingIcon
     },
     props: {

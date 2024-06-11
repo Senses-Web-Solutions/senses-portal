@@ -32,20 +32,23 @@
                 :in-chain="isInChain(message, index)"
             />
         </div>
-        <div v-if="typers.length > 0" class="transition duration-200" :class="{ 'opacity-0' : !typers.length }">
-            {{ typers.join(', ') }} {{ typers.length > 1 ? 'are' : 'is' }} typing.
+        <div v-if="chat?.typers?.size > 0" class="transition duration-200 text-black px-3 py-1 border-t border-zinc-200 text-zinc-400" :class="{ 'opacity-0' : !chat?.typers.size }">
+            {{ [...chat?.typers].join(', ') }} {{ chat?.typers.size > 1 ? 'are' : 'is' }} typing...
         </div>
         <div class="border-t border-zinc-200 flex relative">
-            <textarea 
-                class="p-3 text-black bg-transparent border-0 flex-grow h-[45px] focus:ring-0 pr-32"
+            <div 
+                id="input"
+                class="p-3 text-black bg-transparent border-0 flex-grow focus:ring-0 pr-32 textarea-resize"
                 :class="{
                     'cursor-not-allowed': !yourAssigned,
                 }"
-                v-model="message.content"
-                :disabled="!yourAssigned"
+                v-html="message.content"
+                :contenteditable="yourAssigned"
                 @keydown="textareaKeydown"
+                @paste="textareaPaste"
+                data-placeholder="Type a message..."
             >
-            </textarea>
+            </div>
         </div>
     </div>
 </template>
@@ -53,7 +56,7 @@
 <script>
 import axios from 'axios';
 
-import Message from './Message.vue';
+import Message from '../Messages/Message.vue';
 import SeInput from '../../Ui/Inputs/SeInput.vue';
 import UserPopover from '../Users/UserPopover.vue';
 import Tag from '../../Ui/Tags/Tag.vue';
@@ -83,10 +86,6 @@ export default {
             type: [Object, null],
             required: true
         },
-        typers: {
-            type: Array,
-            default: () => []
-        }
     },
     data() {
         return {
@@ -97,6 +96,8 @@ export default {
                 from_agent: true,
                 sent_at: null
             },
+            isTyping: false,
+            typingTimeout: null,
             user: user()
         }
     },
@@ -116,12 +117,26 @@ export default {
                 } else {
                 return 'You are not assigned to this chat';
             }
+        },
+        defaultMessageSent() {
+            // Any message sent by the current user
+            return Object.values(this.chat?.messages)?.filter(message => message.author === this.user.full_name);
+        },
+    },
+
+    watch: {
+        typers() {
+            this.chat.typers = this.typers;
         }
     },
+
     mounted() {
-        this.message.content = this.defaultMessage;
+        if (!this.defaultMessageSent) {
+            this.message.content = this.defaultMessage;
+        }
         console.log(this.chat);
     },
+
     methods: {
         acceptChat() {
             axios.get(`/api/v2/accept/chats/${this.chat.id}`)
@@ -165,9 +180,13 @@ export default {
             if (event.key === 'Enter') {
                 event.preventDefault();
                 this.sendMessage();
+            } else {
+                this.typing();
             }
         },
         sendMessage() {
+            this.message.content = document.getElementById('input').innerHTML;
+
             this.message.content = sanitiseContent(this.message.content);
 
             if (!this.message.content) {
@@ -193,12 +212,67 @@ export default {
             axios.post(`/api/v2/messages`, this.message)
             .then(response => {
                 if (response.data) {
-                    // this.chat.messages.push(response.data.message);
                     const element = document.getElementById("messages");
                     element.scrollTo({ top: element.scrollHeight, behavior: 'smooth' });
                     this.message.content = '';
                 }
             });
+        },
+
+        typing() {
+            if (this.isTyping) {
+                clearTimeout(this.typingTimeout);
+            } else {
+                this.isTyping = true;
+                axios.post(`/api/v2/typing`, {
+                    chat_id: this.chat.id,
+                    name: this.user.full_name,
+                    from_agent: true,
+                });
+            }
+
+            this.typingTimeout = setTimeout(() => {
+                this.isTyping = false;
+                axios.post(`/api/v2/stop/typing`, {
+                    chat_id: this.chat.id,
+                    name: this.user.full_name,
+                    from_agent: true,
+                });
+            }, 5000); // 5 seconds timeout
+        },
+
+        textareaPaste(e) {
+            if (e.clipboardData) {
+                const items = e.clipboardData.items;
+                if (items) {
+                Array.from(items).forEach((item) => {
+                    if (item.type.indexOf("image") !== -1) {
+                        e.preventDefault();
+                        this.imagePaste(item);
+                    }
+                });
+                }
+            }
+        },
+
+        imagePaste(item) {
+            const blob = item.getAsFile();
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                const base64data = reader.result;
+                const resizedImage = new Image();
+
+                resizedImage.onload = () => {
+                this.modalTextArea.appendChild(resizedImage);
+
+                addNewLine(this.modalTextArea);
+                };
+
+                resizedImage.src = base64data;
+            };
+
+            reader.readAsDataURL(blob);
         }
     }
 }

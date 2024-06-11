@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Messages;
+namespace App\Http\Requests\Chats;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateMessageRequest extends FormRequest
+class TypingRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -19,10 +19,8 @@ class CreateMessageRequest extends FormRequest
     {
         $rules = [
             'chat_id' => 'required|integer|exists:chats,id',
-            'content' => 'required|string',
-            'author' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'from_agent' => 'required|boolean',
-            'meta' => 'nullable|array|max:255',
         ];
 
         return $rules;

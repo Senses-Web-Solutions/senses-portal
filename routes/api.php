@@ -114,6 +114,8 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
 
     // Messages
     Route::get('/messages/{message}/read', [MessageController::class, 'read']);
+    Route::post('/typing', [ChatController::class, 'typing']);
+    Route::post('/stop/typing', [ChatController::class, 'stopTyping']);
 });
 
 
@@ -128,3 +130,6 @@ Route::post('/start/chat', [ChatController::class, 'sensesChatStart']);
 Route::get('/chats/{chat}', [ChatController::class, 'sensesChatFetch']);
 Route::post('/messages', [MessageController::class, 'sensesChatStore']);
 Route::get('/messages/{message}/read', [MessageController::class, 'sensesChatRead']);
+
+Route::post('/typing', [ChatController::class, 'sensesChatTyping']);
+Route::post('/stop/typing', [ChatController::class, 'sensesChatStopTyping']);

@@ -9,27 +9,20 @@
             :id="'message-' + message.id"
     >
         <p v-if="!inChain" class="font-semibold">{{ message.author }}</p>
-        <p>{{ message.content }}</p>
-        <div class="flex justify-end items-center select-none">
-            <p class="text-sm mr-1">{{ FormatTime(message.sent_at, 'HH:mm') }}</p>
-            <div v-if="message.from_agent" class="leading-none last:mr-0 text-gray-500 z-10" :class="{ '!text-blue-500': message.sent_at }">
-                <CheckIcon class="h-4 w-4" />
-            </div>
-            <div v-if="message.from_agent" class="leading-none text-gray-500 -ml-3 z-0" :class="{ '!text-blue-500': message.read_at }">
-                <CheckIcon class="h-4 w-4" />
-            </div>
-        </div>
+
+        <div v-html="message.content" class="message_content" @click="handleClick"></div>
+        
+        <MessageReadStatus :message="message" />
     </div>
 </template>
 <script>
 import axios from 'axios';
-import { CheckIcon } from '@heroicons/vue/outline';
 
-import FormatTime from '../../../Filters/FormatTime';
+import MessageReadStatus from './MessageReadStatus.vue';
 
 export default {
     components: {
-        CheckIcon,
+        MessageReadStatus,
     },
     props: {
         message: {
@@ -55,15 +48,12 @@ export default {
         }
     },
     methods: {
-        FormatTime,
-
         setupObserver() {
             if (this.message.from_agent || this.message.read_at) return;
 
             this.observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                 if (entry.isIntersecting && document.visibilityState === "visible") {
-                    console.log(`Message ${entry.target.id} has been read`);
 
                     const id = entry.target.id.split("-")[1];
 
@@ -78,7 +68,35 @@ export default {
             });
 
             this.observer.observe(this.$el);
-        }
+        },
+        handleClick(e) {
+            // If target is image, open in new tab
+            if (e.target.tagName === 'IMG') {
+                let imageSrc = e.target.src;
+                if (imageSrc.startsWith('data:image')) {
+                    // Create a Blob from the base64 string
+                    let byteCharacters = atob(imageSrc.split(',')[1]);
+                    let byteNumbers = new Array(byteCharacters.length);
+                    for (let i = 0; i < byteCharacters.length; i++) {
+                        byteNumbers[i] = byteCharacters.charCodeAt(i);
+                    }
+                    let byteArray = new Uint8Array(byteNumbers);
+                    let blob = new Blob([byteArray], {type: 'image/jpeg'}); // Change 'image/jpeg' to the actual type of the image
+
+                    // Create an Object URL from the Blob and open it in a new tab
+                    let objectUrl = URL.createObjectURL(blob);
+                    window.open(objectUrl, '_blank');
+                } else {
+                    window.open(imageSrc, '_blank');
+                }
+            }
+        },
     },
 };
 </script>
+<style>
+.message_content img {
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+</style>

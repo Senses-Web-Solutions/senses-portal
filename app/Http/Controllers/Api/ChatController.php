@@ -11,9 +11,11 @@ use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Chats\CreateChatRequest;
 use App\Http\Requests\Chats\DeleteChatRequest;
 use App\Http\Requests\Chats\ListChatRequest;
+use App\Http\Requests\Chats\SensesChatTypingRequest;
 use App\Http\Requests\Chats\ShowChatRequest;
 use App\Http\Requests\Chats\ShowSensesChatRequest;
 use App\Http\Requests\Chats\StartChatRequest;
+use App\Http\Requests\Chats\TypingRequest;
 use App\Http\Requests\Chats\UpdateChatRequest;
 use App\Models\Chat;
 use App\Models\Status;
@@ -176,6 +178,50 @@ class ChatController extends Controller
         }
 
         return app(AcceptChat::class)->execute($chat);
+    }
+
+    public function typing(TypingRequest $request)
+    {
+        $data = $request->all();
+        $chatID = $data['chat_id'];
+        $name = $data['name'];
+        $fromAgent = $data['from_agent'];
+        broadcast_safely(new \App\Events\Chats\Typing($chatID, $name, $fromAgent));
+
+        return response()->json(['chat_id' => $chatID, 'name' => $name, 'from_agent' => $fromAgent]);
+    }
+
+    public function stopTyping(TypingRequest $request)
+    {
+        $data = $request->all();
+        $chatID = $data['chat_id'];
+        $name = $data['name'];
+        $fromAgent = $data['from_agent'];
+        broadcast_safely(new \App\Events\Chats\StopTyping($chatID, $name, $fromAgent));
+
+        return response()->json(['chat_id' => $chatID, 'name' => $name, 'from_agent' => $fromAgent]);
+    }
+
+    public function sensesChatTyping(SensesChatTypingRequest $request)
+    {
+        $data = $request->all();
+        $chatID = $data['chat_id'];
+        $name = $data['name'];
+        $fromAgent = $data['from_agent'];
+        broadcast_safely(new \App\Events\Chats\Typing($chatID, $name, $fromAgent));
+
+        return response()->json(['chat_id' => $chatID, 'name' => $name, 'from_agent' => $fromAgent]);
+    }
+
+    public function sensesChatStopTyping(SensesChatTypingRequest $request)
+    {
+        $data = $request->all();
+        $chatID = $data['chat_id'];
+        $name = $data['name'];
+        $fromAgent = $data['from_agent'];
+        broadcast_safely(new \App\Events\Chats\StopTyping($chatID, $name, $fromAgent));
+
+        return response()->json(['chat_id' => $chatID, 'name' => $name, 'from_agent' => $fromAgent]);
     }
 }
 

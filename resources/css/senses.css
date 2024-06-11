@@ -113,4 +113,26 @@ body:not(.guest-page) #lz_overlay_wm {
     background: #1d1e22;
 }
 
+.textarea-resize {
+    field-sizing: content;
+    form-sizing: content;
+}
+
+#input::before {
+    content: '';
+    position: absolute;
+    color: theme('colors.zinc.400');
+    pointer-events: none;
+    display: block;
+    /* As long as the container is empty, the pseudo-element will be shown */
+}
+
+#input:empty::before {
+    content: 'Type a message...';
+}
+
+#input:focus {
+    outline: none;
+}
+
 @config '../../tailwind.config.js';

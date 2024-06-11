@@ -5,7 +5,7 @@
 
         <ChatMessenger v-if="selectedChat" :chat="selectedChat" />
         <div v-else class="h-full w-full flex items-center justify-center text-black" style="min-height: calc(100vh - 132px)">
-                <h2 class="w-max text-xl">Select a chat on the sidebar</h2>
+            <h2 class="w-max text-xl">Select a chat on the sidebar</h2>
         </div>
     </div>
 </template>
@@ -83,7 +83,6 @@ export default {
             axios.get(this.url)
                 .then(response => {
                     this.chats = response.data;
-                    console.log(response.data);
                     // this.formatChats();
                 })
                 .catch(error => {
@@ -96,8 +95,6 @@ export default {
 
         setupEchoListeners() {
             echo.private(`companies.${this.user.company_id}.chat`).listen('Chats\\ChatCreated', ({chat}) => {
-                console.log('Chat created');
-
                 chat.messages = {};
 
                 // Add chat to chats
@@ -105,17 +102,34 @@ export default {
             })
 
             echo.private(`companies.${this.user.company_id}.message`).listen('Messages\\MessageCreated', ({message}) => {
-                console.log('Message Created');
-
                 // Find chat in chats, update last message and unread messages count and add to messages
                 this.createOrUpdateMessage(message);
             })
 
             echo.private(`companies.${this.user.company_id}.message`).listen('Messages\\MessageUpdated', ({message}) => {
-                console.log('Message Updated');
-
                 // Find chat in chats, update last message and unread messages count and add to messages
                 this.createOrUpdateMessage(message);
+            })
+
+            echo.private(`companies.${this.user.company_id}.message`).listen('Chats\\Typing', (data) => {
+                if (data.from_agent) {
+                    return;
+                }
+
+                // If typers does not exist on chat, create it
+                if (!this.chats[data.chat.id].typers) {
+                    this.chats[data.chat.id].typers = new Set();
+                }
+
+                this.addTyper(data.chat.id, data.name);
+            })
+
+            echo.private(`companies.${this.user.company_id}.message`).listen('Chats\\StopTyping', (data) => {
+                if (data.from_agent) {
+                    return;
+                }
+
+                this.removeTyper(data.chat.id, data.name);
             })
         },
 
@@ -126,12 +140,10 @@ export default {
 
 
         createOrUpdateChat(chat) {
-            console.log(chat);
             this.chats[chat.id] = chat;
         },
 
         createOrUpdateMessage(message) {
-            console.log(message);
             const chat = this.chats[message.chat_id];
             
             if (message.read_at) {
@@ -142,6 +154,14 @@ export default {
             }
 
             chat.messages[message.id] = message;
+        },
+
+        addTyper(chatId, name) {
+            this.chats[chatId].typers.add(name);
+        },
+
+        removeTyper(chatId, name) {
+            this.chats[chatId].typers.delete(name);
         }
     }
 }
