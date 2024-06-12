@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div @click.stop="$modals.push('FileView', { file: proxyFile, canDelete: canDelete, canDownload: downloadable, canEdit: renameable, flush: true})">
+        <!-- <div @click.stop="$modals.push('FileView', { file: proxyFile, canDelete: canDelete, canDownload: downloadable, canEdit: renameable, flush: true})"> -->
+        <div @click.stop="$modals.push('GalleryModal', { fileableId: fileableId, fileableType: `${fileableType}s`, openedFile: proxyFile, files: files })">
             <div v-if="proxyFile">
                 <FileGridItem
                     v-if="type === 'grid'"
@@ -14,7 +15,7 @@
                     @remove="removeFile"
                 >
                     <div v-if="proxyFile.name && proxyFile.extension">
-                        <div :title="proxyFile.name + '.' + proxyFile.extension" class="truncate">{{ proxyFile.name + "." + proxyFile.extension }}</div>
+                        <div :title="proxyFile.name + '.' + proxyFile.extension" class="truncate text-black">{{ proxyFile.name + "." + proxyFile.extension }}</div>
                         <div class="text-sm text-zinc-500">
                             {{ formatDate(proxyFile.created_at, 'dd/MM/yy') }}
                         </div>
@@ -53,15 +54,6 @@
                     </template>
                 </FileBasicListItem>
             </div>
-        </div>
-        <div v-if="proxyFile && isPublishForm" class="flex justify-center mb-6 mt-2">
-            <SeToggle
-                id="publish"
-                v-model="publish"
-                name="publish"
-                layout="horizontal"
-                @update:modelValue="emitPublishFile()"
-            />
         </div>
         <div v-if="proxyFile && selectable" class="flex justify-center mb-6 mt-2">
             <SeToggle
@@ -141,10 +133,6 @@ export default {
             type: String,
             required: false
         },
-        isPublishForm: { // Is this being viewed in a TaskPublishForm aside?
-            type: Boolean,
-            required: false
-        },
         filesToBePublished: {
             type: Array,
             default: () => [],
@@ -163,7 +151,11 @@ export default {
         defaultSelected:{
             type:Boolean,
             default:false,
-        }
+        },
+        files: {
+            type: Array,
+            default: () => [],
+        },
     },
     data() {
         return {

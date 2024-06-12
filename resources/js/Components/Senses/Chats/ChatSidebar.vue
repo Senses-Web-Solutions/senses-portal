@@ -1,7 +1,7 @@
 <template>
     <div
         class="w-1/5 min-w-80 max-w-96 h-full border-r border-zinc-200 overflow-y-scroll hide-scrollbar"
-        style="max-height: calc(100vh - 132px); min-height: calc(100vh - 132px)"
+        style="max-height: calc(100vh - 128px); min-height: calc(100vh - 128px)"
     >
         <div class="p-4">
             <div class="flex justify-between">

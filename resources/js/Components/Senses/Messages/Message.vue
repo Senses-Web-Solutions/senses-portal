@@ -11,6 +11,19 @@
         <p v-if="!inChain" class="font-semibold">{{ message.author }}</p>
 
         <div v-html="message.content" class="message_content" @click="handleClick"></div>
+
+        <!-- Message files -->
+         <!-- Say how many attachments are on message -->
+         <div class="flex flex-col space-y-1 !mt-3 flex-wrap items-start" v-if="message.files?.length > 0">
+            <div v-if="message.files.length > 0" class="text-sm text-gray-500">
+                <span v-if="message.files.length === 1">1 Attachment</span>
+                <span v-else>{{ message.files.length }} Attachments</span>
+            </div>
+
+            <div class="flex flex-wrap items-start">
+                <File class="mb-2 mr-2" v-for="file in message.files" :key="file.id" :file="file" :files="message.files" />
+            </div>
+        </div>
         
         <MessageReadStatus :message="message" />
     </div>
@@ -19,10 +32,12 @@
 import axios from 'axios';
 
 import MessageReadStatus from './MessageReadStatus.vue';
+import File from '../Files/File.vue';
 
 export default {
     components: {
         MessageReadStatus,
+        File
     },
     props: {
         message: {

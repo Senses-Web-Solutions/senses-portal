@@ -2,13 +2,18 @@
 
 namespace App\Observers;
 
+use App\Actions\Files\GenerateFilePreview;
+use App\Actions\Files\GenerateFilePrint;
 use App\Actions\Files\GenerateFileShowCache;
+use App\Actions\Files\MoveFileToRemote;
 use App\Models\File;
 use Senses\TaggedCache\Facades\TaggedCache;
 
 use App\Events\Files\FileCreated;
 use App\Events\Files\FileDeleted;
 use App\Events\Files\FileUpdated;
+use Illuminate\Support\Facades\Bus;
+use Spatie\QueueableAction\ActionJob;
 
 class FileObserver
 {

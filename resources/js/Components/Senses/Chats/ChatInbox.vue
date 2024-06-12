@@ -1,10 +1,10 @@
 <template>
     <!-- Inbox has three columns -->
-    <div class="flex w-full h-full" style="max-height: calc(100vh - 132px); min-height: calc(100vh - 132px)">
+    <div class="flex w-full h-full" style="max-height: calc(100vh - 128px); min-height: calc(100vh - 128px)">
         <ChatSidebar :chats="formattedChats" :selected-chat="selectedChat" :loading-chats="loadingChats" @chatSelected="(chat) => selectedChat = chat"/>
 
         <ChatMessenger v-if="selectedChat" :chat="selectedChat" />
-        <div v-else class="h-full w-full flex items-center justify-center text-black" style="min-height: calc(100vh - 132px)">
+        <div v-else class="h-full w-full flex items-center justify-center text-black" style="min-height: calc(100vh - 128px)">
             <h2 class="w-max text-xl">Select a chat on the sidebar</h2>
         </div>
     </div>

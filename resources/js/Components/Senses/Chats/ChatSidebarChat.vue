@@ -7,11 +7,6 @@
         }"
         @click="selectChat(chat)"
     >
-        <div
-            class="block h-8 w-8 rounded-full bg-primary-400 flex justify-center items-center text-white shrink-0"
-        >
-            JD
-        </div>
 
         <div class="w-full">
             <div class="flex justify-between mb-1 w-full">
@@ -27,7 +22,7 @@
             </div>
             <div class="flex justify-between w-full">
                 <p
-                    class="text-zinc-500"
+                    class="truncate w-[85%] text-zinc-500"
                     :class="{
                         '!text-primary-500': chat?.typers?.size > 0,
                     }"

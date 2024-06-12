@@ -6,10 +6,11 @@ use App\Traits\SensesModel;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Casts\DateTime;
+use App\Traits\HasFiles;
 
 class Message extends Model
 {
-    use SensesModel;
+    use SensesModel, HasFiles;
 
 
     protected $fillable = [
@@ -44,7 +45,7 @@ class Message extends Model
 
     public function allowedEmbeds()
     {
-        return [];
+        return ['files'];
     }
 
     public function allowedFields()

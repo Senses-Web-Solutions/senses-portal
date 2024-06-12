@@ -166,7 +166,6 @@ export default {
         removeFile(removedFile) {
             this.files = this.files.filter(file => file.id !== removedFile.id);
             this.proxyValue = this.files.map(file => file.id);
-
         },
     }
 }

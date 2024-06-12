@@ -137,24 +137,30 @@ class ChatController extends Controller
         $missedStatus = $statusIDs['missed'];
         $agentInvitedStatus = $statusIDs['agent-invited'];
 
-        $chats = Chat::with(['messages' => function ($query) {
-            $query->orderBy('id');
-        }, 'user', 'status'])->where(function ($query) use ($newStatus, $assignedStatus, $userID, $agentInvitedStatus, $companyID, $unresolvedStatus, $resolvedStatus, $missedStatus) {
-            $query->where('status_id', $newStatus)
-                ->orWhere(function ($query) use ($assignedStatus, $userID) {
-                    $query->where('status_id', $assignedStatus)
-                        ->where('user_id', $userID);
-                })
-                ->orWhere(function ($query) use ($agentInvitedStatus, $companyID, $userID) {
-                    $query->where('status_id', $agentInvitedStatus)
-                        ->where('company_id', $companyID)
-                        ->where('invited_user_id', $userID);
-                })
-                ->orWhere(function ($query) use ($companyID, $unresolvedStatus, $resolvedStatus, $missedStatus, $agentInvitedStatus) {
-                    $query->where('company_id', $companyID)
-                        ->whereNotIn('status_id', [$unresolvedStatus, $resolvedStatus, $missedStatus, $agentInvitedStatus]);
-                });
-        })
+        $chats = Chat::with([
+            'messages' => function ($query) {
+                $query->orderBy('id');
+            },
+            'messages.files',
+            'user',
+            'status'
+        ])
+            ->where(function ($query) use ($newStatus, $assignedStatus, $userID, $agentInvitedStatus, $companyID, $unresolvedStatus, $resolvedStatus, $missedStatus) {
+                $query->where('status_id', $newStatus)
+                    ->orWhere(function ($query) use ($assignedStatus, $userID) {
+                        $query->where('status_id', $assignedStatus)
+                            ->where('user_id', $userID);
+                    })
+                    ->orWhere(function ($query) use ($agentInvitedStatus, $companyID, $userID) {
+                        $query->where('status_id', $agentInvitedStatus)
+                            ->where('company_id', $companyID)
+                            ->where('invited_user_id', $userID);
+                    })
+                    ->orWhere(function ($query) use ($companyID, $unresolvedStatus, $resolvedStatus, $missedStatus, $agentInvitedStatus) {
+                        $query->where('company_id', $companyID)
+                            ->whereNotIn('status_id', [$unresolvedStatus, $resolvedStatus, $missedStatus, $agentInvitedStatus]);
+                    });
+            })
             ->get()
             ->each(function ($chat) {
                 $chat->setRelation('messages', $chat->messages->keyBy('id'));

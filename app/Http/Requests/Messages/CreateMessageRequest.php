@@ -23,6 +23,8 @@ class CreateMessageRequest extends FormRequest
             'author' => 'required|string|max:255',
             'from_agent' => 'required|boolean',
             'meta' => 'nullable|array|max:255',
+            'file_ids' => 'nullable|array',
+            'file_ids.*' => 'integer|exists:files,id',
         ];
 
         return $rules;

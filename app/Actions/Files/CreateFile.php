@@ -21,7 +21,7 @@ class CreateFile
 
     public function execute(array $data)
     {
-		$public = $data['public'] ?? false;
+		$public = $data['public'] ?? true;
 
 		$targetDisk = $this->determineDisk($data, $public);
 		$currentDisk = $targetDisk;
@@ -69,8 +69,9 @@ class CreateFile
 
 		$this->attachFileables($file, $data);
 
+		app(GenerateFilePreview::class)->execute($file);
 
-        return $file;
+		return $file->append('url');
     }
 
 	public function determineDisk(array $data, bool $public) : String {
@@ -88,16 +89,16 @@ class CreateFile
 			return $file;
 		}
 
-		//if fileables is provided and only form, we'll link the other related bits automatically.
-		if(count($data['fileables']) === 1 && $data['fileables'][0]['fileable_type'] === 'form') {
-			app(RelateFormFiles::class)->execute($data['fileables'][0], $file);
-			return $file;
-		}
-
 		foreach($data['fileables'] as $fileable) {
+			$fileableId = null;
+			if (array_key_exists('model', $fileable) && $fileable['model']) {
+				$fileableId = $fileable['model']?->id;
+			} else if (array_key_exists('fileable_id', $fileable)) {
+				$fileableId = $fileable['fileable_id'];
+			}
 			$relation = Str::camel(Str::plural($fileable['fileable_type']));
-			$file->$relation()->syncWithoutDetaching($fileable['model']?->id); //right now assumes fileable function exists on tasks
-			$file->emitAttachingFileables($fileable['fileable_type'], $fileable['model']?->id);
+			$file->$relation()->syncWithoutDetaching($fileableId); //right now assumes fileable function exists on tasks
+			$file->emitAttachingFileables($fileable['fileable_type'], $fileableId);
 		}
 
 		return $file;

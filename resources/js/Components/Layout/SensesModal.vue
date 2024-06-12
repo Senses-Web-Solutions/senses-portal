@@ -6,7 +6,7 @@
         leave-active-class="duration-200 ease-in"
         leave-from-class="opacity-100"
         leave-to-class="opacity-0">
-        <div v-if="$modals.all.length" key="modalBackground" class="fixed z-70 inset-0 bg-zinc-500 bg-opacity-75 transition-opacity"/>
+        <div v-if="$modals.all.length" key="modalBackground" class="fixed z-70 inset-0 bg-gray-500 bg-opacity-75 transition-opacity dark:bg-zinc-950 dark:bg-opacity-70"/>
     </Transition>
     <div
         class="fixed z-70 inset-0 flex items-center justify-center"
