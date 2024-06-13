@@ -65,7 +65,7 @@
         {{-- @endif --}}
 
         <div id="app" class="">
-            <layout>
+            <fullscreen-layout>
                 <template #sidebar>
                     {{-- <Sidebar></Sidebar> --}}
                 </template>
@@ -73,7 +73,7 @@
                 <template #content>
                     @yield('content')
                 </template>
-            </layout>
+            </fullscreen-layout>
 
             <snackbars></snackbars>
             <notifications></notifications>

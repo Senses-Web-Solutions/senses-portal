@@ -4,5 +4,6 @@ import SensesModal from './SensesModal.vue';
 import PageLayout from './PageLayout.vue';
 import PageHeader from './PageHeader.vue';
 import SplitLayout from './SplitLayout.vue';
+import FullscreenLayout from './FullscreenLayout.vue';
 
-export { Layout, SensesAside, PageLayout, PageHeader, SplitLayout, SensesModal }
+export { FullscreenLayout, Layout, SensesAside, PageLayout, PageHeader, SplitLayout, SensesModal }

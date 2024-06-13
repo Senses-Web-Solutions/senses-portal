@@ -35,8 +35,8 @@ export default {
     methods: {
         load() {
             axios.get("api/v2/servers?format=all&sort=title").then((response) => {
-                // this.servers = response.data.filter(server => server['title'] != 'Senses Portal');
-                this.servers = response.data;
+                this.servers = response.data.filter(server => server['title'] != 'Senses Portal');
+                // this.servers = response.data;
             });
         },
     },
