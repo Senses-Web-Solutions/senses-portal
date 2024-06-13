@@ -32,14 +32,12 @@ class StartChatRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'key' => 'required|string|max:255', // This key should be stored in the database and should be unique for each company
-            'chat' => 'required|array',
-            'chat.company_id' => 'required|integer|exists:companies,id',
-            'chat.meta' => 'nullable|array|max:255',
-            'chat.message' => 'required|array|max:255',
-            'chat.message.content' => 'required|string|max:255',
-            'chat.message.author' => 'required|string|max:255',
-            'chat.message.sent_at' => 'required|date_format:Y-m-d H:i:s',
+            'company_id' => 'required|integer|exists:companies,id',
+            'meta' => 'nullable|array|max:255',
+            'message' => 'required|array|max:255',
+            'message.content' => 'required|string|max:255',
+            'message.author' => 'required|string|max:255',
+            'message.sent_at' => 'required|date_format:Y-m-d H:i:s',
         ];
 
         return $rules;

@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Messages;
+namespace App\Http\Requests\Files;
 
 use App\Models\AllowedChatSite;
+use Illuminate\Validation\Rule;
+use App\Rules\MorphRelationExists;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
-class SensesChatCreateMessageRequest extends FormRequest
+class SensesChatCreateFileRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -32,13 +35,20 @@ class SensesChatCreateMessageRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'chat_id' => 'required|integer|exists:chats,id',
-            'content' => 'required|string',
-            'author' => 'required|string|max:255',
-            'from_agent' => 'required|boolean',
-            'meta' => 'nullable|array|max:255',
-            'file_ids' => 'nullable|array',
-            'file_ids.*' => 'integer|exists:files,id',
+            'file' => 'required|file|max:200000',
+            'public' => 'boolean|nullable',
+            'app_visible' => 'boolean|nullable',
+            'disk' => 'string|in:remote,local',
+            'fileables' => 'array',
+            'fileables.*.fileable_id' => [
+                'required',
+                new MorphRelationExists('type')
+            ],
+            'fileables.*.fileable_type' => [
+                'required',
+                Rule::in(array_keys(Relation::morphMap())),
+            ],
+            'pending'  => ['bool', 'nullable']
         ];
 
         return $rules;

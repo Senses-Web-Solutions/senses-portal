@@ -11,10 +11,10 @@
                 <Text>{{ formatDateTime(file.created_at) }}</Text>
             </MetaItem>
 
-            <MetaItem>
+            <!-- <MetaItem>
                 <template #title>Uploaded By</template>
                 <Tag :colour="file?.creator.colour">{{ file?.creator.full_name }}</Tag>
-            </MetaItem>
+            </MetaItem> -->
 
             <MetaItem v-if="file?.folder">
                 <template #title>Folder</template>
@@ -84,18 +84,6 @@ export default {
 
             return '#';
         },
-        center() {
-            return this.markers[0].coordinates;
-        }
-    },
-    watch: {
-        file() {
-            this.markers = [];
-            this.setupMarkers();
-        },
-    },
-    created() {
-        this.setupMarkers();
     },
     methods: {
         formatDateTime,
@@ -104,28 +92,6 @@ export default {
             const i = Math.floor(Math.log(size) / Math.log(1024));
             return `${(size / Math.pow(1024, i)).toFixed(2) * 1} ${['B', 'KB', 'MB', 'GB', 'TB'][i]}`;
         },
-        
-        setupMarkers() {
-            this.markers = [];
-            if (this.file.geom !== null) {
-                const markers = [];
-                const points = [];
-    
-                const markerObject = this.setupMarkerDataFromCoordinates([
-                    this.file.geom.y,
-                    this.file.geom.x
-                ], 'sky');
-    
-                if (markerObject) {
-                    markerObject.pulse = true;
-                    markerObject.label = 'Image Location';
-                    markers.push(markerObject);
-                    points.push(markerObject.position);
-                }
-    
-                this.markers = markers;
-            }
-        }
     },
 };
 </script>

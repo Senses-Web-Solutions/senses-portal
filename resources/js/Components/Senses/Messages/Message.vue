@@ -48,6 +48,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        yourAssigned: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -64,7 +68,7 @@ export default {
     },
     methods: {
         setupObserver() {
-            if (this.message.from_agent || this.message.read_at) return;
+            if (this.message.from_agent || this.message.read_at || !this.yourAssigned) return;
 
             this.observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {

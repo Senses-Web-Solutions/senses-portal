@@ -96,15 +96,14 @@ class ChatController extends Controller
     {
         $data = $request->all();
 
-        $chat = $data['chat'];
         $referrerUrl = $request->headers->get('referer');
 
         // Parse the referrer URL to get just the protocol and domain name
         $parsedUrl = parse_url($referrerUrl);
         $protocolAndDomain = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
-        $chat['system'] = $protocolAndDomain;
+        $data['system'] = $protocolAndDomain;
 
-        return $this->respond($createChat->execute($chat));
+        return $this->respond($createChat->execute($data));
     }
 
     public function sensesChatFetch(ShowSensesChatRequest $request, int $id, GenerateChatShowCache $generateChatShowCache)

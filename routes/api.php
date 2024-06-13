@@ -133,3 +133,6 @@ Route::get('/messages/{message}/read', [MessageController::class, 'sensesChatRea
 
 Route::post('/typing', [ChatController::class, 'sensesChatTyping']);
 Route::post('/stop/typing', [ChatController::class, 'sensesChatStopTyping']);
+
+// Files
+Route::post('/files', [FileController::class, 'sensesChatStore']);

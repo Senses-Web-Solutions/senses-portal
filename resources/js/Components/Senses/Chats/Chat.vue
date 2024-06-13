@@ -32,6 +32,7 @@
                 :key="'message:' + message.id"
                 :message="message"
                 :in-chain="isInChain(message, index)"
+                :your-assigned="yourAssigned"
             />
         </div>
 
@@ -320,9 +321,17 @@ export default {
                 const resizedImage = new Image();
 
                 resizedImage.onload = () => {
-                this.modalTextArea.appendChild(resizedImage);
-
-                addNewLine(this.modalTextArea);
+                    let inputElement = document.getElementById('input');
+                    inputElement.appendChild(resizedImage);
+                    
+                    const br = document.createElement("br");
+                    inputElement.appendChild(br);
+                    const range = document.createRange();
+                    const sel = window.getSelection();
+                    range.setStart(br, 0);
+                    range.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
                 };
 
                 resizedImage.src = base64data;

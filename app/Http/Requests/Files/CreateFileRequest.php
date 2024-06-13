@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests\Files;
 
-use App\Rules\Colour;
 use Illuminate\Validation\Rule;
 use App\Rules\MorphRelationExists;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Database\Eloquent\Relations\Relation;
 

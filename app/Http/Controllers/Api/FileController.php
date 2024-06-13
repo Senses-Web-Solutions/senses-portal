@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Files\CreateFileRequest;
 use App\Http\Requests\Files\DeleteFileRequest;
 use App\Http\Requests\Files\ListFileRequest;
+use App\Http\Requests\Files\SensesChatCreateFileRequest;
 use App\Http\Requests\Files\ShowFileRequest;
 use App\Http\Requests\Files\UpdateFileRequest;
 use App\Models\File;
@@ -114,6 +115,16 @@ class FileController extends Controller
 		//return $this->respond(QueryBuilder::for(File::class)->whereHas('services', function ($q) use ($serviceIDs) {$q->whereIn('fileable_id', $serviceIDs); $q->where('fileable_type', 'service')})->list());
 	}
 
+    /**
+     * store()
+     *
+     * Creates, saves and returns a file.
+     * <aside><ul><li>create-file</li></ul></aside>
+     */
+    public function sensesChatStore(SensesChatCreateFileRequest $request, CreateFile $createFile)
+    {
+        return $this->respond($createFile->execute($request->all()));
+    }
 }
 
 //Generated 09-10-2023 13:46:51
