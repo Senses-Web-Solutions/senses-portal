@@ -71,7 +71,7 @@
             </div>
 
             <div class="items-left text-left mt-1 space-y-4">
-                <div>
+                <!-- <div>
                     <div class="text-sm text-zinc-500">CPU: {{ metric.cpu_use }}% / 100% </div>
 
                     <div class="w-100 rounded-full h-1.5 mt-1 fill-yellow-400 bg-zinc-300" :style="'fill: ' + this.getColour(metric.cpu_use / 100)">
@@ -79,7 +79,7 @@
                             <rect :width="metric.cpu_use + '%'" height="100%" rx="3"></rect>
                         </svg>
                     </div>
-                </div>
+                </div> -->
 
                 <div>
                     <div class="text-sm text-zinc-500">Disk: {{ Math.round(metric.disk_used / 10000) / 100 }}Gb / {{ Math.round((metric.disk_total) / 10000) / 100 }}Gb </div>
