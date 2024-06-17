@@ -16,9 +16,10 @@ class AgentReadsChat
         // Find all messages not from_agent and mark them as read
 
         $messages = $chat->messages()->where('from_agent', false)->where('read_at', null)->get();
+        $userID = getCurrentUser()->id;
 
         foreach ($messages as $message) {
-            app(ReadMessage::class)->onQueue()->execute($message);
+            app(ReadMessage::class)->onQueue()->execute($message, $userID);
         }
 
         return $chat;

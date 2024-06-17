@@ -11,13 +11,16 @@ class ReadMessage
 {
     use QueueableAction;
 
-    public function execute(Message|int $message)
+    public function execute(Message|int $message, int $userId)
     {
         $message = $message instanceof Message ? $message : Message::findOrFail($message);
         
         $status = Status::where('slug', 'read')->first();
         $message->status()->associate($status);
         $message->read_at = now();
+
+        $message->read_by = $message->read_by ? array_unique(array_merge($message->read_by, [$userId])) : [$userId];
+
         $message->save();
 
         return $message;

@@ -2,6 +2,7 @@
 
 namespace App\Events\Messages;
 
+use App\Jobs\SendMessageNotificationIfUnread;
 use App\Models\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -14,6 +15,8 @@ class MessageCreated implements ShouldBroadcastNow
 
     public function __construct(Message $message)
     {
+        SendMessageNotificationIfUnread::dispatch($message)->delay(now()->addSeconds(5));
+
         $message->load(['status']);
         $this->message = $message;
         $this->company_id = $message->chat->company_id;

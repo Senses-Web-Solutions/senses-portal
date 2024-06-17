@@ -77,6 +77,7 @@ export default {
             filteredChats: {
                 assigned: [],
                 new: [],
+                'in progress': [],
             },
 
             searchQuery: '',
@@ -95,10 +96,15 @@ export default {
             return this.getChats('new') ?? [];
         },
 
+        inProgressChats() {
+            return this.getChats('in progress') ?? [];
+        },
+
         formattedChats() {
             return {
                 assigned: this.assignedChats,
                 new: this.newChats,
+                'in progress': this.inProgressChats,
             };
         },
 

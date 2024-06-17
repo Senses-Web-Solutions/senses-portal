@@ -13,13 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Notifications\RegistrationRequired;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Senses\LaravelMessenger\Concerns\ReceivesMessages;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -156,6 +150,11 @@ class User extends Authenticatable
             $q->where($table . '.id', 'like', '%' . $search . '%');
             $q->orWhere($table . '.full_name', 'ilike', '%' . $search . '%');
         });
+    }
+
+    public function chats()
+    {
+        return $this->belongsToMany(Chat::class, 'chat_agents');
     }
 
     public function emitRolesUpdated(array $before = [], array $after = [])

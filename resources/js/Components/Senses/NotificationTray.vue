@@ -17,7 +17,6 @@
 <script>
 import axios from "axios";
 import { formatDistance } from "date-fns";
-import { computed, ref } from "vue";
 import { BellIcon } from '@heroicons/vue/outline';
 import { push as pushAside } from "../../Support/Asides";
 import { push as pushNotification } from "../../Support/Notifications";
@@ -45,7 +44,6 @@ export default {
         });
 
         echo.private(`users.${user().id}.notifications`).notification((notification) => {
-            console.log(notification);
             pushNotification({
                 type: 'info',
                 title: notification.title || notification.message,

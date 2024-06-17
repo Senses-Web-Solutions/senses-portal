@@ -38,7 +38,7 @@ class Chat extends Model
 
     public function allowedSorts()
     {
-        return ['id', 'user_id', 'company_id', 'system', 'meta', 'completed_at', 'status_id'];
+        return ['id', 'company_id', 'system', 'meta', 'completed_at', 'status_id'];
     }
 
     public function allowedEmbeds()
@@ -48,14 +48,13 @@ class Chat extends Model
 
     public function allowedFields()
     {
-        return ['id', 'user_id', 'company_id', 'system', 'meta', 'completed_at', 'status_id'];
+        return ['id', 'company_id', 'system', 'meta', 'completed_at', 'status_id'];
     }
 
     public function allowedFilters()
     {
         return $this->defineFilters([
             'id' => 'integer',
-            'user_id' => 'integer',
             'company_id' => 'integer',
             'system' => 'string',
             'meta' => 'string',
@@ -64,9 +63,9 @@ class Chat extends Model
         ]);
     }
 
-    public function user()
+    public function agents()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class, 'chat_agents');
     }
 
     public function company()

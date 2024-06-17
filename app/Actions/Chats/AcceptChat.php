@@ -24,11 +24,11 @@ class AcceptChat
 
         $assignedStatus = Status::where('slug', 'assigned')->first();
         $chat->status()->associate($assignedStatus);
-        $chat->user()->associate($user);
+        $chat->agents()->syncWithoutDetaching([$user->id]);
 
         $chat->save();
 
-        $chat->load('user');
+        $chat->load('agents');
 
         app(AgentReadsChat::class)->onQueue()->execute($chat);
 

@@ -91,7 +91,8 @@ class MessageController extends Controller
 
     public function read(ReadMessageRequest $request, int $id, ReadMessage $readMessage)
     {
-        return $this->respond($readMessage->execute($id));
+        $userID = getCurrentUser()->id;
+        return $this->respond($readMessage->execute($id, $userID));
     }
 
     public function sensesChatStore(SensesChatCreateMessageRequest $request, CreateMessage $createMessage)
@@ -103,7 +104,9 @@ class MessageController extends Controller
 
     public function sensesChatRead(SensesChatReadMessageRequest $request, int $id, ReadMessage $readMessage)
     {
-        return $this->respond($readMessage->execute($id));
+        // Senses system user id
+        $userID = getSensesSystemUser()->id;
+        return $this->respond($readMessage->execute($id, $userID));
     }
 }
 

@@ -112,7 +112,7 @@ class ChatController extends Controller
     }
 
     /**
-     * inboxChats()
+     * inbox()
      *
      * Fetches your assigned chats and incoming chats.
      * <aside><ul><li>list-chat</li></ul></aside>
@@ -141,19 +141,23 @@ class ChatController extends Controller
                 $query->orderBy('id');
             },
             'messages.files',
-            'user',
+            'agents',
             'status'
         ])
             ->where(function ($query) use ($newStatus, $assignedStatus, $userID, $agentInvitedStatus, $companyID, $unresolvedStatus, $resolvedStatus, $missedStatus) {
                 $query->where('status_id', $newStatus)
                     ->orWhere(function ($query) use ($assignedStatus, $userID) {
-                        $query->where('status_id', $assignedStatus)
-                            ->where('user_id', $userID);
+                $query->whereHas('agents', function ($query) use ($userID) {
+                    $query->where('users.id', $userID); // Specify table name
+                })
+                    ->where('status_id', $assignedStatus);
                     })
                     ->orWhere(function ($query) use ($agentInvitedStatus, $companyID, $userID) {
                         $query->where('status_id', $agentInvitedStatus)
                             ->where('company_id', $companyID)
-                            ->where('invited_user_id', $userID);
+                    ->whereHas('agents', function ($query) use ($userID) {
+                        $query->where('users.id', $userID); // Specify table name
+                    });
                     })
                     ->orWhere(function ($query) use ($companyID, $unresolvedStatus, $resolvedStatus, $missedStatus, $agentInvitedStatus) {
                         $query->where('company_id', $companyID)

@@ -3,7 +3,7 @@
     <div class="flex w-full h-full" style="max-height: calc(100vh - 128px); min-height: calc(100vh - 128px)">
         <ChatSidebar :chats="formattedChats" :selected-chat="selectedChat" :loading-chats="loadingChats" @chatSelected="(chat) => selectedChat = chat"/>
 
-        <Chat v-if="selectedChat" :chat="selectedChat" />
+        <Chat v-if="selectedChat" :chat="selectedChat" @chat-accepted="chatAccepted" />
         <div v-else class="h-full w-full flex items-center justify-center text-black" style="min-height: calc(100vh - 128px)">
             <h2 class="w-max text-xl">Select a chat on the sidebar</h2>
         </div>
@@ -11,6 +11,7 @@
 </template>
 <script>
 import axios from 'axios';
+import {Howl, Howler} from 'howler';
 
 import ChatSidebar from './ChatSidebar.vue';
 import Chat from './Chat.vue';
@@ -39,6 +40,21 @@ export default {
             selectedChat: null,
             loadingChats: true,
             user: user(),
+
+            chatSoundPlaying: false,
+
+            chatSound: new Howl({
+                src: ['/sounds/notification-2.mp3'],
+                volume: 1,
+                loop: true,
+            }),
+
+            messageSound: new Howl({
+                src: ['/sounds/notification-1.mp3'],
+                volume: 1,
+            }),
+
+            originalTitle: document.title,
         }
     },
     computed: {
@@ -47,17 +63,25 @@ export default {
                 return {
                     'new': [],
                     'assigned': [],
+                    'in progress': [],
                 };
             }
             return Object.values(this.chats).reduce((acc, chat) => {
-                if (!acc[chat.status.slug]) {
-                    acc[chat.status.slug] = [];
+                let slug = chat.status.slug;
+
+                // Check if the chat status is 'assigned' and the user is not an agent
+                if (slug === 'assigned' && !chat.agents.some(agent => agent.id === this.user.id)) {
+                    slug = 'in progress';
                 }
 
-                acc[chat.status.slug].push(chat);
+                if (!acc[slug]) {
+                    acc[slug] = [];
+                }
+
+                acc[slug].push(chat);
 
                 // Sort chats by sent_at in descending order
-                acc[chat.status.slug].sort((a, b) => {
+                acc[slug].sort((a, b) => {
                     return b.id - a.id;
                 });
 
@@ -65,49 +89,93 @@ export default {
             }, {});
         }
     },
+    watch: {
+        'chats': {
+            handler() {
+                // If all chats have agents, stop playing the chat sound
+                if (Object.values(this.chats).every(chat => chat?.agents?.length > 0)) {
+                    this.chatSound.stop();
+                    this.chatSoundPlaying = false;
+                }
+            },
+            deep: true
+        }
+    },
     mounted() {
+        this.setupAudio();
         this.fetchChats();
         this.setupEchoListeners();
 
         EventHub.on('chats:fetch', this.fetchChats)
     },
     beforeUnmount() {
-        EventHub.off('chats:fetch')
-
+        this.destroyAudio();
         this.destroyEchoListeners();
+        EventHub.off('chats:fetch')
     },
     methods: {
+        setupAudio() {
+            // Create audio context
+            let handleMouseMove = () => {
+                if (Howler.ctx.state !== 'running') {
+                    Howler.ctx.resume();
+                    document.documentElement.removeEventListener('mousemove', handleMouseMove);
+                }
+            };
+
+            document.documentElement.addEventListener('mousemove', handleMouseMove);
+        }, 
+        destroyAudio() {
+            Howler.unload();
+        },
         fetchChats() {
             this.loadingChats = true;
 
             axios.get(this.url)
                 .then(response => {
                     this.chats = response.data;
-                    // this.formatChats();
                 })
                 .catch(error => {
                     console.log(error)
                 })
                 .finally(() => {
                     this.loadingChats = false;
+
+                    // If any of the chats have no agents, play the chat sound
+                    if (Object.values(this.chats).some(chat => chat.agents.length === 0)) {
+                        this.chatSound.play();
+                        this.chatSoundPlaying = true;
+                    }
                 })
         },
 
         setupEchoListeners() {
             echo.private(`companies.${this.user.company_id}.chat`).listen('Chats\\ChatCreated', ({chat}) => {
                 chat.messages = {};
-
+                if (!this.chatSoundPlaying) {
+                    this.chatSound.play();
+                    this.chatSoundPlaying = true;
+                }
+                
                 // Add chat to chats
                 this.createOrUpdateChat(chat);
             })
 
             echo.private(`companies.${this.user.company_id}.message`).listen('Messages\\MessageCreated', ({message}) => {
-                // Find chat in chats, update last message and unread messages count and add to messages
+                if (message.author !== this.user.full_name && !this.chatSoundPlaying) {
+                    this.messageSound.play();
+    
+                    // Edit page title
+                    document.title = 'New message!';
+                    setTimeout(() => {
+                        document.title = this.originalTitle;
+                    }, 3000);
+                }
+
                 this.createOrUpdateMessage(message);
             })
 
             echo.private(`companies.${this.user.company_id}.message`).listen('Messages\\MessageUpdated', ({message}) => {
-                // Find chat in chats, update last message and unread messages count and add to messages
                 this.createOrUpdateMessage(message);
             })
 
@@ -162,6 +230,16 @@ export default {
 
         removeTyper(chatId, name) {
             this.chats[chatId].typers.delete(name);
+        },
+
+        chatAccepted(chat) {
+            this.chats[chat.id] = chat;
+
+            // If there are no more chats without agents, stop playing the chat sound
+            if (Object.values(this.chats).every(chat => chat?.agents?.length > 0)) {
+                this.chatSound.stop();
+                this.chatSoundPlaying = false;
+            }
         }
     }
 }

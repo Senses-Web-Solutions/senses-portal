@@ -123,6 +123,7 @@ export default {
             required: true
         },
     },
+    emits: ['chat-accepted'],
     data() {
         return {
             message: {
@@ -147,17 +148,17 @@ export default {
     },
     computed: {
         unassigned() {
-            return this.chat?.user_id === null;
+            return this.chat?.agents?.length === 0 || !this.chat?.agents;
         },
         yourAssigned() {
-            return this.chat?.user_id === this.user.id;
+            return this.chat?.agents?.some(agent => agent.id === this.user.id) ?? false;
         },
         agent() {
-            return this.chat?.user;
+            return this.chat?.agents?.find(agent => agent.id === this.user.id);
         },
         defaultMessage() {
             if (this.yourAssigned) {
-                return 'Hi, my name is Josh. How can I help you today?';
+                return `Hi, my name is ${this.agent.full_name}. How can I help you today?`;
                 } else {
                 return 'You are not assigned to this chat';
             }
@@ -187,21 +188,7 @@ export default {
         acceptChat() {
             axios.get(`/api/v2/accept/chats/${this.chat.id}`)
                 .then(response => {
-                    if (response.data?.user_id) {
-                        this.chat.user_id = response.data.user_id;
-                    }
-                    
-                    if (response.data?.user) {
-                        this.chat.user = response.data.user;
-                    }
-
-                    if (response.data?.status) {
-                        this.chat.status = response.data.status;
-                    }
-
-                    if (response.data?.status_id) {
-                        this.chat.status_id = response.data.status_id;
-                    }
+                    this.$emit('chat-accepted', response.data);
                 });
         },
         isInChain(message) {

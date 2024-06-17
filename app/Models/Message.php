@@ -74,6 +74,11 @@ class Message extends Model
     {
         return $this->belongsTo(Status::class);
     }
+
+    public function hasBeenReadBy($userId)
+    {
+        return collect(json_decode($this->read_by, true))->contains($userId);
+    }
 }
 
 //Generated 01-11-2023 11:22:36
