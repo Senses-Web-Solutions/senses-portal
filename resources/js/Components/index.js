@@ -82,6 +82,8 @@ import AllowedChatSiteActions from "./Senses/AllowedChatSites/AllowedChatSiteAct
 import AllowedChatSiteForm from "./Senses/AllowedChatSites/AllowedChatSiteForm.vue";
 import AllowedChatSiteView from "./Senses/AllowedChatSites/AllowedChatSiteView.vue";
 
+import ChatInviteForm from "./Senses/Chats/ChatInviteForm.vue";
+
 import GalleryModal from "./Senses/Files/GalleryModal.vue";
 // ----- GENERATOR A -----
 
@@ -167,6 +169,7 @@ export {
     AllowedChatSiteActions,
     AllowedChatSiteForm,
     AllowedChatSiteView,
+    ChatInviteForm,
     GalleryModal,
     // ----- GENERATOR B -----
 };

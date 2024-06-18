@@ -7,9 +7,8 @@ use App\Models\Status;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueueableAction\QueueableAction;
-use App\Actions\Chats\AgentReadsChat;
 
-class AcceptChat
+class LeaveChat
 {
     use QueueableAction;
 
@@ -22,15 +21,18 @@ class AcceptChat
             $user = Auth::user();
         }
 
-        $assignedStatus = Status::where('slug', 'assigned')->first();
-        $chat->status()->associate($assignedStatus);
-        $chat->agents()->syncWithoutDetaching([$user->id]);
+        $chat->agents()->detach($user->id);
+
+        if ($chat->agents->count() === 0) {
+            $unassignedStatus = Status::where('slug', 'unassigned')->first();
+            $chat->status()->associate($unassignedStatus);
+        }
 
         $chat->save();
 
-        $chat->load('agents');
+        $chat->load('agents', 'invitedAgents');
 
-        app(AgentReadsChat::class)->onQueue()->execute($chat);
+        event(new \App\Events\Chats\ChatUpdated($chat));
 
         return $chat;
     }

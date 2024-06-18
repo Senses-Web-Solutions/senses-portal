@@ -113,6 +113,11 @@ class UserController extends Controller
 
         return $user;
     }
+
+    public function companyUsers(ListUserRequest $request, int $companyID)
+    {
+        return QueryBuilder::for(User::class)->where('company_id', $companyID)->list();
+    }
 }
 
 //Generated 10-10-2023 10:05:12

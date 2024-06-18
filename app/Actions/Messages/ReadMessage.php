@@ -19,7 +19,8 @@ class ReadMessage
         $message->status()->associate($status);
         $message->read_at = now();
 
-        $message->read_by = $message->read_by ? array_unique(array_merge($message->read_by, [$userId])) : [$userId];
+        $readBy = json_decode($message->read_by, true);
+        $message->read_by = $readBy ? array_unique(array_merge($readBy, [$userId])) : [$userId];
 
         $message->save();
 

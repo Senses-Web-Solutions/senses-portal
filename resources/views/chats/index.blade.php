@@ -8,7 +8,7 @@
     <template #title>Chats</template>
 
     <template #actions>
-        <chat-actions></chat-actions>
+        {{-- <chat-actions></chat-actions> --}}
     </template>
 </page-header>
 

@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Actions\Chats\AcceptChat;
+use App\Actions\Chats\ChatInvite;
 use App\Actions\Chats\CreateChat;
 use App\Actions\Chats\DeleteChat;
 use App\Actions\Chats\GenerateChatShowCache;
+use App\Actions\Chats\JoinChat;
+use App\Actions\Chats\LeaveChat;
 use App\Actions\Chats\UpdateChat;
 use App\Http\Controllers\Api\Controller;
+use App\Http\Requests\Chats\ChatInviteRequest;
 use App\Http\Requests\Chats\CreateChatRequest;
 use App\Http\Requests\Chats\DeleteChatRequest;
 use App\Http\Requests\Chats\ListChatRequest;
@@ -134,7 +137,6 @@ class ChatController extends Controller
         $resolvedStatus = $statusIDs['resolved'];
         $unresolvedStatus = $statusIDs['unresolved'];
         $missedStatus = $statusIDs['missed'];
-        $agentInvitedStatus = $statusIDs['agent-invited'];
 
         $chats = Chat::with([
             'messages' => function ($query) {
@@ -142,9 +144,10 @@ class ChatController extends Controller
             },
             'messages.files',
             'agents',
-            'status'
+            'status',
+            'invitedAgents'
         ])
-            ->where(function ($query) use ($newStatus, $assignedStatus, $userID, $agentInvitedStatus, $companyID, $unresolvedStatus, $resolvedStatus, $missedStatus) {
+            ->where(function ($query) use ($newStatus, $assignedStatus, $userID, $companyID, $unresolvedStatus, $resolvedStatus, $missedStatus) {
                 $query->where('status_id', $newStatus)
                     ->orWhere(function ($query) use ($assignedStatus, $userID) {
                 $query->whereHas('agents', function ($query) use ($userID) {
@@ -152,23 +155,21 @@ class ChatController extends Controller
                 })
                     ->where('status_id', $assignedStatus);
                     })
-                    ->orWhere(function ($query) use ($agentInvitedStatus, $companyID, $userID) {
-                        $query->where('status_id', $agentInvitedStatus)
-                            ->where('company_id', $companyID)
-                    ->whereHas('agents', function ($query) use ($userID) {
-                        $query->where('users.id', $userID); // Specify table name
-                    });
-                    })
-                    ->orWhere(function ($query) use ($companyID, $unresolvedStatus, $resolvedStatus, $missedStatus, $agentInvitedStatus) {
+            ->orWhere(function ($query) use ($companyID, $unresolvedStatus, $resolvedStatus, $missedStatus) {
                         $query->where('company_id', $companyID)
-                            ->whereNotIn('status_id', [$unresolvedStatus, $resolvedStatus, $missedStatus, $agentInvitedStatus]);
+                ->whereNotIn('status_id', [$unresolvedStatus, $resolvedStatus, $missedStatus]);
+            })
+            ->orWhere(function ($query) use ($userID) {
+                $query->whereHas('invitedAgents', function ($query) use ($userID) {
+                    $query->where('users.id', $userID);
+                });
                     });
             })
             ->get()
             ->each(function ($chat) {
                 $chat->setRelation('messages', $chat->messages->keyBy('id'));
             })
-            ->append(['last_message', 'unread_messages_count',])
+            ->append(['last_message'])
             ->sortByDesc(function ($chat) {
                 return $chat->last_message ? $chat->last_message->sent_at : null;
             })
@@ -179,14 +180,37 @@ class ChatController extends Controller
         return $this->respond($chats);
     }
 
-    public function accept(Chat|int $chat)
+    public function join(Chat|int $chat)
     {
 
         if (is_int($chat)) {
             $chat = Chat::findOrFail($chat);
         }
 
-        return app(AcceptChat::class)->execute($chat);
+        return app(JoinChat::class)->execute($chat);
+    }
+
+    public function leave(Chat|int $chat)
+    {
+        if (is_int($chat)) {
+            $chat = Chat::findOrFail($chat);
+        }
+
+        return app(LeaveChat::class)->execute($chat);
+    }
+
+    public function invite(ChatInviteRequest $request)
+    {
+        $data = $request->all();
+        $chatID = $data['chat_id'];
+        $agents = $data['agents'];
+        $chat = Chat::findOrFail($chatID);
+
+        foreach ($agents as $agent) {
+            app(ChatInvite::class)->execute($chat, $agent['id']);
+        }
+
+        return $this->respond($chat);
     }
 
     public function typing(TypingRequest $request)

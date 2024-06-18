@@ -68,6 +68,11 @@ class Chat extends Model
         return $this->belongsToMany(User::class, 'chat_agents');
     }
 
+    public function invitedAgents()
+    {
+        return $this->belongsToMany(User::class, 'chat_invited_agents');
+    }
+
     public function company()
     {
         return $this->belongsTo(Company::class);

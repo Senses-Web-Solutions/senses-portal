@@ -294,8 +294,6 @@ export default {
 
                 if (!this.field) {
                     this.value = newValue;
-                } else {
-                    // console.log('field set');
                 }
             },
         },
@@ -460,7 +458,7 @@ export default {
                     `${url}${this.url.includes('?') ? '&' : '?'}filter[${this.searchKey}]=${query}`
                 )
                 .then((response) => {
-                    this.searchResponse = response.data;
+                    this.searchResponse = response.data.data;
                     this.$nextTick(() => {
                         this.state.set(AjaxSelectState.IDLE);
                         // If there is only one option and preloadOptions is true, then auto fill the select with that one option
@@ -470,7 +468,6 @@ export default {
                             this.preselectOption &&
                             response.data.length === 1
                         ) {
-                            console.log(this.value);
                             [this.value] = response.data;
                             this.hasDoneInitialOptionsLoad = true;
                         } else if (!this.hasDoneInitialOptionsLoad &&

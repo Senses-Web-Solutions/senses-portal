@@ -135,4 +135,69 @@ body:not(.guest-page) #lz_overlay_wm {
     outline: none;
 }
 
+/* Multiselect */
+.dark .multiselect--disabled {
+    opacity: 0.5;
+}
+
+.dark .multiselect__input {
+    background-color: theme('colors.zinc.900');
+    color: theme('colors.zinc.400');
+}
+
+.dark .multiselect__input::placeholder {
+    color: theme('colors.zinc.500');
+}
+
+.dark .multiselect__placeholder {
+    color: theme('colors.zinc.500');
+}
+
+.dark .multiselect__placeholder::placeholder {
+    color: theme('colors.zinc.500');
+}
+
+.dark .multiselect__strong {
+    color: theme('colors.zinc.400');
+}
+
+.dark .multiselect__tags, .multiselect__select {
+    border-color: theme('colors.secondary.600');
+}
+
+.dark .multiselect__tags {
+    background-color: theme('colors.zinc.900');
+}
+
+.dark .multiselect__select {
+    background-color: theme('colors.zinc.900');
+    border-radius: 10px;
+}
+
+.dark .multiselect__content-wrapper {
+    background-color: theme('colors.zinc.900');
+}
+
+.multiselect--above .multiselect__content-wrapper {
+    border-top: 1px solid theme('colors.secondary.300');
+}
+
+.dark .multiselect__option {
+    background: theme('colors.zinc.900');
+    color: theme('colors.zinc.400');
+}
+
+.dark .multiselect__option--highlight {
+    background: theme('colors.primary.700') !important;
+    color: theme('colors.zinc.50');
+}
+
+.dark .multiselect__option--highlight::after {
+    background: theme('colors.primary.700') !important;
+}
+
+.dark .multiselect__spinner {
+    background-color: theme('colors.zinc.900');
+}
+
 @config '../../tailwind.config.js';

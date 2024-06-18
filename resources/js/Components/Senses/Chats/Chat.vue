@@ -6,34 +6,54 @@
             </div>
 
             <div class="flex items-center">
-                <UserPopover 
-                    v-if="agent" 
-                    panel-class="origin-top-left left-0" 
-                    :id="agent?.id" 
-                    :title="agent?.full_name"
+                <TransitionGroup
+                    enter-active-class="transition duration-150 ease-out"
+                    enter-from-class="scale-75 opacity-0"
+                    enter-to-class="scale-100 opacity-100"
+                    leave-active-class="transition duration-150 ease-in"
+                    leave-from-class="scale-100 opacity-100"
+                    leave-to-class="scale-75 opacity-0"
                 >
-                    <Tag class="mr-2" highlight-border :highlight-dot="false" colour="purple">
-                        {{ agent?.full_name }}
-                    </Tag>
-                </UserPopover>
+                    <div v-for="agent in chat.agents" :key="agent.id">
+                        <UserPopover 
+                            panel-class="origin-top-left left-0" 
+                            :id="agent?.id" 
+                            :title="agent?.full_name"
+                        >
+                            <Tag class="mr-2" highlight-border :highlight-dot="false" colour="purple">
+                                {{ agent?.full_name }}
+                            </Tag>
+                        </UserPopover>
+                    </div>
+                </TransitionGroup>
                 <ButtonGroup>
-                    <PrimaryButton v-if="unassigned" @click="acceptChat">Accept Chat</PrimaryButton>
+                    <ChatActions :chat="chat" />
+                    <!-- <PrimaryButton v-if="unassigned" @click="acceptChat">Accept Chat</PrimaryButton>
                     <SecondaryButton v-if="yourAssigned">Leave</SecondaryButton>
                     <SecondaryButton v-if="yourAssigned">Invite Agent</SecondaryButton>
-                    <SecondaryButton v-if="yourAssigned">Mark As Resolved</SecondaryButton>
+                    <SecondaryButton v-if="yourAssigned">Mark As Resolved</SecondaryButton> -->
                 </ButtonGroup>
             </div>
         </div>
 
 
         <div id="messages" class="flex-grow overflow-y-auto overflow-x-hidden p-3 relative bg-white">
-            <Message
-                v-for="(message, index) in chat?.messages"
-                :key="'message:' + message.id"
-                :message="message"
-                :in-chain="isInChain(message, index)"
-                :your-assigned="yourAssigned"
-            />
+            <TransitionGroup
+                enter-active-class="transition duration-150 ease-out"
+                enter-from-class="scale-75 opacity-0"
+                enter-to-class="scale-100 opacity-100"
+                leave-active-class="transition duration-150 ease-in"
+                leave-from-class="scale-100 opacity-100"
+                leave-to-class="scale-75 opacity-0"
+            >
+                <Message
+                    v-for="(message, index) in chat?.messages"
+                    :key="'message:' + message.id"
+                    :message="message"
+                    :in-chain="isInChain(message, index)"
+                    :your-assigned="yourAssigned"
+                />
+            </TransitionGroup>
         </div>
 
 
@@ -101,6 +121,7 @@ import File from '../Files/File.vue';
 
 import user from '../../../Support/user';
 import sanitiseContent from '../../../Support/sanitiseContent';
+import ChatActions from './ChatActions.vue';
 
 export default {
     components: {
@@ -115,7 +136,8 @@ export default {
         SuccessButton,
         EmojiHappyIcon,
         PhotographIcon,
-        File
+        File,
+        ChatActions,
     },
     props: {
         chat: {
@@ -123,7 +145,6 @@ export default {
             required: true
         },
     },
-    emits: ['chat-accepted'],
     data() {
         return {
             message: {
@@ -153,12 +174,9 @@ export default {
         yourAssigned() {
             return this.chat?.agents?.some(agent => agent.id === this.user.id) ?? false;
         },
-        agent() {
-            return this.chat?.agents?.find(agent => agent.id === this.user.id);
-        },
         defaultMessage() {
             if (this.yourAssigned) {
-                return `Hi, my name is ${this.agent.full_name}. How can I help you today?`;
+                return `Hi, my name is ${this.user.full_name}. How can I help you today?`;
                 } else {
                 return 'You are not assigned to this chat';
             }
@@ -179,18 +197,12 @@ export default {
         if (!this.defaultMessageSent) {
             this.message.content = this.defaultMessage;
         }
-        console.log(this.chat);
+        
         this.setupKeyboardShortcuts();
         this.setupDropzone();
     },
 
     methods: {
-        acceptChat() {
-            axios.get(`/api/v2/accept/chats/${this.chat.id}`)
-                .then(response => {
-                    this.$emit('chat-accepted', response.data);
-                });
-        },
         isInChain(message) {
             let messages = Object.values(this.chat.messages);
             // Find index of message in array of messages

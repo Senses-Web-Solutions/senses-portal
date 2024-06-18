@@ -6,7 +6,7 @@ use App\Actions\Messages\ReadMessage;
 use App\Models\Chat;
 use Spatie\QueueableAction\QueueableAction;
 
-class AgentReadsChat
+class ReadChat
 {
     use QueueableAction;
 

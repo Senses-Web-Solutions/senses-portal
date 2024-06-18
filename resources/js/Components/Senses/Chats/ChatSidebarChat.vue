@@ -30,10 +30,10 @@
                     {{ chatOverview }}
                 </p>
                 <div
-                    v-if="chat.unread_messages_count > 0"
+                    v-if="unreadMessageCount > 0"
                     class="h-5 w-5 bg-primary-400 rounded-full flex justify-center items-center text-white text-xs"
                 >
-                    {{ chat.unread_messages_count ?? 1 }}
+                    {{ unreadMessageCount ?? 1 }}
                 </div>
             </div>
         </div>
@@ -41,6 +41,7 @@
 </template>
 <script>
 import FormatTime from "../../../Filters/FormatTime";
+import user from "../../../Support/user";
 
 export default {
     props: {
@@ -71,6 +72,23 @@ export default {
 
             return content;
         },
+        yourAssigned() {
+            return this.chat?.agents?.some(agent => agent.id === user().id) ?? false;
+        },
+        someoneIsAssigned() {
+            return this.chat?.agents?.length > 0;
+        },
+        unreadMessageCount() {
+            if (!this.yourAssigned && this.someoneIsAssigned) return 0;
+
+            const messagesArray = Object.values(this.chat.messages ?? {}) ?? [];
+
+            const count = messagesArray.reduce((acc, message) => {
+                return (message.author !== user().full_name && !message.read_at) ? acc + 1 : acc;
+            }, 0);
+
+            return count;
+        }
     },
     methods: {
         FormatTime,

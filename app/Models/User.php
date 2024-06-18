@@ -157,6 +157,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Chat::class, 'chat_agents');
     }
 
+    public function invitedChats()
+    {
+        return $this->belongsToMany(Chat::class, 'chat_invited_agents');
+    }
+
     public function emitRolesUpdated(array $before = [], array $after = [])
     {
         event('eloquent.rolesUpdated: ' . get_class($this), [$this, $before, $after]);

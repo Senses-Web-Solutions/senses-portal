@@ -4,7 +4,6 @@ namespace App\Actions\Chats;
 
 use App\Models\Chat;
 use App\Models\Status;
-use App\Events\Chats\ChatCreated;
 use App\Actions\Messages\CreateMessage;
 use Spatie\QueueableAction\QueueableAction;
 
@@ -35,7 +34,7 @@ class CreateChat
             app(CreateMessage::class)->execute($messageData);
         }
 
-        $chat->load('messages');
+        $chat->load('messages', 'agents', 'invitedAgents');
 
         return $chat;
     }

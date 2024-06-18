@@ -15,6 +15,9 @@ class DeleteChat
 
         $chat->delete();
 
+        // Delete all messages related to chat
+        $chat->messages()->delete();
+
         return $chat;
     }
 }

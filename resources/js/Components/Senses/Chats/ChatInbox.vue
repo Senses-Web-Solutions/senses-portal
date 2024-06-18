@@ -1,24 +1,36 @@
 <template>
     <!-- Inbox has three columns -->
-    <div class="flex w-full h-full" style="max-height: calc(100vh - 128px); min-height: calc(100vh - 128px)">
-        <ChatSidebar :chats="formattedChats" :selected-chat="selectedChat" :loading-chats="loadingChats" @chatSelected="(chat) => selectedChat = chat"/>
+    <div
+        class="flex w-full h-full"
+        style="max-height: calc(100vh - 128px); min-height: calc(100vh - 128px)"
+    >
+        <ChatSidebar
+            :chats="formattedChats"
+            :selected-chat="selectedChat"
+            :loading-chats="loadingChats"
+            @chatSelected="(chat) => (selectedChat = chat)"
+        />
 
-        <Chat v-if="selectedChat" :chat="selectedChat" @chat-accepted="chatAccepted" />
-        <div v-else class="h-full w-full flex items-center justify-center text-black" style="min-height: calc(100vh - 128px)">
+        <Chat v-if="selectedChat" :chat="selectedChat" />
+        <div
+            v-else
+            class="h-full w-full flex items-center justify-center text-black"
+            style="min-height: calc(100vh - 128px)"
+        >
             <h2 class="w-max text-xl">Select a chat on the sidebar</h2>
         </div>
     </div>
 </template>
 <script>
-import axios from 'axios';
-import {Howl, Howler} from 'howler';
+import axios from "axios";
+import { Howl, Howler } from "howler";
 
-import ChatSidebar from './ChatSidebar.vue';
-import Chat from './Chat.vue';
+import ChatSidebar from "./ChatSidebar.vue";
+import Chat from "./Chat.vue";
 
-import EventHub from '../../../Support/EventHub';
-import useEcho from '../../../Support/useEcho';
-import user from '../../../Support/user';
+import EventHub from "../../../Support/EventHub";
+import useEcho from "../../../Support/useEcho";
+import user from "../../../Support/user";
 
 const echo = useEcho();
 
@@ -30,8 +42,8 @@ export default {
     props: {
         url: {
             type: String,
-            default: '/api/v2/inbox/chats'
-        }
+            default: "/api/v2/inbox/chats",
+        },
     },
     data() {
         return {
@@ -39,39 +51,50 @@ export default {
 
             selectedChat: null,
             loadingChats: true,
-            user: user(),
 
             chatSoundPlaying: false,
 
             chatSound: new Howl({
-                src: ['/sounds/notification-2.mp3'],
+                src: ["/sounds/notification-2.mp3"],
                 volume: 1,
                 loop: true,
+                rate: 0.75
             }),
 
             messageSound: new Howl({
-                src: ['/sounds/notification-1.mp3'],
+                src: ["/sounds/notification-1.mp3"],
                 volume: 1,
             }),
 
             originalTitle: document.title,
-        }
+        };
     },
     computed: {
+        chatArray() {
+            return Object.values(this.chats);
+        },
         formattedChats() {
-            if (Object.values(this.chats).length === 0) {
+            if (this.chatArray.length === 0) {
                 return {
-                    'new': [],
-                    'assigned': [],
-                    'in progress': [],
+                    new: [],
+                    assigned: [],
+                    "in progress": [],
+                    "invited": [],
                 };
             }
-            return Object.values(this.chats).reduce((acc, chat) => {
+            return this.chatArray.reduce((acc, chat) => {
                 let slug = chat.status.slug;
 
+                if (chat?.invited_agents.some((agent) => agent.id === user().id)) {
+                    slug = "invited";
+                }
+
                 // Check if the chat status is 'assigned' and the user is not an agent
-                if (slug === 'assigned' && !chat.agents.some(agent => agent.id === this.user.id)) {
-                    slug = 'in progress';
+                if (
+                    slug === "assigned" &&
+                    !chat.agents.some((agent) => agent.id === user().id)
+                ) {
+                    slug = "in progress";
                 }
 
                 if (!acc[slug]) {
@@ -87,138 +110,228 @@ export default {
 
                 return acc;
             }, {});
-        }
+        },
     },
     watch: {
-        'chats': {
+        chats: {
             handler() {
                 // If all chats have agents, stop playing the chat sound
-                if (Object.values(this.chats).every(chat => chat?.agents?.length > 0)) {
+                if (this.chatArray.every((chat) => chat?.agents?.length > 0)) {
                     this.chatSound.stop();
                     this.chatSoundPlaying = false;
                 }
             },
-            deep: true
-        }
+            deep: true,
+        },
     },
     mounted() {
         this.setupAudio();
         this.fetchChats();
         this.setupEchoListeners();
-
-        EventHub.on('chats:fetch', this.fetchChats)
+        this.setupEventHubListeners();
     },
     beforeUnmount() {
         this.destroyAudio();
         this.destroyEchoListeners();
-        EventHub.off('chats:fetch')
+        this.destroyEventHubListeners();
     },
     methods: {
+        setupEventHubListeners() {
+            EventHub.on("chats:join", this.chatJoined);
+            EventHub.on("chats:leave", this.chatLeft);
+            EventHub.on("chats:delete", this.chatDeleted);
+            EventHub.on("chats:fetch", this.fetchChats);
+        },
+        destroyEventHubListeners() {
+            EventHub.off("chats:join");
+            EventHub.off("chats:leave");
+            EventHub.off("chats:fetch");
+        },
+        chatJoined(chat) {
+            this.createOrUpdateChat(chat);
+            this.selectedChat = chat;
+        },
+        chatLeft(chat) {
+            this.createOrUpdateChat(chat);
+            this.selectedChat = chat;
+        },
+        chatDeleted(id) {
+            delete this.chats[id];
+            this.selectedChat = null;
+        },
         setupAudio() {
             // Create audio context
             let handleMouseMove = () => {
-                if (Howler.ctx.state !== 'running') {
+                if (Howler.ctx.state !== "running") {
                     Howler.ctx.resume();
-                    document.documentElement.removeEventListener('mousemove', handleMouseMove);
+                    document.documentElement.removeEventListener(
+                        "mousemove",
+                        handleMouseMove
+                    );
                 }
             };
 
-            document.documentElement.addEventListener('mousemove', handleMouseMove);
-        }, 
+            document.documentElement.addEventListener(
+                "mousemove",
+                handleMouseMove
+            );
+        },
         destroyAudio() {
             Howler.unload();
         },
         fetchChats() {
             this.loadingChats = true;
 
-            axios.get(this.url)
-                .then(response => {
+            axios
+                .get(this.url)
+                .then((response) => {
                     this.chats = response.data;
                 })
-                .catch(error => {
-                    console.log(error)
+                .catch((error) => {
+                    console.log(error);
                 })
                 .finally(() => {
                     this.loadingChats = false;
 
                     // If any of the chats have no agents, play the chat sound
-                    if (Object.values(this.chats).some(chat => chat.agents.length === 0)) {
+                    if (
+                        this.chatArray.some((chat) => chat.agents.length === 0)
+                    ) {
                         this.chatSound.play();
                         this.chatSoundPlaying = true;
                     }
-                })
+                });
+        },
+
+        createNotification(chat) {
+
+            if (!("Notification" in window)) {
+                console.log(
+                    "This browser does not support desktop notification"
+                );
+            } else if (Notification.permission === "granted") {
+                let notification = new Notification(`New Chat - ${chat.name}`, {
+                    body: `New Chat - ${chat.name}`,
+                });
+            } else if (Notification.permission === "denied") {
+                Notification.requestPermission().then(function (permission) {
+                    if (permission === "granted") {
+                        let notification = new Notification(
+                            `New Chat - ${chat.name}`,
+                            {
+                                body: `New Chat - ${chat.name}`,
+                            }
+                        );
+                    }
+                });
+            }
         },
 
         setupEchoListeners() {
-            echo.private(`companies.${this.user.company_id}.chat`).listen('Chats\\ChatCreated', ({chat}) => {
-                chat.messages = {};
-                if (!this.chatSoundPlaying) {
-                    this.chatSound.play();
-                    this.chatSoundPlaying = true;
+            echo.private(`companies.${user().company_id}.chat`).listen(
+                "Chats\\ChatCreated",
+                ({ chat }) => {
+                    chat.messages = {};
+                    if (!this.chatSoundPlaying) {
+                        this.chatSound.play();
+                        this.chatSoundPlaying = true;
+                    }
+
+                    // Add chat to chats
+                    this.createOrUpdateChat(chat);
+
+                    // Create a notification
+                    this.createNotification(chat);
                 }
-                
-                // Add chat to chats
-                this.createOrUpdateChat(chat);
-            })
+            );
 
-            echo.private(`companies.${this.user.company_id}.message`).listen('Messages\\MessageCreated', ({message}) => {
-                if (message.author !== this.user.full_name && !this.chatSoundPlaying) {
-                    this.messageSound.play();
-    
-                    // Edit page title
-                    document.title = 'New message!';
-                    setTimeout(() => {
-                        document.title = this.originalTitle;
-                    }, 3000);
+            echo.private(`companies.${user().company_id}.chat`).listen(
+                "Chats\\ChatUpdated",
+                ({ chat }) => {
+                    // Add chat to chats
+                    this.createOrUpdateChat(chat);
                 }
+            );
 
-                this.createOrUpdateMessage(message);
-            })
+            echo.private(`companies.${user().company_id}.message`).listen(
+                "Messages\\MessageCreated",
+                ({ message }) => {
+                    if (
+                        message.author !== user().full_name &&
+                        !this.chatSoundPlaying
+                    ) {
+                        this.messageSound.play();
 
-            echo.private(`companies.${this.user.company_id}.message`).listen('Messages\\MessageUpdated', ({message}) => {
-                this.createOrUpdateMessage(message);
-            })
+                        // Edit page title
+                        document.title = "New message!";
+                        setTimeout(() => {
+                            document.title = this.originalTitle;
+                        }, 3000);
+                    }
 
-            echo.private(`companies.${this.user.company_id}.message`).listen('Chats\\Typing', (data) => {
-                if (data.from_agent) {
-                    return;
+                    this.createOrUpdateMessage(message);
                 }
+            );
 
-                // If typers does not exist on chat, create it
-                if (!this.chats[data.chat.id].typers) {
-                    this.chats[data.chat.id].typers = new Set();
+            echo.private(`companies.${user().company_id}.message`).listen(
+                "Messages\\MessageUpdated",
+                ({ message }) => {
+                    this.createOrUpdateMessage(message);
                 }
+            );
 
-                this.addTyper(data.chat.id, data.name);
-            })
+            echo.private(`companies.${user().company_id}.message`).listen(
+                "Chats\\Typing",
+                (data) => {
+                    if (data.from_agent) {
+                        return;
+                    }
 
-            echo.private(`companies.${this.user.company_id}.message`).listen('Chats\\StopTyping', (data) => {
-                if (data.from_agent) {
-                    return;
+                    // If typers does not exist on chat, create it
+                    if (!this.chats[data.chat.id].typers) {
+                        this.chats[data.chat.id].typers = new Set();
+                    }
+
+                    this.addTyper(data.chat.id, data.name);
                 }
+            );
 
-                this.removeTyper(data.chat.id, data.name);
-            })
+            echo.private(`companies.${user().company_id}.message`).listen(
+                "Chats\\StopTyping",
+                (data) => {
+                    if (data.from_agent) {
+                        return;
+                    }
+
+                    this.removeTyper(data.chat.id, data.name);
+                }
+            );
         },
 
         destroyEchoListeners() {
-            echo.leave(`companies.${this.user.company_id}.chat`);
-            echo.leave(`companies.${this.user.company_id}.message`);
+            echo.leave(`companies.${user().company_id}.chat`);
+            echo.leave(`companies.${user().company_id}.message`);
         },
-
 
         createOrUpdateChat(chat) {
             this.chats[chat.id] = chat;
+
+            // If there are no more chats without agents, stop playing the chat sound
+            if (this.chatArray.every((chat) => chat?.agents?.length > 0)) {
+                this.chatSound.stop();
+                this.chatSoundPlaying = false;
+            }
+
+            if (this.selectedChat && this.selectedChat.id === chat.id) {
+                this.selectedChat = chat;
+            }
         },
 
         createOrUpdateMessage(message) {
             const chat = this.chats[message.chat_id];
-            
-            if (message.read_at) {
-                chat.unread_messages_count -= 1;
-                } else {
+
+            if (message.id > chat.last_message.id) {
                 chat.last_message = message;
-                chat.unread_messages_count += 1;
             }
 
             chat.messages[message.id] = message;
@@ -231,16 +344,6 @@ export default {
         removeTyper(chatId, name) {
             this.chats[chatId].typers.delete(name);
         },
-
-        chatAccepted(chat) {
-            this.chats[chat.id] = chat;
-
-            // If there are no more chats without agents, stop playing the chat sound
-            if (Object.values(this.chats).every(chat => chat?.agents?.length > 0)) {
-                this.chatSound.stop();
-                this.chatSoundPlaying = false;
-            }
-        }
-    }
-}
+    },
+};
 </script>

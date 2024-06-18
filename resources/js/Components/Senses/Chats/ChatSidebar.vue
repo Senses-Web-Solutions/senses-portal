@@ -78,12 +78,15 @@ export default {
                 assigned: [],
                 new: [],
                 'in progress': [],
+                'invited': [],
             },
 
             searchQuery: '',
             emptyMessages: {
-                assigned: 'You have no chats assigned to you',
+                assigned: 'You have are not assigned to any chats',
                 new: 'There are no new chats',
+                'in progress': 'There are no chats in progress',
+                'invited': 'You have not been invited to any chats',
             }
         }
     },
@@ -100,11 +103,16 @@ export default {
             return this.getChats('in progress') ?? [];
         },
 
+        invitedChats() {
+            return this.getChats('invited') ?? [];
+        },
+
         formattedChats() {
             return {
                 assigned: this.assignedChats,
                 new: this.newChats,
                 'in progress': this.inProgressChats,
+                'invited': this.invitedChats,
             };
         },
 

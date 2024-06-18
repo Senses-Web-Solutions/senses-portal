@@ -110,12 +110,17 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
 
     // Chats
     Route::get('inbox/chats', [ChatController::class, 'inbox']);
-    Route::get('accept/chats/{chat}', [ChatController::class, 'accept']);
+    Route::get('join/chats/{chat}', [ChatController::class, 'join']);
+    Route::get('leave/chats/{chat}', [ChatController::class, 'leave']);
+    Route::post('invite/agents', [ChatController::class, 'invite']);
 
     // Messages
     Route::get('/messages/{message}/read', [MessageController::class, 'read']);
     Route::post('/typing', [ChatController::class, 'typing']);
     Route::post('/stop/typing', [ChatController::class, 'stopTyping']);
+
+    // Users
+    Route::get('company/{company}/users', [UserController::class, 'companyUsers']);
 });
 
 
