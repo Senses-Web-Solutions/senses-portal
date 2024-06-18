@@ -2,17 +2,21 @@
 
 namespace App\Actions\Chats;
 
+use App\Actions\ActionLogs\CreateActionLog;
 use App\Models\Chat;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueueableAction\QueueableAction;
 
-class RefuseChatInvite
+class RejectChatInvite
 {
     use QueueableAction;
 
-    public function execute(Chat $chat, User|int $user = null)
+    public function execute(Chat|int $chat, User|int $user = null)
     {
+        if (is_int($chat)) {
+            $chat = Chat::findOrFail($chat);
+        }
 
         if (is_int($user)) {
             $user = User::findOrFail($user);
@@ -21,6 +25,9 @@ class RefuseChatInvite
         }
 
         $chat->invitedAgents()->detach($user->id);
+        app(CreateActionLog::class)->execute($chat, 'rejected-invite', []);
+
+        $chat->load('agents', 'invitedAgents');
 
         event(new \App\Events\Chats\ChatUpdated($chat));
 

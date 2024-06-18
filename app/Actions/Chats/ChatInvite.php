@@ -2,6 +2,7 @@
 
 namespace App\Actions\Chats;
 
+use App\Actions\ActionLogs\CreateActionLog;
 use App\Models\Chat;
 use App\Models\Status;
 use App\Models\User;
@@ -12,15 +13,13 @@ class ChatInvite
 {
     use QueueableAction;
 
-    public function execute(Chat $chat, User|int $user = null)
+    public function execute(Chat $chat, User|int $user)
     {
 
         $status = Status::firstWhere('slug', 'agent-invited');
 
         if (is_int($user)) {
             $user = User::findOrFail($user);
-        } else if (is_null($user)) {
-            $user = Auth::user();
         }
 
         $chat->status()->associate($status);
@@ -28,7 +27,10 @@ class ChatInvite
 
         $chat->load('agents', 'invitedAgents');
 
+        app(CreateActionLog::class)->execute($chat, 'invited', ['invited_user_id' => $user->id]);
+
         event(new \App\Events\Chats\ChatUpdated($chat));
+
 
         return $chat;
     }

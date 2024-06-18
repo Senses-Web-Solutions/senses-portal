@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Traits\SensesModel;
+use App\Traits\HasActionLogs;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Casts\DateTime;
+use Illuminate\Database\Eloquent\Model;
 
 class Chat extends Model
 {
-    use SensesModel;
+    use SensesModel, HasActionLogs;
 
 
     protected $fillable = [
@@ -26,6 +27,8 @@ class Chat extends Model
         'hidden_at' => DateTime::class,
         'meta' => 'json'
     ];
+
+    protected $excludedActionLogs = ['created', 'updated'];
 
     public function scopeTableSearch($query, $search)
     {
@@ -86,6 +89,11 @@ class Chat extends Model
     public function messages()
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function actionLogs()
+    {
+        return $this->morphMany(ActionLog::class, 'loggable');
     }
 
     public function getLastMessageAttribute()

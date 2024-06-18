@@ -68,7 +68,7 @@ export default {
                             label: "Agents",
                             textField: 'full_name',
                             type: "select-search",
-                            url: `api/v2/company/${user().company_id}/users`,
+                            url: `api/v2/chat/invite/users?chat=${this.data.chat_id}&company=${user().company_id}`,
                             
                             multiple: true,
                             preloadOptions: true

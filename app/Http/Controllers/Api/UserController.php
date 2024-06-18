@@ -9,6 +9,7 @@ use App\Actions\Users\UpdateUser;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Users\CreateUserRequest;
 use App\Http\Requests\Users\DeleteUserRequest;
+use App\Http\Requests\Users\ListChatInviteUserRequest;
 use App\Http\Requests\Users\ListUserRequest;
 use App\Http\Requests\Users\ShowUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
@@ -118,6 +119,24 @@ class UserController extends Controller
     {
         return QueryBuilder::for(User::class)->where('company_id', $companyID)->list();
     }
+
+    public function chatInviteCompanyUsers(ListChatInviteUserRequest $request)
+    {
+        $companyID = request()->query('company');
+        $chatID = request()->query('chat');
+
+        // invitedChats is a relationship on the User model
+        return QueryBuilder::for(User::class)
+            ->where('company_id', $companyID)
+            ->whereDoesntHave('invitedChats', function ($q) use ($chatID) {
+                $q->where('chat_id', $chatID);
+            })
+            ->whereDoesntHave('chats', function ($q) use ($chatID) {
+                $q->where('chat_id', $chatID);
+            })
+            ->list();
+    }
 }
+
 
 //Generated 10-10-2023 10:05:12

@@ -12,7 +12,7 @@ class ChatCreated implements ShouldBroadcastNow
 
     public function __construct(Chat $chat)
     {
-        $chat->load(['messages', 'status', 'agents']);
+        $chat->load(['messages', 'status', 'agents', 'invitedAgents']);
         $chat->append(['last_message']);
         $chat->user_id = $chat->user_id ?? null;
         $chat->invited_user_id = $chat->invited_user_id ?? null;

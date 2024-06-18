@@ -1,8 +1,11 @@
 <template>
-    <MenuItem v-slot="{ active }">
+    <MenuItem v-slot="{ active }" :disabled="disabled">
         <button
-            class="text-left transition"
-            :class="[active ? 'bg-zinc-100 ' : '', 'group flex w-full items-center py-2 px-3 text-zinc-700']"
+            class="text-left transitioncz group flex w-full items-center py-2 px-3 text-zinc-700"
+            :class="{
+                'bg-zinc-100': active,
+                'cursor-not-allowed opacity-50': disabled,
+            }"
         >
             <div v-if="$slots.icon" class="my-auto mr-3 h-5 w-5 text-zinc-400 transition group-hover:text-zinc-500">
                 <slot name="icon"></slot>
@@ -24,6 +27,10 @@ export default {
         },
         dot: {
             type: Boolean,
+        },
+        disabled: {
+            type: Boolean,
+            default: false,
         },
     },
 

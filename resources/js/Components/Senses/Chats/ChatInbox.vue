@@ -11,7 +11,7 @@
             @chatSelected="(chat) => (selectedChat = chat)"
         />
 
-        <Chat v-if="selectedChat" :chat="selectedChat" />
+        <Chat v-if="selectedChat" :chat="selectedChat" :show-history="showHistory" />
         <div
             v-else
             class="h-full w-full flex items-center justify-center text-black"
@@ -19,6 +19,7 @@
         >
             <h2 class="w-max text-xl">Select a chat on the sidebar</h2>
         </div>
+        <ChatHistory v-if="selectedChat && showHistory" :chat="selectedChat" />
     </div>
 </template>
 <script>
@@ -26,6 +27,7 @@ import axios from "axios";
 import { Howl, Howler } from "howler";
 
 import ChatSidebar from "./ChatSidebar.vue";
+import ChatHistory from "./ChatHistory.vue";
 import Chat from "./Chat.vue";
 
 import EventHub from "../../../Support/EventHub";
@@ -38,6 +40,7 @@ export default {
     components: {
         ChatSidebar,
         Chat,
+        ChatHistory,
     },
     props: {
         url: {
@@ -50,6 +53,7 @@ export default {
             chats: {},
 
             selectedChat: null,
+            showHistory: false,
             loadingChats: true,
 
             chatSoundPlaying: false,
@@ -78,14 +82,16 @@ export default {
                 return {
                     new: [],
                     assigned: [],
+                    unassigned: [],
                     "in progress": [],
-                    "invited": [],
+                    invited: [],
                 };
             }
             return this.chatArray.reduce((acc, chat) => {
                 let slug = chat.status.slug;
 
                 if (chat?.invited_agents.some((agent) => agent.id === user().id)) {
+                    console.log('Put in invited')
                     slug = "invited";
                 }
 
@@ -141,11 +147,15 @@ export default {
             EventHub.on("chats:leave", this.chatLeft);
             EventHub.on("chats:delete", this.chatDeleted);
             EventHub.on("chats:fetch", this.fetchChats);
+            EventHub.on("chats:show-history", () => (this.showHistory = true));
+            EventHub.on("chats:hide-history", () => (this.showHistory = false));
         },
         destroyEventHubListeners() {
             EventHub.off("chats:join");
             EventHub.off("chats:leave");
             EventHub.off("chats:fetch");
+            EventHub.off("chats:show-history");
+            EventHub.off("chats:hide-history");
         },
         chatJoined(chat) {
             this.createOrUpdateChat(chat);
@@ -248,6 +258,13 @@ export default {
             echo.private(`companies.${user().company_id}.chat`).listen(
                 "Chats\\ChatUpdated",
                 ({ chat }) => {
+
+                    // If chat has no agents, play the chat sound
+                    if (chat.agents.length === 0) {
+                        this.chatSound.play();
+                        this.chatSoundPlaying = true;
+                    }
+
                     // Add chat to chats
                     this.createOrUpdateChat(chat);
                 }

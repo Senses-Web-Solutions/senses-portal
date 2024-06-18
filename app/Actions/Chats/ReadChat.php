@@ -10,8 +10,12 @@ class ReadChat
 {
     use QueueableAction;
 
-    public function execute(Chat $chat)
+    public function execute(Chat|int $chat)
     {
+
+        if (is_int($chat)) {
+            $chat = Chat::findOrFail($chat);
+        }
 
         // Find all messages not from_agent and mark them as read
 

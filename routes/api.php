@@ -109,10 +109,12 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
     Route::get('company/{company}/allowed-chat-sites', [AllowedChatSiteController::class, 'companyAllowedChatSites']);
 
     // Chats
-    Route::get('inbox/chats', [ChatController::class, 'inbox']);
-    Route::get('join/chats/{chat}', [ChatController::class, 'join']);
-    Route::get('leave/chats/{chat}', [ChatController::class, 'leave']);
-    Route::post('invite/agents', [ChatController::class, 'invite']);
+    Route::get('/inbox/chats', [ChatController::class, 'inbox']);
+    Route::get('/join/chats/{chat}', [ChatController::class, 'join']);
+    Route::get('/leave/chats/{chat}', [ChatController::class, 'leave']);
+    Route::post('/invite/agents', [ChatController::class, 'invite']);
+    Route::get('/accept/invite/chats/{chat}', [ChatController::class, 'acceptInvite']);
+    Route::get('/reject/invite/chats/{chat}', [ChatController::class, 'rejectInvite']);
 
     // Messages
     Route::get('/messages/{message}/read', [MessageController::class, 'read']);
@@ -121,6 +123,7 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
 
     // Users
     Route::get('company/{company}/users', [UserController::class, 'companyUsers']);
+    Route::get('chat/invite/users', [UserController::class, 'chatInviteCompanyUsers']);
 });
 
 

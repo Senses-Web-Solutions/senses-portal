@@ -27,7 +27,7 @@
                     </div>
                 </TransitionGroup>
                 <ButtonGroup>
-                    <ChatActions :chat="chat" />
+                    <ChatActions :chat="chat" :show-history="showHistory" />
                     <!-- <PrimaryButton v-if="unassigned" @click="acceptChat">Accept Chat</PrimaryButton>
                     <SecondaryButton v-if="yourAssigned">Leave</SecondaryButton>
                     <SecondaryButton v-if="yourAssigned">Invite Agent</SecondaryButton>
@@ -143,6 +143,10 @@ export default {
         chat: {
             type: [Object, null],
             required: true
+        },
+        showHistory: {
+            type: Boolean,
+            default: false
         },
     },
     data() {

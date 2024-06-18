@@ -95,6 +95,10 @@ export default {
             return this.getChats('assigned') ?? [];
         },
 
+        unassignedChats() {
+            return this.getChats('unassigned') ?? [];
+        },
+
         newChats() {
             return this.getChats('new') ?? [];
         },
@@ -110,6 +114,7 @@ export default {
         formattedChats() {
             return {
                 assigned: this.assignedChats,
+                unassigned: this.unassignedChats,
                 new: this.newChats,
                 'in progress': this.inProgressChats,
                 'invited': this.invitedChats,

@@ -5,6 +5,7 @@ namespace App\Actions\Chats;
 use App\Models\Chat;
 use App\Models\Status;
 use App\Actions\Messages\CreateMessage;
+use App\Actions\ActionLogs\CreateActionLog;
 use Spatie\QueueableAction\QueueableAction;
 
 class CreateChat
@@ -35,6 +36,8 @@ class CreateChat
         }
 
         $chat->load('messages', 'agents', 'invitedAgents');
+
+        app(CreateActionLog::class)->execute($chat, 'created', ['author' => $data['author'] ?? 'system']);
 
         return $chat;
     }

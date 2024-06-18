@@ -1,3 +1,3 @@
 <template>
-    <hr class="">
+    <hr class="border-zinc-200">
 </template>

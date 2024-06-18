@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\Chats\AcceptChatInvite;
 use App\Actions\Chats\ChatInvite;
 use App\Actions\Chats\CreateChat;
 use App\Actions\Chats\DeleteChat;
 use App\Actions\Chats\GenerateChatShowCache;
 use App\Actions\Chats\JoinChat;
 use App\Actions\Chats\LeaveChat;
+use App\Actions\Chats\RejectChatInvite;
 use App\Actions\Chats\UpdateChat;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Chats\ChatInviteRequest;
@@ -145,7 +147,8 @@ class ChatController extends Controller
             'messages.files',
             'agents',
             'status',
-            'invitedAgents'
+            'invitedAgents',
+            'actionLogs.user'
         ])
             ->where(function ($query) use ($newStatus, $assignedStatus, $userID, $companyID, $unresolvedStatus, $resolvedStatus, $missedStatus) {
                 $query->where('status_id', $newStatus)
@@ -182,21 +185,23 @@ class ChatController extends Controller
 
     public function join(Chat|int $chat)
     {
-
-        if (is_int($chat)) {
-            $chat = Chat::findOrFail($chat);
-        }
-
         return app(JoinChat::class)->execute($chat);
     }
 
     public function leave(Chat|int $chat)
     {
-        if (is_int($chat)) {
-            $chat = Chat::findOrFail($chat);
-        }
-
         return app(LeaveChat::class)->execute($chat);
+    }
+
+    public function acceptInvite(Chat|int $chat)
+    {
+        app(AcceptChatInvite::class)->execute($chat);
+        return app(JoinChat::class)->execute($chat);
+    }
+
+    public function rejectInvite(Chat|int $chat)
+    {
+        app(RejectChatInvite::class)->execute($chat);
     }
 
     public function invite(ChatInviteRequest $request)

@@ -2,6 +2,7 @@
 
 namespace App\Actions\Chats;
 
+use App\Actions\ActionLogs\CreateActionLog;
 use App\Models\Chat;
 use App\Models\Status;
 use App\Models\User;
@@ -13,9 +14,13 @@ class JoinChat
 {
     use QueueableAction;
 
-    public function execute(Chat $chat, User|int $user = null)
+    public function execute(Chat|int $chat, User|int $user = null)
     {
 
+        if (is_int($chat)) {
+            $chat = Chat::findOrFail($chat);
+        }
+        
         if (is_int($user)) {
             $user = User::findOrFail($user);
         } else if (is_null($user)) {
@@ -28,15 +33,13 @@ class JoinChat
             $chat->status()->associate($assignedStatus);
         }
 
-        // If you were an invited agent, remove the invite
-        $chat->invitedAgents()->detach($user->id);
-
         $chat->agents()->syncWithoutDetaching([$user->id]);
         $chat->save();
 
         $chat->load('agents', 'invitedAgents');
 
         app(ReadChat::class)->onQueue()->execute($chat);
+        app(CreateActionLog::class)->execute($chat, 'joined', []);
 
         event(new \App\Events\Chats\ChatUpdated($chat));
 

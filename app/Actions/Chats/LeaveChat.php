@@ -2,6 +2,7 @@
 
 namespace App\Actions\Chats;
 
+use App\Actions\ActionLogs\CreateActionLog;
 use App\Models\Chat;
 use App\Models\Status;
 use App\Models\User;
@@ -12,8 +13,12 @@ class LeaveChat
 {
     use QueueableAction;
 
-    public function execute(Chat $chat, User|int $user = null)
+    public function execute(Chat|int $chat, User|int $user = null)
     {
+
+        if (is_int($chat)) {
+            $chat = Chat::findOrFail($chat);
+        }
 
         if (is_int($user)) {
             $user = User::findOrFail($user);
@@ -31,6 +36,8 @@ class LeaveChat
         $chat->save();
 
         $chat->load('agents', 'invitedAgents');
+
+        app(CreateActionLog::class)->execute($chat, 'left', []);
 
         event(new \App\Events\Chats\ChatUpdated($chat));
 

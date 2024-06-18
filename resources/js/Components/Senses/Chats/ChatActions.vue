@@ -19,7 +19,7 @@
 </template>
 <script>
 import axios from 'axios';
-import { LoginIcon, MailIcon, LogoutIcon, TrashIcon, CheckIcon } from '@heroicons/vue/outline';
+import { LoginIcon, MailIcon, LogoutIcon, TrashIcon, CheckIcon, XIcon, EyeIcon, EyeOffIcon } from '@heroicons/vue/outline';
 
 import SeMenu from '../../Ui/Menu/SeMenu.vue';
 import MenuItem from '../../Ui/Menu/MenuItem.vue';
@@ -41,13 +41,20 @@ export default {
         MailIcon,
         LogoutIcon,
         TrashIcon,
-        CheckIcon
+        CheckIcon,
+        XIcon,
+        EyeIcon,
+        EyeOffIcon
     },
 
     props: {
         chat: {
             type: Object,
             required: true
+        },
+        showHistory: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -62,6 +69,23 @@ export default {
         menuItems() {
             const itemArray = [];
 
+            // If you are an invited agent in the list of agents, have an accept and reject button
+            if (this.chat.invited_agents.find(agent => agent.id === this.user.id)) {
+                itemArray.push({
+                    title: 'Accept Invite',
+                    icon: 'CheckIcon',
+                    action: this.acceptInvite
+                });
+
+                itemArray.push({
+                    title: 'Reject Invite',
+                    icon: 'XIcon',
+                    action: this.rejectInvite
+                });
+
+                return itemArray;
+            }
+
             // If you are not an agent in the list of agents
             if (!this.chat.agents.find(agent => agent.id === this.user.id)) {
                 itemArray.push({
@@ -69,6 +93,8 @@ export default {
                     icon: 'LoginIcon',
                     action: this.joinChat
                 });
+
+                itemArray.push({ type: 'divider' });
 
                 itemArray.push({
                     title: 'Delete',
@@ -79,7 +105,30 @@ export default {
                 return itemArray;
             }
 
+            if (this.showHistory) {
+                itemArray.push({
+                    title: 'Hide History',
+                    icon: 'EyeOffIcon',
+                    action: this.hideHistory
+                });
+
+            } else {
+                itemArray.push({
+                    title: 'Show History',
+                    icon: 'EyeIcon',
+                    action: this.emitShowHistory
+                });
+            }
+
             // If you are an agent in the list of agents
+            itemArray.push({
+                title: 'Mark as complete',
+                icon: 'CheckIcon',
+                action: () => {
+                    // EventHub.emit('chat:close', this.chat.id);
+                }
+            });
+
             itemArray.push({
                 title: 'Invite Agent',
                 icon: 'MailIcon',
@@ -97,18 +146,13 @@ export default {
                 action: this.leaveChat
             });
 
-            itemArray.push({
-                title: 'Mark as complete',
-                icon: 'CheckIcon',
-                action: () => {
-                    // EventHub.emit('chat:close', this.chat.id);
-                }
-            });
+            itemArray.push({ type: 'divider' });
 
             itemArray.push({
                 title: 'Delete',
                 icon: 'TrashIcon',
-                action: this.deleteChat
+                action: this.deleteChat,
+                disabled: () => this.chat.agents.length > 1
             });
 
             return itemArray;
@@ -118,6 +162,20 @@ export default {
     methods: {
         fetchChats() {
             EventHub.emit('chats:fetch');
+        },
+
+        acceptInvite() {
+            axios.get(`/api/v2/accept/invite/chats/${this.chat.id}`)
+                .then(response => {
+                    EventHub.emit('chats:accept', response.data);
+                });
+        },
+
+        rejectInvite() {
+            axios.get(`/api/v2/reject/invite/chats/${this.chat.id}`)
+                .then(response => {
+                    EventHub.emit('chats:reject', response.data);
+                });
         },
 
         joinChat() {
@@ -142,13 +200,20 @@ export default {
         },
 
         deleteChat() {
+            // console.log('Delete Chat');
             axios.delete(`/api/v2/chats/${this.chat.id}`)
                 .then(response => {
                     EventHub.emit('chats:delete', this.chat.id);
                 });
         },
 
-        inviteAgent() {}
+        emitShowHistory() {
+            EventHub.emit('chats:show-history');
+        },
+
+        hideHistory() {
+            EventHub.emit('chats:hide-history');
+        },
     }
 }
 </script>
