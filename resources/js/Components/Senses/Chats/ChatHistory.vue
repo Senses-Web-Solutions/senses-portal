@@ -34,8 +34,8 @@ export default {
     },
     methods: {
         hide() {
-            EventHub.$emit('chats:hide-history');
+            EventHub.emit('chats:hide-history');
         }
-    }
+    },
 }
 </script>

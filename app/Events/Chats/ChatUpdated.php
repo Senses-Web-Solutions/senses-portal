@@ -12,7 +12,7 @@ class ChatUpdated implements ShouldBroadcastNow
 
     public function __construct(Chat $chat)
     {
-        $chat->load(['messages', 'status', 'agents', 'invitedAgents']);
+        $chat->load(['messages', 'status', 'agents', 'invitedAgents', 'actionLogs.user']);
         $chat->append(['last_message']);
         $this->chat = $chat;
     }

@@ -25,7 +25,7 @@ class ChatInvite
         $chat->status()->associate($status);
         $chat->invitedAgents()->syncWithoutDetaching([$user->id]);
 
-        $chat->load('agents', 'invitedAgents');
+        $chat->load('agents', 'invitedAgents', 'actionLogs.user');
 
         app(CreateActionLog::class)->execute($chat, 'invited', ['invited_user_id' => $user->id]);
 

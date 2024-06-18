@@ -36,7 +36,7 @@ class JoinChat
         $chat->agents()->syncWithoutDetaching([$user->id]);
         $chat->save();
 
-        $chat->load('agents', 'invitedAgents');
+        $chat->load('agents', 'invitedAgents', 'actionLogs.user');
 
         app(ReadChat::class)->onQueue()->execute($chat);
         app(CreateActionLog::class)->execute($chat, 'joined', []);
