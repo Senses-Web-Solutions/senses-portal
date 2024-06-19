@@ -28,10 +28,6 @@
                 </TransitionGroup>
                 <ButtonGroup>
                     <ChatActions :chat="chat" :show-history="showHistory" />
-                    <!-- <PrimaryButton v-if="unassigned" @click="acceptChat">Accept Chat</PrimaryButton>
-                    <SecondaryButton v-if="yourAssigned">Leave</SecondaryButton>
-                    <SecondaryButton v-if="yourAssigned">Invite Agent</SecondaryButton>
-                    <SecondaryButton v-if="yourAssigned">Mark As Resolved</SecondaryButton> -->
                 </ButtonGroup>
             </div>
         </div>

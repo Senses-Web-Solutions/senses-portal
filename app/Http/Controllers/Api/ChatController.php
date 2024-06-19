@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Actions\Chats\AcceptChatInvite;
 use App\Actions\Chats\ChatInvite;
+use App\Actions\Chats\CobrowseChat;
 use App\Actions\Chats\CreateChat;
 use App\Actions\Chats\DeleteChat;
 use App\Actions\Chats\GenerateChatShowCache;
@@ -16,6 +17,7 @@ use App\Http\Requests\Chats\ChatInviteRequest;
 use App\Http\Requests\Chats\CreateChatRequest;
 use App\Http\Requests\Chats\DeleteChatRequest;
 use App\Http\Requests\Chats\ListChatRequest;
+use App\Http\Requests\Chats\SensesChatCobrowseRequest;
 use App\Http\Requests\Chats\SensesChatTypingRequest;
 use App\Http\Requests\Chats\ShowChatRequest;
 use App\Http\Requests\Chats\ShowSensesChatRequest;
@@ -148,6 +150,9 @@ class ChatController extends Controller
             'agents',
             'status',
             'invitedAgents',
+            'actionLogs' => function ($query) {
+                $query->orderBy('logged_at', 'asc');
+            },
             'actionLogs.user'
         ])
             ->where(function ($query) use ($newStatus, $assignedStatus, $userID, $companyID, $unresolvedStatus, $resolvedStatus, $missedStatus) {
@@ -218,6 +223,11 @@ class ChatController extends Controller
         return $this->respond($chat);
     }
 
+    public function cobrowse(Chat|int $chat)
+    {
+        return app(CobrowseChat::class)->execute($chat);
+    }
+
     public function typing(TypingRequest $request)
     {
         $data = $request->all();
@@ -260,6 +270,19 @@ class ChatController extends Controller
         broadcast_safely(new \App\Events\Chats\StopTyping($chatID, $name, $fromAgent));
 
         return response()->json(['chat_id' => $chatID, 'name' => $name, 'from_agent' => $fromAgent]);
+    }
+
+    public function sensesChatCobrowse(SensesChatCobrowseRequest $request)
+    {
+        $data = $request->all();
+        $chatID = $data['chat_id'];
+        $html = $data['html'];
+        $stylesheet = $data['stylesheet'] ?? '';
+
+        $chat = Chat::findOrFail($chatID);
+
+        broadcast_safely(new \App\Events\Chats\Cobrowse($chat, $html, $stylesheet));
+        return $chat;
     }
 }
 

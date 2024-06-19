@@ -11,14 +11,18 @@
             @chatSelected="(chat) => (selectedChat = chat)"
         />
 
-        <Chat v-if="selectedChat" :chat="selectedChat" :show-history="showHistory" />
-        <div
-            v-else
-            class="h-full w-full flex items-center justify-center text-black"
-            style="min-height: calc(100vh - 128px)"
-        >
-            <h2 class="w-max text-xl">Select a chat on the sidebar</h2>
+        <div v-if="cobrowsing" class="flex flex-col flex-grow h-full overflow-y-scroll" style="height: calc(100vh - 128px); min-height: calc(100vh - 128px)">
+            <div class="p-3 border-b border-zinc-200 flex items-center">
+                <div class="text-black font-semibold text-xl">
+                    Cobrowsing
+                </div>
+            </div>
+            <div>
+                <iframe id="cobrowse" class="w-full" :srcdoc="htmlContent"></iframe>
+            </div>
         </div>
+
+        <Chat v-if="selectedChat && !cobrowsing" :chat="selectedChat" :show-history="showHistory" />
         <ChatHistory v-if="selectedChat && showHistory" :chat="selectedChat" />
     </div>
 </template>
@@ -71,6 +75,9 @@ export default {
             }),
 
             originalTitle: document.title,
+
+            htmlContent: '',
+            cobrowsing: false
         };
     },
     computed: {
@@ -143,8 +150,8 @@ export default {
     },
     methods: {
         setupEventHubListeners() {
-            EventHub.on("chats:join", this.chatJoined);
-            EventHub.on("chats:leave", this.chatLeft);
+            // EventHub.on("chats:join", this.chatJoined);
+            // EventHub.on("chats:leave", this.chatLeft);
             EventHub.on("chats:delete", this.chatDeleted);
             EventHub.on("chats:fetch", this.fetchChats);
             EventHub.on("chats:show-history", () => (this.showHistory = true));
@@ -157,14 +164,14 @@ export default {
             EventHub.off("chats:show-history");
             EventHub.off("chats:hide-history");
         },
-        chatJoined(chat) {
-            this.createOrUpdateChat(chat);
-            this.selectedChat = chat;
-        },
-        chatLeft(chat) {
-            this.createOrUpdateChat(chat);
-            this.selectedChat = chat;
-        },
+        // chatJoined(chat) {
+        //     this.createOrUpdateChat(chat);
+        //     this.selectedChat = chat;
+        // },
+        // chatLeft(chat) {
+        //     this.createOrUpdateChat(chat);
+        //     this.selectedChat = chat;
+        // },
         chatDeleted(id) {
             delete this.chats[id];
             this.selectedChat = null;
@@ -321,6 +328,18 @@ export default {
                     }
 
                     this.removeTyper(data.chat.id, data.name);
+                }
+            );
+
+            echo.private(`companies.${user().company_id}.chat`).listen(
+                "Chats\\Cobrowse",
+                ({html, stylesheet}) => {
+                    this.cobrowsing = true;
+
+                    // const styledHtmlContent = `<link rel="stylesheet" type="text/css" href="${stylesheet}">${html}`
+
+                    this.htmlContent = html;
+                    console.log('Cobrowsing', stylesheet);
                 }
             );
         },

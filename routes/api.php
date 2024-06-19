@@ -115,6 +115,7 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
     Route::post('/invite/agents', [ChatController::class, 'invite']);
     Route::get('/accept/invite/chats/{chat}', [ChatController::class, 'acceptInvite']);
     Route::get('/reject/invite/chats/{chat}', [ChatController::class, 'rejectInvite']);
+    Route::get('/cobrowse/chats/{chat}', [ChatController::class, 'cobrowse']);
 
     // Messages
     Route::get('/messages/{message}/read', [MessageController::class, 'read']);
@@ -144,3 +145,6 @@ Route::post('/stop/typing', [ChatController::class, 'sensesChatStopTyping']);
 
 // Files
 Route::post('/files', [FileController::class, 'sensesChatStore']);
+
+// Cobrowse
+Route::post('/cobrowse', [ChatController::class, 'sensesChatCobrowse']);
