@@ -336,10 +336,9 @@ export default {
                 ({html, stylesheet}) => {
                     this.cobrowsing = true;
 
-                    // const styledHtmlContent = `<link rel="stylesheet" type="text/css" href="${stylesheet}">${html}`
+                    const styledHtmlContent = `<link rel="stylesheet" type="text/css" href="${stylesheet}">${html}`
 
-                    this.htmlContent = html;
-                    console.log('Cobrowsing', stylesheet);
+                    this.htmlContent = styledHtmlContent;
                 }
             );
         },
