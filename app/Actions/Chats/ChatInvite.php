@@ -27,7 +27,7 @@ class ChatInvite
 
         $chat->load('agents', 'invitedAgents', 'actionLogs.user');
 
-        app(CreateActionLog::class)->execute($chat, 'invited', ['invited_user_id' => $user->id]);
+        app(CreateActionLog::class)->onQueue()->execute($chat, 'invited', ['invited_user_id' => $user->id]);
 
         event(new \App\Events\Chats\ChatUpdated($chat));
 

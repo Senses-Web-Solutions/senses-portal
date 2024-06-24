@@ -37,7 +37,7 @@ class CreateChat
 
         $chat->load('messages', 'agents', 'invitedAgents', 'actionLogs.user');
 
-        app(CreateActionLog::class)->execute($chat, 'created', ['author' => $data['author'] ?? 'system']);
+        app(CreateActionLog::class)->onQueue()->execute($chat, 'created', []);
 
         return $chat;
     }

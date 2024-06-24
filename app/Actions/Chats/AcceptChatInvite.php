@@ -26,7 +26,7 @@ class AcceptChatInvite
         }
 
         $chat->invitedAgents()->detach($user->id);
-        app(CreateActionLog::class)->execute($chat, 'accepted-invite', []);
+        app(CreateActionLog::class)->onQueue()->execute($chat, 'accepted-invite', []);
 
         return $chat;
     }

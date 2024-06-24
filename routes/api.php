@@ -150,5 +150,6 @@ Route::post('/stop/typing', [ChatController::class, 'sensesChatStopTyping']);
 Route::post('/files', [FileController::class, 'sensesChatStore']);
 
 // Cobrowse
-Route::post('/cobrowse', [ChatController::class, 'sensesChatCobrowse']);
+Route::get('/stop/cobrowse/chats/{chat}', [ChatController::class, 'sensesChatStopCobrowse']);
+Route::get('/cobrowse/chats/{chat}', [ChatController::class, 'sensesChatCobrowse']);
 Route::post('/signal', [ChatController::class, 'sensesChatSignal']);

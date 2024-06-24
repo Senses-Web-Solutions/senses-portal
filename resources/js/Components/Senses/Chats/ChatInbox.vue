@@ -11,15 +11,14 @@
             @chatSelected="(chat) => (selectedChat = chat)"
         />
 
-        <Chat v-if="selectedChat && !cobrowsing" :chat="selectedChat" :show-history="showHistory" />
         <ChatCobrowse v-if="cobrowsing" :chat="selectedChat" :cobrowsing="cobrowsing" />
+        <Chat v-if="selectedChat" :chat="selectedChat" :show-history="showHistory" :cobrowsing="cobrowsing" />
         <ChatHistory v-if="selectedChat && showHistory" :chat="selectedChat" />
     </div>
 </template>
 <script>
 import axios from "axios";
 import { Howl, Howler } from "howler";
-
 
 import ChatSidebar from "./ChatSidebar.vue";
 import ChatHistory from "./ChatHistory.vue";
@@ -69,9 +68,7 @@ export default {
 
             originalTitle: document.title,
 
-            htmlContent: '',
             cobrowsing: false,
-            peer2: null,
         };
     },
     computed: {
@@ -150,6 +147,7 @@ export default {
             EventHub.on("chats:fetch", this.fetchChats);
             EventHub.on("chats:show-history", () => (this.showHistory = true));
             EventHub.on("chats:hide-history", () => (this.showHistory = false));
+            EventHub.on('cobrowse:stop', () => {this.cobrowsing = false});
         },
         destroyEventHubListeners() {
             EventHub.off("chats:join");
@@ -157,15 +155,8 @@ export default {
             EventHub.off("chats:fetch");
             EventHub.off("chats:show-history");
             EventHub.off("chats:hide-history");
+            EventHub.off('cobrowse:stop');
         },
-        // chatJoined(chat) {
-        //     this.createOrUpdateChat(chat);
-        //     this.selectedChat = chat;
-        // },
-        // chatLeft(chat) {
-        //     this.createOrUpdateChat(chat);
-        //     this.selectedChat = chat;
-        // },
         chatDeleted(id) {
             delete this.chats[id];
             this.selectedChat = null;
@@ -334,7 +325,7 @@ export default {
                     this.cobrowsing = true;
 
                     this.$nextTick(() => {
-                        EventHub.emit('cobrowsing:start');
+                        EventHub.emit('cobrowse:start');
                     });
                 }
             );

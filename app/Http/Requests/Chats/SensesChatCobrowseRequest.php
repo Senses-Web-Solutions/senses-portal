@@ -5,7 +5,7 @@ namespace App\Http\Requests\Chats;
 use App\Models\AllowedChatSite;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SensesChatStartCobrowseRequest extends FormRequest
+class SensesChatCobrowseRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -28,9 +28,7 @@ class SensesChatStartCobrowseRequest extends FormRequest
 
     public function rules()
     {
-        $rules = [
-            'chat_id' => 'required|integer|exists:chats,id',
-        ];
+        $rules = [];
 
         return $rules;
     }

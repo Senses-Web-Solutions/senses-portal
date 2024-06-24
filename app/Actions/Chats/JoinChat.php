@@ -39,7 +39,7 @@ class JoinChat
         $chat->load('agents', 'invitedAgents', 'actionLogs.user');
 
         app(ReadChat::class)->onQueue()->execute($chat);
-        app(CreateActionLog::class)->execute($chat, 'joined', []);
+        app(CreateActionLog::class)->onQueue()->execute($chat, 'joined', []);
 
         event(new \App\Events\Chats\ChatUpdated($chat));
 

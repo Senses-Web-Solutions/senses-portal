@@ -19,7 +19,7 @@
 </template>
 <script>
 import axios from 'axios';
-import { LoginIcon, MailIcon, LogoutIcon, TrashIcon, CheckIcon, XIcon, EyeIcon, EyeOffIcon, DesktopComputerIcon } from '@heroicons/vue/outline';
+import { LoginIcon, MailIcon, LogoutIcon, TrashIcon, CheckIcon, XIcon, EyeIcon, EyeOffIcon, DesktopComputerIcon, StopIcon } from '@heroicons/vue/outline';
 
 import SeMenu from '../../Ui/Menu/SeMenu.vue';
 import MenuItem from '../../Ui/Menu/MenuItem.vue';
@@ -45,7 +45,8 @@ export default {
         XIcon,
         EyeIcon,
         EyeOffIcon,
-        DesktopComputerIcon
+        DesktopComputerIcon,
+        StopIcon
     },
 
     props: {
@@ -54,6 +55,10 @@ export default {
             required: true
         },
         showHistory: {
+            type: Boolean,
+            default: false
+        },
+        cobrowsing: {
             type: Boolean,
             default: false
         }
@@ -112,6 +117,12 @@ export default {
                 action: this.requestCobrowse
             };
 
+            const stopCobrowse = {
+                title: 'Stop Cobrowsing',
+                icon: 'StopIcon',
+                action: this.stopCobrowse
+            };
+
             const hideHistory = {
                 title: 'Hide History',
                 icon: 'EyeOffIcon',
@@ -166,7 +177,11 @@ export default {
                 return itemArray;
             }
 
-            itemArray.push(requestCobrowse);
+            if (this.cobrowsing) {
+                itemArray.push(stopCobrowse);
+            } else {
+                itemArray.push(requestCobrowse);
+            }
 
             if (this.showHistory) {
                 itemArray.push(hideHistory);
@@ -204,9 +219,13 @@ export default {
         },
 
         requestCobrowse() {
-            axios.get(`/api/v2/cobrowse/chats/${this.chat.id}`)
+            axios.get(`/api/v2/cobrowse/chats/${this.chat.id}`);
+        },
+
+        stopCobrowse() {
+            axios.get(`/api/v2/stop/cobrowse/chats/${this.chat.id}`)
                 .then(response => {
-                    EventHub.emit('chats:cobrowse', response.data);
+                    EventHub.emit('chats:cobrowse:stop', response.data);
                 });
         },
 

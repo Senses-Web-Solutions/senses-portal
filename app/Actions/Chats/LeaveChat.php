@@ -37,7 +37,7 @@ class LeaveChat
 
         $chat->load('agents', 'invitedAgents', 'actionLogs.user');
 
-        app(CreateActionLog::class)->execute($chat, 'left', []);
+        app(CreateActionLog::class)->onQueue()->execute($chat, 'left', []);
 
         event(new \App\Events\Chats\ChatUpdated($chat));
 

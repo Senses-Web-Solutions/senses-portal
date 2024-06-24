@@ -1,12 +1,15 @@
 <template>
     <div
-        class="w-1/5 min-w-80 max-w-96 h-full border-r border-zinc-200 overflow-y-scroll hide-scrollbar"
+        class=" h-full border-r border-zinc-200 overflow-y-scroll hide-scrollbar transition-all duration-300 ease-out"
+        :class="minimisedClasses"
         style="max-height: calc(100vh - 128px); min-height: calc(100vh - 128px)"
     >
         <div class="p-4">
-            <div class="flex justify-between">
-                <h1 class="text-xl font-bold text-black mb-3">Inbox</h1>
-                <h1 class="text-xl font-bold text-black mb-3">{{ totalChats }}</h1>
+            <div class="flex justify-between items-center mb-3">
+                <h1 class="text-xl font-bold text-black">Inbox</h1>
+                <SecondaryButton size="xs" @click="toggleSidebar">
+                    <ChevronDoubleLeftIcon class="'w-4 h-4 text-zinc-500 transition-all duration-300 transform" :class="rotationClasses"/>
+                </SecondaryButton>
             </div>
 
             <SeInput
@@ -42,12 +45,13 @@
 </template>
 <script>
 import { debounce } from 'lodash-es';
-import { SearchIcon } from '@heroicons/vue/outline';
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, SearchIcon } from '@heroicons/vue/outline';
 
 import SeInput from '../../Ui/Inputs/SeInput.vue';
 import EmptyState from '../../Ui/EmptyState.vue';
 import ChatSidebarChatList from './ChatSidebarChatList.vue';
 import LoadingIcon from '../../Ui/LoadingIcon.vue';
+import SecondaryButton from '../../Ui/Buttons/SecondaryButton.vue';
 
 export default {
     components: {
@@ -55,7 +59,10 @@ export default {
         EmptyState,
         SearchIcon,
         ChatSidebarChatList,
-        LoadingIcon
+        LoadingIcon,
+        SecondaryButton,
+        ChevronDoubleLeftIcon,
+        ChevronDoubleRightIcon
     },
     props: {
         chats: {
@@ -87,7 +94,9 @@ export default {
                 new: 'There are no new chats',
                 'in progress': 'There are no chats in progress',
                 'invited': 'You have not been invited to any chats',
-            }
+            },
+
+            minimised: false,
         }
     },
     computed: {
@@ -123,6 +132,17 @@ export default {
 
         totalChats() {
             return this.newChats.length + this.assignedChats.length;
+        },
+
+        minimisedClasses() {
+            return {
+                'w-1/6 min-w-52 max-w-60': this.minimised,
+                'w-1/5 min-w-80 max-w-96': !this.minimised,
+            }
+        },
+
+        rotationClasses() {
+            return this.minimised ? 'rotate-180' : 'rotate-0';
         }
     },
     methods: {
@@ -144,6 +164,10 @@ export default {
 
         selectChat(chat) {
             this.$emit('chatSelected', chat);
+        },
+
+        toggleSidebar() {
+            this.minimised = !this.minimised;
         }
     }
 }

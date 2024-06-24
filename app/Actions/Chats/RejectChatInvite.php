@@ -25,7 +25,7 @@ class RejectChatInvite
         }
 
         $chat->invitedAgents()->detach($user->id);
-        app(CreateActionLog::class)->execute($chat, 'rejected-invite', []);
+        app(CreateActionLog::class)->onQueue()->execute($chat, 'rejected-invite', []);
 
         $chat->load('agents', 'invitedAgents', 'actionLogs.user');
 

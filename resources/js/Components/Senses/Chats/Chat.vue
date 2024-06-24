@@ -1,33 +1,17 @@
 <template>
     <div class="flex flex-col justify-between flex-grow">
         <div class="p-3 border-b border-zinc-200 flex items-center justify-between">
-            <div class="text-black font-semibold text-xl">
+            <div v-if="!cobrowsing" class="text-black font-semibold text-xl">
                 {{ chat.name }}
+            </div>
+            <div v-else class="text-black font-semibold text-xl">
+                Chat
             </div>
 
             <div class="flex items-center">
-                <TransitionGroup
-                    enter-active-class="transition duration-150 ease-out"
-                    enter-from-class="scale-75 opacity-0"
-                    enter-to-class="scale-100 opacity-100"
-                    leave-active-class="transition duration-150 ease-in"
-                    leave-from-class="scale-100 opacity-100"
-                    leave-to-class="scale-75 opacity-0"
-                >
-                    <div v-for="agent in chat.agents" :key="agent.id">
-                        <UserPopover 
-                            panel-class="origin-top-left left-0" 
-                            :id="agent?.id" 
-                            :title="agent?.full_name"
-                        >
-                            <Tag class="mr-2" highlight-border :highlight-dot="false" colour="purple">
-                                {{ agent?.full_name }}
-                            </Tag>
-                        </UserPopover>
-                    </div>
-                </TransitionGroup>
+                <ChatAgents :agents="chat.agents" />
                 <ButtonGroup>
-                    <ChatActions :chat="chat" :show-history="showHistory" />
+                    <ChatActions :chat="chat" :show-history="showHistory" :cobrowsing="cobrowsing" />
                 </ButtonGroup>
             </div>
         </div>
@@ -35,10 +19,10 @@
 
         <div id="messages" class="flex-grow overflow-y-auto overflow-x-hidden p-3 relative bg-white">
             <TransitionGroup
-                enter-active-class="transition duration-150 ease-out"
+                enter-active-class="transition duration-300 ease-out"
                 enter-from-class="scale-75 opacity-0"
                 enter-to-class="scale-100 opacity-100"
-                leave-active-class="transition duration-150 ease-in"
+                leave-active-class="transition duration-300 ease-in"
                 leave-from-class="scale-100 opacity-100"
                 leave-to-class="scale-75 opacity-0"
             >
@@ -66,10 +50,10 @@
 
 import Message from '../Messages/Message.vue';
 import SeInput from '../../Ui/Inputs/SeInput.vue';
-import UserPopover from '../Users/UserPopover.vue';
-import Tag from '../../Ui/Tags/Tag.vue';
+
 import ButtonGroup from '../../Ui/Buttons/ButtonGroup.vue';
 
+import ChatAgents from './ChatAgents.vue';
 import ChatActions from './ChatActions.vue';
 import ChatInput from './ChatInput.vue';
 
@@ -79,9 +63,8 @@ export default {
     components: {
         Message,
         SeInput,
-        UserPopover,
-        Tag,
         ButtonGroup,
+        ChatAgents,
         ChatActions,
         ChatInput
     },
@@ -94,6 +77,10 @@ export default {
             type: Boolean,
             default: false
         },
+        cobrowsing: {
+            type: Boolean,
+            default: false
+        }
     },
     data() {
         return {

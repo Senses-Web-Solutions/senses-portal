@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\ActionLogs\CreateActionLog;
 use App\Actions\Chats\AcceptChatInvite;
 use App\Actions\Chats\ChatInvite;
 use App\Actions\Chats\CobrowseChat;
@@ -17,8 +18,8 @@ use App\Http\Requests\Chats\ChatInviteRequest;
 use App\Http\Requests\Chats\CreateChatRequest;
 use App\Http\Requests\Chats\DeleteChatRequest;
 use App\Http\Requests\Chats\ListChatRequest;
+use App\Http\Requests\Chats\SensesChatCobrowseRequest;
 use App\Http\Requests\Chats\SensesChatSignalRequest;
-use App\Http\Requests\Chats\SensesChatStartCobrowseRequest;
 use App\Http\Requests\Chats\SensesChatTypingRequest;
 use App\Http\Requests\Chats\ShowChatRequest;
 use App\Http\Requests\Chats\ShowSensesChatRequest;
@@ -227,6 +228,7 @@ class ChatController extends Controller
 
     public function cobrowse(Chat|int $chat)
     {
+        app(CreateActionLog::class)->onQueue()->execute($chat, 'requested-cobrowse', []);
         return app(CobrowseChat::class)->execute($chat);
     }
 
@@ -288,14 +290,22 @@ class ChatController extends Controller
         return response()->json(['chat_id' => $chatID, 'name' => $name, 'from_agent' => $fromAgent]);
     }
 
-    public function sensesChatCobrowse(SensesChatStartCobrowseRequest $request)
+    public function sensesChatCobrowse(SensesChatCobrowseRequest $request, int $chatID)
     {
-        $data = $request->all();
-        $chatID = $data['chat_id'];
-
         $chat = Chat::findOrFail($chatID);
 
+        app(CreateActionLog::class)->onQueue()->execute($chat, 'accepted-cobrowse', []);
+
         broadcast_safely(new \App\Events\Chats\StartCobrowse($chatID));
+
+        return $chat;
+    }
+
+    public function sensesChatStopCobrowse(SensesChatCobrowseRequest $request, int $chatID)
+    {
+        $chat = Chat::findOrFail($chatID);
+
+        app(CreateActionLog::class)->onQueue()->execute($chat, 'stopped-cobrowse', []);
         
         return $chat;
     }

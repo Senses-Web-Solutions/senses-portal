@@ -4,7 +4,7 @@
             <AnnotationIcon class="h-4 w-4 text-green-500" />
         </template>
         <template #title>
-            <span class="text-black">{{ author }}</span> started a chat
+            Chat Started
         </template>
     </TimelineItem>
 </template>
@@ -22,11 +22,6 @@ export default {
         actionLog: {
             type: Object,
             required: true
-        },
-    },
-    computed: {
-        author() {
-            return this.actionLog.data.author ?? 'Visitor';
         },
     },
 }
