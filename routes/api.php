@@ -125,6 +125,9 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
     // Users
     Route::get('company/{company}/users', [UserController::class, 'companyUsers']);
     Route::get('chat/invite/users', [UserController::class, 'chatInviteCompanyUsers']);
+
+    // Cobrowse
+    Route::post('/signal', [ChatController::class, 'signal']);
 });
 
 
@@ -148,3 +151,4 @@ Route::post('/files', [FileController::class, 'sensesChatStore']);
 
 // Cobrowse
 Route::post('/cobrowse', [ChatController::class, 'sensesChatCobrowse']);
+Route::post('/signal', [ChatController::class, 'sensesChatSignal']);

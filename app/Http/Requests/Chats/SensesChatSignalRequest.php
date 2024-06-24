@@ -5,7 +5,7 @@ namespace App\Http\Requests\Chats;
 use App\Models\AllowedChatSite;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SensesChatStartCobrowseRequest extends FormRequest
+class SensesChatSignalRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -19,9 +19,12 @@ class SensesChatStartCobrowseRequest extends FormRequest
         // Find AllowedChatSite with the given protocol and domain
         $allowedChatSite = AllowedChatSite::where('url', $protocolAndDomain)->first();
 
+        // TODO: Setup a new table that contains company_id, key, and url
         if ($allowedChatSite) {
             return true;
         }
+
+        logger('Referrer URL is not correct');
 
         return false;
     }
@@ -30,6 +33,7 @@ class SensesChatStartCobrowseRequest extends FormRequest
     {
         $rules = [
             'chat_id' => 'required|integer|exists:chats,id',
+            'data' => 'required|array',
         ];
 
         return $rules;

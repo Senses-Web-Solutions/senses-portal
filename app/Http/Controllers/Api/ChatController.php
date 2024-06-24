@@ -17,10 +17,12 @@ use App\Http\Requests\Chats\ChatInviteRequest;
 use App\Http\Requests\Chats\CreateChatRequest;
 use App\Http\Requests\Chats\DeleteChatRequest;
 use App\Http\Requests\Chats\ListChatRequest;
-use App\Http\Requests\Chats\SensesChatCobrowseRequest;
+use App\Http\Requests\Chats\SensesChatSignalRequest;
+use App\Http\Requests\Chats\SensesChatStartCobrowseRequest;
 use App\Http\Requests\Chats\SensesChatTypingRequest;
 use App\Http\Requests\Chats\ShowChatRequest;
 use App\Http\Requests\Chats\ShowSensesChatRequest;
+use App\Http\Requests\Chats\SignalRequest;
 use App\Http\Requests\Chats\StartChatRequest;
 use App\Http\Requests\Chats\TypingRequest;
 use App\Http\Requests\Chats\UpdateChatRequest;
@@ -228,6 +230,20 @@ class ChatController extends Controller
         return app(CobrowseChat::class)->execute($chat);
     }
 
+    public function signal(SignalRequest $request)
+    {
+        $payload = $request->all();
+        $chatID = $payload['chat_id'];
+        $data = $payload['data'];
+        $fromAgent = true;
+
+        $chat = Chat::findOrFail($chatID);
+
+        broadcast_safely(new \App\Events\Chats\Signal($chat, $fromAgent, $data));
+
+        return $this->respond($chat);
+    }
+
     public function typing(TypingRequest $request)
     {
         $data = $request->all();
@@ -272,17 +288,30 @@ class ChatController extends Controller
         return response()->json(['chat_id' => $chatID, 'name' => $name, 'from_agent' => $fromAgent]);
     }
 
-    public function sensesChatCobrowse(SensesChatCobrowseRequest $request)
+    public function sensesChatCobrowse(SensesChatStartCobrowseRequest $request)
     {
         $data = $request->all();
         $chatID = $data['chat_id'];
-        $html = $data['html'];
-        $stylesheet = $data['stylesheet'] ?? '';
 
         $chat = Chat::findOrFail($chatID);
 
-        broadcast_safely(new \App\Events\Chats\Cobrowse($chat, $html, $stylesheet));
+        broadcast_safely(new \App\Events\Chats\StartCobrowse($chatID));
+        
         return $chat;
+    }
+
+    public function sensesChatSignal(SensesChatSignalRequest $request)
+    {
+        $payload = $request->all();
+        $chatID = $payload['chat_id'];
+        $data = $payload['data'];
+        $fromAgent = false;
+
+        $chat = Chat::findOrFail($chatID);
+
+        broadcast_safely(new \App\Events\Chats\Signal($chat, $fromAgent, $data));
+
+        return $this->respond($chat);
     }
 }
 

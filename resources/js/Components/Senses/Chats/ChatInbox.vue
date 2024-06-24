@@ -11,24 +11,15 @@
             @chatSelected="(chat) => (selectedChat = chat)"
         />
 
-        <div v-if="cobrowsing" class="flex flex-col flex-grow h-full overflow-y-scroll" style="height: calc(100vh - 128px); min-height: calc(100vh - 128px)">
-            <div class="p-3 border-b border-zinc-200 flex items-center">
-                <div class="text-black font-semibold text-xl">
-                    Cobrowsing
-                </div>
-            </div>
-            <div>
-                <iframe id="cobrowse" class="w-full" :srcdoc="htmlContent"></iframe>
-            </div>
-        </div>
-
         <Chat v-if="selectedChat && !cobrowsing" :chat="selectedChat" :show-history="showHistory" />
+        <ChatCobrowse v-if="cobrowsing" :chat="selectedChat" :cobrowsing="cobrowsing" />
         <ChatHistory v-if="selectedChat && showHistory" :chat="selectedChat" />
     </div>
 </template>
 <script>
 import axios from "axios";
 import { Howl, Howler } from "howler";
+
 
 import ChatSidebar from "./ChatSidebar.vue";
 import ChatHistory from "./ChatHistory.vue";
@@ -37,6 +28,7 @@ import Chat from "./Chat.vue";
 import EventHub from "../../../Support/EventHub";
 import useEcho from "../../../Support/useEcho";
 import user from "../../../Support/user";
+import ChatCobrowse from "./ChatCobrowse.vue";
 
 const echo = useEcho();
 
@@ -44,6 +36,7 @@ export default {
     components: {
         ChatSidebar,
         Chat,
+        ChatCobrowse,
         ChatHistory,
     },
     props: {
@@ -77,7 +70,8 @@ export default {
             originalTitle: document.title,
 
             htmlContent: '',
-            cobrowsing: false
+            cobrowsing: false,
+            peer2: null,
         };
     },
     computed: {
@@ -245,7 +239,10 @@ export default {
         },
 
         setupEchoListeners() {
-            echo.private(`companies.${user().company_id}.chat`).listen(
+            const chatChannel = echo.private(`companies.${user().company_id}.chat`);
+            const messageChannel = echo.private(`companies.${user().company_id}.message`);
+
+            chatChannel.listen(
                 "Chats\\ChatCreated",
                 ({ chat }) => {
                     chat.messages = {};
@@ -262,7 +259,7 @@ export default {
                 }
             );
 
-            echo.private(`companies.${user().company_id}.chat`).listen(
+            chatChannel.listen(
                 "Chats\\ChatUpdated",
                 ({ chat }) => {
 
@@ -277,7 +274,7 @@ export default {
                 }
             );
 
-            echo.private(`companies.${user().company_id}.message`).listen(
+            messageChannel.listen(
                 "Messages\\MessageCreated",
                 ({ message }) => {
                     if (
@@ -297,14 +294,14 @@ export default {
                 }
             );
 
-            echo.private(`companies.${user().company_id}.message`).listen(
+            messageChannel.listen(
                 "Messages\\MessageUpdated",
                 ({ message }) => {
                     this.createOrUpdateMessage(message);
                 }
             );
 
-            echo.private(`companies.${user().company_id}.message`).listen(
+            messageChannel.listen(
                 "Chats\\Typing",
                 (data) => {
                     if (data.from_agent) {
@@ -320,7 +317,7 @@ export default {
                 }
             );
 
-            echo.private(`companies.${user().company_id}.message`).listen(
+            messageChannel.listen(
                 "Chats\\StopTyping",
                 (data) => {
                     if (data.from_agent) {
@@ -331,14 +328,14 @@ export default {
                 }
             );
 
-            echo.private(`companies.${user().company_id}.chat`).listen(
-                "Chats\\Cobrowse",
-                ({html, stylesheet}) => {
+            chatChannel.listen(
+                "Chats\\StartCobrowse",
+                ({data}) => {
                     this.cobrowsing = true;
 
-                    const styledHtmlContent = `<link rel="stylesheet" type="text/css" href="${stylesheet}">${html}`
-
-                    this.htmlContent = styledHtmlContent;
+                    this.$nextTick(() => {
+                        EventHub.emit('cobrowsing:start');
+                    });
                 }
             );
         },
