@@ -205,7 +205,7 @@ export default {
                     name: this.user.full_name,
                     from_agent: true,
                 });
-            }, 5000);
+            }, 3000);
         },
 
         textareaPaste(e) {
