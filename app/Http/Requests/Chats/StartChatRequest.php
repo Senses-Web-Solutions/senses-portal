@@ -35,6 +35,7 @@ class StartChatRequest extends FormRequest
             'company_id' => 'required|integer|exists:companies,id',
             'meta' => 'nullable|array|max:255',
             'message' => 'required|array|max:255',
+            'name' => 'required|string|max:255',
             'message.content' => 'required|string|max:255',
             'message.author' => 'required|string|max:255',
             'message.sent_at' => 'required|date_format:Y-m-d H:i:s',

@@ -1,5 +1,5 @@
 <template>
-    <TimelineItem :datetime="actionLog.logged_at">
+    <TimelineItem :datetime="actionLog.logged_at" :last="last">
         <template #icon>
             <AnnotationIcon class="h-4 w-4 text-green-500" />
         </template>
@@ -23,6 +23,10 @@ export default {
             type: Object,
             required: true
         },
+        last: {
+            type: Boolean,
+            default: false
+        }
     },
 }
 </script>

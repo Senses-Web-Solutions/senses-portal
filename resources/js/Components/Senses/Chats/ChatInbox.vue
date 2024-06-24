@@ -1,7 +1,7 @@
 <template>
     <!-- Inbox has three columns -->
     <div
-        class="flex w-full h-full"
+        class="flex w-full h-full overflow-x-hidden"
         style="max-height: calc(100vh - 128px); min-height: calc(100vh - 128px)"
     >
         <ChatSidebar
@@ -13,7 +13,7 @@
 
         <ChatCobrowse v-if="cobrowsing" :chat="selectedChat" :cobrowsing="cobrowsing" />
         <Chat v-if="selectedChat" :chat="selectedChat" :show-history="showHistory" :cobrowsing="cobrowsing" />
-        <ChatHistory v-if="selectedChat && showHistory" :chat="selectedChat" />
+        <ChatHistory :chat="selectedChat" :show="showHistory" />
     </div>
 </template>
 <script>
@@ -187,6 +187,10 @@ export default {
             axios
                 .get(this.url)
                 .then((response) => {
+                    if (response.data === []) {
+                        return;
+                    }
+
                     this.chats = response.data;
                 })
                 .catch((error) => {
@@ -351,9 +355,11 @@ export default {
         },
 
         createOrUpdateMessage(message) {
+            console.log(message);
+            console.log(this.chats);
             const chat = this.chats[message.chat_id];
 
-            if (message.id > chat.last_message.id) {
+            if (message.id > chat.last_message?.id || !chat.last_message) {
                 chat.last_message = message;
             }
 

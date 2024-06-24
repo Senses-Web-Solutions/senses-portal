@@ -1,10 +1,10 @@
 <template>
     <CreatedChatActionLog v-if="created" :action-log="actionLog" :last="last" />
-    <JoinedChatActionLog v-if="joined" :action-log="actionLog" />
-    <LeftChatActionLog v-if="left" :action-log="actionLog" />
-    <SentInviteActionLog v-if="invited" :action-log="actionLog" />
-    <InviteAcceptedActionLog v-if="acceptedInvite" :action-log="actionLog" />
-    <InviteRejectedActionLog v-if="rejectedInvite" :action-log="actionLog" />
+    <JoinedChatActionLog v-if="joined" :action-log="actionLog" :last="last" />
+    <LeftChatActionLog v-if="left" :action-log="actionLog" :last="last"/>
+    <SentInviteActionLog v-if="invited" :action-log="actionLog" :last="last"/>
+    <InviteAcceptedActionLog v-if="acceptedInvite" :action-log="actionLog" :last="last"/>
+    <InviteRejectedActionLog v-if="rejectedInvite" :action-log="actionLog" :last="last"/>
 </template>
 <script>
 import TimelineItem from '../../Timelines/TimelineItem.vue';

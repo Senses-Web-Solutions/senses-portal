@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 border-l border-zinc-200 w-96 overflow-y-scroll">
+    <div v-if="chat?.action_logs" class="border-l border-zinc-200 overflow-y-scroll transition-width duration-300" :class="showClasses">
         <div class="flex items-center justify-between mb-4">
             <h1 class="text-xl font-bold text-black">History</h1>
             <SecondaryButton @click="hide">Hide</SecondaryButton>
@@ -28,9 +28,21 @@ export default {
     },
     props: {
         chat: {
-            type: Object,
+            type: [Object, null],
+            required: true
+        },
+        show: {
+            type: Boolean,
             required: true
         }
+    },
+    computed: {
+        showClasses() {
+            return {
+                'w-0 translate-x-full p-0': !this.show,
+                'w-96 p-4': this.show,
+            }
+        },
     },
     methods: {
         hide() {
@@ -39,3 +51,8 @@ export default {
     },
 }
 </script>
+<style>
+.transition-width {
+    transition-property: width;
+}
+</style>
