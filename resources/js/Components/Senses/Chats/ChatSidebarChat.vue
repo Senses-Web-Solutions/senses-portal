@@ -10,13 +10,13 @@
 
         <div class="w-full">
             <div class="flex justify-between mb-1 w-full">
-                <h4 class="text-black font-semibold">
-                    {{ chat.name }}
+                <h4 class="text-black font-semibold truncate w-[55%]">
+                    {{chat.name}}
                 </h4>
                 <p class="text-zinc-400 text-sm">
                     {{
-                        FormatTime(chat?.last_message?.sent_at, "HH:mm") ??
-                        FormatTime(new Date.now(), "HH:mm")
+                        FormatDateTime(chat?.last_message?.sent_at, "dd/MM HH:mm") ??
+                        FormatDateTime(new Date.now(), "dd/MM HH:mm")
                     }}
                 </p>
             </div>
@@ -40,7 +40,7 @@
     </div>
 </template>
 <script>
-import FormatTime from "../../../Filters/FormatTime";
+import FormatDateTime from "../../../Filters/FormatDateTime";
 import user from "../../../Support/user";
 
 export default {
@@ -91,7 +91,7 @@ export default {
         }
     },
     methods: {
-        FormatTime,
+        FormatDateTime,
         selectChat(chat) {
             this.$emit("select-chat", chat);
         },

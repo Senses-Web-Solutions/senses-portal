@@ -1,6 +1,6 @@
 <template>
     <div
-        class="h-full border-r border-zinc-200 overflow-y-scroll hide-scrollbar transition-all duration-300 ease-out"
+        class="h-full border-r border-zinc-200 overflow-y-scroll hide-scrollbar transition-all duration-500 ease-out"
         :class="minimisedClasses"
         style="max-height: calc(100vh - 128px); min-height: calc(100vh - 128px)"
     >
@@ -8,7 +8,7 @@
             <div class="flex justify-between items-center mb-3">
                 <h1 class="text-xl font-bold text-black">Inbox</h1>
                 <SecondaryButton size="xs" @click="toggleSidebar">
-                    <ChevronDoubleLeftIcon class="'w-4 h-4 text-zinc-500 transition-all duration-300 transform" :class="rotationClasses"/>
+                    <ChevronDoubleLeftIcon class="'w-4 h-4 text-zinc-500 transition-all duration-500 transform" :class="rotationClasses"/>
                 </SecondaryButton>
             </div>
 
