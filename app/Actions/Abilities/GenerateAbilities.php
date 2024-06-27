@@ -121,7 +121,8 @@ class GenerateAbilities
 			'communication-log',
             'chat',
             'message',
-            'allowed-chat-site'
+            'allowed-chat-site',
+            'chat-review'
 			// ----- GENERATOR -----
             //PLEASE remember to add a comma to the above, or the generator will get angry!
         ];
