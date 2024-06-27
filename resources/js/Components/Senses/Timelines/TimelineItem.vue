@@ -30,7 +30,7 @@ export default {
     },
     computed: {
         formattedDatetime() {
-            const date = new Date();
+            const date = new Date(this.datetime);
             const formattedDate = formatDistanceToNow(date, { addSuffix: true });
 
             // If formattedDate contains "about ", remove it
