@@ -32,11 +32,11 @@
                     </template>
 
                     <SidebarSubItem title="Inbox" v-if="user().can('list-chat')" to="/chats" :active="Route.is('chats', 'index')" />
-                    <SidebarSubItem title="Current" v-if="user().can('list-chat')" to="/current/chats" :active="Route.is('current', 'chats')" />
+                    <!-- <SidebarSubItem title="Current" v-if="user().can('list-chat')" to="/current/chats" :active="Route.is('current', 'chats')" />
                     <SidebarSubItem title="Resolved" v-if="user().can('list-chat')" to="/resolved/chats" :active="Route.is('resolved', 'chats')" />
                     <SidebarSubItem title="Unresolved" v-if="user().can('list-chat')" to="/unresolved/chats" :active="Route.is('unresolved', 'chats')" />
                     <SidebarSubItem title="Missed" v-if="user().can('list-chat')" to="/missed/chats" :active="Route.is('missed', 'chats')" />
-                    <SidebarSubItem title="Feedback" v-if="user().can('list-chat')" to="/feedback/chats" :active="Route.is('feedback', 'chats')" />
+                    <SidebarSubItem title="Feedback" v-if="user().can('list-chat')" to="/feedback/chats" :active="Route.is('feedback', 'chats')" /> -->
                     <SidebarSubItem title="Setup" v-if="user().can('list-chat')" to="/setup/chats" :active="Route.is('setup', 'chats')" />
                 </SidebarGroup>
 				<!-- <SidebarItem title="Revenues" v-if="user().can('list-revenue')" to="/revenues" :active="Route.is('revenues', 'any')" /> -->
