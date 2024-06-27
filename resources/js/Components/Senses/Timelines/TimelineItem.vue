@@ -5,7 +5,7 @@
             <div class="!h-8 !w-8 bg-zinc-50 rounded-full flex items-center justify-center z-10 relative">
                 <slot name="icon"></slot>
             </div>
-            <div class="flex items-center justify-between w-full text-sm">
+            <div class="flex items-center justify-between w-[90%] text-sm">
                 <div class="font-medium text-zinc-400 translate-x-3">
                     <slot name="title" />
                 </div>

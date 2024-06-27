@@ -1,9 +1,9 @@
 <template>
     <TransitionGroup
-        enter-active-class="transition duration-300 ease-out"
+        enter-active-class="transition duration-150 ease-out"
         enter-from-class="scale-75 opacity-0"
         enter-to-class="scale-100 opacity-100"
-        leave-active-class="transition duration-300 ease-in"
+        leave-active-class="transition duration-150 ease-in"
         leave-from-class="scale-100 opacity-100"
         leave-to-class="scale-75 opacity-0"
     >

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="chat?.action_logs" class="border-l border-zinc-200 overflow-y-scroll transition-width duration-300" :class="showClasses">
+    <div v-if="chat?.action_logs" class="border-l border-zinc-200 overflow-y-scroll transition-width duration-500" :class="showClasses">
         <div class="flex items-center justify-between mb-4">
             <h1 class="text-xl font-bold text-black">History</h1>
             <SecondaryButton @click="hide">Hide</SecondaryButton>

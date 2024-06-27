@@ -34,6 +34,7 @@ class JoinChat
         }
 
         $chat->agents()->syncWithoutDetaching([$user->id]);
+        $chat->historicalAgents()->syncWithoutDetaching([$user->id]);
         $chat->save();
 
         $chat->load('agents', 'invitedAgents', 'actionLogs.user');
