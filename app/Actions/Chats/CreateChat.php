@@ -35,8 +35,6 @@ class CreateChat
             app(CreateMessage::class)->execute($messageData);
         }
 
-        $chat->load('messages', 'agents', 'invitedAgents', 'actionLogs.user');
-
         app(CreateActionLog::class)->onQueue()->execute($chat, 'created', []);
 
         return $chat;

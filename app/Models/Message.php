@@ -27,6 +27,8 @@ class Message extends Model
         'updated_at' => DateTime::class,
         'deleted_at' => DateTime::class,
         'hidden_at' => DateTime::class,
+
+        'read_by' => 'array',
     ];
 
     public function scopeTableSearch($query, $search)

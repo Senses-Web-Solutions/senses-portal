@@ -9,9 +9,10 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
 class StopTyping implements ShouldBroadcastNow
 {
-    public Chat $chat;
+    private Chat $chat;
     public string $name;
     public bool $from_agent;
+    public int $chat_id;
 
     public function __construct(Chat|int $chat, string $name, bool $fromAgent)
     {
@@ -22,6 +23,7 @@ class StopTyping implements ShouldBroadcastNow
         $this->chat = $chat;
         $this->name = $name;
         $this->from_agent = $fromAgent;
+        $this->chat_id = $chat->id;
     }
 
     public function broadcastWhen()

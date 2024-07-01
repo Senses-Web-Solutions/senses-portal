@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 class MessageCreated implements ShouldBroadcastNow
 {
     public Message $message;
-    public int $company_id;
+    private int $company_id;
 
     public function __construct(Message $message)
     {
@@ -21,7 +21,6 @@ class MessageCreated implements ShouldBroadcastNow
         $this->message = $message;
         $this->company_id = $message->chat->company_id;
 
-        // Take chat off the message to avoid circular reference
         unset($this->message->chat);
     }
 

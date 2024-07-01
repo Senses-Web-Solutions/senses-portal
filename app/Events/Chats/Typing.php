@@ -9,7 +9,8 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
 class Typing implements ShouldBroadcastNow
 {
-    public Chat $chat;
+    private Chat $chat;
+    public int $chat_id;
     public string $name;
     public bool $from_agent;
 
@@ -22,6 +23,7 @@ class Typing implements ShouldBroadcastNow
         $this->chat = $chat;
         $this->name = $name;
         $this->from_agent = $fromAgent;
+        $this->chat_id = $chat->id;
     }
 
     public function broadcastWhen()

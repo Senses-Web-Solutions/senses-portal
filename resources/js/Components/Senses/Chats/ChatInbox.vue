@@ -309,11 +309,11 @@ export default {
                     }
 
                     // If typers does not exist on chat, create it
-                    if (!this.chats[data.chat.id].typers) {
-                        this.chats[data.chat.id].typers = new Set();
+                    if (!this.chats[data.chat_id].typers) {
+                        this.chats[data.chat_id].typers = new Set();
                     }
 
-                    this.addTyper(data.chat.id, data.name);
+                    this.addTyper(data.chat_id, data.name);
                 }
             );
 
@@ -324,7 +324,7 @@ export default {
                         return;
                     }
 
-                    this.removeTyper(data.chat.id, data.name);
+                    this.removeTyper(data.chat_id, data.name);
                 }
             );
 

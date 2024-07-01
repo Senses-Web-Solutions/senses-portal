@@ -19,6 +19,8 @@ class ResolveChat
 
         $chat->status()->associate($status);
 
+        $chat->completed_at = now();
+
         $chat->save();
 
         event(new ChatResolved($chat));

@@ -103,16 +103,17 @@ class Chat extends Model
 
     public function getLastMessageAttribute()
     {
-        return Message::where('chat_id', $this->id)->latest()->first();
+        return Message::where('chat_id', $this->id)->latest()->first(['id', 'chat_id', 'content', 'author', 'sent_at']);
     }
 
     public function getUnreadMessagesAttribute()
     {
-        return Message::where('chat_id', $this->id)->where('read_at', null)->get();
+        return Message::where('chat_id', $this->id)->where('read_at', null)->get(['id', 'chat_id', 'content', 'author', 'sent_at']);
     }
 
     public function getUnreadMessagesCountAttribute()
     {
+        // For counting, selecting specific columns is unnecessary and ignored by the query builder.
         return Message::where('chat_id', $this->id)->where('read_at', null)->where('from_agent', false)->count();
     }
 
