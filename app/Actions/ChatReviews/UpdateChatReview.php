@@ -5,7 +5,7 @@ namespace App\Actions\ChatReviews;
 use App\Models\ChatReview;
 use Spatie\QueueableAction\QueueableAction;
 
-class UpdateChatReviews
+class UpdateChatReview
 {
     use QueueableAction;
 

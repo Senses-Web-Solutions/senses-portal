@@ -18,6 +18,7 @@ class ChatReview extends Model
         'friendliness',
         'responsiveness',
         'overall',
+        'comment'
     ];
 
     protected $casts = [
@@ -41,7 +42,7 @@ class ChatReview extends Model
 
     public function allowedSorts()
     {
-        return ['id', 'chat_id', 'knowledge', 'friendliness', 'responsiveness', 'overall'];
+        return ['id', 'chat_id', 'knowledge', 'friendliness', 'responsiveness', 'overall', 'comment'];
     }
 
     public function allowedEmbeds()
@@ -51,7 +52,7 @@ class ChatReview extends Model
 
     public function allowedFields()
     {
-        return ['id', 'chat_id', 'knowledge', 'friendliness', 'responsiveness', 'overall'];
+        return ['id', 'chat_id', 'knowledge', 'friendliness', 'responsiveness', 'overall', 'comment'];
     }
 
     public function allowedFilters()
@@ -62,18 +63,13 @@ class ChatReview extends Model
             'knowledge' => 'integer',
             'friendliness' => 'integer',
             'responsiveness' => 'integer',
-            'overall' => 'float',
+            'overall' => 'integer',
         ]);
     }
 
     public function chat()
     {
         return $this->belongsTo(Chat::class);
-    }
-
-    public function getAgentsAttribute()
-    {
-        return Chat::find($this->id)->historicalAgents;
     }
 }
 

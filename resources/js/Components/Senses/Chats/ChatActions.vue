@@ -138,9 +138,7 @@ export default {
             const markAsComplete = {
                 title: 'Mark as Complete',
                 icon: 'CheckIcon',
-                action: () => {
-                    // EventHub.emit('chat:close', this.chat.id);
-                }
+                action: this.completeChat
             };
 
             const inviteAgent = {
@@ -183,16 +181,15 @@ export default {
                 itemArray.push(requestCobrowse);
             }
 
+            // If you are an agent in the list of agents
+            itemArray.push(inviteAgent);
             if (this.showHistory) {
                 itemArray.push(hideHistory);
 
             } else {
                 itemArray.push(showHistory);
             }
-
-            // If you are an agent in the list of agents
             itemArray.push(markAsComplete);
-            itemArray.push(inviteAgent);
             itemArray.push(leaveChat);
             itemArray.push({ type: 'divider' });
             itemArray.push(deleteChat);
@@ -235,15 +232,28 @@ export default {
             })
         },
 
+        completeChat() {
+            this.$modals.push('CompleteChatModal', {
+                chat_id: this.chat.id,
+                name: this.chat.name,
+                hideCloseButton: true
+            });
+        },
+
         leaveChat() {
-            axios.get(`/api/v2/leave/chats/${this.chat.id}`);
+            this.$modals.push('LeaveChatModal', {
+                chat_id: this.chat.id,
+                name: this.chat.name,
+                hideCloseButton: true
+            });
         },
 
         deleteChat() {
-            axios.delete(`/api/v2/chats/${this.chat.id}`)
-                .then(response => {
-                    EventHub.emit('chats:delete', this.chat.id);
-                });
+            this.$modals.push('DeleteChatModal', {
+                chat_id: this.chat.id,
+                name: this.chat.name,
+                hideCloseButton: true
+            });
         },
 
         emitShowHistory() {

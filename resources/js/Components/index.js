@@ -85,6 +85,11 @@ import AllowedChatSiteView from "./Senses/AllowedChatSites/AllowedChatSiteView.v
 import ChatInviteForm from "./Senses/Chats/ChatInviteForm.vue";
 
 import GalleryModal from "./Senses/Files/GalleryModal.vue";
+import LeaveChatModal from "./Senses/Chats/LeaveChatModal.vue";
+import DeleteChatModal from "./Senses/Chats/DeleteChatModal.vue";
+import CompleteChatModal from "./Senses/Chats/CompleteChatModal.vue";
+import ChatReviewTable from "./Senses/ChatReviews/ChatReviewTable.vue";
+import AgentChatReviewTable from "./Senses/ChatReviews/AgentChatReviewTable.vue";
 // ----- GENERATOR A -----
 
 export {
@@ -171,5 +176,10 @@ export {
     AllowedChatSiteView,
     ChatInviteForm,
     GalleryModal,
+    LeaveChatModal,
+    DeleteChatModal,
+    CompleteChatModal,
+    ChatReviewTable,
+    AgentChatReviewTable,
     // ----- GENERATOR B -----
 };

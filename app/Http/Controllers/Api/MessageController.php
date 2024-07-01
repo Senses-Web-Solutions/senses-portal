@@ -12,8 +12,8 @@ use App\Http\Requests\Messages\CreateMessageRequest;
 use App\Http\Requests\Messages\DeleteMessageRequest;
 use App\Http\Requests\Messages\ListMessageRequest;
 use App\Http\Requests\Messages\ReadMessageRequest;
-use App\Http\Requests\Messages\SensesChatCreateMessageRequest;
-use App\Http\Requests\Messages\SensesChatReadMessageRequest;
+use App\Http\Requests\Messages\packageCreateMessageRequest;
+use App\Http\Requests\Messages\packageReadMessageRequest;
 use App\Http\Requests\Messages\ShowMessageRequest;
 use App\Http\Requests\Messages\UpdateMessageRequest;
 use App\Models\Message;
@@ -95,14 +95,14 @@ class MessageController extends Controller
         return $this->respond($readMessage->execute($id, $userID));
     }
 
-    public function sensesChatStore(SensesChatCreateMessageRequest $request, CreateMessage $createMessage)
+    public function packageStore(packageCreateMessageRequest $request, CreateMessage $createMessage)
     {
         $data = $request->all();
 
         return $this->respond($createMessage->execute($data));
     }
 
-    public function sensesChatRead(SensesChatReadMessageRequest $request, int $id, ReadMessage $readMessage)
+    public function packageRead(packageReadMessageRequest $request, int $id, ReadMessage $readMessage)
     {
         // Senses system user id
         $userID = getSensesSystemUser()->id;

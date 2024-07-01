@@ -1,9 +1,9 @@
 <template>
     <Transition
-        enter-active-class="duration-300 ease-out"
+        enter-active-class="duration-150 ease-out"
         enter-from-class="opacity-0"
         enter-to-class="opacity-100"
-        leave-active-class="duration-200 ease-in"
+        leave-active-class="duration-150 ease-in"
         leave-from-class="opacity-100"
         leave-to-class="opacity-0">
         <div v-if="$modals.all.length" key="modalBackground" class="fixed z-70 inset-0 bg-gray-500 bg-opacity-75 transition-opacity dark:bg-zinc-950 dark:bg-opacity-70"/>
@@ -18,7 +18,7 @@
             enter-active-class="duration-150 ease-out"
             enter-from-class="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-80"
             enter-to-class="translate-y-0 opacity-100 sm:scale-100"
-            leave-active-class="duration-200 ease-in"
+            leave-active-class="duration-150 ease-in"
             leave-from-class="translate-y-0 opacity-100 sm:scale-100"
             leave-to-class="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-80">
             <div

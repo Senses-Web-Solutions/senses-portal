@@ -17,6 +17,7 @@ use App\Http\Controllers\Web\ServerController;
 use App\Http\Controllers\Web\RevenueController;
 use App\Http\Controllers\Web\SubscriptionController;
 use App\Http\Controllers\Web\CommunicationLogController;
+use App\Http\Controllers\Web\ChatReviewController;
 // ----- GENERATOR 1 -----
 
 /*
@@ -59,4 +60,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/missed/chats', [ChatController::class, 'missed']);
 	Route::get('/feedback/chats', [ChatController::class, 'feedback']);
 	Route::get('/setup/chats', [ChatController::class, 'setup']);
+
+	// Chat reviews
+	Route::get('/chat-reviews', [ChatReviewController::class, 'index']);
 });

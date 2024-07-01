@@ -2,36 +2,39 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Actions\ActionLogs\CreateActionLog;
-use App\Actions\Chats\AcceptChatInvite;
-use App\Actions\Chats\ChatInvite;
-use App\Actions\Chats\CobrowseChat;
-use App\Actions\Chats\CreateChat;
-use App\Actions\Chats\DeleteChat;
-use App\Actions\Chats\GenerateChatShowCache;
-use App\Actions\Chats\JoinChat;
-use App\Actions\Chats\LeaveChat;
-use App\Actions\Chats\RejectChatInvite;
-use App\Actions\Chats\UpdateChat;
-use App\Http\Controllers\Api\Controller;
-use App\Http\Requests\Chats\ChatInviteRequest;
-use App\Http\Requests\Chats\CreateChatRequest;
-use App\Http\Requests\Chats\DeleteChatRequest;
-use App\Http\Requests\Chats\ListChatRequest;
-use App\Http\Requests\Chats\SensesChatCobrowseRequest;
-use App\Http\Requests\Chats\SensesChatSignalRequest;
-use App\Http\Requests\Chats\SensesChatTypingRequest;
-use App\Http\Requests\Chats\ShowChatRequest;
-use App\Http\Requests\Chats\ShowSensesChatRequest;
-use App\Http\Requests\Chats\SignalRequest;
-use App\Http\Requests\Chats\StartChatRequest;
-use App\Http\Requests\Chats\TypingRequest;
-use App\Http\Requests\Chats\UpdateChatRequest;
 use App\Models\Chat;
 use App\Models\Status;
+use App\Traits\ApiResponse;
 use App\Models\StatusGroup;
 use App\Support\QueryBuilder;
-use App\Traits\ApiResponse;
+use App\Actions\Chats\JoinChat;
+use App\Actions\Chats\LeaveChat;
+use App\Actions\Chats\DeleteChat;
+use App\Actions\Chats\ChatInvite;
+use App\Actions\Chats\CreateChat;
+use App\Actions\Chats\UpdateChat;
+use App\Actions\Chats\ResolveChat;
+use App\Actions\Chats\CobrowseChat;
+use App\Actions\Chats\AcceptChatInvite;
+use App\Actions\Chats\RejectChatInvite;
+use App\Actions\Messages\TypingMessage;
+use App\Http\Controllers\Api\Controller;
+use App\Http\Requests\Chats\SignalRequest;
+use App\Http\Requests\Chats\TypingRequest;
+use App\Actions\Messages\StopTypingMessage;
+use App\Actions\ActionLogs\CreateActionLog;
+use App\Http\Requests\Chats\ListChatRequest;
+use App\Actions\Chats\GenerateChatShowCache;
+use App\Http\Requests\Chats\ShowChatRequest;
+use App\Http\Requests\Chats\ChatInviteRequest;
+use App\Http\Requests\Chats\UpdateChatRequest;
+use App\Http\Requests\Chats\CreateChatRequest;
+use App\Http\Requests\Chats\DeleteChatRequest;
+use App\Http\Requests\Chats\PackageTypingRequest;
+use App\Http\Requests\Chats\PackageSignalRequest;
+use App\Http\Requests\Chats\PackageShowChatRequest;
+use App\Http\Requests\Chats\PackageCobrowseRequest;
+use App\Http\Requests\Chats\PackageCreateChatRequest;
 
 /**
  * @group Chat
@@ -73,9 +76,7 @@ class ChatController extends Controller
      */
     public function store(CreateChatRequest $request, CreateChat $createChat)
     {
-        $data = $request->all();
-
-        return $this->respond($createChat->execute($data));
+        return $this->respond($createChat->execute($request->all()));
     }
 
     /**
@@ -102,7 +103,7 @@ class ChatController extends Controller
         return $this->respondDeleted($deleteChat->execute($id));
     }
 
-    public function sensesChatStart(StartChatRequest $request, CreateChat $createChat)
+    public function packageCreate(PackageCreateChatRequest $request, CreateChat $createChat)
     {
         $data = $request->all();
 
@@ -116,7 +117,7 @@ class ChatController extends Controller
         return $this->respond($createChat->execute($data));
     }
 
-    public function sensesChatFetch(ShowSensesChatRequest $request, int $id, GenerateChatShowCache $generateChatShowCache)
+    public function packageShow(PackageShowChatRequest $request, int $id, GenerateChatShowCache $generateChatShowCache)
     {
         return $generateChatShowCache->execute($id);
     }
@@ -166,14 +167,14 @@ class ChatController extends Controller
                 })
                     ->where('status_id', $assignedStatus);
                     })
-            ->orWhere(function ($query) use ($companyID, $unresolvedStatus, $resolvedStatus, $missedStatus) {
+                ->orWhere(function ($query) use ($companyID, $unresolvedStatus, $resolvedStatus, $missedStatus) {
                         $query->where('company_id', $companyID)
-                ->whereNotIn('status_id', [$unresolvedStatus, $resolvedStatus, $missedStatus]);
-            })
-            ->orWhere(function ($query) use ($userID) {
-                $query->whereHas('invitedAgents', function ($query) use ($userID) {
-                    $query->where('users.id', $userID);
-                });
+                    ->whereNotIn('status_id', [$unresolvedStatus, $resolvedStatus, $missedStatus]);
+                })
+                ->orWhere(function ($query) use ($userID) {
+                    $query->whereHas('invitedAgents', function ($query) use ($userID) {
+                        $query->where('users.id', $userID);
+                    });
                     });
             })
             ->get()
@@ -226,6 +227,12 @@ class ChatController extends Controller
         return $this->respond($chat);
     }
 
+    public function resolve(Chat|int $chat)
+    {
+        app(CreateActionLog::class)->onQueue()->execute($chat, 'resolved', []);
+        return app(ResolveChat::class)->execute($chat);
+    }
+
     public function cobrowse(Chat|int $chat)
     {
         app(CreateActionLog::class)->onQueue()->execute($chat, 'requested-cobrowse', []);
@@ -246,51 +253,27 @@ class ChatController extends Controller
         return $this->respond($chat);
     }
 
-    public function typing(TypingRequest $request)
+    public function typing(TypingRequest $request, TypingMessage $typingMessage)
     {
-        $data = $request->all();
-        $chatID = $data['chat_id'];
-        $name = $data['name'];
-        $fromAgent = $data['from_agent'];
-        broadcast_safely(new \App\Events\Chats\Typing($chatID, $name, $fromAgent));
-
-        return response()->json(['chat_id' => $chatID, 'name' => $name, 'from_agent' => $fromAgent]);
+        return $typingMessage->execute($request);
     }
 
-    public function stopTyping(TypingRequest $request)
+    public function stopTyping(TypingRequest $request, StopTypingMessage $stopTypingMessage)
     {
-        $data = $request->all();
-        $chatID = $data['chat_id'];
-        $name = $data['name'];
-        $fromAgent = $data['from_agent'];
-        broadcast_safely(new \App\Events\Chats\StopTyping($chatID, $name, $fromAgent));
-
-        return response()->json(['chat_id' => $chatID, 'name' => $name, 'from_agent' => $fromAgent]);
+        return $stopTypingMessage->execute($request);
     }
 
-    public function sensesChatTyping(SensesChatTypingRequest $request)
+    public function packageTyping(PackageTypingRequest $request, TypingMessage $typingMessage)
     {
-        $data = $request->all();
-        $chatID = $data['chat_id'];
-        $name = $data['name'];
-        $fromAgent = $data['from_agent'];
-        broadcast_safely(new \App\Events\Chats\Typing($chatID, $name, $fromAgent));
-
-        return response()->json(['chat_id' => $chatID, 'name' => $name, 'from_agent' => $fromAgent]);
+        return $typingMessage->execute($request);
     }
 
-    public function sensesChatStopTyping(SensesChatTypingRequest $request)
+    public function packageStopTyping(PackageTypingRequest $request, StopTypingMessage $stopTypingMessage)
     {
-        $data = $request->all();
-        $chatID = $data['chat_id'];
-        $name = $data['name'];
-        $fromAgent = $data['from_agent'];
-        broadcast_safely(new \App\Events\Chats\StopTyping($chatID, $name, $fromAgent));
-
-        return response()->json(['chat_id' => $chatID, 'name' => $name, 'from_agent' => $fromAgent]);
+        return $stopTypingMessage->execute($request);
     }
 
-    public function sensesChatCobrowse(SensesChatCobrowseRequest $request, int $chatID)
+    public function packageCobrowse(PackageCobrowseRequest $request, int $chatID)
     {
         $chat = Chat::findOrFail($chatID);
 
@@ -301,16 +284,16 @@ class ChatController extends Controller
         return $chat;
     }
 
-    public function sensesChatStopCobrowse(SensesChatCobrowseRequest $request, int $chatID)
+    public function packageStopCobrowse(PackageCobrowseRequest $request, int $chatID)
     {
         $chat = Chat::findOrFail($chatID);
 
         app(CreateActionLog::class)->onQueue()->execute($chat, 'stopped-cobrowse', []);
-        
+
         return $chat;
     }
 
-    public function sensesChatSignal(SensesChatSignalRequest $request)
+    public function packageSignal(PackageSignalRequest $request)
     {
         $payload = $request->all();
         $chatID = $payload['chat_id'];

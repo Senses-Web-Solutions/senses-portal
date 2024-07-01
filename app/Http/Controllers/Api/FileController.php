@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Files\CreateFileRequest;
 use App\Http\Requests\Files\DeleteFileRequest;
 use App\Http\Requests\Files\ListFileRequest;
-use App\Http\Requests\Files\SensesChatCreateFileRequest;
+use App\Http\Requests\Files\packageCreateFileRequest;
 use App\Http\Requests\Files\ShowFileRequest;
 use App\Http\Requests\Files\UpdateFileRequest;
 use App\Models\File;
@@ -121,7 +121,7 @@ class FileController extends Controller
      * Creates, saves and returns a file.
      * <aside><ul><li>create-file</li></ul></aside>
      */
-    public function sensesChatStore(SensesChatCreateFileRequest $request, CreateFile $createFile)
+    public function packageStore(packageCreateFileRequest $request, CreateFile $createFile)
     {
         return $this->respond($createFile->execute($request->all()));
     }

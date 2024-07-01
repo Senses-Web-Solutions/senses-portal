@@ -32,6 +32,7 @@
                     </template>
 
                     <SidebarSubItem title="Inbox" v-if="user().can('list-chat')" to="/chats" :active="Route.is('chats', 'index')" />
+                    <SidebarSubItem title="Reviews" v-if="user().can('list-chat-review')" to="/chat-reviews" :active="Route.is('chat-reviews', 'index')" />
                     <!-- <SidebarSubItem title="Current" v-if="user().can('list-chat')" to="/current/chats" :active="Route.is('current', 'chats')" />
                     <SidebarSubItem title="Resolved" v-if="user().can('list-chat')" to="/resolved/chats" :active="Route.is('resolved', 'chats')" />
                     <SidebarSubItem title="Unresolved" v-if="user().can('list-chat')" to="/unresolved/chats" :active="Route.is('unresolved', 'chats')" />

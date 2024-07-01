@@ -2,7 +2,7 @@
     <div
         class="w-80 p-3 relative shadow rounded-lg text-black space-y-1"
         :class="{ 
-            'bg-zinc-200 ml-auto' : message.from_agent, 
+            'bg-zinc-200 dark:bg-zinc-100 ml-auto' : message.from_agent, 
             'bg-primary-200': !message.from_agent,
             'mt-1': inChain,
             'mt-3': !inChain }"

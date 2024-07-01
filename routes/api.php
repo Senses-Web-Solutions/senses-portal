@@ -66,6 +66,7 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
         'chats' => ChatController::class,
         'allowed-chat-sites' => AllowedChatSiteController::class,
         'messages' => MessageController::class,
+        'chat-reviews' => ChatReviewController::class,
 		// ----- GENERATOR 2 -----
     ]);
 
@@ -116,6 +117,7 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
     Route::get('/accept/invite/chats/{chat}', [ChatController::class, 'acceptInvite']);
     Route::get('/reject/invite/chats/{chat}', [ChatController::class, 'rejectInvite']);
     Route::get('/cobrowse/chats/{chat}', [ChatController::class, 'cobrowse']);
+    Route::get('/resolve/chats/{chat}', [ChatController::class, 'resolve']);
 
     // Messages
     Route::get('/messages/{message}/read', [MessageController::class, 'read']);
@@ -128,6 +130,9 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
 
     // Cobrowse
     Route::post('/signal', [ChatController::class, 'signal']);
+
+    // Chat reviews
+    Route::get('/user/{user}/chat-reviews', [ChatReviewController::class, 'userChatReviews']);
 });
 
 
@@ -138,18 +143,21 @@ Route::prefix('v2')->group(function () {
 });
 
 Route::post('/servers/deploy', [ServerController::class, 'deploy']);
-Route::post('/start/chat', [ChatController::class, 'sensesChatStart']);
-Route::get('/chats/{chat}', [ChatController::class, 'sensesChatFetch']);
-Route::post('/messages', [MessageController::class, 'sensesChatStore']);
-Route::get('/messages/{message}/read', [MessageController::class, 'sensesChatRead']);
+Route::post('/chats', [ChatController::class, 'packageCreate']);
+Route::get('/chats/{chat}', [ChatController::class, 'packageShow']);
+Route::post('/messages', [MessageController::class, 'packageStore']);
+Route::get('/messages/{message}/read', [MessageController::class, 'packageRead']);
 
-Route::post('/typing', [ChatController::class, 'sensesChatTyping']);
-Route::post('/stop/typing', [ChatController::class, 'sensesChatStopTyping']);
+Route::post('/typing', [ChatController::class, 'packageTyping']);
+Route::post('/stop/typing', [ChatController::class, 'packageStopTyping']);
 
 // Files
-Route::post('/files', [FileController::class, 'sensesChatStore']);
+Route::post('/files', [FileController::class, 'packageStore']);
 
 // Cobrowse
-Route::get('/stop/cobrowse/chats/{chat}', [ChatController::class, 'sensesChatStopCobrowse']);
-Route::get('/cobrowse/chats/{chat}', [ChatController::class, 'sensesChatCobrowse']);
-Route::post('/signal', [ChatController::class, 'sensesChatSignal']);
+Route::get('/stop/cobrowse/chats/{chat}', [ChatController::class, 'packageStopCobrowse']);
+Route::get('/cobrowse/chats/{chat}', [ChatController::class, 'packageCobrowse']);
+Route::post('/signal', [ChatController::class, 'packageSignal']);
+
+// Review
+Route::post('/chat-reviews', [ChatReviewController::class, 'packageStore']);

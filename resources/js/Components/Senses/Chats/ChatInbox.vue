@@ -144,6 +144,7 @@ export default {
             // EventHub.on("chats:join", this.chatJoined);
             // EventHub.on("chats:leave", this.chatLeft);
             EventHub.on("chats:delete", this.chatDeleted);
+            EventHub.on("chats:complete", this.chatCompleted)
             EventHub.on("chats:fetch", this.fetchChats);
             EventHub.on("chats:show-history", () => (this.showHistory = true));
             EventHub.on("chats:hide-history", () => (this.showHistory = false));
@@ -158,6 +159,10 @@ export default {
             EventHub.off('cobrowse:stop');
         },
         chatDeleted(id) {
+            delete this.chats[id];
+            this.selectedChat = null;
+        },
+        chatCompleted(id) {
             delete this.chats[id];
             this.selectedChat = null;
         },

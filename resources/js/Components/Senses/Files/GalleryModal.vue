@@ -8,7 +8,6 @@
 </template>
 <script>
 import axios from 'axios';
-import pluralize from 'pluralize';
 
 import Gallery from './Gallery.vue';
 import LoadingIcon from '../../Ui/LoadingIcon.vue';
