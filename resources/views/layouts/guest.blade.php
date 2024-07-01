@@ -39,11 +39,17 @@
         <meta http-equiv="refresh" content="{{ (config('session.lifetime') * 60) - 5 }}">
     </head>
 
-    <body class="@yield('body-class') bg-gradient-to-br from-sky-100 via-yellow-50 to-primary-200 h-screen guest-page" :class="window.getCookie('theme')">
+    <body class="@yield('body-class') bg-gradient-to-br from-sky-100 dark:from-sky-50 via-yellow-50 to-primary-200 dark:via-yellow-50 dark:to-primary-100 h-screen guest-page" :class="window.getCookie('theme')">
         <div id="{{ env('SENSES_CLIENT') }}" />
 
         <div id="app">
             @yield('content')
         </div>
     </body>
+    <script>
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            // Device is in dark mode
+            document.documentElement.classList.add('nightwind', 'dark');
+        }
+    </script>
 </html>
