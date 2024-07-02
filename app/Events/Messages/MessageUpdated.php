@@ -14,7 +14,12 @@ class MessageUpdated implements ShouldBroadcastNow
 
     public function __construct(Message $message)
     {
-        $message->load(['status']);
+        $message->load([
+            'status' => function ($query) {
+                $query->select('statuses.id', 'statuses.title', 'statuses.slug', 'statuses.colour', 'statuses.text_colour');
+            },
+            'files'
+        ]);
         $this->message = $message;
         $this->company_id = $message->chat->company_id;
 

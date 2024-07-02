@@ -15,9 +15,14 @@ class MessageCreated implements ShouldBroadcastNow
 
     public function __construct(Message $message)
     {
-        SendMessageNotificationIfUnread::dispatch($message)->delay(now()->addSeconds(5));
+        SendMessageNotificationIfUnread::dispatch($message)->delay(now()->addSeconds(10));
 
-        $message->load(['status']);
+        $message->load([
+            'status' => function ($query) {
+                $query->select('statuses.id', 'statuses.title', 'statuses.slug', 'statuses.colour', 'statuses.text_colour');
+            },
+            'files'
+        ]);
         $this->message = $message;
         $this->company_id = $message->chat->company_id;
 

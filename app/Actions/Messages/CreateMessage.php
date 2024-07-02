@@ -21,7 +21,6 @@ class CreateMessage
         $sentStatus = Status::where('slug', 'sent')->first();
         $message->status()->associate($sentStatus);
 
-        
         $message->save();
 
         if (isset($data['file_ids'])) {
