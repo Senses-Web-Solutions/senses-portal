@@ -9,7 +9,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
 class ChatResolved implements ShouldBroadcastNow
 {
-    public Chat $chat;
+    private Chat $chat;
 
     public function __construct(Chat $chat)
     {

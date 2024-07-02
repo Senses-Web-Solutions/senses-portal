@@ -148,33 +148,30 @@ class ChatController extends Controller
 
         $chats = Chat::with([
             'messages' => function ($query) {
+                $query->select('id', 'chat_id', 'from_agent', 'content', 'author', 'sent_at', 'read_at', 'read_by');
                 $query->orderBy('id');
             },
             'messages.files',
-            'agents',
-            'status',
-            'invitedAgents',
-            'actionLogs' => function ($query) {
-                $query->orderBy('logged_at', 'asc');
-            },
-            'actionLogs.user'
+            'agents:id,full_name,email',
+            'status:id,title,slug,colour,text_colour',
+            'invitedAgents:id,full_name',
         ])
             ->where(function ($query) use ($newStatus, $assignedStatus, $userID, $companyID, $unresolvedStatus, $resolvedStatus, $missedStatus) {
                 $query->where('status_id', $newStatus)
                     ->orWhere(function ($query) use ($assignedStatus, $userID) {
-                $query->whereHas('agents', function ($query) use ($userID) {
-                    $query->where('users.id', $userID); // Specify table name
-                })
-                    ->where('status_id', $assignedStatus);
+                        $query->whereHas('agents', function ($query) use ($userID) {
+                            $query->where('users.id', $userID); // Specify table name
+                        })
+                            ->where('status_id', $assignedStatus);
                     })
-                ->orWhere(function ($query) use ($companyID, $unresolvedStatus, $resolvedStatus, $missedStatus) {
+                    ->orWhere(function ($query) use ($companyID, $unresolvedStatus, $resolvedStatus, $missedStatus) {
                         $query->where('company_id', $companyID)
-                    ->whereNotIn('status_id', [$unresolvedStatus, $resolvedStatus, $missedStatus]);
-                })
-                ->orWhere(function ($query) use ($userID) {
-                    $query->whereHas('invitedAgents', function ($query) use ($userID) {
-                        $query->where('users.id', $userID);
-                    });
+                            ->whereNotIn('status_id', [$unresolvedStatus, $resolvedStatus, $missedStatus]);
+                    })
+                    ->orWhere(function ($query) use ($userID) {
+                        $query->whereHas('invitedAgents', function ($query) use ($userID) {
+                            $query->where('users.id', $userID);
+                        });
                     });
             })
             ->get()
