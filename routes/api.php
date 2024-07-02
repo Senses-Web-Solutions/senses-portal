@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\StatusGroupController;
 use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\UserSettingController;
 use App\Http\Controllers\Api\AbilityGroupController;
+use App\Http\Controllers\Api\ActionLogController;
 use App\Http\Controllers\Api\AllowedChatSiteController;
 use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\NotificationController;
@@ -133,6 +134,9 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
 
     // Chat reviews
     Route::get('/user/{user}/chat-reviews', [ChatReviewController::class, 'userChatReviews']);
+
+    // Action Logs
+    Route::get('/chats/{chat}/action-logs', [ActionLogController::class, 'chatActionLogs']);
 });
 
 

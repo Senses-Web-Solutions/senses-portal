@@ -1,30 +1,37 @@
 <template>
-    <div v-if="chat?.action_logs" class="border-l border-zinc-200 overflow-y-scroll transition-width duration-500" :class="showClasses">
+    <div class="border-l border-zinc-200 overflow-y-scroll transition-width duration-500" :class="showClasses">
         <div class="flex items-center justify-between mb-4">
             <h1 class="text-xl font-bold text-black">History</h1>
             <SecondaryButton @click="hide">Hide</SecondaryButton>
         </div>
 
-        <div v-if="chat.action_logs.length > 0" class="space-y-4">
+        <div v-if="actionLogs.length > 0" class="space-y-4">
             <ChatActionLog
-                v-for="(actionLog, index) in chat.action_logs"
+                v-for="(actionLog, index) in actionLogs"
                 :key="actionLog.id"
                 :action-log="actionLog"
-                :last="index === chat.action_logs.length - 1"
+                :last="index === actionLogs.length - 1"
             />
         </div>
+
+        <EmptyState v-else>
+            No history found
+        </EmptyState>
     </div>
 </template>
 <script>
+import axios from 'axios';
 import ChatActionLog from '../ActionLogs/Chats/ChatActionLog.vue';
 import SecondaryButton from '../../Ui/Buttons/SecondaryButton.vue';
+import EmptyState from '../../Ui/EmptyState.vue';
 
 import EventHub from '../../../Support/EventHub';
 
 export default {
     components: {
         ChatActionLog,
-        SecondaryButton
+        SecondaryButton,
+        EmptyState
     },
     props: {
         chat: {
@@ -36,6 +43,11 @@ export default {
             required: true
         }
     },
+    data() {
+        return {
+            actionLogs: []
+        }
+    },
     computed: {
         showClasses() {
             return {
@@ -44,9 +56,28 @@ export default {
             }
         },
     },
+    watch: {
+        show(value) {
+            if (value) {
+                this.fetchHistory();
+            }
+        }
+    },
     methods: {
         hide() {
             EventHub.emit('chats:hide-history');
+        },
+
+        fetchHistory() {
+            console.log('Fetch history');
+            axios.get(`/api/v2/chats/${this.chat.id}/action-logs`)
+                .then(response => {
+                    response.data.data.sort((a, b) => a.id - b.id);
+                    this.actionLogs = response.data.data;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         }
     },
 }
