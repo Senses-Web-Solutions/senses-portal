@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\AbilityGroupController;
 use App\Http\Controllers\Api\ActionLogController;
 use App\Http\Controllers\Api\AllowedChatSiteController;
 use App\Http\Controllers\Api\ChatController;
+use App\Http\Controllers\Api\ChatUserController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\ServerController;
 use App\Http\Controllers\Api\CompanyController;
@@ -165,3 +166,6 @@ Route::post('/signal', [ChatController::class, 'packageSignal']);
 
 // Review
 Route::post('/chat-reviews', [ChatReviewController::class, 'packageStore']);
+
+// Chat User UUID
+Route::post('/chat-users', [ChatUserController::class, 'packageFindOrCreateChatUser']);

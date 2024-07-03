@@ -33,7 +33,6 @@ class PackageTypingRequest extends FormRequest
     {
         $rules = [
             'chat_id' => 'required|integer|exists:chats,id',
-            'name' => 'required|string|max:255',
             'from_agent' => 'required|boolean',
         ];
 

@@ -21,6 +21,7 @@ class MessageCreated implements ShouldBroadcastNow
             'status' => function ($query) {
                 $query->select('statuses.id', 'statuses.title', 'statuses.slug', 'statuses.colour', 'statuses.text_colour');
             },
+            'author:id,full_name',
             'files'
         ]);
         $this->message = $message;

@@ -147,10 +147,8 @@ class ChatController extends Controller
         $missedStatus = $statusIDs['missed'];
 
         $chats = Chat::with([
-            'messages' => function ($query) {
-                $query->select('id', 'chat_id', 'from_agent', 'content', 'author', 'sent_at', 'read_at', 'read_by');
-                $query->orderBy('id');
-            },
+            'chatUser:id,full_name',
+            'messages',
             'messages.files',
             'agents:id,full_name,email',
             'status:id,title,slug,colour,text_colour',

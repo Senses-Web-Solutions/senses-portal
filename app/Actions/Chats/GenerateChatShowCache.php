@@ -22,7 +22,7 @@ class GenerateChatShowCache
         ];
 
         $with = [
-            'messages:id,chat_id,from_agent,content,author,sent_at,read_at,read_by',
+            'messages:id,chat_id,from_agent,content,sent_at,read_at,read_by,author_id,author_type',
             'agents:id,full_name,email',
             'status:id,title,slug,colour,text_colour',
         ];

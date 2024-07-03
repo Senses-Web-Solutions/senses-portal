@@ -157,6 +157,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Chat::class, 'chat_agents');
     }
 
+    public function messages()
+    {
+        return $this->morphMany(Message::class, 'author');
+    }
+
     public function historicalChats()
     {
         return $this->belongsToMany(Chat::class, 'chat_historical_agents');

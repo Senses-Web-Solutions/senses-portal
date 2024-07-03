@@ -6,6 +6,7 @@ use App\Models\Chat;
 use App\Models\Status;
 use App\Actions\Messages\CreateMessage;
 use App\Actions\ActionLogs\CreateActionLog;
+use App\Models\ChatUser;
 use Spatie\QueueableAction\QueueableAction;
 
 class CreateChat
@@ -23,14 +24,18 @@ class CreateChat
         $newStatus = Status::where('slug', 'new')->first();
         $chat->status()->associate($newStatus);
 
+        $chatUser = ChatUser::where('uuid', $data['chat_user_uuid'])->first();
+        $chat->chatUser()->associate($chatUser);
+
         $chat->save();
 
         if (isset($data['message'])) {
             $messageData = [
                 'chat_id' => $chat->id,
+                'chat_user_uuid' => $data['message']['chat_user_uuid'] ?? null,
                 'content' => $data['message']['content'],
-                'author' => $data['message']['author'],
                 'sent_at' => now(),
+                'from_agent' => $data['message']['from_agent'] ?? false,
             ];
             app(CreateMessage::class)->execute($messageData);
         }

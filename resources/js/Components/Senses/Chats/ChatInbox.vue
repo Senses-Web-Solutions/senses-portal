@@ -278,7 +278,7 @@ export default {
                 "Messages\\MessageCreated",
                 ({ message }) => {
                     if (
-                        message.author !== user().full_name &&
+                        message.author.full_name !== user().full_name &&
                         !this.chatSoundPlaying
                     ) {
                         this.messageSound.play();

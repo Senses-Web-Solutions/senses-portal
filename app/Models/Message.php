@@ -12,9 +12,7 @@ class Message extends Model
 {
     use SensesModel, HasFiles;
 
-
     protected $fillable = [
-        'author',
         'content',
         'meta',
         'sent_at',
@@ -75,6 +73,11 @@ class Message extends Model
     public function status()
     {
         return $this->belongsTo(Status::class);
+    }
+
+    public function author()
+    {
+        return $this->morphTo();
     }
 
     public function hasBeenReadBy($userId)

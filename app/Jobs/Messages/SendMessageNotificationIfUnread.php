@@ -35,7 +35,7 @@ class SendMessageNotificationIfUnread implements ShouldQueue
         $agents = $this->message->chat->agents;
 
         foreach ($agents as $agent) {
-            if ($this->message->hasBeenReadBy($agent->id) || $this->message->author == $agent->full_name) {
+            if ($this->message->hasBeenReadBy($agent->id) || $this->message->author->full_name == $agent->full_name) {
                 continue;
             }
 

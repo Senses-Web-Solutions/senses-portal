@@ -35,7 +35,7 @@ class Chat extends Model
         $table = $this->getTable();
         $query->where(function ($q) use (&$search, $table) {
             $q->where($table . '.id', 'like', '%' . $search . '%');
-            $q->orWhere($table . '.title', 'ilike', '%' . $search . '%');
+            $q->orWhere($table . '.name', 'ilike', '%' . $search . '%');
         });
     }
 
@@ -101,14 +101,19 @@ class Chat extends Model
         return $this->morphMany(ActionLog::class, 'loggable');
     }
 
+    public function chatUser()
+    {
+        return $this->belongsTo(ChatUser::class);
+    }
+
     public function getLastMessageAttribute()
     {
-        return Message::where('chat_id', $this->id)->latest()->first(['id', 'chat_id', 'content', 'author', 'sent_at']);
+        return Message::where('chat_id', $this->id)->latest()->with('author')->first(['id', 'chat_id', 'content', 'sent_at']);
     }
 
     public function getUnreadMessagesAttribute()
     {
-        return Message::where('chat_id', $this->id)->where('read_at', null)->get(['id', 'chat_id', 'content', 'author', 'sent_at']);
+        return Message::where('chat_id', $this->id)->where('read_at', null)->with('author')->get(['id', 'chat_id', 'content', 'sent_at']);
     }
 
     public function getUnreadMessagesCountAttribute()
@@ -122,8 +127,8 @@ class Chat extends Model
         $array = parent::toArray();
 
         // Convert messages to an object keyed by message id
-        $array['messages'] = (object) $this->messages()->get([
-            'id', 'chat_id', 'from_agent', 'content', 'author', 'sent_at', 'read_at', 'read_by'
+        $array['messages'] = (object) $this->messages()->with(['author:id,full_name'])->get([
+            'id', 'chat_id', 'from_agent', 'content', 'sent_at', 'read_at', 'read_by', 'author_type', 'author_id'
         ])->keyBy('id')->all();
 
         return $array;

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Chats;
+namespace App\Http\Requests\ChatUsers;
 
 use App\Models\AllowedChatSite;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PackageCreateChatRequest extends FormRequest
+class PackageFindOrCreateChatUserRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -16,10 +16,10 @@ class PackageCreateChatRequest extends FormRequest
         $parsedUrl = parse_url($referrerUrl);
         $protocolAndDomain = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
 
+        $companyId = $this->input('company_id');
         // Find AllowedChatSite with the given protocol and domain
-        $allowedChatSite = AllowedChatSite::where('url', $protocolAndDomain)->first();
+        $allowedChatSite = AllowedChatSite::where('url', $protocolAndDomain)->where('company_id', $companyId)->first();
 
-        // TODO: Setup a new table that contains company_id, key, and url
         if ($allowedChatSite) {
             return true;
         }
@@ -33,12 +33,11 @@ class PackageCreateChatRequest extends FormRequest
     {
         $rules = [
             'company_id' => 'required|integer|exists:companies,id',
-            'meta' => 'nullable|array|max:255',
-            'chat_user_uuid' => 'required|string|max:255',
-            'message' => 'required|array|max:255',
-            'message.content' => 'required|string|max:255',
-            'message.chat_user_uuid' => 'required_if:message.from_agent,false|string|max:255',
-            'message.from_agent' => 'required|boolean',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'nullable|string|max:255',
+            'full_name' => 'required|string|max:255',
+            'email' => 'nullable|string|max:255',
+            'external_id' => 'nullable|string|max:255',
         ];
 
         return $rules;

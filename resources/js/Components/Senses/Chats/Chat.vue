@@ -113,7 +113,7 @@ export default {
             }
 
             let lastMessage = messages[index - 1];
-            return message.author === lastMessage.author;
+            return message.author.full_name === lastMessage.author.full_name;
         },
     }
 }

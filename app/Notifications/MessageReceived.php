@@ -42,7 +42,7 @@ class MessageReceived extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'title' => $this->message->author . ' Sent You a Message',
+            'title' => $this->message->author->full_name . ' Sent You a Message',
             'description' => str($this->message->content)->limit(30),
             // 'user_id' => $this->message->user->id,
         ];

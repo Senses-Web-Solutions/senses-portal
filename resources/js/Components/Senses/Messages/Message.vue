@@ -8,7 +8,7 @@
             'mt-3': !inChain }"
             :id="'message-' + message.id"
     >
-        <p v-if="!inChain" class="font-semibold">{{ message.author }}</p>
+        <p v-if="!inChain" class="font-semibold">{{ message.author?.full_name }}</p>
 
         <div v-html="message.content" class="message_content" @click="handleClick"></div>
 

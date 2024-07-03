@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Chats;
+namespace App\Http\Requests\ChatUsers;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateChatRequest extends FormRequest
+class UpdateChatUserRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        if (getCurrentUser()?->can('create-chat')) {
+        if (getCurrentUser()?->can('update-chat-user')) {
             return true;
         }
 
@@ -20,12 +20,11 @@ class CreateChatRequest extends FormRequest
         $rules = [
             'company_id' => 'required|integer|exists:companies,id',
             'system' => 'required|string|max:255',
-            'meta' => 'nullable|array|max:255',
-            'chat_user_uuid' => 'required|string|max:255',
-            'message' => 'required|array|max:255',
-            'message.content' => 'required|string|max:255',
-            'message.chat_user_uuid' => 'required_if:message.from_agent,false|string|max:255',
-            'message.from_agent' => 'required|boolean',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'full_name' => 'required|string|max:255',
+            'email' => 'nullable|string|max:255',
+            'external_id' => 'nullable|string|max:255',
         ];
 
         return $rules;

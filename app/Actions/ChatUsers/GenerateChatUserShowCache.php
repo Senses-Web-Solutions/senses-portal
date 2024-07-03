@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Actions\Messages;
+namespace App\Actions\Chats;
 
-use App\Models\Message;
+use App\Models\ChatUser;
 use App\Traits\ApiResponse;
 use Senses\TaggedCache\Facades\TaggedCache;
 use Spatie\QueueableAction\QueueableAction;
 
-class GenerateMessageShowCache
+class GenerateChatUserShowCache
 {
     use QueueableAction, ApiResponse;
 
@@ -15,8 +15,9 @@ class GenerateMessageShowCache
 
     public function execute(int $id)
     {
-        return TaggedCache::responseForever('message-' . $id, function () use ($id) {
-            return $this->respond(Message::with(['status', 'author'])->findOrFail($id));
+
+        return TaggedCache::responseForever('chat-user-' . $id, function () use ($id) {
+            return $this->respond(ChatUser::findOrFail($id));
         });
     }
 }

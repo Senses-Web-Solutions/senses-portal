@@ -8,11 +8,10 @@ class StopTypingMessage
     {
         $data = $request->all();
         $chatID = $data['chat_id'];
-        $name = $data['name'];
         $fromAgent = $data['from_agent'];
-        broadcast_safely(new \App\Events\Chats\StopTyping($chatID, $name, $fromAgent));
+        broadcast_safely(new \App\Events\Chats\StopTyping($chatID, $fromAgent));
 
-        return response()->json(['chat_id' => $chatID, 'name' => $name, 'from_agent' => $fromAgent]);
+        return response()->json(['chat_id' => $chatID, 'from_agent' => $fromAgent]);
     }
 }
 

@@ -114,7 +114,7 @@ export default {
         },
         defaultMessageSent() {
             // Any message sent by the current user
-            return Object.values(this.chat?.messages)?.filter(message => message.author === this.user.full_name);
+            return Object.values(this.chat?.messages)?.filter(message => message.author.full_name === this.user.full_name);
         },
     },
     mounted() {

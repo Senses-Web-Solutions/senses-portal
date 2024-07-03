@@ -74,6 +74,16 @@ class Company extends Model
 		return $this->hasMany(User::class);
 	}
 
+    public function chats()
+    {
+        return $this->hasMany(Chat::class);
+    }
+
+    public function chatUsers()
+    {
+        return $this->hasMany(ChatUser::class);
+    }
+
 }
 
 //Generated 27-10-2023 10:55:44

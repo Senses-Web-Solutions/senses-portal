@@ -14,7 +14,7 @@ class ChatUpdated implements ShouldBroadcastNow
     {
         $chat->load([
             'messages' => function ($query) {
-                $query->select('messages.id', 'messages.chat_id', 'messages.from_agent', 'messages.content', 'messages.author', 'messages.sent_at', 'messages.read_at', 'messages.read_by');
+                $query->select('messages.id', 'messages.chat_id', 'messages.from_agent', 'messages.content', 'messages.author_type', 'messages.author_id', 'messages.sent_at', 'messages.read_at', 'messages.read_by');
             },
             'status' => function ($query) {
                 $query->select('statuses.id', 'statuses.title', 'statuses.slug', 'statuses.colour', 'statuses.text_colour');

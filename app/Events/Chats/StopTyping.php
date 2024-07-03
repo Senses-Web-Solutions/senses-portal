@@ -6,6 +6,7 @@ use App\Models\Chat;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use Illuminate\Support\Facades\Auth;
 
 class StopTyping implements ShouldBroadcastNow
 {
@@ -14,10 +15,16 @@ class StopTyping implements ShouldBroadcastNow
     public bool $from_agent;
     public int $chat_id;
 
-    public function __construct(Chat|int $chat, string $name, bool $fromAgent)
+    public function __construct(Chat|int $chat, bool $fromAgent)
     {
         if (is_int($chat)) {
             $chat = Chat::findOrFail($chat);
+        }
+
+        if ($fromAgent) {
+            $name = Auth::user()->full_name;
+        } else {
+            $name = $chat->chatUser->full_name;
         }
 
         $this->chat = $chat;

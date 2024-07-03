@@ -11,7 +11,7 @@
         <div class="w-full">
             <div class="flex justify-between mb-1 w-full">
                 <h4 class="text-black font-semibold truncate w-[55%]">
-                    {{chat.name}}
+                    {{chat?.chat_user?.full_name ?? 'Visitor' }}
                 </h4>
                 <p class="text-zinc-400 text-sm">
                     {{
@@ -59,7 +59,6 @@ export default {
     computed: {
         chatOverview() {
             if (this.chat?.typers?.size > 0) {
-                // return [...this.chat.typers].join(", ") + " " + (this.chat.typers.size > 1 ? "are" : "is") + " typing...";
                 return "Typing...";
             }
 
@@ -84,7 +83,7 @@ export default {
             const messagesArray = Object.values(this.chat.messages ?? {}) ?? [];
 
             const count = messagesArray.reduce((acc, message) => {
-                return (message.author !== user().full_name && !message.read_at) ? acc + 1 : acc;
+                return (message.author.full_name !== user().full_name && !message.read_at) ? acc + 1 : acc;
             }, 0);
 
             return count;
