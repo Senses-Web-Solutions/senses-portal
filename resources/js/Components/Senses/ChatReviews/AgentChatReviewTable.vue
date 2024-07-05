@@ -32,6 +32,7 @@ export default {
 				{ label: "Friendliness", key: "friendliness" },
                 { label: "Responsiveness", key: "responsiveness" },
                 { label: "Overall", key: "overall" },
+                { label: "Resolved", key: "resolved" },
                 { label: "Comment", key: "comment" },
             ]
         }

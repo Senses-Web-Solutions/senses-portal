@@ -33,6 +33,7 @@ class PackageCreateChatReviewRequest extends FormRequest
             'knowledge' => 'required|integer|between:1,5',
             'friendliness' => 'required|integer|between:1,5',
             'responsiveness' => 'required|integer|between:1,5',
+            'resolved' => 'required|boolean',
             'comment' => 'nullable|string',
         ];
 

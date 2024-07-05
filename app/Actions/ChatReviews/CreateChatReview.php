@@ -4,6 +4,7 @@ namespace App\Actions\ChatReviews;
 
 use App\Models\Chat;
 use App\Models\ChatReview;
+use App\Models\Status;
 use Spatie\QueueableAction\QueueableAction;
 
 class CreateChatReview
@@ -19,6 +20,12 @@ class CreateChatReview
 
         $chatReview->chat()->associate($chat);
         $chatReview->chatUser()->associate($chat->chat_user_id);
+
+        if ($data['resolved'] == false) {
+            $status = Status::where('slug', 'unresolved')->first();
+            $chat->status()->associate($status);
+            $chat->save();
+        }
 
         $chatReview->save();
 
