@@ -1,7 +1,7 @@
 <template>
     <a :href="to" class="text-md group flex cursor-pointer items-center rounded-md px-2 py-1.5" v-bind="$attrs" :class="{
-            'bg-primary-700 text-white': active,
-            'text-zinc-500 hover:bg-primary-200': !active,
+            'bg-primary-700 text-white dark:text-black dark:bg-primary-200': active,
+            'text-zinc-500 hover:bg-primary-200 dark:hover:!bg-primary-700 dark:hover:!text-white': !active,
         }">
 
         <div class="w-4 h-4 mr-2 shrink-0">
@@ -11,7 +11,7 @@
         </div>
 
         <Tooltip class="flex items-center flex-grow truncate mr-3 h-4">
-            <div v-if="title" class="truncate" :class="{ 'text-white': active, 'text-zinc-800': !active }">
+            <div v-if="title" class="truncate">
                 {{ title }}
             </div>
             <IndeterminateLoadingBar v-else></IndeterminateLoadingBar>

@@ -31,8 +31,8 @@
                         <ChatIcon />
                     </template>
 
-                    <SidebarSubItem title="Inbox" v-if="user().can('list-chat')" to="/inbox/chats" :active="Route.is('chats', 'inbox')" />
-                    <SidebarSubItem title="History" v-if="user().can('list-chat')" to="/history/chats" :active="Route.is('chats', 'history')" />
+                    <SidebarSubItem title="Inbox" v-if="user().can('list-chat')" to="/inbox/chats" :active="Route.is('inbox', 'chats')" />
+                    <SidebarSubItem title="History" v-if="user().can('list-chat')" to="/history/chats" :active="Route.is('history', 'chats')" />
                 </SidebarGroup>
 
                 <SidebarItem title="Chat Reviews" v-if="user().can('list-chat-review')" to="/chat-reviews" :active="Route.is('chat-reviews', 'any')">
