@@ -91,6 +91,7 @@ class GenerateAbilities
             'Log Out User',
             'List Hidden User',
             'Unhide user',
+            'List company chat user',
         ];
     }
 
@@ -122,7 +123,8 @@ class GenerateAbilities
             'chat',
             'message',
             'allowed-chat-site',
-            'chat-review'
+            'chat-review',
+            'chat-user'
 			// ----- GENERATOR -----
             //PLEASE remember to add a comma to the above, or the generator will get angry!
         ];

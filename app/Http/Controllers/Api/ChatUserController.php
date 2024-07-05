@@ -15,6 +15,7 @@ use App\Http\Requests\ChatUsers\ListChatUserRequest;
 use App\Http\Requests\ChatUsers\ShowChatUserRequest;
 use App\Http\Requests\ChatUsers\CreateChatUserRequest;
 use App\Http\Requests\ChatUsers\DeleteChatUserRequest;
+use App\Http\Requests\ChatUsers\ListCompanyChatUserRequest;
 use App\Http\Requests\ChatUsers\PackageFindOrCreateChatUserRequest;
 use App\Http\Requests\ChatUsers\UpdateChatUserRequest;
 
@@ -83,6 +84,13 @@ class ChatUserController extends Controller
     public function destroy(DeleteChatUserRequest $request, int $id, DeleteChatUser $deleteChatUser)
     {
         return $this->respondDeleted($deleteChatUser->execute($id));
+    }
+
+    public function listCompanyChatUsers(ListCompanyChatUserRequest $request, int $companyID)
+    {
+        return QueryBuilder::for(ChatUser::class)
+            ->where('company_id', $companyID)
+            ->list();
     }
 
     public function packageFindOrCreateChatUser(PackageFindOrCreateChatUserRequest $request, PackageFindOrCreateChatUser $packageFindOrCreateChatUser)

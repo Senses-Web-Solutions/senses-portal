@@ -52,7 +52,7 @@ class ChatUser extends Model
 
     public function allowedFields()
     {
-        return ['id', 'first_name', 'last_name', 'full_name', 'email', 'external_id', 'system', 'company_id'];
+        return ['id', 'first_name', 'last_name', 'full_name', 'email', 'external_id', 'system', 'company_id', 'average_review', 'total_reviews'];
     }
 
     public function allowedFilters()
@@ -82,6 +82,21 @@ class ChatUser extends Model
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function chatReviews()
+    {
+        return $this->hasMany(ChatReview::class);
+    }
+
+    public function getAverageReviewAttribute()
+    {
+        return $this->chatReviews()->avg('overall');
+    }
+
+    public function getTotalReviewsAttribute()
+    {
+        return $this->chatReviews()->count();
     }
 }
 

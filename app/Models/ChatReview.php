@@ -71,6 +71,11 @@ class ChatReview extends Model
     {
         return $this->belongsTo(Chat::class);
     }
+
+    public function chatUser()
+    {
+        return $this->belongsTo(ChatUser::class);
+    }
 }
 
 //Generated 01-11-2023 11:22:36

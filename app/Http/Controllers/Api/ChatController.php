@@ -35,6 +35,7 @@ use App\Http\Requests\Chats\PackageSignalRequest;
 use App\Http\Requests\Chats\PackageShowChatRequest;
 use App\Http\Requests\Chats\PackageCobrowseRequest;
 use App\Http\Requests\Chats\PackageCreateChatRequest;
+use Carbon\Carbon;
 
 /**
  * @group Chat
@@ -101,6 +102,91 @@ class ChatController extends Controller
     public function destroy(DeleteChatRequest $request, int $id, DeleteChat $deleteChat)
     {
         return $this->respondDeleted($deleteChat->execute($id));
+    }
+
+    public function userChatsStats(ListChatRequest $request, int $userID)
+    {
+        $chats = QueryBuilder::for(Chat::class)
+            ->whereHas('historicalAgents', function ($query) use ($userID) {
+                $query->where('user_id', $userID);
+            })
+            ->list();
+
+        $messagesFromThisAgent = $chats->sum(function ($chat) use ($userID) {
+            return $chat->messages->where('author_type', 'user')->where('author_id', $userID)->count();
+        });
+
+        $averageMessages = $chats->count() ? $messagesFromThisAgent / $chats->count() : 0;
+
+        $duration = $chats->sum(function ($chat) {
+            $start = Carbon::parse($chat->created_at);
+            $end = Carbon::parse($chat->completed_at);
+            return $end->diffInSeconds($start); // This will give you the duration in seconds
+        });
+
+        $averageDuration = $chats->count() ? $duration / $chats->count() : 0;
+
+        $resolvedStatus = Status::where('slug', 'resolved')->pluck('id')->first();
+        $unresolvedStatus = Status::where('slug', 'unresolved')->pluck('id')->first();
+
+        $resolvedChats = $chats->where('status_id', $resolvedStatus)->count();
+        $unresolvedChats = $chats->where('status_id', $unresolvedStatus)->count();
+
+        $completedChats = $chats->where('completed_at', '!=', null)->count();
+
+        $stats = [
+            'messages' => $averageMessages,
+            'duration' => $averageDuration,
+            'resolved' => $resolvedChats,
+            'unresolved' => $unresolvedChats,
+            'completed_chats' => $completedChats,
+        ];
+
+        return $this->respond($stats);
+    }
+
+    public function chatUserChatsStats(ListChatRequest $request, int $chatUserID)
+    {
+        $chats = QueryBuilder::for(Chat::class)->where('chat_user_id', $chatUserID)->list();
+
+        $messagesFromThisAgent = $chats->sum(function ($chat) use ($chatUserID) {
+            return $chat->messages->where('author_type', 'chat-user')->where('author_id', $chatUserID)->count();
+        });
+
+        $averageMessages = $chats->count() ? $messagesFromThisAgent / $chats->count() : 0;
+
+        $duration = $chats->sum(function ($chat) {
+            $start = Carbon::parse($chat->created_at);
+            $end = Carbon::parse($chat->completed_at);
+            return $end->diffInSeconds($start); // This will give you the duration in seconds
+        });
+
+        $averageDuration = $chats->count() ? $duration / $chats->count() : 0;
+
+        $resolvedStatus = Status::where('slug', 'resolved')->pluck('id')->first();
+        $unresolvedStatus = Status::where('slug', 'unresolved')->pluck('id')->first();
+
+        $resolvedChats = $chats->where('status_id', $resolvedStatus)->count();
+        $unresolvedChats = $chats->where('status_id', $unresolvedStatus)->count();
+
+        $completedChats = $chats->where('completed_at', '!=', null)->count();
+
+        $stats = [
+            'messages' => $averageMessages,
+            'duration' => $averageDuration,
+            'resolved' => $resolvedChats,
+            'unresolved' => $unresolvedChats,
+            'completed_chats' => $completedChats,
+        ];
+
+        return $this->respond($stats);
+    }
+
+    public function chatUserChats(ListChatRequest $request, int $chatUserId)
+    {
+        return QueryBuilder::for(Chat::class)
+            ->where('chat_user_id', $chatUserId)
+            ->list();
     }
 
     public function packageCreate(PackageCreateChatRequest $request, CreateChat $createChat)
@@ -180,6 +266,36 @@ class ChatController extends Controller
             ->sortByDesc(function ($chat) {
                 return $chat->last_message ? $chat->last_message->sent_at : null;
             })
+            ->values();
+
+        $chats = $chats->keyBy('id');
+
+        return $this->respond($chats);
+    }
+
+    /**
+     * history()
+     *
+     * Fetches your assigned chats and incoming chats.
+     * <aside><ul><li>list-chat</li></ul></aside>
+     */
+    public function history(ListChatRequest $request)
+    {
+        $companyID = auth()->user()->company_id;
+
+        $chats = Chat::with([
+            'chatUser:id,full_name',
+            'messages',
+            'messages.files',
+            'agents:id,full_name,email',
+            'status:id,title,slug,colour,text_colour',
+            'invitedAgents:id,full_name',
+        ])->where('company_id', $companyID)
+            ->get()
+            ->each(function ($chat) {
+                $chat->setRelation('messages', $chat->messages->keyBy('id'));
+            })
+            ->append(['last_message'])
             ->values();
 
         $chats = $chats->keyBy('id');

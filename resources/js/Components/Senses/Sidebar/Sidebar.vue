@@ -31,15 +31,28 @@
                         <ChatIcon />
                     </template>
 
-                    <SidebarSubItem title="Inbox" v-if="user().can('list-chat')" to="/chats" :active="Route.is('chats', 'index')" />
-                    <SidebarSubItem title="Reviews" v-if="user().can('list-chat-review')" to="/chat-reviews" :active="Route.is('chat-reviews', 'index')" />
-                    <!-- <SidebarSubItem title="Current" v-if="user().can('list-chat')" to="/current/chats" :active="Route.is('current', 'chats')" />
-                    <SidebarSubItem title="Resolved" v-if="user().can('list-chat')" to="/resolved/chats" :active="Route.is('resolved', 'chats')" />
-                    <SidebarSubItem title="Unresolved" v-if="user().can('list-chat')" to="/unresolved/chats" :active="Route.is('unresolved', 'chats')" />
-                    <SidebarSubItem title="Missed" v-if="user().can('list-chat')" to="/missed/chats" :active="Route.is('missed', 'chats')" />
-                    <SidebarSubItem title="Feedback" v-if="user().can('list-chat')" to="/feedback/chats" :active="Route.is('feedback', 'chats')" /> -->
-                    <SidebarSubItem title="Setup" v-if="user().can('list-chat')" to="/setup/chats" :active="Route.is('setup', 'chats')" />
+                    <SidebarSubItem title="Inbox" v-if="user().can('list-chat')" to="/inbox/chats" :active="Route.is('chats', 'inbox')" />
+                    <SidebarSubItem title="History" v-if="user().can('list-chat')" to="/history/chats" :active="Route.is('chats', 'history')" />
                 </SidebarGroup>
+
+                <SidebarItem title="Chat Reviews" v-if="user().can('list-chat-review')" to="/chat-reviews" :active="Route.is('chat-reviews', 'any')">
+                    <template #icon>
+                        <StarIcon />
+                    </template>
+                </SidebarItem>
+
+                <SidebarItem title="Chat Users" v-if="user().can('list-chat-user')" to="/chat-users" :active="Route.is('chat-users', 'any')">
+                    <template #icon>
+                        <UserGroupIcon />
+                    </template>
+                </SidebarItem>
+
+                <SidebarItem title="Chat Settings" v-if="user().can('list-chat')" to="/setup/chats" :active="Route.is('setup', 'any')">
+                    <template #icon>
+                        <CogIcon />
+                    </template>
+                </SidebarItem>
+
 				<!-- <SidebarItem title="Revenues" v-if="user().can('list-revenue')" to="/revenues" :active="Route.is('revenues', 'any')" /> -->
 				<!-- <SidebarItem title="Subscriptions" v-if="user().can('list-subscription')" to="/subscriptions" :active="Route.is('subscriptions', 'any')" /> -->
 				<!-- <SidebarItem title="Communication Logs" v-if="user().can('list-communication-log')" to="/communication-logs" :active="Route.is('communication-logs', 'any')" /> -->
@@ -120,6 +133,8 @@ import {
     AcademicCapIcon,
     GlobeAltIcon,
     CheckIcon,
+    StarIcon,
+    UserGroupIcon
 } from "@heroicons/vue/outline";
 import axios from 'axios';
 import { mapStores } from "pinia";
@@ -167,6 +182,8 @@ export default {
         GlobeAltIcon,
         AcademicCapIcon,
         CheckIcon,
+        StarIcon,
+        UserGroupIcon
     },
     provide() {
         return {

@@ -19,7 +19,7 @@
 </template>
 <script>
 import axios from 'axios';
-import { LoginIcon, MailIcon, LogoutIcon, TrashIcon, CheckIcon, XIcon, EyeIcon, EyeOffIcon, DesktopComputerIcon, StopIcon } from '@heroicons/vue/outline';
+import { LoginIcon, MailIcon, LogoutIcon, TrashIcon, CheckIcon, XIcon, EyeIcon, EyeOffIcon, DesktopComputerIcon, StopIcon, UserIcon } from '@heroicons/vue/outline';
 
 import SeMenu from '../../Ui/Menu/SeMenu.vue';
 import MenuItem from '../../Ui/Menu/MenuItem.vue';
@@ -46,7 +46,8 @@ export default {
         EyeIcon,
         EyeOffIcon,
         DesktopComputerIcon,
-        StopIcon
+        StopIcon,
+        UserIcon
     },
 
     props: {
@@ -59,6 +60,10 @@ export default {
             default: false
         },
         cobrowsing: {
+            type: Boolean,
+            default: false
+        },
+        historical: {
             type: Boolean,
             default: false
         }
@@ -79,7 +84,7 @@ export default {
             return this.chat.agents.find(agent => agent.id === this.user.id);
         },
         menuItems() {
-            const itemArray = [];
+            let itemArray = [];
 
             const acceptInvite = {
                 title: 'Accept Invite',
@@ -130,7 +135,7 @@ export default {
             };
 
             const showHistory = {
-                title: 'Show History',
+                title: 'View History',
                 icon: 'EyeIcon',
                 action: this.emitShowHistory
             };
@@ -152,6 +157,25 @@ export default {
                 }
             }
 
+            const viewChatUser = {
+                title: 'View Chat User',
+                icon: 'UserIcon',
+                disabled: () => !this.chat.chat_user_id,
+                action: () => {
+                    window.open(`/chat-users/${this.chat.chat_user_id}`, '_blank');
+                }
+            }
+
+            if (this.historical) {
+                itemArray.push(showHistory);
+                itemArray.push(viewChatUser);
+                itemArray.push({ type: 'divider' });
+                itemArray.push(deleteChat);
+                // Add divider between
+
+                return itemArray;
+            }
+
             // If you are an invited agent in the list of agents, have an accept and reject button
             if (this.yourInvited) {
                 itemArray.push(acceptInvite);
@@ -165,10 +189,10 @@ export default {
                 itemArray.push(joinChat);
                 if (this.showHistory) {
                     itemArray.push(hideHistory);
-
                 } else {
                     itemArray.push(showHistory);
                 }
+                itemArray.push(viewChatUser);
                 itemArray.push({ type: 'divider' });
                 itemArray.push(deleteChat);
 
@@ -185,14 +209,15 @@ export default {
             itemArray.push(inviteAgent);
             if (this.showHistory) {
                 itemArray.push(hideHistory);
-
             } else {
                 itemArray.push(showHistory);
             }
+            itemArray.push(viewChatUser);
             itemArray.push(markAsComplete);
             itemArray.push(leaveChat);
             itemArray.push({ type: 'divider' });
             itemArray.push(deleteChat);
+
 
             return itemArray;
         }

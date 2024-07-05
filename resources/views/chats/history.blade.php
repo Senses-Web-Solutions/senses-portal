@@ -13,7 +13,7 @@
 </page-header>
 
 <page-layout flush>
-    <chat-inbox url="/api/v2/history/chats"></chat-inbox>
+    <chat-historical-inbox url="/api/v2/history/chats"></chat-historical-inbox>
 </page-layout>
 
 @endsection

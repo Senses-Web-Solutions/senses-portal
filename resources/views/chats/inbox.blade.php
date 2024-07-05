@@ -5,10 +5,14 @@
 @section('content')
 
 <page-header>
-    <template #title>Missed Chats</template>
+    <template #title>Chats</template>
+
+    <template #actions>
+        {{-- <chat-actions></chat-actions> --}}
+    </template>
 </page-header>
 
-<page-layout>
+<page-layout flush>
     <chat-inbox></chat-inbox>
 </page-layout>
 

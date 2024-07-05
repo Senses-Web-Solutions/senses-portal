@@ -76,6 +76,7 @@ import CommunicationLogTable from './Senses/CommunicationLogs/CommunicationLogTa
 import CommunicationLogForm from './Senses/CommunicationLogs/CommunicationLogForm.vue';
 
 import ChatInbox from "./Senses/Chats/ChatInbox.vue";
+import ChatHistoricalInbox from "./Senses/Chats/ChatHistoricalInbox.vue";
 import ChatActions from "./Senses/Chats/ChatActions.vue";
 import AllowedChatSites from "./Senses/AllowedChatSites/AllowedChatSites.vue";
 import AllowedChatSiteActions from "./Senses/AllowedChatSites/AllowedChatSiteActions.vue";
@@ -90,6 +91,9 @@ import DeleteChatModal from "./Senses/Chats/DeleteChatModal.vue";
 import CompleteChatModal from "./Senses/Chats/CompleteChatModal.vue";
 import ChatReviewTable from "./Senses/ChatReviews/ChatReviewTable.vue";
 import AgentChatReviewTable from "./Senses/ChatReviews/AgentChatReviewTable.vue";
+import CompanyChatUserTable from "./Senses/ChatUsers/CompanyChatUserTable.vue";
+import AgentChatReviews from "./Senses/ChatReviews/AgentChatReviews.vue";
+import ChatUserShow from "./Senses/ChatUsers/ChatUserShow.vue";
 // ----- GENERATOR A -----
 
 export {
@@ -181,5 +185,9 @@ export {
     CompleteChatModal,
     ChatReviewTable,
     AgentChatReviewTable,
+    CompanyChatUserTable,
+    AgentChatReviews,
+    ChatUserShow,
+    ChatHistoricalInbox,
     // ----- GENERATOR B -----
 };

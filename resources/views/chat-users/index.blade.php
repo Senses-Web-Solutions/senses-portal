@@ -1,15 +1,15 @@
 @extends('layouts.senses')
 
-@section('title', 'Chats')
+@section('title', 'Chat Users')
 
 @section('content')
 
 <page-header>
-    <template #title>Chat Feedback</template>
+    <template #title>Chat Users</template>
 </page-header>
 
 <page-layout>
-    <chat-inbox></chat-inbox>
+    <company-chat-user-table></company-chat-user-table>
 </page-layout>
 
 @endsection

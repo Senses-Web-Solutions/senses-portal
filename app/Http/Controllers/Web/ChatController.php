@@ -22,15 +22,6 @@ class ChatController extends Controller
         return view('chats.show', compact('id'));
     }
 
-    public function current()
-    {
-        if (!getCurrentUser()->can('list-chat')) {
-            abort(403);
-        }
-
-        return view('chats.current');
-    }
-
     public function resolved()
     {
         if (!getCurrentUser()->can('list-chat')) {
@@ -49,13 +40,22 @@ class ChatController extends Controller
         return view('chats.unresolved');
     }
 
-    public function missed()
+    public function inbox()
     {
         if (!getCurrentUser()->can('list-chat')) {
             abort(403);
         }
 
-        return view('chats.missed');
+        return view('chats.inbox');
+    }
+
+    public function history()
+    {
+        if (!getCurrentUser()->can('list-chat')) {
+            abort(403);
+        }
+
+        return view('chats.history');
     }
 
     public function feedback()

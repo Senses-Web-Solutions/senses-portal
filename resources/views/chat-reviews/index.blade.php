@@ -9,7 +9,7 @@
 </page-header>
 
 <page-layout>
-    <agent-chat-review-table></agent-chat-review-table>
+    <agent-chat-reviews></agent-chat-reviews>
 </page-layout>
 
 @endsection

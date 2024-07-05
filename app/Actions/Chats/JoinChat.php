@@ -35,6 +35,12 @@ class JoinChat
 
         $chat->agents()->syncWithoutDetaching([$user->id]);
         $chat->historicalAgents()->syncWithoutDetaching([$user->id]);
+
+        // If the chat's answered_at is null, then set it to the current time
+        if (is_null($chat->answered_at)) {
+            $chat->answered_at = now();
+        }
+
         $chat->save();
 
         app(ReadChat::class)->onQueue()->execute($chat);

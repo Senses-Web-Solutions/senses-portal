@@ -6,7 +6,7 @@
     >
         <div class="p-4">
             <div class="flex justify-between items-center mb-3">
-                <h1 class="text-xl font-bold text-black">Inbox</h1>
+                <h1 class="text-xl font-bold text-black">History</h1>
                 <SecondaryButton size="xs" @click="toggleSidebar">
                     <ChevronDoubleLeftIcon class="'w-4 h-4 text-zinc-500 transition-all duration-500 transform" :class="rotationClasses"/>
                 </SecondaryButton>
@@ -82,51 +82,21 @@ export default {
     data() {
         return {
             filteredChats: {
-                assigned: [],
-                new: [],
-                'in progress': [],
-                'invited': [],
+                chats: [],
             },
 
             searchQuery: '',
             emptyMessages: {
-                assigned: 'You have are not assigned to any chats',
-                new: 'There are no new chats',
-                'in progress': 'There are no chats in progress',
-                'invited': 'You have not been invited to any chats',
+                chats: 'There are no historical chats.',
             },
 
             minimised: false,
         }
     },
     computed: {
-        assignedChats() {
-            return this.getChats('assigned') ?? [];
-        },
-
-        unassignedChats() {
-            return this.getChats('unassigned') ?? [];
-        },
-
-        newChats() {
-            return this.getChats('new') ?? [];
-        },
-
-        inProgressChats() {
-            return this.getChats('in progress') ?? [];
-        },
-
-        invitedChats() {
-            return this.getChats('invited') ?? [];
-        },
-
         formattedChats() {
             return {
-                assigned: this.assignedChats,
-                unassigned: this.unassignedChats,
-                new: this.newChats,
-                'in progress': this.inProgressChats,
-                'invited': this.invitedChats,
+                chats: this.filteredChats['chats'].length > 0 ? this.filteredChats['chats'] : this.chats
             };
         },
 
@@ -146,21 +116,9 @@ export default {
         }
     },
     methods: {
-        getChats(type) {
-            if (this.searchQuery && this.filteredChats[type]?.length === 0) {
-                this.emptyMessages[type] = `No "${type.charAt(0).toUpperCase() + type.slice(1)}" chats found for "${this.searchQuery}"`;
-                return [];
-            }
-
-            return this.filteredChats[type]?.length > 0 ? this.filteredChats[type] : this.chats[type];
-        },
         searchChats: debounce(function() {
-            ['new', 'assigned'].forEach(type => {
-                if (this.chats[type]?.length) {
-                    this.filteredChats[type] = this.chats[type].filter(chat => {
-                        return chat?.chat_user?.full_name.toLowerCase().includes(this.searchQuery.toLowerCase());
-                    });
-                }
+            this.filteredChats['chats'] = this.chats.filter(chat => {
+                return chat?.chat_user?.full_name.toLowerCase().includes(this.searchQuery.toLowerCase());
             });
         }, 250),
 

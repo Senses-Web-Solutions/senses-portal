@@ -11,7 +11,7 @@
             <div class="flex items-center">
                 <ChatAgents :agents="chat.agents" />
                 <ButtonGroup>
-                    <ChatActions :chat="chat" :show-history="showHistory" :cobrowsing="cobrowsing" />
+                    <ChatActions :chat="chat" :show-history="showHistory" :cobrowsing="cobrowsing" :historical="historical" />
                 </ButtonGroup>
             </div>
         </div>
@@ -42,7 +42,7 @@
         </div>
 
 
-        <ChatInput :chat="chat" :your-assigned="yourAssigned" />
+        <ChatInput v-if="showInput" :chat="chat" :your-assigned="yourAssigned" />
     </div>
 </template>
 
@@ -78,6 +78,14 @@ export default {
             default: false
         },
         cobrowsing: {
+            type: Boolean,
+            default: false
+        },
+        showInput: {
+            type: Boolean,
+            default: true
+        },
+        historical: {
             type: Boolean,
             default: false
         }

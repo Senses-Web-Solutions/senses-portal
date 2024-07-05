@@ -51,7 +51,7 @@ class Chat extends Model
 
     public function allowedFields()
     {
-        return ['id', 'company_id', 'system', 'meta', 'completed_at', 'status_id'];
+        return ['id', 'company_id', 'system', 'meta', 'created_at', 'completed_at', 'status_id'];
     }
 
     public function allowedFilters()

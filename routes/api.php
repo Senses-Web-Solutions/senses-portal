@@ -69,6 +69,7 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
         'allowed-chat-sites' => AllowedChatSiteController::class,
         'messages' => MessageController::class,
         'chat-reviews' => ChatReviewController::class,
+        'chat-users' => ChatUserController::class,
 		// ----- GENERATOR 2 -----
     ]);
 
@@ -113,6 +114,7 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
 
     // Chats
     Route::get('/inbox/chats', [ChatController::class, 'inbox']);
+    Route::get('/history/chats', [ChatController::class, 'history']);
     Route::get('/join/chats/{chat}', [ChatController::class, 'join']);
     Route::get('/leave/chats/{chat}', [ChatController::class, 'leave']);
     Route::post('/invite/agents', [ChatController::class, 'invite']);
@@ -120,6 +122,9 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
     Route::get('/reject/invite/chats/{chat}', [ChatController::class, 'rejectInvite']);
     Route::get('/cobrowse/chats/{chat}', [ChatController::class, 'cobrowse']);
     Route::get('/resolve/chats/{chat}', [ChatController::class, 'resolve']);
+    Route::get('/chat-users/{chat_user}/chats', [ChatController::class, 'chatUserChats']);
+    Route::get('/users/{user}/chats/stats', [ChatController::class, 'userChatsStats']);
+    Route::get('/chat-users/{chat_user}/chats/stats', [ChatController::class, 'chatUserChatsStats']);
 
     // Messages
     Route::get('/messages/{message}/read', [MessageController::class, 'read']);
@@ -135,9 +140,15 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
 
     // Chat reviews
     Route::get('/user/{user}/chat-reviews', [ChatReviewController::class, 'userChatReviews']);
+    Route::get('/user/{user}/chat-reviews/stats', [ChatReviewController::class, 'userChatReviewStats']);
+    Route::get('/chat-users/{chat_user}/chat-reviews', [ChatReviewController::class, 'chatUserChatReviews']);
+    Route::get('/chat-users/{chat_user}/chat-reviews/stats', [ChatReviewController::class, 'chatUserChatReviewStats']);
 
     // Action Logs
     Route::get('/chats/{chat}/action-logs', [ActionLogController::class, 'chatActionLogs']);
+
+    // Chat Users
+    Route::get('/company/{company}/chat-users', [ChatUserController::class, 'listCompanyChatUsers']);
 });
 
 

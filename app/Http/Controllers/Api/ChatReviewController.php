@@ -85,10 +85,47 @@ class ChatReviewController extends Controller
     public function userChatReviews(ListChatReviewRequest $request, int $userId)
     {
         return QueryBuilder::for(ChatReview::class)
-            ->whereHas('chat.historicalAgents', function ($query) {
-                $query->where('user_id', auth()->id());
+            ->whereHas('chat.historicalAgents', function ($query) use ($userId) {
+                $query->where('user_id', $userId);
             })
             ->list();
+    }
+
+    public function userChatReviewStats(ListChatReviewRequest $request, int $userId)
+    {
+        $chatReviews = ChatReview::whereHas('chat.historicalAgents', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->get();
+
+        $data = [
+            'overall' => round($chatReviews->avg('overall'), 1),
+            'knowledge' => round($chatReviews->avg('knowledge'), 1),
+            'friendliness' => round($chatReviews->avg('friendliness'), 1),
+            'responsiveness' => round($chatReviews->avg('responsiveness'), 1),
+        ];
+
+        return $this->respond($data);
+    }
+
+    public function chatUserChatReviews(ListChatReviewRequest $request, int $chatUserId)
+    {
+        return QueryBuilder::for(ChatReview::class)
+            ->where('chat_user_id', $chatUserId)
+            ->list();
+    }
+
+    public function chatUserChatReviewStats(ListChatReviewRequest $request, int $chatUserId)
+    {
+        $chatReviews = ChatReview::where('chat_user_id', $chatUserId)->get();
+
+        $data = [
+            'overall' => round($chatReviews->avg('overall'), 1),
+            'knowledge' => round($chatReviews->avg('knowledge'), 1),
+            'friendliness' => round($chatReviews->avg('friendliness'), 1),
+            'responsiveness' => round($chatReviews->avg('responsiveness'), 1),
+        ];
+
+        return $this->respond($data);
     }
 
     public function packageStore(PackageCreateChatReviewRequest $request, CreateChatReview $createChatReview)
