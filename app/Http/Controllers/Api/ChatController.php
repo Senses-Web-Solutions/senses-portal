@@ -36,6 +36,7 @@ use App\Http\Requests\Chats\PackageShowChatRequest;
 use App\Http\Requests\Chats\PackageCobrowseRequest;
 use App\Http\Requests\Chats\PackageCreateChatRequest;
 use Carbon\Carbon;
+use Stevebauman\Location\Facades\Location;
 
 /**
  * @group Chat
@@ -77,7 +78,17 @@ class ChatController extends Controller
      */
     public function store(CreateChatRequest $request, CreateChat $createChat)
     {
-        return $this->respond($createChat->execute($request->all()));
+        $data = $request->all();
+        $ip = $request->getClientIp();
+
+        $data['ip'] = $ip;
+        $location = Location::get($ip);
+        if ($location) {
+            $data['lng'] = $location->longitude;
+            $data['lat'] = $location->latitude;
+            $data['country_code'] = $location->countryCode;
+        }
+        return $this->respond($createChat->execute($data));
     }
 
     /**
@@ -194,6 +205,16 @@ class ChatController extends Controller
         $data = $request->all();
 
         $referrerUrl = $request->headers->get('referer');
+        $data = $request->all();
+        $ip = $request->getClientIp();
+
+        $data['ip'] = $ip;
+        $location = Location::get($ip);
+        if ($location) {
+            $data['lng'] = $location->longitude;
+            $data['lat'] = $location->latitude;
+            $data['country_code'] = $location->countryCode;
+        }
 
         // Parse the referrer URL to get just the protocol and domain name
         $parsedUrl = parse_url($referrerUrl);

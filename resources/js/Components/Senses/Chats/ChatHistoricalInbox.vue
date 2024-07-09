@@ -12,15 +12,24 @@
         />
 
         <ChatCobrowse v-if="cobrowsing" :chat="selectedChat" :cobrowsing="cobrowsing" />
-        <Chat v-if="selectedChat" :chat="selectedChat" :show-history="showHistory" :cobrowsing="cobrowsing" :show-input="false" :historical="true"/>
-        <ChatHistory :chat="selectedChat" :show="showHistory" />
+        <Chat 
+            v-if="selectedChat" 
+            :chat="selectedChat" 
+            :show-history="showHistory" 
+            :cobrowsing="cobrowsing" 
+            :show-input="false" 
+            :historical="true"
+        />
+        <ChatDetails :chat="selectedChat" :show="showDetails" />
+        <ChatActionLogs :chat="selectedChat" :show="showHistory" />
     </div>
 </template>
 <script>
 import axios from "axios";
 
 import ChatHistoricalSidebar from "./ChatHistoricalSidebar.vue";
-import ChatHistory from "./ChatHistory.vue";
+import ChatActionLogs from "./ChatActionLogs.vue";
+import ChatDetails from "./ChatDetails.vue";
 import Chat from "./Chat.vue";
 
 import EventHub from "../../../Support/EventHub";
@@ -35,7 +44,8 @@ export default {
         ChatHistoricalSidebar,
         Chat,
         ChatCobrowse,
-        ChatHistory,
+        ChatActionLogs,
+        ChatDetails
     },
     props: {
         url: {
@@ -49,6 +59,7 @@ export default {
 
             selectedChat: null,
             showHistory: false,
+            showDetails: false,
             loadingChats: true,
 
             originalTitle: document.title,
@@ -81,6 +92,8 @@ export default {
             EventHub.on("chats:fetch", this.fetchChats);
             EventHub.on("chats:show-history", () => (this.showHistory = true));
             EventHub.on("chats:hide-history", () => (this.showHistory = false));
+            EventHub.on("chats:show-details", () => (this.showDetails = true));
+            EventHub.on("chats:hide-details", () => (this.showDetails = false));
             EventHub.on('cobrowse:stop', () => {this.cobrowsing = false});
         },
         destroyEventHubListeners() {
@@ -89,6 +102,8 @@ export default {
             EventHub.off("chats:fetch");
             EventHub.off("chats:show-history");
             EventHub.off("chats:hide-history");
+            EventHub.off("chats:show-details");
+            EventHub.off("chats:hide-details");
             EventHub.off('cobrowse:stop');
         },
         chatDeleted(id) {

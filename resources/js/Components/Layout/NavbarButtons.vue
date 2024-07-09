@@ -89,6 +89,7 @@ export default {
         }
 
         this.darkMode = window.getCookie('theme') == 'dark';
+        window.localStorage.setItem('darkMode', JSON.stringify(this.darkMode))
     },
 
     methods: {
@@ -100,9 +101,11 @@ export default {
             if (v) {
                 document.getElementById('app').classList.add('dark');
                 window.setCookie('theme', 'dark');
+                window.localStorage.setItem('darkMode', JSON.stringify(window.getCookie('theme') == 'dark'))
             } else {
                 document.getElementById('app').classList.remove('dark');
                 window.setCookie('theme', 'light');
+                window.localStorage.setItem('darkMode', JSON.stringify(window.getCookie('theme') == 'dark'))
             }
         }
     },

@@ -1,19 +1,11 @@
 <?php
 namespace App\Traits;
 
-use App\Casts\Point;
-use App\Casts\Polygon;
 use App\Casts\Geometry;
-use App\Casts\LineString;
-use App\Casts\MultiPoint;
 use App\Scopes\PostgisScope;
-use App\Casts\MultiLineString;
-use App\Casts\GeometryCollection;
 use Illuminate\Support\Facades\DB;
 use App\Scopes\PostgisTransformScope;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\Pivot;
 
 trait HasPostgis
 {
@@ -39,9 +31,9 @@ trait HasPostgis
     public function scopeWhereInBoundingBox($query, $column, $minLat, $minLng, $maxLat, $maxLng, $inputSrid = null)
     {
         $inputSrid = $this->getInputSrid($inputSrid);
-        $outputSrid = $this->getOutputSrid();
+        $configInputSrid = $this->getInputSrid();
 
-        return $query->whereRaw("ST_Intersects(ST_TRANSFORM(ST_MakeEnvelope(?, ?, ?, ?, $inputSrid),$outputSrid), ?)", [$minLat, $minLng, $maxLat, $maxLng, $column]);
+        return $query->whereRaw("ST_Intersects(ST_TRANSFORM(ST_MakeEnvelope(?, ?, ?, ?, $inputSrid),$configInputSrid), $column)", [$minLat, $minLng, $maxLat, $maxLng]);
     }
 
     public function scopeWhereInPolygon($query, $column, $lineString, $inputSrid = null)

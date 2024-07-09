@@ -1,8 +1,8 @@
 <template>
     <div class="relative">
-        <span v-if="!last" class="absolute top-5 -ml-px h-full w-0.5 bg-zinc-50 left-4" aria-hidden="true"></span>
+        <span v-if="!last" class="absolute top-5 -ml-px h-full w-0.5 bg-zinc-100 left-4" aria-hidden="true"></span>
         <div class="flex items-center w-full">
-            <div class="!h-8 !w-8 bg-zinc-50 rounded-full flex items-center justify-center z-10 relative">
+            <div class="!h-8 !w-8 bg-zinc-100 rounded-full flex items-center justify-center z-10 relative">
                 <slot name="icon"></slot>
             </div>
             <div class="flex items-center justify-between w-[90%] text-sm">

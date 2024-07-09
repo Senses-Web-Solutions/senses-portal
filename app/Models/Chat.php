@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Casts\Point;
+use App\Traits\HasPostgis;
 use App\Traits\SensesModel;
 use App\Traits\HasActionLogs;
 
@@ -10,13 +12,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Chat extends Model
 {
-    use SensesModel, HasActionLogs;
-
+    use SensesModel, HasActionLogs, HasPostgis;
 
     protected $fillable = [
         'system',
-        'name',
         'meta',
+        'country_code',
+        'ip',
+        'language',
+        'timezone',
+        'device_resolution',
+        'tab_resolution',
+        'browser',
+        'browser_version',
+        'os',
+        'os_version',
+        'device',
     ];
 
     protected $casts = [
@@ -25,7 +36,8 @@ class Chat extends Model
         'updated_at' => DateTime::class,
         'deleted_at' => DateTime::class,
         'hidden_at' => DateTime::class,
-        'meta' => 'json'
+        'meta' => 'json',
+        'geom' => Point::class,
     ];
 
     protected $excludedActionLogs = ['created', 'updated'];
@@ -41,7 +53,7 @@ class Chat extends Model
 
     public function allowedSorts()
     {
-        return ['id', 'company_id', 'system', 'meta', 'completed_at', 'status_id'];
+        return ['id', 'company_id', 'system', 'meta', 'completed_at', 'status_id', 'country_code'];
     }
 
     public function allowedEmbeds()
@@ -51,7 +63,7 @@ class Chat extends Model
 
     public function allowedFields()
     {
-        return ['id', 'company_id', 'system', 'meta', 'created_at', 'completed_at', 'status_id'];
+        return ['id', 'company_id', 'system', 'meta', 'created_at', 'completed_at', 'status_id', 'country_code'];
     }
 
     public function allowedFilters()
@@ -63,6 +75,7 @@ class Chat extends Model
             'meta' => 'string',
             'completed_at' => 'datetime',
             'status_id' => 'integer',
+            'country_code' => 'string',
         ]);
     }
 

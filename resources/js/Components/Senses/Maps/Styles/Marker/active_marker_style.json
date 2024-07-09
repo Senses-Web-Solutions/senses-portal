@@ -1,0 +1,44 @@
+{
+    "id": "active-markers",
+    "type": "circle",
+    "source": "markers",
+    "filter": [
+        "all",
+        ["!", ["has", "point_count"]],
+        ["==", ["get", "active"], true]
+    ],
+    "paint": {
+        "circle-color": [
+            "case",
+            ["has", "colour"],
+            ["get", "colour"],
+            "#886CB3"
+        ],
+        "circle-radius": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            5,
+            4,
+            10,
+            6,
+            15,
+            12
+        ],
+        "circle-stroke-width": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            5,
+            0,
+            10,
+            1
+        ],
+        "circle-stroke-color": [
+            "case",
+            ["has", "border_colour"],
+            ["get", "border_colour"],
+            "#884917"
+        ]
+    }
+}

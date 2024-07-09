@@ -19,7 +19,7 @@
 </template>
 <script>
 import axios from 'axios';
-import { LoginIcon, MailIcon, LogoutIcon, TrashIcon, CheckIcon, XIcon, EyeIcon, EyeOffIcon, DesktopComputerIcon, StopIcon, UserIcon } from '@heroicons/vue/outline';
+import { LoginIcon, MailIcon, LogoutIcon, TrashIcon, CheckIcon, XIcon, EyeIcon, EyeOffIcon, DesktopComputerIcon, StopIcon, UserIcon, InformationCircleIcon, BookOpenIcon } from '@heroicons/vue/outline';
 
 import SeMenu from '../../Ui/Menu/SeMenu.vue';
 import MenuItem from '../../Ui/Menu/MenuItem.vue';
@@ -47,7 +47,9 @@ export default {
         EyeOffIcon,
         DesktopComputerIcon,
         StopIcon,
-        UserIcon
+        UserIcon,
+        InformationCircleIcon,
+        BookOpenIcon
     },
 
     props: {
@@ -56,6 +58,10 @@ export default {
             required: true
         },
         showHistory: {
+            type: Boolean,
+            default: false
+        },
+        showDetails: {
             type: Boolean,
             default: false
         },
@@ -130,14 +136,26 @@ export default {
 
             const hideHistory = {
                 title: 'Hide History',
-                icon: 'EyeOffIcon',
-                action: this.hideHistory
+                icon: 'BookOpenIcon',
+                action: this.emitHideHistory
             };
 
             const showHistory = {
                 title: 'View History',
-                icon: 'EyeIcon',
+                icon: 'BookOpenIcon',
                 action: this.emitShowHistory
+            };
+
+            const showDetails = {
+                title: 'View Details',
+                icon: 'InformationCircleIcon',
+                action: this.emitShowDetails
+            };
+
+            const hideDetails = {
+                title: 'Hide Details',
+                icon: 'InformationCircleIcon',
+                action: this.emiteHideDetails
             };
 
             const markAsComplete = {
@@ -167,7 +185,18 @@ export default {
             }
 
             if (this.historical) {
-                itemArray.push(showHistory);
+                if (this.showHistory) {
+                    itemArray.push(hideHistory);
+                } else {
+                    itemArray.push(showHistory);
+                }
+                
+                if (this.showDetails) {
+                    itemArray.push(hideDetails);
+                } else {
+                    itemArray.push(showDetails);
+                }
+
                 itemArray.push(viewChatUser);
                 itemArray.push({ type: 'divider' });
                 itemArray.push(deleteChat);
@@ -187,11 +216,19 @@ export default {
             // If you are not an agent in the list of agents
             if (!this.yourAssigned) {
                 itemArray.push(joinChat);
+
+                if (this.showDetails) {
+                    itemArray.push(hideDetails);
+                } else {
+                    itemArray.push(showDetails);
+                }
+
                 if (this.showHistory) {
                     itemArray.push(hideHistory);
                 } else {
                     itemArray.push(showHistory);
                 }
+
                 itemArray.push(viewChatUser);
                 itemArray.push({ type: 'divider' });
                 itemArray.push(deleteChat);
@@ -207,11 +244,18 @@ export default {
 
             // If you are an agent in the list of agents
             itemArray.push(inviteAgent);
+            if (this.showDetails) {
+                itemArray.push(hideDetails);
+            } else {
+                itemArray.push(showDetails);
+            }
+
             if (this.showHistory) {
                 itemArray.push(hideHistory);
             } else {
                 itemArray.push(showHistory);
             }
+
             itemArray.push(viewChatUser);
             itemArray.push(markAsComplete);
             itemArray.push(leaveChat);
@@ -285,9 +329,17 @@ export default {
             EventHub.emit('chats:show-history');
         },
 
-        hideHistory() {
+        emitHideHistory() {
             EventHub.emit('chats:hide-history');
         },
+
+        emitShowDetails() {
+            EventHub.emit('chats:show-details');
+        },
+
+        emiteHideDetails() {
+            EventHub.emit('chats:hide-details');
+        }
     }
 }
 </script>

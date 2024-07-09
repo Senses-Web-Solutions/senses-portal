@@ -7,6 +7,7 @@ use App\Models\Status;
 use App\Actions\Messages\CreateMessage;
 use App\Actions\ActionLogs\CreateActionLog;
 use App\Models\ChatUser;
+use Shapefile\Geometry\Point;
 use Spatie\QueueableAction\QueueableAction;
 
 class CreateChat
@@ -17,15 +18,19 @@ class CreateChat
     {
         $chat = new Chat($data);
 
-        if (isset($data['company_id'])) {
-            $chat->company()->associate($data['company_id']);
-        }
+        $chatUser = ChatUser::where('uuid', $data['chat_user_uuid'])->first();
+        $chat->chatUser()->associate($chatUser);
+        $companyId = $chatUser->company_id;
+
+        $chat->company()->associate($companyId);
 
         $newStatus = Status::where('slug', 'new')->first();
         $chat->status()->associate($newStatus);
 
-        $chatUser = ChatUser::where('uuid', $data['chat_user_uuid'])->first();
-        $chat->chatUser()->associate($chatUser);
+
+        if (isset($data['lat']) && isset($data['lng'])) {
+            $chat->geom = new Point($data['lng'], $data['lat']);
+        }
 
         $chat->save();
 

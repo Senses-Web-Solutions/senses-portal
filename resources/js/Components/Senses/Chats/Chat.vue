@@ -2,7 +2,7 @@
     <div class="flex flex-col justify-between flex-grow">
         <div class="p-3 border-b border-zinc-200 flex items-center justify-between">
             <div v-if="!cobrowsing" class="text-black font-semibold text-xl">
-                {{ chat.name }}
+                {{ chat?.chat_user?.full_name }}
             </div>
             <div v-else class="text-black font-semibold text-xl">
                 Chat
@@ -11,7 +11,7 @@
             <div class="flex items-center">
                 <ChatAgents :agents="chat.agents" />
                 <ButtonGroup>
-                    <ChatActions :chat="chat" :show-history="showHistory" :cobrowsing="cobrowsing" :historical="historical" />
+                    <ChatActions :chat="chat" :show-history="showHistory" :show-details="showDetails" :cobrowsing="cobrowsing" :historical="historical" />
                 </ButtonGroup>
             </div>
         </div>
@@ -58,6 +58,7 @@ import ChatActions from './ChatActions.vue';
 import ChatInput from './ChatInput.vue';
 
 import user from '../../../Support/user';
+import EventHub from '../../../Support/EventHub';
 
 export default {
     components: {
@@ -77,6 +78,10 @@ export default {
             type: Boolean,
             default: false
         },
+        showDetails: {
+            type: Boolean,
+            default: false
+        },
         cobrowsing: {
             type: Boolean,
             default: false
@@ -92,7 +97,7 @@ export default {
     },
     data() {
         return {
-
+            keydownListener: null
         }
     },
     computed: {
@@ -110,7 +115,42 @@ export default {
         }
     },
 
+    mounted() {
+        this.setupKeyboardListeners();
+    },
+
+    beforeUnmount() {
+        this.destroyKeyboardListeners();
+    },
+
     methods: {
+        setupKeyboardListeners() {
+            this.keydownListener = (event) => {
+                if (event.ctrlKey) {
+                    if (event.key === 'd') {
+                        if (this.showDetails) {
+                            EventHub.emit('chats:hide-details');
+                        } else {
+                            EventHub.emit('chats:show-details');
+                        }
+                    }
+
+                    else if (event.key === 'h') {
+                        if (this.showHistory) {
+                            EventHub.emit('chats:hide-history');
+                        } else {
+                            EventHub.emit('chats:show-history');
+                        }
+                    }
+
+                    event.preventDefault(); // Prevent default action to avoid any browser shortcut conflict
+                }
+            };
+            document.addEventListener('keydown', this.keydownListener);
+        },
+        destroyKeyboardListeners() {
+            document.removeEventListener('keydown', this.keydownListener);
+        },
         isInChain(message) {
             let messages = Object.values(this.chat.messages);
             // Find index of message in array of messages

@@ -12,22 +12,30 @@
         />
 
         <ChatCobrowse v-if="cobrowsing" :chat="selectedChat" :cobrowsing="cobrowsing" />
-        <Chat v-if="selectedChat" :chat="selectedChat" :show-history="showHistory" :cobrowsing="cobrowsing" />
-        <ChatHistory :chat="selectedChat" :show="showHistory" />
+        <Chat 
+            v-if="selectedChat" 
+            :chat="selectedChat" 
+            :show-history="showHistory" 
+            :show-details="showDetails" 
+            :cobrowsing="cobrowsing" 
+        />
+        <ChatDetails :chat="selectedChat" :show="showDetails" />
+        <ChatActionLogs :chat="selectedChat" :show="showHistory" />
     </div>
 </template>
 <script>
 import axios from "axios";
 import { Howl, Howler } from "howler";
 
-import ChatSidebar from "./ChatSidebar.vue";
-import ChatHistory from "./ChatHistory.vue";
 import Chat from "./Chat.vue";
+import ChatSidebar from "./ChatSidebar.vue";
+import ChatCobrowse from "./ChatCobrowse.vue";
+import ChatActionLogs from "./ChatActionLogs.vue";
+import ChatDetails from "./ChatDetails.vue";
 
 import EventHub from "../../../Support/EventHub";
 import useEcho from "../../../Support/useEcho";
 import user from "../../../Support/user";
-import ChatCobrowse from "./ChatCobrowse.vue";
 
 const echo = useEcho();
 
@@ -36,7 +44,8 @@ export default {
         ChatSidebar,
         Chat,
         ChatCobrowse,
-        ChatHistory,
+        ChatActionLogs,
+        ChatDetails,
     },
     props: {
         url: {
@@ -50,6 +59,7 @@ export default {
 
             selectedChat: null,
             showHistory: false,
+            showDetails: false,
             loadingChats: true,
 
             chatSoundPlaying: false,
@@ -89,7 +99,6 @@ export default {
                 let slug = chat.status.slug;
 
                 if (chat?.invited_agents.some((agent) => agent.id === user().id)) {
-                    console.log('Put in invited')
                     slug = "invited";
                 }
 
@@ -148,6 +157,8 @@ export default {
             EventHub.on("chats:fetch", this.fetchChats);
             EventHub.on("chats:show-history", () => (this.showHistory = true));
             EventHub.on("chats:hide-history", () => (this.showHistory = false));
+            EventHub.on("chats:show-details", () => (this.showDetails = true));
+            EventHub.on("chats:hide-details", () => (this.showDetails = false));
             EventHub.on('cobrowse:stop', () => {this.cobrowsing = false});
         },
         destroyEventHubListeners() {
@@ -156,6 +167,8 @@ export default {
             EventHub.off("chats:fetch");
             EventHub.off("chats:show-history");
             EventHub.off("chats:hide-history");
+            EventHub.off("chats:show-details");
+            EventHub.off("chats:hide-details");
             EventHub.off('cobrowse:stop');
         },
         chatDeleted(id) {
@@ -360,8 +373,6 @@ export default {
         },
 
         createOrUpdateMessage(message) {
-            console.log(message);
-            console.log(this.chats);
             const chat = this.chats[message.chat_id];
 
             if (message.id > chat.last_message?.id || !chat.last_message) {

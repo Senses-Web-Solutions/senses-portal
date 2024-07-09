@@ -12,6 +12,7 @@ class DetermineUserSettingAction
         'table' => GetTableUserSetting::class,
         'impersonation' => GetUserImpersonationSetting::class,
         'contact' => GetContactUserSetting::class,
+        'map' => GetMapUserSetting::class,
     ];
 
     public function execute(string $setting)

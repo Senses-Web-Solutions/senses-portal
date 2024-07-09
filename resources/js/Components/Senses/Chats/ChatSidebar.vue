@@ -4,27 +4,26 @@
         :class="minimisedClasses"
         style="max-height: calc(100vh - 128px); min-height: calc(100vh - 128px)"
     >
-        <div class="p-4">
-            <div class="flex justify-between items-center mb-3">
+            <div class="flex justify-between gap-3 items-center p-3">
                 <h1 class="text-xl font-bold text-black">Inbox</h1>
+
+                <SeInput
+                    v-model="searchQuery"
+                    id="search"
+                    name="search"
+                    placeholder="Search"
+                    class="!border-l-0 focus:!ring-0 focus:!border-zinc-300 !pl-0 !min-h-8"
+                    @update:modelValue="searchChats"
+                >
+                    <template #icon>
+                        <SearchIcon class="w-5 h-5 text-zinc-300" />
+                    </template>
+                </SeInput>
+
                 <SecondaryButton size="xs" @click="toggleSidebar">
                     <ChevronDoubleLeftIcon class="'w-4 h-4 text-zinc-500 transition-all duration-500 transform" :class="rotationClasses"/>
                 </SecondaryButton>
             </div>
-
-            <SeInput
-                v-model="searchQuery"
-                id="search"
-                name="search"
-                placeholder="Search"
-                class="!border-l-0 focus:!ring-0 focus:!border-zinc-300 !pl-0"
-                @update:modelValue="searchChats"
-            >
-                <template #icon>
-                    <SearchIcon class="w-5 h-5 text-zinc-300" />
-                </template>
-            </SeInput>
-        </div>
 
         <div v-if="formattedChats && !loadingChats" class="h-full space-y-4">
             <ChatSidebarChatList
@@ -97,6 +96,7 @@ export default {
             },
 
             minimised: false,
+            keydownListener: null
         }
     },
     computed: {
@@ -145,7 +145,25 @@ export default {
             return this.minimised ? 'rotate-180' : 'rotate-0';
         }
     },
+    mounted() {
+        this.setupKeyboardListeners();
+    },
+    beforeUnmount() {
+        this.destroyKeyboardListeners();
+    },
     methods: {
+        setupKeyboardListeners() {
+            this.keydownListener = (event) => {
+                if (event.ctrlKey && event.key === 'm') {
+                    this.toggleSidebar();
+                    event.preventDefault(); // Prevent default action to avoid any browser shortcut conflict
+                }
+            };
+            document.addEventListener('keydown', this.keydownListener);
+        },
+        destroyKeyboardListeners() {
+            document.removeEventListener('keydown', this.keydownListener);
+        },
         getChats(type) {
             if (this.searchQuery && this.filteredChats[type]?.length === 0) {
                 this.emptyMessages[type] = `No "${type.charAt(0).toUpperCase() + type.slice(1)}" chats found for "${this.searchQuery}"`;

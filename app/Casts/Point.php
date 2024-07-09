@@ -3,6 +3,7 @@
 namespace App\Casts;
 
 use App\Casts\Postgis;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Shapefile\Geometry\Point as PostgisPoint;
@@ -21,13 +22,13 @@ class Point extends Postgis
     public function get($model, $key, $value, $attributes)
     {
         if($value instanceof \Illuminate\Database\Query\Expression) {
-            $value = Str::between($value->getValue(), "ST_GeomFromText('" ,"'"); //some point we end up with our initial raw query, not sure how.
+            $value = Str::between($value->getValue(DB::connection()->getQueryGrammar()), "ST_GeomFromText('", "'"); //some point we end up with our initial raw query, not sure how.
         }
 
         if($value == 'POINT EMPTY') {
             dd($value);
         }
-        
+
  		return $value ? (new PostgisPoint())->initFromWKT($value) : null;
     }
 

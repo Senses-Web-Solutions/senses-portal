@@ -78,7 +78,7 @@ export default {
         return {
             stats: {
                 messages: {
-                    title: `Avg. Messages Sent`,
+                    title: `Avg. Messages`,
                     icon: "ChatIcon",
                     value: 0,
                 },

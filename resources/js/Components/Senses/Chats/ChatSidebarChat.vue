@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex gap-2 p-4 cursor-pointer transition-all border border-transparent hover:bg-zinc-200"
+        class="flex gap-2 p-3 cursor-pointer transition-all border border-transparent hover:bg-zinc-200"
         :class="{
             'bg-zinc-200 !border !border-primary-400':
                 selectedChat && selectedChat.id === chat.id,

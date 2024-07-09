@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Chats;
 
 use App\Models\AllowedChatSite;
+use App\Models\ChatUser;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PackageCreateChatRequest extends FormRequest
@@ -12,19 +13,32 @@ class PackageCreateChatRequest extends FormRequest
         // Get the referrer URL
         $referrerUrl = $this->headers->get('referer');
 
-        // Parse the referrer URL to get just the protocol and domain name
-        $parsedUrl = parse_url($referrerUrl);
-        $protocolAndDomain = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
-
-        // Find AllowedChatSite with the given protocol and domain
-        $allowedChatSite = AllowedChatSite::where('url', $protocolAndDomain)->first();
-
-        // TODO: Setup a new table that contains company_id, key, and url
-        if ($allowedChatSite) {
-            return true;
+        // Early exit if no referrer URL is provided
+        if (!$referrerUrl) {
+            logger('No referrer URL provided');
+            return false;
         }
 
-        logger('Referrer URL is not correct');
+        // Parse the referrer URL to get just the protocol and domain name
+        $parsedUrl = parse_url($referrerUrl);
+        if (!isset($parsedUrl['scheme'], $parsedUrl['host'])) {
+            logger('Invalid referrer URL');
+            return false;
+        }
+        $protocolAndDomain = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
+
+        // Get chat user UUID from request
+        $chatUserUuid = $this->input('chat_user_uuid');
+
+        // Attempt to directly check for an allowed chat site using a single query
+        $allowedChatSiteExists = AllowedChatSite::join('chat_users', 'allowed_chat_sites.company_id', '=', 'chat_users.company_id')
+        ->where('chat_users.uuid', $chatUserUuid)
+        ->where('allowed_chat_sites.url', $protocolAndDomain)
+        ->exists();
+
+        if ($allowedChatSiteExists) {
+            return true;
+        } 
 
         return false;
     }
@@ -32,9 +46,17 @@ class PackageCreateChatRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'company_id' => 'required|integer|exists:companies,id',
-            'meta' => 'nullable|array|max:255',
             'chat_user_uuid' => 'required|string|max:255',
+            'language' => 'nullable|string|max:50',
+            'timezone' => 'nullable|string|max:50',
+            'device_resolution' => 'nullable|string|max:50',
+            'tab_resolution' => 'nullable|string|max:50',
+            'browser' => 'nullable|string|max:50',
+            'browser_version' => 'nullable|string|max:50',
+            'os' => 'nullable|string|max:50',
+            'os_version' => 'nullable|string|max:50',
+            'device' => 'nullable|string|max:50',
+            'meta' => 'nullable|array|max:255',
             'message' => 'required|array|max:255',
             'message.content' => 'required|string|max:255',
             'message.chat_user_uuid' => 'required_if:message.from_agent,false|string|max:255',

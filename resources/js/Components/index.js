@@ -79,6 +79,7 @@ import ChatInbox from "./Senses/Chats/ChatInbox.vue";
 import ChatHistoricalInbox from "./Senses/Chats/ChatHistoricalInbox.vue";
 import ChatActions from "./Senses/Chats/ChatActions.vue";
 import AllowedChatSites from "./Senses/AllowedChatSites/AllowedChatSites.vue";
+import CompanyAllowedChatSites from "./Senses/AllowedChatSites/CompanyAllowedChatSites.vue";
 import AllowedChatSiteActions from "./Senses/AllowedChatSites/AllowedChatSiteActions.vue";
 import AllowedChatSiteForm from "./Senses/AllowedChatSites/AllowedChatSiteForm.vue";
 import AllowedChatSiteView from "./Senses/AllowedChatSites/AllowedChatSiteView.vue";
@@ -175,6 +176,7 @@ export {
     ChatInbox,
     ChatActions,
     AllowedChatSites,
+    CompanyAllowedChatSites,
     AllowedChatSiteActions,
     AllowedChatSiteForm,
     AllowedChatSiteView,

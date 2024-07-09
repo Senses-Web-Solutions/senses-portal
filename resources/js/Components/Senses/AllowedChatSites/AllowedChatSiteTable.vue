@@ -1,6 +1,6 @@
 <template>
     <SensesTable
-        :url="`/api/v2/company/${user().company_id}/allowed-chat-sites`"
+        :url="`/api/v2/allowed-chat-sites`"
         table="allowed_chat_sites"
         setting="table-allowed-chat-sites"
         event="allowed-chat-sites-updated"

@@ -5,7 +5,7 @@
                 <SectionTitle> Your Stats </SectionTitle>
             </div>
         </div>
-        <div class="grid grid-cols-4 gap-8">
+        <div class="grid grid-cols-2 xl:grid-cols-4 gap-8">
             <Card
                 v-for="(stat, key) in stats"
                 :key="key"
@@ -26,7 +26,7 @@
                             />
                         </div>
                         <p class="ml-16 font-medium text-zinc-500 capitalize">
-                            {{ key !== "amount" ? "Avg." : "" }} {{ key }}
+                           {{ key }}
                         </p>
                     </dt>
                     <dd class="ml-16 flex items-baseline">

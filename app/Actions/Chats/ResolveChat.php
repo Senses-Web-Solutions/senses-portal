@@ -21,6 +21,9 @@ class ResolveChat
 
         $chat->completed_at = now();
 
+        // Remove all assigned agents
+        $chat->agents()->detach();
+
         $chat->save();
 
         event(new ChatResolved($chat));

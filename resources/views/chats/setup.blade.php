@@ -5,14 +5,14 @@
 @section('content')
 
 <page-header>
-    <template #title>Chat Setup</template>
+    <template #title>Chat Settings</template>
     <template #actions>
         <allowed-chat-site-actions></allowed-chat-site-actions>
     </template>
 </page-header>
 
 <page-layout>
-    <allowed-chat-sites></allowed-chat-sites>
+    <company-allowed-chat-sites></company-allowed-chat-sites>
 </page-layout>
 
 @endsection

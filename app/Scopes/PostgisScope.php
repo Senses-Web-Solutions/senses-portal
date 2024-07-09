@@ -23,7 +23,7 @@ class PostgisScope implements Scope
         $columns = $builder->getQuery()->columns;
         
         $columns = $this->replaceColumns($columns, $model);
-        
+        // dd($columns);
         $builder->getQuery()->columns = $columns;
     }
 
@@ -38,6 +38,13 @@ class PostgisScope implements Scope
             strtolower(\App\Casts\MultiPoint::class),
             strtolower(\App\Casts\Point::class),
             strtolower(\App\Casts\Polygon::class),
+            \App\Casts\Geometry::class,
+            \App\Casts\GeometryCollection::class,
+            \App\Casts\LineString::class,
+            \App\Casts\MultiLineString::class,
+            \App\Casts\MultiPoint::class,
+            \App\Casts\Point::class,
+            \App\Casts\Polygon::class,
         ];
 
         //hasOneOfMany seems to not be null but rather an array of ['table_name.*'], lets replace this correctly.
@@ -48,14 +55,14 @@ class PostgisScope implements Scope
         if (is_null($columns)) {
             $tableAlias = $model->getTable() . '.';
             $columns = $model->getPostgisColumns();
-            $columns = array_map(fn ($v) => $tableAlias . $v, $columns); //prefix with table name
+            // $columns = array_map(fn ($v) => $tableAlias . $v, $columns); //prefix with table name
         }
 
         foreach ($columns as $key => $column) {
             
             $aliasColumn = $tableAlias ? Str::after($column, $tableAlias) : $column;
             if (is_string($aliasColumn)) {
-                if ($model->hasCast($aliasColumn, $castableGeometries)) {
+                if ($model->hasCast($column, $castableGeometries)) {
                     if ($tableAlias) {
                         $column = '"' . $model->getTable() . '".' . $aliasColumn;
                     }
