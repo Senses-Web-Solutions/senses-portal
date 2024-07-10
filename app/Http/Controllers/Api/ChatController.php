@@ -25,6 +25,7 @@ use App\Actions\Messages\StopTypingMessage;
 use App\Actions\ActionLogs\CreateActionLog;
 use App\Http\Requests\Chats\ListChatRequest;
 use App\Actions\Chats\GenerateChatShowCache;
+use App\Events\Chats\PulseChat;
 use App\Http\Requests\Chats\ShowChatRequest;
 use App\Http\Requests\Chats\ChatInviteRequest;
 use App\Http\Requests\Chats\UpdateChatRequest;
@@ -35,6 +36,7 @@ use App\Http\Requests\Chats\PackageSignalRequest;
 use App\Http\Requests\Chats\PackageShowChatRequest;
 use App\Http\Requests\Chats\PackageCobrowseRequest;
 use App\Http\Requests\Chats\PackageCreateChatRequest;
+use App\Http\Requests\Chats\PulseChatRequest;
 use Carbon\Carbon;
 use Stevebauman\Location\Facades\Location;
 
@@ -363,6 +365,18 @@ class ChatController extends Controller
     {
         app(CreateActionLog::class)->onQueue()->execute($chat, 'resolved', []);
         return app(ResolveChat::class)->execute($chat);
+    }
+
+    public function pulseChat(PulseChatRequest $request)
+    {
+        $data = $request->all();
+        $chatID = $data['chat_id'];
+        $chat = Chat::findOrFail($chatID);
+        $x = $data['x'];
+        $y = $data['y'];
+
+        event(new PulseChat($chat, $x, $y));
+        return true;
     }
 
     public function cobrowse(Chat|int $chat)

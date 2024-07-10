@@ -1,6 +1,6 @@
 <template>
     <div
-        class="h-full border-r border-zinc-200 overflow-y-scroll hide-scrollbar transition-all duration-500 ease-out"
+        class="h-full border-r border-zinc-200 overflow-y-scroll hide-scrollbar transition-all duration-500 ease-out bg-white"
         :class="minimisedClasses"
         style="max-height: calc(100vh - 128px); min-height: calc(100vh - 128px)"
     >

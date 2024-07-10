@@ -3,6 +3,8 @@
 namespace App\Actions\Chats;
 
 use App\Actions\ActionLogs\CreateActionLog;
+use App\Events\Chats\ChatUpdated;
+use App\Events\Chats\LeftChat;
 use App\Models\Chat;
 use App\Models\Status;
 use App\Models\User;
@@ -33,7 +35,12 @@ class LeaveChat
             $chat->status()->associate($unassignedStatus);
         }
 
+        event(new LeftChat($user, $chat));
         $chat->save();
+
+        if ($chat->agents->count() > 0) {
+            event(new ChatUpdated($chat));
+        }
 
         app(CreateActionLog::class)->onQueue()->execute($chat, 'left', []);
 

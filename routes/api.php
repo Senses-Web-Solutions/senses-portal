@@ -125,6 +125,7 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
     Route::get('/chat-users/{chat_user}/chats', [ChatController::class, 'chatUserChats']);
     Route::get('/users/{user}/chats/stats', [ChatController::class, 'userChatsStats']);
     Route::get('/chat-users/{chat_user}/chats/stats', [ChatController::class, 'chatUserChatsStats']);
+    Route::post('/pulse/chats', [ChatController::class, 'pulseChat']);
 
     // Messages
     Route::get('/messages/{message}/read', [MessageController::class, 'read']);

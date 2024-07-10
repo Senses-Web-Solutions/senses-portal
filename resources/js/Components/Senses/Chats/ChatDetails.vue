@@ -1,6 +1,6 @@
 <template>
     <div class="border-zinc-200 transition-width duration-500 bg-white" :class="showClasses">
-        <div class="flex items-center justify-between p-3 border-b border-zinc-200 !bg-zinc-100" v-if="show">
+        <div class="flex items-center justify-between p-3 border-b border-zinc-200" v-if="show">
             <h1 class="text-xl font-bold text-black">Details</h1>
             <SecondaryButton @click="hide">Hide</SecondaryButton>
         </div>
@@ -95,7 +95,7 @@
                     <img class="h-5 w-10" :src="`/images/flags/${chat.country_code.toUpperCase()}.svg`">
                 </div>
 
-                <div v-if="showMap" class="relative">
+                <div v-if="showMap && markers?.length > 0" class="relative">
                     <SeLabel class="mb-2">Location:</SeLabel>
                     <BasicMap
                         :show-controls="false"

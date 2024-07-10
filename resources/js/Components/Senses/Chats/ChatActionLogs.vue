@@ -1,11 +1,11 @@
 <template>
-    <div class="border-zinc-200 overflow-y-scroll transition-width duration-500" :class="showClasses">
+    <div class="border-zinc-200 overflow-y-scroll transition-width duration-500 bg-white overflow-x-hidden" :class="showClasses">
         <div class="flex items-center justify-between p-3 border-b border-zinc-200" v-if="show">
             <h1 class="text-xl font-bold text-black">History</h1>
             <SecondaryButton @click="hide">Hide</SecondaryButton>
         </div>
 
-        <div class="w-full h-full relative bg-white p-3">
+        <div class="w-full relative bg-white p-3 min-h-full">
             <div v-if="actionLogs.length > 0 && show" class="space-y-4">
                 <ChatActionLog
                     v-for="(actionLog, index) in actionLogs"
@@ -72,7 +72,6 @@ export default {
         },
 
         fetchHistory() {
-            console.log('Fetch history');
             axios.get(`/api/v2/chats/${this.chat.id}/action-logs`)
                 .then(response => {
                     response.data.data.sort((a, b) => a.id - b.id);

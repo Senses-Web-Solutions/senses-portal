@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueueableAction\QueueableAction;
 use App\Actions\Chats\ReadChat;
+use App\Events\Chats\ChatUpdated;
+use App\Events\Chats\JoinedChat;
 
 class JoinChat
 {
@@ -41,10 +43,16 @@ class JoinChat
             $chat->answered_at = now();
         }
 
+        event(new JoinedChat($user, $chat));
         $chat->save();
+
+        if ($chat->agents->count() > 0) {
+            event(new ChatUpdated($chat));
+        }
 
         app(ReadChat::class)->onQueue()->execute($chat);
         app(CreateActionLog::class)->onQueue()->execute($chat, 'joined', []);
+
 
         return $chat;
     }

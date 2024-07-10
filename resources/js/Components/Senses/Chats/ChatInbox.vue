@@ -346,8 +346,6 @@ export default {
             chatChannel.listen(
                 "Chats\\StartCobrowse",
                 (data) => {
-                    console.log('Start cobrowse');
-                    console.log(data);
                     this.cobrowsing = true;
 
                     this.$nextTick(() => {

@@ -3,6 +3,7 @@
 namespace App\Actions\Chats;
 
 use App\Actions\ActionLogs\CreateActionLog;
+use App\Events\Chats\RequestCobrowse;
 use App\Models\Chat;
 use Spatie\QueueableAction\QueueableAction;
 
@@ -19,7 +20,7 @@ class CobrowseChat
 
         app(CreateActionLog::class)->onQueue()->execute($chat, 'request-cobrowse', []);
 
-        event(new \App\Events\Chats\RequestCobrowse($chat));
+        event(new RequestCobrowse($chat));
 
         return $chat;
     }

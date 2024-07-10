@@ -1,5 +1,5 @@
 <template>
-    <div class="border-t border-zinc-200 flex relative">
+    <div class="border-t border-zinc-200 flex relative bg-white">
         <div class="flex flex-col w-full p-3 translate">
             <div
                 id="input"
@@ -351,6 +351,6 @@ export default {
 <style>
     em-emoji-picker {
         --rgb-accent: 136, 108, 179;
-        --rgb-background: 39, 39, 42;
+        --rgb-background: 24, 24, 28;
     }
 </style>

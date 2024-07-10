@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col justify-between flex-grow">
-        <div class="p-3 border-b border-zinc-200 flex items-center justify-between">
+        <div class="p-3 border-b border-zinc-200 flex items-center justify-between bg-white">
             <div v-if="!cobrowsing" class="text-black font-semibold text-xl">
                 {{ chat?.chat_user?.full_name }}
             </div>
@@ -17,7 +17,7 @@
         </div>
 
 
-        <div id="messages" class="flex-grow overflow-y-auto overflow-x-hidden p-3 relative bg-white">
+        <div id="messages" class="flex-grow overflow-y-auto overflow-x-hidden p-3 relative bg-zinc-100">
             <TransitionGroup
                 enter-active-class="transition duration-150 ease-out"
                 enter-from-class="scale-75 opacity-0"

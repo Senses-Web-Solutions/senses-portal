@@ -250,8 +250,6 @@ export default {
         },
 
         createOrUpdateMessage(message) {
-            console.log(message);
-            console.log(this.chats);
             const chat = this.chats[message.chat_id];
 
             if (message.id > chat.last_message?.id || !chat.last_message) {
