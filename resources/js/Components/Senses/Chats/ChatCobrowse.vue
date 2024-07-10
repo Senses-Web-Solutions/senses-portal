@@ -49,7 +49,8 @@ export default {
     },
     data() {
         return {
-            peer: null
+            peer: null,
+            channel: null,
         };
     },
     mounted() {
@@ -58,6 +59,8 @@ export default {
     },
     beforeUnmount() {
         this.destroyEventHubListeners();
+        this.destroyEchoListeners();
+        this.stopCobrowse();
     },
     methods: {
         setupEventHubListeners() {
@@ -75,11 +78,17 @@ export default {
                     this.peer.signal(data.data);
                 }
             });
+
+            this.channel = chatChannel;
+        },
+        destroyEchoListeners() {
+            this.channel.stopListening('Chats\\Signal');
         },
         setupPeer() {
             this.peer = new Peer();
 
             this.peer.on("signal", data => {
+                console.log(data);
                 axios.post('/api/v2/signal', {
                     chat_id: this.chat.id,
                     data: data
@@ -94,10 +103,15 @@ export default {
                 }
             });
 
-            this.peer.on('close', () => EventHub.emit('cobrowse:stop'));
+            this.peer.on('close', () => this.stopCobrowse());
         },
         stopCobrowse() {
-            this.peer.destroy();
+            if (this.peer) {
+                EventHub.emit('cobrowse:stop')
+                console.log('Destroy Peer');
+                this.peer.destroy();
+                this.peer = null;
+            }
         }
     },
 }

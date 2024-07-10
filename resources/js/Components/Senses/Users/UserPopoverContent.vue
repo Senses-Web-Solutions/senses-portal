@@ -1,40 +1,29 @@
 <template>
-    <div ref="element" class="w-64 space-y-2">
+    <div ref="element" class="w-64 space-y-2 rounded-lg" :class="{'bg-white': !isDark, 'bg-black': isDark}">
         <template v-if="user">
-            <div class="divide-y">
-                <div class="p-3 flex items-center text-center justify-center">
+            <div class="divide-y" :class="{'divide-zinc-200': !isDark, 'divide-zinc-700': isDark}">
+                <div class="p-3 flex items-center text-center justify-center" :class="{'text-black': !isDark, 'text-white': isDark}">
                     <div class="space-y-2">
                         <UserIcon :user="user" height="10" width="10" text-size="lg"></UserIcon>
                         <div>
-                            <Text class="text-md">{{ user.first_name }} {{ user.last_name }}</Text>
-                            <Text class="text-sm">{{ user.job_title }}</Text>
+                            <Text class="text-md" :class="{'text-black': !isDark, 'text-white': isDark}">{{ user.first_name }} {{ user.last_name }}</Text>
+                            <Text class="text-sm" :class="{'text-black': !isDark, 'text-white': isDark}">{{ user.job_title }}</Text>
                         </div>
                         <div class="text-zinc-400 text-sm space-y-1">
                             <div class="flex items-center justify-center mr-2" v-if="user.mobile">
                                 <PhoneIcon class="h-3 w-3 mr-1"></PhoneIcon>
-                                <Text>{{ user.mobile }}</Text>
+                                <Text :class="{'text-black': !isDark, 'text-white': isDark}">{{ user.mobile }}</Text>
                             </div>
                             <div class="flex items-center justify-center mr-2" v-if="user.email">
                                 <MailIcon class="h-3 w-3 mr-1"></MailIcon>
-                                <Text>{{ user.email }}</Text>
+                                <Text :class="{'text-black': !isDark, 'text-white': isDark}">{{ user.email }}</Text>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="p-3">
-                    <div class="text-zinc-400 text-sm space-y-1 mb-4" v-if="user.current_task">
-                            <div class="flex items-center justify-center mr-2 mb-2" v-if="user.current_task">
-                                <CollectionIcon class="h-3 w-3 mr-1"></CollectionIcon>
-                                <Text>Task {{ user.current_task.id }} - {{ user.current_task.status?.title }}</Text>
-                            </div>
-                            <div class="flex items-center justify-center mr-2 mb-2" v-if="user.current_task && user.current_task.venue">
-                                <LocationMarkerIcon class="h-3 w-3 mr-1"></LocationMarkerIcon>
-                                <Text>{{ user.current_task.venue.title }}</Text>
-                            </div>
-                        </div>
                     <div class="flex justify-center space-x-4 items-center">
                         <SecondaryButton size="xs" @click="goToUser">View Profile</SecondaryButton>
-                        <SecondaryButton size="xs" @click="goToMessenger">Message</SecondaryButton>
                     </div>
                 </div>
             </div>
@@ -67,7 +56,8 @@ export default {
     data() {
         return {
             currentUser: window.user,
-            user: null
+            user: null,
+            isDark: window.localStorage.getItem('darkMode') === 'true',
         }
     },
     mounted() {
@@ -86,10 +76,6 @@ export default {
             ) {
                 window.open(`/users/${this.user.id}`, "_blank");
             }
-        },
-
-        goToMessenger() {
-            window.location.href = '/messenger';
         },
     },
 };

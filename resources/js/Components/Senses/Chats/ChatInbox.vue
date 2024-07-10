@@ -79,6 +79,8 @@ export default {
             originalTitle: document.title,
 
             cobrowsing: false,
+            chatChannel: null,
+            messageChannel: null,
         };
     },
     computed: {
@@ -343,7 +345,9 @@ export default {
 
             chatChannel.listen(
                 "Chats\\StartCobrowse",
-                ({data}) => {
+                (data) => {
+                    console.log('Start cobrowse');
+                    console.log(data);
                     this.cobrowsing = true;
 
                     this.$nextTick(() => {
@@ -351,11 +355,21 @@ export default {
                     });
                 }
             );
+
+            this.chatChannel = chatChannel;
+            this.messageChannel = messageChannel;
         },
 
         destroyEchoListeners() {
-            echo.leave(`companies.${user().company_id}.chat`);
-            echo.leave(`companies.${user().company_id}.message`);
+            // this.chatChannel.stopListening("Chats\\ChatCreated");
+            // this.chatChannel.stopListening("Chats\\ChatUpdated");
+            // this.messageChannel.stopListening("Messages\\MessageCreated");
+            // this.messageChannel.stopListening("Messages\\MessageUpdated");
+            // this.messageChannel.stopListening("Chats\\Typing");
+            // this.messageChannel.stopListening("Chats\\StopTyping");
+
+            // echo.leave(`companies.${user().company_id}.chat`);
+            // echo.leave(`companies.${user().company_id}.message`);
         },
 
         createOrUpdateChat(chat) {
