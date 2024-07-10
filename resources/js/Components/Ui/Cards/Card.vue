@@ -35,8 +35,7 @@
             class="rounded-lg bg-white"
             :class="{
                 'shadow shadow-md': !internal,
-                'border border-zinc-200': !borderless && !internal && !isDark,
-                'border border-zinc-800': !borderless && !internal && isDark,
+                'border border-zinc-200': !borderless && !internal,
                 'divide-y': !externalTitle
             }"
         >

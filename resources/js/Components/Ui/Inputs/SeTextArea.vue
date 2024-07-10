@@ -3,7 +3,7 @@
         <textarea
             :name="name"
             :id="id"
-            class="block h-[120px] min-h-10 w-full rounded-md border-zinc-300 shadow-sm focus:border-purple-500 focus:ring-4 focus:ring-purple-200"
+            class="block h-[120px] min-h-10 w-full rounded-md border-zinc-300 shadow-sm focus:border-purple-500 focus:ring-4 focus:ring-purple-200 bg-white text-black"
             :placeholder="placeholder"
             :class="{ 'border-red-500': !isValid, 'h-[80vh]' : fullHeight }"
             :value="modelValue"

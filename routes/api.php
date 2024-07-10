@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\UserSettingController;
 use App\Http\Controllers\Api\AbilityGroupController;
 use App\Http\Controllers\Api\ActionLogController;
 use App\Http\Controllers\Api\AllowedChatSiteController;
+use App\Http\Controllers\Api\CannedMessageController;
 use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\ChatUserController;
 use App\Http\Controllers\Api\NotificationController;
@@ -70,6 +71,7 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
         'messages' => MessageController::class,
         'chat-reviews' => ChatReviewController::class,
         'chat-users' => ChatUserController::class,
+        'canned-messages' => CannedMessageController::class,
 		// ----- GENERATOR 2 -----
     ]);
 
@@ -150,6 +152,9 @@ Route::middleware(['auth:api'])->prefix('v2')->group(function () {
 
     // Chat Users
     Route::get('/company/{company}/chat-users', [ChatUserController::class, 'listCompanyChatUsers']);
+
+    // Canned Messages
+    Route::get('/users/{user}/canned-messages', [CannedMessageController::class, 'userCannedMessages']);
 });
 
 

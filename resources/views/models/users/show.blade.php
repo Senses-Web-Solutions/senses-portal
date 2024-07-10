@@ -16,6 +16,11 @@
 
     <div class="grid grid-cols-3 gap-8 px-8 py-8">
         <div class="col-span-2">
+            {{-- Canned messages --}}
+            <user-canned-message-table />
+
+            {{-- Default Message --}}
+            {{-- <UserDefaultMessageTable /> --}}
         </div>
 
         <div class="col-span-1">

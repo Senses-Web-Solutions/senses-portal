@@ -95,6 +95,11 @@ import AgentChatReviewTable from "./Senses/ChatReviews/AgentChatReviewTable.vue"
 import CompanyChatUserTable from "./Senses/ChatUsers/CompanyChatUserTable.vue";
 import AgentChatReviews from "./Senses/ChatReviews/AgentChatReviews.vue";
 import ChatUserShow from "./Senses/ChatUsers/ChatUserShow.vue";
+
+// Canned Messages
+// import CannedMessageTable from "./Senses/CannedMessages/CannedMessageTable.vue";
+import UserCannedMessageTable from "./Senses/CannedMessages/UserCannedMessageTable.vue";
+import UserCannedMessageForm from "./Senses/CannedMessages/UserCannedMessageForm.vue";
 // ----- GENERATOR A -----
 
 export {
@@ -191,5 +196,10 @@ export {
     AgentChatReviews,
     ChatUserShow,
     ChatHistoricalInbox,
+
+    // Canned Messages
+    // CannedMessageTable,
+    UserCannedMessageTable,
+    UserCannedMessageForm,
     // ----- GENERATOR B -----
 };

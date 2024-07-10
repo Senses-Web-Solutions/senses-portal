@@ -124,7 +124,8 @@ class GenerateAbilities
             'message',
             'allowed-chat-site',
             'chat-review',
-            'chat-user'
+            'chat-user',
+            'canned-message'
 			// ----- GENERATOR -----
             //PLEASE remember to add a comma to the above, or the generator will get angry!
         ];
