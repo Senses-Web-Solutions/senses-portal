@@ -13,7 +13,7 @@
             </div>
             <div class="bg-white flex items-center justify-center" style="height: calc(100vh - 200px); max-height: calc(100vh - 200px)">
                 <video 
-                    class="h-full w-auto border border-zinc-200 border-t-0" 
+                    class="w-auto border border-zinc-200 border-t-0" 
                     id="video"
                     autoplay
                     @click="sendPulse">
