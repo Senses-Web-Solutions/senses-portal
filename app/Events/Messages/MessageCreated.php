@@ -2,10 +2,10 @@
 
 namespace App\Events\Messages;
 
-use App\Jobs\SendMessageNotificationIfUnread;
 use App\Models\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\PrivateChannel;
+use App\Jobs\Messages\SendMessageNotificationIfUnread;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
 class MessageCreated implements ShouldBroadcastNow
