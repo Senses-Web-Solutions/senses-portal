@@ -151,7 +151,8 @@ export default {
 
             let send = true;
             if (this.capturingCannedMessageShortcut) {
-                if (event.key === "Enter") {
+                if (event.key === "Tab") {
+                    event.preventDefault();
                     send = false;
                     this.capturingCannedMessageShortcut = false;
                     this.cannedShortcut = this.cannedShortcut.trim();
@@ -171,10 +172,35 @@ export default {
                                         `/${this.cannedShortcut}`,
                                         ""
                                     );
-                                this.message.content +=
-                                    response.data.data[0].content;
+
+                                    const cannedAbbreviations = {
+                                        'user': this.chat.chat_user.full_name,
+                                    }
+
+                                    let cannedMessage = response.data.data[0].content;
+
+                                    const re = /\${(.*?)}/g;
+
+                                    const matches = cannedMessage.match(re);
+
+                                    if (matches) {
+                                        matches.forEach((match) => {
+                                            const key = match.replace("${", "").replace("}", "");
+                                            cannedMessage = cannedMessage.replace(match, cannedAbbreviations[key]);
+                                        });
+                                    }
+
+                                this.message.content += cannedMessage;
 
                                     // Put the cursor at the end of the id input
+                                    this.$nextTick(() => {
+                                        const range = document.createRange();
+                                        const sel = window.getSelection();
+                                        range.setStart(div, 1);
+                                        range.collapse(true);
+                                        sel.removeAllRanges();
+                                        sel.addRange(range);
+                                    });
 
                                     this.cannedShortcut = "";
 
