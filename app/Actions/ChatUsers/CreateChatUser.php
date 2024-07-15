@@ -13,6 +13,16 @@ class CreateChatUser
 
     public function execute(array $data)
     {
+
+        // If chat user with email and system already exists, return that chat user
+        $chatUser = ChatUser::where('email', $data['email'])
+        ->where('system', $data['system'])
+        ->first();
+
+        if ($chatUser) {
+            return $chatUser;
+        }
+
         $chatUser = new ChatUser($data);
         $chatUser->uuid = SensesUUID::generate();
 
