@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Messages;
 
 use App\Models\Message;
 use App\Notifications\MessageReceived;

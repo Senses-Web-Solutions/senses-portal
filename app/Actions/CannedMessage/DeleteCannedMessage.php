@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\CannedMessages;
+namespace app\Actions\CannedMessages;
 
 use App\Models\CannedMessage;
 use Spatie\QueueableAction\QueueableAction;

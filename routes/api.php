@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\ActionLogController;
 use App\Http\Controllers\Api\AllowedChatSiteController;
 use App\Http\Controllers\Api\CannedMessageController;
 use App\Http\Controllers\Api\ChatController;
+use App\Http\Controllers\Api\ChatReviewController;
 use App\Http\Controllers\Api\ChatUserController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\ServerController;

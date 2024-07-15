@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Chats;
+namespace App\Actions\ChatUsers;
 
 use App\Models\ChatUser;
 use App\Traits\ApiResponse;

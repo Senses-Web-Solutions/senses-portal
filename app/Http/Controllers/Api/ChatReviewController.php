@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Http\Controllers\Api;
+
 use App\Actions\ChatReviews\CreateChatReview;
 use App\Actions\ChatReviews\DeleteChatReview;
 use App\Actions\ChatReviews\GenerateChatReviewShowCache;
@@ -8,9 +10,9 @@ use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\ChatReviews\CreateChatReviewRequest;
 use App\Http\Requests\ChatReviews\PackageCreateChatReviewRequest;
 use App\Http\Requests\ChatReviews\UpdateChatReviewRequest;
-use App\Http\Requests\Chats\DeleteChatReviewRequest;
-use App\Http\Requests\Chats\ListChatReviewRequest;
-use App\Http\Requests\Chats\ShowChatReviewRequest;
+use App\Http\Requests\ChatReviews\DeleteChatReviewRequest;
+use App\Http\Requests\ChatReviews\ListChatReviewRequest;
+use App\Http\Requests\ChatReviews\ShowChatReviewRequest;
 use App\Models\ChatReview;
 use App\Support\QueryBuilder;
 use App\Traits\ApiResponse;

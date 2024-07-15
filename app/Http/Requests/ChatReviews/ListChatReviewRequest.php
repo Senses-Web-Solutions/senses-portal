@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Chats;
+namespace App\Http\Requests\ChatReviews;
 
 use Illuminate\Foundation\Http\FormRequest;
 
