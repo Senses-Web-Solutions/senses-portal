@@ -129,8 +129,6 @@ class ChatController extends Controller
             return $chat->messages->where('author_type', 'user')->where('author_id', $userID)->count();
         });
 
-        $averageMessages = $chats->count() ? $messagesFromThisAgent / $chats->count() : 0;
-
         $duration = $chats->sum(function ($chat) {
             $start = Carbon::parse($chat->created_at);
             $end = Carbon::parse($chat->completed_at);
@@ -148,7 +146,7 @@ class ChatController extends Controller
         $completedChats = $chats->where('completed_at', '!=', null)->count();
 
         $stats = [
-            'messages' => $averageMessages,
+            'chats' => $chats->count(),
             'duration' => $averageDuration,
             'resolved' => $resolvedChats,
             'unresolved' => $unresolvedChats,
@@ -166,8 +164,6 @@ class ChatController extends Controller
             return $chat->messages->where('author_type', 'chat-user')->where('author_id', $chatUserID)->count();
         });
 
-        $averageMessages = $chats->count() ? $messagesFromThisAgent / $chats->count() : 0;
-
         $duration = $chats->sum(function ($chat) {
             $start = Carbon::parse($chat->created_at);
             $end = Carbon::parse($chat->completed_at);
@@ -185,7 +181,7 @@ class ChatController extends Controller
         $completedChats = $chats->where('completed_at', '!=', null)->count();
 
         $stats = [
-            'messages' => $averageMessages,
+            'chats' => $chats->count(),
             'duration' => $averageDuration,
             'resolved' => $resolvedChats,
             'unresolved' => $unresolvedChats,

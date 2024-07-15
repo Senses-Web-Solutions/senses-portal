@@ -2,7 +2,7 @@
     <section class="mb-12">
         <div class="flex items-center px-2 pb-4 lg:space-x-3">
             <div>
-                <SectionTitle> Your Stats </SectionTitle>
+                <SectionTitle> Chat Review Stats </SectionTitle>
             </div>
         </div>
         <div class="grid grid-cols-2 xl:grid-cols-4 gap-8">

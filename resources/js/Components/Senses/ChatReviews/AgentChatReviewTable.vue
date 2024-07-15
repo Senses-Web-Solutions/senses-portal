@@ -1,6 +1,6 @@
 <template>
     <SensesTable
-        title="Your Reviews"
+        title="Chat Reviews"
         :url="`/api/v2/user/${user().id}/chat-reviews`"
         table="chat_reviews"
         setting="table-chat-reviews"

@@ -15,7 +15,9 @@
     </page-header>
 
     <div class="grid grid-cols-3 gap-8 px-8 py-8">
-        <div class="col-span-2">
+        <div class="col-span-2 space-y-8">
+            <agent-chats-stats></agent-chats-stats>
+            <agent-chat-reviews></agent-chat-reviews>
             {{-- Canned messages --}}
             <user-canned-message-table />
 

@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\Controller;
 use App\Actions\ChatUsers\CreateChatUser;
 use App\Actions\ChatUsers\UpdateChatUser;
 use App\Actions\ChatUsers\DeleteChatUser;
-use App\Actions\Chats\GenerateChatUserShowCache;
+use App\Actions\ChatUsers\GenerateChatUserShowCache;
 use App\Actions\ChatUsers\PackageFindOrCreateChatUser;
 use App\Http\Requests\ChatUsers\ListChatUserRequest;
 use App\Http\Requests\ChatUsers\ShowChatUserRequest;

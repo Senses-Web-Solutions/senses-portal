@@ -60,7 +60,7 @@ export default {
                 return [
                     {
                         title: 'Canned Message Information',
-                        description: 'Basic information about canned Messages',
+                        description: 'Basic information about canned Messages. ',
                         fields: [
                             { key: 'title', type: 'text' },
                             { key: 'content', type: 'textarea' },

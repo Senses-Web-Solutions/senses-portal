@@ -2,7 +2,7 @@
     <section>
         <div class="flex items-center px-2 pb-4 lg:space-x-3">
             <div>
-                <SectionTitle> Your Stats </SectionTitle>
+                <SectionTitle> Chat Stats </SectionTitle>
             </div>
         </div>
         <div class="grid grid-cols-4 gap-8">
@@ -18,7 +18,7 @@
                     <dt>
                         <div
                             class="absolute rounded-md p-3"
-                            :class="backgroundReviewColour(key, stat.value)"
+                            :class="colour(key, stat.value, 'bg')"
                         >
                             <component
                                 :is="stat.icon"
@@ -32,9 +32,9 @@
                     <dd class="ml-16 flex items-baseline">
                         <p
                             class="text-2xl font-semibold"
-                            :class="textReviewColour(key, stat.value)"
+                            :class="colour(key, stat.value, 'text')"
                         >
-                            {{ stat.value }}
+                        {{ key === 'duration' ? hrDuration(stat.value) : stat.value }}
                         </p>
                     </dd>
                 </div>
@@ -69,8 +69,8 @@ export default {
     data() {
         return {
             stats: {
-                messages: {
-                    title: 'Avg. Messages',
+                chats: {
+                    title: 'Chats',
                     icon: "ChatIcon",
                     value: 0,
                 },
@@ -90,6 +90,7 @@ export default {
                     value: 0,
                 },
             },
+            completedChats: 0,
         };
     },
     mounted() {
@@ -99,12 +100,16 @@ export default {
     methods: {
         fetchStats() {
             axios
-                .get(`/api/v2/user/${user().id}/chats/stats`)
+                .get(`/api/v2/users/${user().id}/chats/stats`)
                 .then((response) => {
                     if (response.data) {
                         const keys = Object.keys(response.data);
                         keys.forEach((key) => {
-                            this.stats[key].value = response.data[key];
+                            if (key === 'completed_chats') {
+                                this.completedChats = response.data[key];
+                            } else {
+                                this.stats[key].value = response.data[key];
+                            }
                         });
                     }
                 })
@@ -112,37 +117,64 @@ export default {
                     console.error(error);
                 });
         },
-        textReviewColour(key, value) {
-            if (value === 5) {
-                return "text-primary-600 dark:text-primary-400";
-            } else if (value >= 4 && value < 5) {
-                return "text-green-600 dark:text-green-400";
-            } else if (value >= 3 && value < 4) {
-                return "text-yellow-600 dark:text-yellow-400";
-            } else if (value >= 2 && value < 3) {
-                return "text-orange-600 dark:text-orange-400";
-            } else if (value >= 1 && value < 2) {
-                return "text-red-600 dark:text-red-400";
-            } else {
-                return "text-zinc-600 dark:text-zinc-400";
+        colour(key, value, type) {
+            switch (key) {
+                case 'chats':
+                    return this.avgMessagesSentColour(value, type);
+                case 'duration':
+                    return this.avgDurationColour(value, type);
+                case 'resolved':
+                    return this.resolvedColour(value, type);
+                case 'unresolved':
+                    return this.unresolvedColour(value, type);
+                default:
+                    return ''; // Default case if the key doesn't match any criteria
             }
         },
 
-        backgroundReviewColour(key, value) {
-            if (value === 5) {
-                return "bg-primary-600 dark:bg-primary-400";
-            } else if (value >= 4 && value < 5) {
-                return "bg-green-600 dark:bg-green-400";
-            } else if (value >= 3 && value < 4) {
-                return "bg-yellow-600 dark:bg-yellow-400";
-            } else if (value >= 2 && value < 3) {
-                return "bg-orange-600 dark:bg-orange-400";
-            } else if (value >= 1 && value < 2) {
-                return "bg-red-600 dark:bg-red-400";
-            } else {
-                return "bg-zinc-600 dark:bg-zinc-400";
-            }
+        avgMessagesSentColour(value, type) {
+            if (this.completedChats === 0) return `${type}-zinc-600 dark:${type}-zinc-400`;
+
+            if (value > 1) return `${type}-primary-600 dark:${type}-primary-400`;
         },
+
+        avgDurationColour(value, type) {
+            if (this.completedChats === 0) return `${type}-zinc-600 dark:${type}-zinc-400`;
+
+            if (value < 300) return `${type}-primary-600 dark:${type}-primary-400`;
+            else if (value < 450) return `${type}-green-600 dark:${type}-green-400`;
+            else if (value < 600) return `${type}-yellow-600 dark:${type}-yellow-400`;
+            else if (value < 900) return `${type}-orange-600 dark:${type}-orange-400`;
+            else return `${type}-red-600 dark:${type}-red-400`;
+        },
+
+        resolvedColour(resolved, type) {
+            if (this.completedChats === 0) return `${type}-zinc-600 dark:${type}-zinc-400`;
+
+            if (resolved === 0 && this.completedChats > 0)
+                return `${type}-red-600 dark:${type}-red-400`;
+            else return `${type}-green-600 dark:${type}-green-400`;
+        },
+
+        unresolvedColour(unresolved, type) {
+            if (this.completedChats === 0) return `${type}-zinc-600 dark:${type}-zinc-400`;
+            
+            if (unresolved === 0 && this.completedChats > 0)
+                return `${type}-green-600 dark:${type}-green-400`;
+            else return `${type}-red-600 dark:${type}-red-400`;
+        },
+
+        hrDuration(duration) {
+            // Create a new Date object at the Unix epoch in UTC
+            let helperDate = new Date(0);
+            // Use UTC methods to add seconds
+            helperDate.setUTCSeconds(duration);
+            // Format the date in HH:mm:ss format using UTC methods
+            const hours = helperDate.getUTCHours().toString().padStart(2, '0');
+            const minutes = helperDate.getUTCMinutes().toString().padStart(2, '0');
+            const seconds = helperDate.getUTCSeconds().toString().padStart(2, '0');
+            return `${hours}:${minutes}:${seconds}`;
+        }
     },
 };
 </script>

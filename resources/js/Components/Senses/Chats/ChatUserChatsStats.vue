@@ -77,8 +77,8 @@ export default {
     data() {
         return {
             stats: {
-                messages: {
-                    title: `Avg. Messages`,
+                chats: {
+                    title: `Chats`,
                     icon: "ChatIcon",
                     value: 0,
                 },
@@ -127,7 +127,7 @@ export default {
 
         colour(key, value, type) {
             switch (key) {
-                case 'messages':
+                case 'chats':
                     return this.avgMessagesSentColour(value, type);
                 case 'duration':
                     return this.avgDurationColour(value, type);
@@ -143,11 +143,7 @@ export default {
         avgMessagesSentColour(value, type) {
             if (this.completedChats === 0) return `${type}-zinc-600 dark:${type}-zinc-400`;
 
-            if (value < 5) return `${type}-primary-600 dark:${type}-primary-400`;
-            else if (value <= 10) return `${type}-green-600 dark:${type}-green-400`;
-            else if (value <= 15) return `${type}-yellow-600 dark:${type}-yellow-400`;
-            else if (value <= 20) return `${type}-orange-600 dark:${type}-orange-400`;
-            else return `${type}-red-600 dark:${type}-red-400`;
+            if (value > 1) return `${type}-primary-600 dark:${type}-primary-400`;
         },
 
         avgDurationColour(value, type) {
