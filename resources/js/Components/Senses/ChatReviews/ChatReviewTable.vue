@@ -40,13 +40,13 @@ export default {
 
     methods: {
         rowClick(row, type) {
-            if (row.id && user().can('show-chat-review')) {
-                if (type && type === 'blank') {
-                    window.open("/chat-reviews/" + row.id);
-                } else {
-                    window.location.href = "/chat-reviews/" + row.id;
-                }
-            }
+            // if (row.id && user().can('show-chat-review')) {
+            //     if (type && type === 'blank') {
+            //         window.open("/chat-reviews/" + row.id);
+            //     } else {
+            //         window.location.href = "/chat-reviews/" + row.id;
+            //     }
+            // }
         }
     }
 }
