@@ -96,6 +96,7 @@ import CompanyChatUserTable from "./Senses/ChatUsers/CompanyChatUserTable.vue";
 import AgentChatReviews from "./Senses/ChatReviews/AgentChatReviews.vue";
 import ChatUserShow from "./Senses/ChatUsers/ChatUserShow.vue";
 import AgentChatsStats from './Senses/Chats/AgentChatsStats.vue';
+import ChatUserForm from "./Senses/ChatUsers/ChatUserForm.vue";
 
 // Canned Messages
 // import CannedMessageTable from "./Senses/CannedMessages/CannedMessageTable.vue";
@@ -198,6 +199,7 @@ export {
     ChatUserShow,
     ChatHistoricalInbox,
     AgentChatsStats,
+    ChatUserForm,
 
     // Canned Messages
     // CannedMessageTable,
