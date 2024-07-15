@@ -1,6 +1,23 @@
 <template>
     <div class="border-t border-zinc-200 flex relative bg-white">
-        <div class="flex flex-col w-full p-3 translate">
+        <div
+            v-if="
+                searchedCannedMessages.length > 0 &&
+                capturingCannedMessageShortcut
+            "
+            class="absolute -top-44 h-40 w-96 left-3 bg-white shadow-lg p-3 rounded-lg divide-y divide-zinc-200 text-black overflow-y-scroll"
+        >
+            <div
+                v-for="(message, index) in searchedCannedMessages"
+                :key="index"
+                class="p-2 rounded cursor-pointer hover:bg-zinc-100 transition-all"
+                :class="{'bg-zinc-100': activeCannedIndex === index}"
+                @click="() => addCannedMessage(index)"
+            >
+                <strong>{{ message.shortcut }}</strong> {{ message.content }}
+            </div>
+        </div>
+        <div class="flex flex-col w-full p-3 translate relative">
             <div
                 id="input"
                 class="text-black bg-transparent border-0 flex-grow focus:ring-0 textarea-resize"
@@ -105,27 +122,40 @@ export default {
 
             capturingCannedMessageShortcut: false,
             cannedShortcut: "",
+            cannedMessages: [],
+            activeCannedIndex: 0,
         };
     },
     computed: {
-        defaultMessage() {
-            if (this.yourAssigned) {
-                return `Hi, my name is ${this.user.full_name}. How can I help you today?`;
-            } else {
-                return "You are not assigned to this chat";
+        searchedCannedMessages() {
+            // If canned short cut contains '//' then replace it with '/'
+            if (this.cannedShortcut.includes("//")) {
+                this.cannedShortcut = this.cannedShortcut.replace("//", "/");
             }
-        },
-        defaultMessageSent() {
-            // Any message sent by the current user
-            return Object.values(this.chat?.messages)?.filter(
-                (message) => message.author.full_name === this.user.full_name
+            if (!this.capturingCannedMessageShortcut) {
+                return [];
+            }
+
+            if (this.cannedShortcut === "" || this.cannedShortcut === "/") {
+                return this.cannedMessages;
+            }
+
+            const array = this.cannedMessages.filter((message) =>
+                message.shortcut.includes(this.cannedShortcut)
             );
+
+            return array;
         },
     },
     mounted() {
-        if (!this.defaultMessageSent) {
-            this.message.content = this.defaultMessage;
-        }
+        axios
+            .get(`/api/v2/users/${user().id}/canned-messages`)
+            .then((response) => {
+                this.cannedMessages = response.data.data;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
 
         this.setupKeyboardShortcuts();
         this.setupDropzone();
@@ -134,8 +164,23 @@ export default {
         textareaKeydown(event) {
             const div = event.target;
 
-            if (event.key === "Backspace" && div.textContent.length === 1) {
-                div.innerHTML = "";
+            if (event.key === "Backspace") {
+                if (div.textContent.length === 1) {
+                    div.innerHTML = "";
+                }
+
+                // Check if the '/' character is removed
+                // If second to last character is '/' then reset the capturingCannedMessageShortcut
+                if (
+                    div.textContent.length > 1 &&
+                    div.textContent[div.textContent.length - 2] === "/"
+                ) {
+                    this.cannedShortcut = "/";
+                }
+
+                if (div.textContent.endsWith("/")) {
+                    this.capturingCannedMessageShortcut = false;
+                }
                 return;
             }
 
@@ -153,59 +198,7 @@ export default {
             if (this.capturingCannedMessageShortcut) {
                 if (event.key === "Tab") {
                     event.preventDefault();
-                    send = false;
-                    this.capturingCannedMessageShortcut = false;
-                    this.cannedShortcut = this.cannedShortcut.trim();
-                    axios
-                        .get(
-                            `/api/v2/users/${
-                                user().id
-                            }/canned-messages?filter[shortcut_exact]=${
-                                this.cannedShortcut
-                            }`
-                        )
-                        .then((response) => {
-                            if (response.data.data.length) {
-                                // Remove the shortcut from the message
-                                this.message.content =
-                                    this.message.content.replace(
-                                        `/${this.cannedShortcut}`,
-                                        ""
-                                    );
-
-                                    const cannedAbbreviations = {
-                                        'user': this.chat.chat_user.full_name,
-                                    }
-
-                                    let cannedMessage = response.data.data[0].content;
-
-                                    const re = /\${(.*?)}/g;
-
-                                    const matches = cannedMessage.match(re);
-
-                                    if (matches) {
-                                        matches.forEach((match) => {
-                                            const key = match.replace("${", "").replace("}", "");
-                                            cannedMessage = cannedMessage.replace(match, cannedAbbreviations[key]);
-                                        });
-                                    }
-
-                                this.message.content += cannedMessage;
-
-                                    // Put the cursor at the end of the id input
-                                    this.$nextTick(() => {
-                                        const range = document.createRange();
-                                        const sel = window.getSelection();
-                                        range.setStart(div, 1);
-                                        range.collapse(true);
-                                        sel.removeAllRanges();
-                                        sel.addRange(range);
-                                    });
-
-                                    this.cannedShortcut = "";
-
-                            }
-                        });
+                    this.addCannedMessage(this.activeCannedIndex);
                 } else {
                     this.cannedShortcut += event.key;
                 }
@@ -219,6 +212,49 @@ export default {
 
                 this.typing();
             }
+        },
+        addCannedMessage(index){
+            this.addCannedMessageToMessage(this.searchedCannedMessages[index].content);
+        },
+        addCannedMessageToMessage(content) {
+            const div = document.getElementById("input");
+            // Remove the shortcut from the message
+            div.innerText = div.innerText.replace(this.cannedShortcut, "");
+
+            const cannedAbbreviations = {
+                user: this.chat.chat_user.full_name,
+            };
+
+            let cannedMessage = content;
+
+            const re = /\${(.*?)}/g;
+
+            const matches = cannedMessage.match(re);
+
+            if (matches) {
+                matches.forEach((match) => {
+                    const key = match.replace("${", "").replace("}", "");
+                    cannedMessage = cannedMessage.replace(
+                        match,
+                        cannedAbbreviations[key]
+                    );
+                });
+            }
+
+            div.innerText = div.innerText + " " + cannedMessage;
+
+            // Put the cursor at the end of the id input
+            this.$nextTick(() => {
+                const range = document.createRange();
+                const sel = window.getSelection();
+                range.setStart(div, 1);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+                this.capturingCannedMessageShortcut = false;
+            });
+
+            this.cannedShortcut = "";
         },
         sendMessage() {
             this.message.content = document.getElementById("input").innerHTML;
