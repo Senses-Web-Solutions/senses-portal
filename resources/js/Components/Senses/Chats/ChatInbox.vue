@@ -277,8 +277,6 @@ export default {
             chatChannel.listen(
                 "Chats\\ChatUpdated",
                 ({ chat }) => {
-                    console.log(chat);
-
                     // If chat has no agents, play the chat sound
                     if (chat.agents.length === 0) {
                         this.chatSound.play();
