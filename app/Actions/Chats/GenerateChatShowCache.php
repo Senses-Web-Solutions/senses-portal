@@ -19,6 +19,7 @@ class GenerateChatShowCache
             'id',
             'company_id',
             'status_id',
+            'completed_at'
         ];
 
         $with = [

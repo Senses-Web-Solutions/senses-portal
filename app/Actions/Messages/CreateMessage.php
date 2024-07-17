@@ -26,9 +26,7 @@ class CreateMessage
 
         $message->author()->associate($author);
 
-        if (isset($data['chat_id'])) {
-            $message->chat()->associate($data['chat_id']);
-        }
+        $message->chat()->associate($data['chat_id']);
 
         $sentStatus = Status::where('slug', 'sent')->first();
         $message->status()->associate($sentStatus);
@@ -37,9 +35,9 @@ class CreateMessage
 
         if (isset($data['file_ids'])) {
             $message->files()->sync($data['file_ids']);
+            $message->load('files');
         }
 
-        $message->load('files');
         
         return $message;
     }

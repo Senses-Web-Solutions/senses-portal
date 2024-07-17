@@ -5,7 +5,7 @@
                 <SectionTitle> Chat Stats </SectionTitle>
             </div>
         </div>
-        <div class="grid grid-cols-4 gap-8">
+        <div class="grid grid-cols-2 2xl:grid-cols-4 gap-8">
             <Card
                 v-for="(stat, key) in stats"
                 :key="key"
@@ -66,6 +66,12 @@ export default {
         ClockIcon,
         ChatIcon,
     },
+    props: {
+        id: {
+            type: Number,
+            required: false,
+        },
+    },
     data() {
         return {
             stats: {
@@ -100,7 +106,7 @@ export default {
     methods: {
         fetchStats() {
             axios
-                .get(`/api/v2/users/${user().id}/chats/stats`)
+                .get(`/api/v2/users/${this.id ?? user().id}/chats/stats`)
                 .then((response) => {
                     if (response.data) {
                         const keys = Object.keys(response.data);

@@ -7,19 +7,25 @@
         }"
         @click="selectChat(chat)"
     >
-
-        <div class="w-full">
-            <div class="flex justify-between mb-1 w-full">
-                <h4 class="text-black font-semibold truncate w-[55%]">
-                    {{chat?.chat_user?.full_name ?? 'Visitor' }}
+        <div class="w-full space-y-2 ">
+            <div class="flex items-start justify-between w-full">
+                <h4 class="text-zinc-400 text-sm truncate w-[60%]">
+                    <!-- {{ chat?.system ?? "Unknown" }} -->
+                      http://ietg.teamleaf.uk
                 </h4>
                 <p class="text-zinc-400 text-sm">
                     {{
-                        FormatDateTime(chat?.last_message?.sent_at, "dd/MM HH:mm") ??
-                        FormatDateTime(new Date.now(), "dd/MM HH:mm")
+                        FormatDateTime(
+                            chat?.last_message?.sent_at,
+                            "dd/MM HH:mm"
+                        ) ?? FormatDateTime(new Date.now(), "dd/MM HH:mm")
                     }}
                 </p>
             </div>
+            <h4 class="text-black font-semibold">
+                {{ chat?.chat_user?.full_name ?? "Unknown" }}
+            </h4>
+
             <div class="flex justify-between w-full">
                 <p
                     class="truncate w-[85%] text-zinc-500"
@@ -66,13 +72,18 @@ export default {
             const imgCount = (content.match(/<img /g) || []).length;
 
             if (imgCount > 0) {
-                return ' (' + imgCount + ' image' + (imgCount > 1 ? 's' : '') + ')';
+                return (
+                    " (" + imgCount + " image" + (imgCount > 1 ? "s" : "") + ")"
+                );
             }
 
             return content;
         },
         yourAssigned() {
-            return this.chat?.agents?.some(agent => agent.id === user().id) ?? false;
+            return (
+                this.chat?.agents?.some((agent) => agent.id === user().id) ??
+                false
+            );
         },
         someoneIsAssigned() {
             return this.chat?.agents?.length > 0;
@@ -83,11 +94,14 @@ export default {
             const messagesArray = Object.values(this.chat.messages ?? {}) ?? [];
 
             const count = messagesArray.reduce((acc, message) => {
-                return (message.author?.full_name !== user()?.full_name && !message.read_at) ? acc + 1 : acc;
+                return message.author?.full_name !== user()?.full_name &&
+                    !message.read_at
+                    ? acc + 1
+                    : acc;
             }, 0);
 
             return count;
-        }
+        },
     },
     methods: {
         FormatDateTime,
@@ -95,5 +109,5 @@ export default {
             this.$emit("select-chat", chat);
         },
     },
-}
+};
 </script>

@@ -277,6 +277,7 @@ export default {
             chatChannel.listen(
                 "Chats\\ChatUpdated",
                 ({ chat }) => {
+                    console.log(chat);
 
                     // If chat has no agents, play the chat sound
                     if (chat.agents.length === 0) {
@@ -399,7 +400,9 @@ export default {
         },
 
         removeTyper(chatId, name) {
-            this.chats[chatId].typers.delete(name);
+            if (this.chats[chatId]?.typers?.has(name)) {
+                this.chats[chatId]?.typers?.delete(name);
+            }
         },
     },
 };

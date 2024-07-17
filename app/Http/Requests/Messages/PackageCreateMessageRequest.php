@@ -55,6 +55,7 @@ class PackageCreateMessageRequest extends FormRequest
             'meta' => 'nullable|array|max:255',
             'file_ids' => 'nullable|array',
             'file_ids.*' => 'integer|exists:files,id',
+            'current_page' => 'nullable|string',
         ];
 
         return $rules;

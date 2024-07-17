@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\ActionLogs\CreateActionLog;
+use App\Actions\Chats\UpdateChatCurrentPage;
 use App\Actions\Messages\CreateMessage;
 use App\Actions\Messages\DeleteMessage;
 use App\Actions\Messages\GenerateMessageShowCache;
@@ -16,6 +18,7 @@ use App\Http\Requests\Messages\packageCreateMessageRequest;
 use App\Http\Requests\Messages\packageReadMessageRequest;
 use App\Http\Requests\Messages\ShowMessageRequest;
 use App\Http\Requests\Messages\UpdateMessageRequest;
+use App\Models\Chat;
 use App\Models\Message;
 use App\Support\QueryBuilder;
 use App\Traits\ApiResponse;
@@ -98,6 +101,10 @@ class MessageController extends Controller
     public function packageStore(packageCreateMessageRequest $request, CreateMessage $createMessage)
     {
         $data = $request->all();
+
+        $currentPage = $data['current_page'] ?? null;
+
+        app(UpdateChatCurrentPage::class)->onQueue()->execute($data['chat_id'], $currentPage);
 
         return $this->respond($createMessage->execute($data));
     }

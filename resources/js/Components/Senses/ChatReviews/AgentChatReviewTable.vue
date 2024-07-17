@@ -1,7 +1,7 @@
 <template>
     <SensesTable
         title="Chat Reviews"
-        :url="`/api/v2/user/${user().id}/chat-reviews`"
+        :url="`/api/v2/user/${id ?? user().id}/chat-reviews`"
         table="chat_reviews"
         setting="table-chat-reviews"
         event="chat-review-updated"
@@ -18,6 +18,13 @@ import SensesTable from '../Tables/SensesTable.vue';
 export default {
     components: {
         SensesTable,
+    },
+
+    props: {
+        id: {
+            type: Number,
+            required: false,
+        },
     },
 
     data() {

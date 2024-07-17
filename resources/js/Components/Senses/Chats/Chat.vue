@@ -1,8 +1,11 @@
 <template>
     <div class="flex flex-col justify-between flex-grow">
         <div class="p-3 border-b border-zinc-200 flex items-center justify-between bg-white">
-            <div v-if="!cobrowsing" class="text-black font-semibold text-xl">
-                {{ chat?.chat_user?.full_name }}
+            <div v-if="!cobrowsing" class="flex flex-col text-black font-semibold text-xl space-y-1">
+                <div class="flex items-center text-sm text-zinc-400 hover:text-primary-500 transition-all">
+                    <a :href="chat?.system" target="_blank">{{ chat?.current_page }}<ExternalLinkIcon class="h-4 w-4 inline-block" /></a>
+                </div>
+                <p class="text-sm">{{ chat?.chat_user?.full_name }}</p> 
             </div>
             <div v-else class="text-black font-semibold text-xl">
                 Chat
@@ -15,7 +18,6 @@
                 </ButtonGroup>
             </div>
         </div>
-
 
         <div id="messages" class="flex-grow overflow-y-auto overflow-x-hidden p-3 relative bg-zinc-100">
             <TransitionGroup
@@ -47,6 +49,7 @@
 </template>
 
 <script>
+import { ExternalLinkIcon } from '@heroicons/vue/outline';
 
 import Message from '../Messages/Message.vue';
 import SeInput from '../../Ui/Inputs/SeInput.vue';
@@ -62,6 +65,7 @@ import EventHub from '../../../Support/EventHub';
 
 export default {
     components: {
+        ExternalLinkIcon,
         Message,
         SeInput,
         ButtonGroup,

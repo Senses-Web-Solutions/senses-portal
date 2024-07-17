@@ -124,6 +124,7 @@ export default {
             cannedShortcut: "",
             cannedMessages: [],
             activeCannedIndex: 0,
+            send: true,
         };
     },
     computed: {
@@ -192,11 +193,11 @@ export default {
 
             if (event.key === "/") {
                 this.capturingCannedMessageShortcut = true;
+                this.send = false;
             }
 
-            let send = true;
             if (this.capturingCannedMessageShortcut) {
-                if (event.key === "Tab") {
+                if (event.key === "Tab" || event.key === 'Enter') {
                     event.preventDefault();
                     this.addCannedMessage(this.activeCannedIndex);
                 } else {
@@ -204,7 +205,7 @@ export default {
                 }
             }
 
-            if (event.key === "Enter" && send) {
+            if (event.key === "Enter" && this.send) {
                 event.preventDefault();
                 this.sendMessage();
             } else {
@@ -247,7 +248,12 @@ export default {
             this.$nextTick(() => {
                 const range = document.createRange();
                 const sel = window.getSelection();
-                range.setStart(div, 1);
+                if (div.childNodes.length > 0) {
+                    const offset = div.childNodes.length > 1 ? 1 : 0;
+                    range.setStart(div, offset);
+                } else {
+                    range.setStart(div, 0);
+                }
                 range.collapse(true);
                 sel.removeAllRanges();
                 sel.addRange(range);
@@ -255,6 +261,7 @@ export default {
             });
 
             this.cannedShortcut = "";
+            this.send = true;
         },
         sendMessage() {
             this.message.content = document.getElementById("input").innerHTML;

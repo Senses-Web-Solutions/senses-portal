@@ -224,7 +224,17 @@ class ChatController extends Controller
 
     public function packageShow(PackageShowChatRequest $request, int $id, GenerateChatShowCache $generateChatShowCache)
     {
-        return $generateChatShowCache->execute($id);
+        $chatResponse = $generateChatShowCache->execute($id);
+        // Decode the JSON content to an array or object
+        $chatData = json_decode($chatResponse->content(), true); // true for associative array, false for object
+
+        // Now you can check if completed_at exists
+        if (isset($chatData['completed_at'])) {
+            // If chat is completed send 404
+            return response()->json(['message' => 'Chat not found'], 404);
+        }
+
+        return $chatResponse;
     }
 
     /**
@@ -245,14 +255,12 @@ class ChatController extends Controller
         })->pluck('id', 'slug');
 
         $newStatus = $statusIDs['new'];
-        $unassignedStatus = $statusIDs['unassigned'];
         $assignedStatus = $statusIDs['assigned'];
         $resolvedStatus = $statusIDs['resolved'];
         $unresolvedStatus = $statusIDs['unresolved'];
         $missedStatus = $statusIDs['missed'];
 
-        $chats = Chat::with([
-            'chatUser:id,full_name',
+        $chats = Chat::with(['chatUser:id,full_name,external_id',
             'messages',
             'messages.files',
             'agents:id,full_name,email',

@@ -1,5 +1,6 @@
 <template>
-    <a v-if="$slots.default" :href="href" class="text-sm-old relative inline-flex max-w-full items-center rounded-full border bg-white px-3 py-0.5" :class="[highlightBorder ? `border-${colour}` : 'border-zinc-300']">
+    <!-- <a v-if="$slots.default" :href="href" class="text-sm-old relative inline-flex max-w-full items-center rounded-full border bg-white px-3 py-0.5" :class="[highlightBorder ? `border-${colour}` : 'border-zinc-300', `bg-gradient-to-b from-${colour}-50 to-white`]"> -->
+        <a v-if="$slots.default" :href="href" class="text-sm-old relative inline-flex max-w-full items-center rounded-full border bg-white px-3 py-0.5" :class="[highlightBorder ? `border-${colour}` : 'border-zinc-300']">
         <span v-if="colour && highlightDot" class="absolute flex shrink-0 items-center justify-center">
             <span class="h-1.5 w-1.5 rounded-full" :class="`bg-${colour}`" aria-hidden="true"></span>
         </span>

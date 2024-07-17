@@ -1,6 +1,6 @@
 <template>
-    <AgentChatReviewStats />
-    <AgentChatReviewTable />
+    <AgentChatReviewStats :id="id" />
+    <AgentChatReviewTable :id="id" />
 </template>
 <script>
 import AgentChatReviewStats from './AgentChatReviewStats.vue';
@@ -11,5 +11,11 @@ export default {
         AgentChatReviewStats,
         AgentChatReviewTable,
     },
+    props: {
+        id: {
+            type: Number,
+            required: false,
+        },
+    }
 }
 </script>

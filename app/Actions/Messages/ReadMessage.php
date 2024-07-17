@@ -19,8 +19,14 @@ class ReadMessage
         $message->status()->associate($status);
         $message->read_at = now();
 
-        $readBy = json_decode($message->read_by, true);
-        $message->read_by = $readBy ? array_unique(array_merge($readBy, [$userId])) : [$userId];
+        // Check if $message->read_by is a string and decode it, otherwise handle it as an array or initialize as an empty array
+        $readBy = is_string($message->read_by) ? json_decode($message->read_by, true) : (is_array($message->read_by) ? $message->read_by : []);
+
+        // Merge $userId into the array, ensuring uniqueness
+        $message->read_by = array_unique(array_merge($readBy, [$userId]));
+
+        // Encode back to JSON string before saving, if needed
+        $message->read_by = json_encode($message->read_by);
 
         $message->save();
 
