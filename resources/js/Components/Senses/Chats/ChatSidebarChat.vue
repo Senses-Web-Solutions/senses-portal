@@ -10,8 +10,7 @@
         <div class="w-full space-y-2 ">
             <div class="flex items-start justify-between w-full">
                 <h4 class="text-zinc-400 text-sm truncate w-[60%]">
-                    <!-- {{ chat?.system ?? "Unknown" }} -->
-                      http://ietg.teamleaf.uk
+                    {{ chat?.system ?? "Unknown" }}
                 </h4>
                 <p class="text-zinc-400 text-sm">
                     {{
