@@ -89,7 +89,6 @@ export default {
         }
 
         this.darkMode = localStorage.getItem('darkMode') === "true";
-        console.log(this.darkMode);
         window.localStorage.setItem('darkMode', this.darkMode ? "true" : "false")
     },
 

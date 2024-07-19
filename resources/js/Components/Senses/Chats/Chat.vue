@@ -165,7 +165,7 @@ export default {
             }
 
             let lastMessage = messages[index - 1];
-            return message.author.full_name === lastMessage.author.full_name;
+            return message.author.full_name === lastMessage.author.full_name && message.from_agent === lastMessage.from_agent;
         },
     }
 }
