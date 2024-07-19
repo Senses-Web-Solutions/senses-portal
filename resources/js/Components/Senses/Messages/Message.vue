@@ -1,6 +1,6 @@
 <template>
     <div
-        class="w-80 p-3 relative shadow rounded-lg text-black space-y-1"
+        class="max-w-[25%] min-w-72 w-fit p-3 relative shadow rounded-lg text-black space-y-1"
         :class="{ 
             'bg-white ml-auto' : message.from_agent, 
             'bg-primary-500 text-white dark:bg-primary-200 dark:text-black': !message.from_agent,
@@ -15,7 +15,7 @@
         <!-- Message files -->
          <!-- Say how many attachments are on message -->
          <div class="flex flex-col space-y-1 !mt-3 flex-wrap items-start" v-if="message.files?.length > 0">
-            <div v-if="message.files.length > 0" class="text-sm text-gray-500">
+            <div v-if="message.files.length > 0" class="text-sm text-zinc-500">
                 <span v-if="message.files.length === 1">1 Attachment</span>
                 <span v-else>{{ message.files.length }} Attachments</span>
             </div>

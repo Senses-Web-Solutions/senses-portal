@@ -35,6 +35,13 @@ class UpdateMessage
             $message->emitUpdated();
         }
 
+        $message->saveQuietly();
+
+        if (isset($data['file_ids'])) {
+            $message->files()->sync($data['file_ids']);
+            $message->load('files');
+        }
+
         $message->save();
 
         return $message;
