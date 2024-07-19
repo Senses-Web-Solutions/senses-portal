@@ -287,6 +287,7 @@ export default {
                 String(date.getSeconds()).padStart(2, "0");
 
             this.message.sent_at = formattedDate;
+            this.message.chat_id = this.chat.id;
 
             axios.post(`/api/v2/messages`, this.message).then((response) => {
                 if (response.data) {
