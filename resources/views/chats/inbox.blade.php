@@ -5,7 +5,7 @@
 @section('content')
 
 <page-header>
-    <template #title>Chats</template>
+    <template #title>Inbox</template>
 
     <template #actions>
         {{-- <chat-actions></chat-actions> --}}

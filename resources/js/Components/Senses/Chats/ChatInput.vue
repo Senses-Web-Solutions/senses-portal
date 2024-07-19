@@ -269,7 +269,11 @@ export default {
             this.message.content = sanitiseContent(this.message.content);
 
             if (!this.message.content) {
-                return;
+                if (this.message.file_ids.length === 0) {
+                    return;
+                } else {
+                    this.message.content = this.message.file_ids.length + " Attachment" + (this.message.file_ids.length > 1 ? "s" : "");
+                }
             }
 
             const date = new Date();

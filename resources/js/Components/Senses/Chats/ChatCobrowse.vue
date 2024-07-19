@@ -101,10 +101,8 @@ export default {
         },
         setupPeer() {
             this.peer = new Peer();
-            console.log(this.peer);
 
             this.peer.on("signal", (data) => {
-                console.log('Signal', data);
                 axios.post("/api/v2/signal", {
                     chat_id: this.chat.id,
                     data: data,

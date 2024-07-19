@@ -49,7 +49,7 @@ class PackageCreateMessageRequest extends FormRequest
     {
         $rules = [
             'chat_id' => 'required|integer|exists:chats,id',
-            'content' => 'required|string',
+            'content' => 'required_without:file_ids|string',
             'chat_user_uuid' => 'required|string|max:255',
             'from_agent' => 'required|boolean',
             'meta' => 'nullable|array|max:255',

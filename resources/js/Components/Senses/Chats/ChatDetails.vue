@@ -216,7 +216,7 @@ export default {
         showClasses() {
             return {
                 "w-0 translate-x-full p-0": !this.show,
-                "w-96 border-l": this.show,
+                "w-96 border-l min-w-96": this.show,
             };
         },
         filteredDefinedMeta() {

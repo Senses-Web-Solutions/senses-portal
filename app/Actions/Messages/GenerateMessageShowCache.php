@@ -16,7 +16,7 @@ class GenerateMessageShowCache
     public function execute(int $id)
     {
         return TaggedCache::responseForever('message-' . $id, function () use ($id) {
-            return $this->respond(Message::with(['status', 'author'])->findOrFail($id));
+            return $this->respond(Message::with(['status', 'author', 'files'])->findOrFail($id));
         });
     }
 }

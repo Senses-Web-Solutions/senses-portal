@@ -140,7 +140,7 @@ class Chat extends Model
         $array = parent::toArray();
 
         // Convert messages to an object keyed by message id
-        $array['messages'] = (object) $this->messages()->with(['author:id,full_name'])->get([
+        $array['messages'] = (object) $this->messages()->with(['author:id,full_name', 'files'])->get([
             'id', 'chat_id', 'from_agent', 'content', 'sent_at', 'read_at', 'read_by', 'author_type', 'author_id'
         ])->keyBy('id')->all();
 

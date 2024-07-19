@@ -125,10 +125,6 @@ class ChatController extends Controller
             })
             ->list();
 
-        $messagesFromThisAgent = $chats->sum(function ($chat) use ($userID) {
-            return $chat->messages->where('author_type', 'user')->where('author_id', $userID)->count();
-        });
-
         $duration = $chats->sum(function ($chat) {
             $start = Carbon::parse($chat->created_at);
             $end = Carbon::parse($chat->completed_at);
@@ -159,10 +155,6 @@ class ChatController extends Controller
     public function chatUserChatsStats(ListChatRequest $request, int $chatUserID)
     {
         $chats = QueryBuilder::for(Chat::class)->where('chat_user_id', $chatUserID)->list();
-
-        $messagesFromThisAgent = $chats->sum(function ($chat) use ($chatUserID) {
-            return $chat->messages->where('author_type', 'chat-user')->where('author_id', $chatUserID)->count();
-        });
 
         $duration = $chats->sum(function ($chat) {
             $start = Carbon::parse($chat->created_at);
@@ -260,7 +252,8 @@ class ChatController extends Controller
         $unresolvedStatus = $statusIDs['unresolved'];
         $missedStatus = $statusIDs['missed'];
 
-        $chats = Chat::with(['chatUser:id,full_name,external_id',
+        $chats = Chat::with([
+            'chatUser:id,full_name,external_id',
             'messages',
             'messages.files',
             'agents:id,full_name,email',

@@ -5,8 +5,6 @@
         style="max-height: calc(100vh - 128px); min-height: calc(100vh - 128px)"
     >
             <div class="flex justify-between gap-3 items-center p-3">
-                <h1 class="text-xl font-bold text-black">Inbox</h1>
-
                 <SeInput
                     v-model="searchQuery"
                     id="search"

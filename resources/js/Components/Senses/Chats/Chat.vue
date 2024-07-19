@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col justify-between flex-grow">
+    <div class="flex flex-col justify-between flex-grow min-w-96">
         <div class="p-3 border-b border-zinc-200 flex items-center justify-between bg-white">
             <div v-if="!cobrowsing" class="flex flex-col text-black font-semibold text-xl space-y-1">
                 <div class="flex items-center text-sm text-zinc-400 hover:text-primary-500 transition-all">
