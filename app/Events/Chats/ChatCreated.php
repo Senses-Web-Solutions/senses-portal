@@ -25,6 +25,7 @@ class ChatCreated implements ShouldBroadcastNow
             'invitedAgents' => function ($query) {
                 $query->select('users.id', 'users.full_name');
             },
+            'chatUser'
         ]);
         $chat->append(['last_message']);
         $chat->user_id = $chat->user_id ?? null;
