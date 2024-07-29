@@ -37,6 +37,7 @@ Route::pusherBatchAuth();
 
 Route::group(['middleware' => ['auth']], function () {
 	Route::view('/', 'dashboard');
+	Route::view('/dashboard', 'fullscreen-dashboard');
 	Route::resource('users', UserController::class)->only('index', 'show');
 
 	Route::resource('tags', TagController::class)->only('index', 'show');

@@ -19,7 +19,6 @@
         <script type="text/javascript" src="/js/circles.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.umd.js"></script>
 
-
         @vite([
             'resources/css/senses.css',
             'resources/js/senses.js'
@@ -66,7 +65,7 @@
         {{-- @endif --}}
 
         <div id="app" class="">
-            <layout>
+            <fullscreen-layout>
                 <template #sidebar>
                     {{-- <Sidebar></Sidebar> --}}
                 </template>
@@ -74,7 +73,7 @@
                 <template #content>
                     @yield('content')
                 </template>
-            </layout>
+            </fullscreen-layout>
 
             <snackbars></snackbars>
             <notifications></notifications>
