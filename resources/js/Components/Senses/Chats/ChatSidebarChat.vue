@@ -93,7 +93,7 @@ export default {
             const messagesArray = Object.values(this.chat.messages ?? {}) ?? [];
 
             const count = messagesArray.reduce((acc, message) => {
-                return message.author?.full_name !== user()?.full_name &&
+                return message.author?.id !== user()?.id && message.author?.author_type !== "user" &&
                     !message.read_at
                     ? acc + 1
                     : acc;
