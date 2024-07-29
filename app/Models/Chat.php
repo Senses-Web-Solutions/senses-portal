@@ -28,6 +28,7 @@ class Chat extends Model
         'os',
         'os_version',
         'device',
+        'current_page'
     ];
 
     protected $casts = [
