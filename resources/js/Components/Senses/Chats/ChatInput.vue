@@ -196,6 +196,15 @@ export default {
                 this.send = false;
             }
 
+            if (event.key === "Enter" && this.send && !this.capturingCannedMessageShortcut) {
+                event.preventDefault();
+                this.sendMessage();
+            } else {
+                // If '/' key then detect shortcut and if press tab after, then load canned_message content
+
+                this.typing();
+            }
+
             if (this.capturingCannedMessageShortcut) {
                 if (event.key === "Tab" || event.key === 'Enter') {
                     event.preventDefault();
@@ -205,14 +214,6 @@ export default {
                 }
             }
 
-            if (event.key === "Enter" && this.send) {
-                event.preventDefault();
-                this.sendMessage();
-            } else {
-                // If '/' key then detect shortcut and if press tab after, then load canned_message content
-
-                this.typing();
-            }
         },
         addCannedMessage(index){
             this.addCannedMessageToMessage(this.searchedCannedMessages[index].content);
@@ -246,11 +247,13 @@ export default {
 
             // Put the cursor at the end of the id input
             this.$nextTick(() => {
+                console.log('Next Tick');
                 const range = document.createRange();
                 const sel = window.getSelection();
                 if (div.childNodes.length > 0) {
-                    const offset = div.childNodes.length > 1 ? 1 : 0;
-                    range.setStart(div, offset);
+                    const lastChild = div.childNodes[div.childNodes.length - 1];
+                    const offset = lastChild.nodeType === Node.TEXT_NODE ? lastChild.length : lastChild.childNodes.length;
+                    range.setStart(lastChild, offset);
                 } else {
                     range.setStart(div, 0);
                 }
