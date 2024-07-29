@@ -121,6 +121,40 @@ export default {
 
     mounted() {
         this.setupKeyboardListeners();
+
+        // Auto scroll to last message that was read by you
+        // Loop through each message and find the last message that was read by you
+        let messages = Object.values(this.chat.messages);
+
+        // Filter out messages where you aren't the author
+        messages = messages.filter(message => message?.author_id !== user().id && message?.author_type !== 'user');
+
+        console.log(this.chat.messages);
+        console.log(messages);
+
+        if (messages.length === 0) {
+            return;
+        }
+
+        // Ready by is an array of ids
+        let lastReadMessage = null;
+        const userId = user().id;
+        for (let i = messages.length - 1; i >= 0; i--) {
+            if (messages[i].read_by?.includes(userId)) {
+                lastReadMessage = messages[i];
+                break;
+            }
+        }
+
+        // Auto scroll to last read message, each message has an id of message-<id>
+        if (lastReadMessage) {
+            console.log('Scrolling to last read message', lastReadMessage);
+            const lastReadMessageId = `message-${lastReadMessage.id}`;
+            const lastReadMessageElement = document.getElementById(lastReadMessageId);
+            if (lastReadMessageElement) {
+                lastReadMessageElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }
+        }
     },
 
     beforeUnmount() {
