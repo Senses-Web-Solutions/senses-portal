@@ -198,8 +198,6 @@ export default {
                 }
 
                 itemArray.push(viewChatUser);
-                itemArray.push({ type: 'divider' });
-                itemArray.push(deleteChat);
                 // Add divider between
 
                 return itemArray;
@@ -230,8 +228,6 @@ export default {
                 }
 
                 itemArray.push(viewChatUser);
-                itemArray.push({ type: 'divider' });
-                itemArray.push(deleteChat);
 
                 return itemArray;
             }
@@ -258,9 +254,9 @@ export default {
 
             itemArray.push(viewChatUser);
             itemArray.push(markAsComplete);
-            itemArray.push(leaveChat);
             itemArray.push({ type: 'divider' });
-            itemArray.push(deleteChat);
+            itemArray.push(leaveChat);
+            // itemArray.push(deleteChat);
 
 
             return itemArray;
