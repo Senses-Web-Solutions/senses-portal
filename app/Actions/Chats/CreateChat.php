@@ -29,6 +29,8 @@ class CreateChat
 
 
         if (isset($data['lat']) && isset($data['lng'])) {
+            $data['lng'] = (float) $data['lng'];
+            $data['lat'] = (float) $data['lat'];
             $chat->geom = new Point($data['lng'], $data['lat']);
         }
 

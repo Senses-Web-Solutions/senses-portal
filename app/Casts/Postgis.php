@@ -13,7 +13,7 @@ abstract class Postgis implements CastsAttributes, SerializesCastableAttributes
 {
     public function transformWKT($value)
     {
-        $inputSrid = config('senses.geometry.input_srid', 4326);
+        $inputSrid = config('senses.geometry.input_srid', 27700);
         $outputSrid = config('senses.geometry.output_srid', 4326);
         return $value ? DB::raw("ST_Transform(ST_GeomFromText('{$value->getWKT()}',$outputSrid), $inputSrid)") : null;
     }

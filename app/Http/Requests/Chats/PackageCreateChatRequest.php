@@ -36,11 +36,7 @@ class PackageCreateChatRequest extends FormRequest
         ->where('allowed_chat_sites.url', $protocolAndDomain)
         ->exists();
 
-        if ($allowedChatSiteExists) {
-            return true;
-        } 
-
-        return false;
+        return $allowedChatSiteExists;
     }
 
     public function rules()

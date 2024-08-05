@@ -4,10 +4,7 @@ namespace App\Scopes;
 
 use App\Scopes\PostgisScope;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
-use Illuminate\Database\Eloquent\Builder;
 
 class PostgisTransformScope extends PostgisScope implements Scope
 {
