@@ -31,8 +31,12 @@ class CreateServerMetric
         ];
 
         $server = Server::find($data['server_id']);
-        if ($server->cpu_cores == null) {
-            $server->update($serverData);
+
+        foreach ($serverData as $key => $value) {
+            if ($server->{$key} != $serverData[$key]) {
+                $server->update($serverData);
+                break;
+            }
         }
 
         $serverMetric = new ServerMetric($data);
